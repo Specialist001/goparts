@@ -15,7 +15,7 @@ class m190517_125140_create_post_translations_table extends Migration
         $this->createTable('{{%post_translations}}', [
             'id' => $this->primaryKey(),
             'post_id' => $this->integer(11),
-            'lang' => $this->char(2)->null(),
+            'locale' => $this->string(255)->null(),
             'title' => $this->string(255),
             'content' => $this->text()->null(),
             'keywords' => $this->string(255)->null(),
@@ -30,6 +30,8 @@ class m190517_125140_create_post_translations_table extends Migration
      */
     public function safeDown()
     {
+        $this->dropIndex('ix-post_translations-post_id', '{{%post_translations}}');
+
         $this->dropTable('{{%post_translations}}');
     }
 }

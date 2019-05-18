@@ -40,6 +40,9 @@ class m190517_152323_create_menu_items_table extends Migration
      */
     public function safeDown()
     {
+        $this->dropIndex('ix-menu_items-parent_id','{{%menu_items}}');
+        $this->dropIndex('ix-menu_items-menu_id','{{%menu_items}}');
+
         $this->dropTable('{{%menu_items}}');
     }
 }

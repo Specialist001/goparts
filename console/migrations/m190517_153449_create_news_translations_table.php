@@ -15,7 +15,7 @@ class m190517_153449_create_news_translations_table extends Migration
         $this->createTable('{{%news_translations}}', [
             'id' => $this->primaryKey(),
             'news_id' => $this->integer(11),
-            'lang' => $this->char(2),
+            'locale' => $this->string(255),
             'title' => $this->string(255),
             'slug' => $this->string(255),
             'short_text' => $this->text()->null(),
@@ -23,6 +23,8 @@ class m190517_153449_create_news_translations_table extends Migration
             'keywords' => $this->string(255)->null(),
             'description' => $this->string(255)->null(),
         ]);
+
+        $this->createIndex('ix-news_translations-news_id', '{{%news_translations}}', 'news_id', false);
     }
 
     /**
@@ -30,6 +32,8 @@ class m190517_153449_create_news_translations_table extends Migration
      */
     public function safeDown()
     {
+        $this->dropIndex('ix-news_translations-news_id', '{{%news_translations}}');
+
         $this->dropTable('{{%news_translations}}');
     }
 }

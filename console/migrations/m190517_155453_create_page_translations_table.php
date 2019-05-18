@@ -5,17 +5,17 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `{{%pages_translations}}`.
  */
-class m190517_155453_create_pages_translations_table extends Migration
+class m190517_155453_create_page_translations_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('{{%pages_translations}}', [
+        $this->createTable('{{%page_translations}}', [
             'id' => $this->primaryKey(),
             'page_id' => $this->integer(11),
-            'lang' => $this->char(2)->null(),
+            'locale' => $this->string(255)->null(),
             'title' => $this->string(255),
             'title_short' => $this->string(255)->null(),
             'body' => $this->text(),
@@ -23,7 +23,7 @@ class m190517_155453_create_pages_translations_table extends Migration
             'description' => $this->string(255)->null(),
         ]);
 
-        $this->createIndex('ix-pages_translations-page_id', '{{%pages_translations}}', 'page_id', false);
+        $this->createIndex('ix-page_translations-page_id', '{{%page_translations}}', 'page_id', false);
     }
 
     /**
@@ -31,6 +31,8 @@ class m190517_155453_create_pages_translations_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('{{%pages_translations}}');
+        $this->dropIndex('ix-page_translations-page_id', '{{%page_translations}}');
+
+        $this->dropTable('{{%page_translations}}');
     }
 }

@@ -27,6 +27,8 @@ class m190517_155213_create_notify_settings_table extends Migration
      */
     public function safeDown()
     {
+        $this->dropIndex('ix-notify_settings-user_id', '{{%notify_settings}}');
+
         $this->dropTable('{{%notify_settings}}');
     }
 }

@@ -26,7 +26,7 @@ class m190517_145627_create_feedbacks_table extends Migration
             'answer_time' => $this->integer(11)->null(),
             'is_faq' => $this->smallInteger(1)->defaultValue(0),
             'status' => $this->smallInteger(1)->defaultValue(0),
-            'ip' => $this->string(30),
+            'ip' => $this->string(30)->null(),
 
             'created_at' => $this->integer(11)->notNull(),
             'updated_at' => $this->integer(11)->notNull(),
