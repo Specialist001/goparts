@@ -17,17 +17,8 @@ class m190518_111838_create_store_product_attributes_table extends Migration
             'product_id' => $this->integer(11)->null()->comment('store_products->id'),
             'type_id' => $this->integer(11)->null()->comment('store_types->id'),
         ]);
-    }
-
-    public function safeUp()
-    {
         $this->createIndex('ix-store_product_attributes-product_id','{{%store_product_attributes}}','product_id',false);
-        $this->createIndex('ix-store_product_attributes-type_id','{{%store_product_attributes}}','type_id',false);    }
-
-    public function safeDown()
-    {
-        $this->dropIndex('ix-store_product_attributes-product_id','{{%store_product_attributes}}');
-        $this->dropIndex('ix-store_product_attributes-type_id','{{%store_product_attributes}}');
+        $this->createIndex('ix-store_product_attributes-type_id','{{%store_product_attributes}}','type_id',false);
     }
 
     /**

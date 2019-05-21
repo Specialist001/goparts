@@ -17,18 +17,8 @@ class m190517_131436_create_post_to_tags_table extends Migration
             'tag_id' => $this->integer(11),
         ]);
 
-    }
-
-    public function safeUp()
-    {
         $this->createIndex('ix-post_to_tags-post_id', '{{%post_to_tags}}', 'post_id',false);
         $this->createIndex('ix-post_to_tags-tag_id', '{{%post_to_tags}}', 'tag_id',false);
-    }
-
-    public function safeDown()
-    {
-        $this->dropIndex('ix-post_to_tags-post_id', '{{%post_to_tags}}');
-        $this->dropIndex('ix-post_to_tags-tag_id', '{{%post_to_tags}}');
     }
 
     /**

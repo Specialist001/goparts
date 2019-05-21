@@ -25,11 +25,11 @@ class m190517_151205_create_mail_templates_table extends Migration
             'status' => $this->integer(11)->defaultValue(1),
         ]);
 
+        $this->createIndex('ix-mail_templates-event_id', '{{%mail_templates}}', 'event_id', false);
     }
 
     public function safeUp()
     {
-        $this->createIndex('ix-mail_templates-event_id', '{{%mail_templates}}', 'event_id', false);
     }
 
     public function safeDown()

@@ -31,18 +31,9 @@ class m190517_152323_create_menu_items_table extends Migration
             'status' => $this->integer(11)->defaultValue(1)
         ]);
 
-
-    }
-
-    public function safeUp()
-    {
         $this->createIndex('ix-menu_items-parent_id','{{%menu_items}}', 'parent_id', false);
-        $this->createIndex('ix-menu_items-menu_id','{{%menu_items}}', 'menu_id', false);    }
+        $this->createIndex('ix-menu_items-menu_id','{{%menu_items}}', 'menu_id', false);
 
-    public function safeDown()
-    {
-        $this->dropIndex('ix-menu_items-parent_id','{{%menu_items}}');
-        $this->dropIndex('ix-menu_items-menu_id','{{%menu_items}}');
     }
 
     /**

@@ -18,16 +18,7 @@ class m190518_064341_create_store_attribute_option_translations_table extends Mi
             'locale' => $this->string(255)->defaultValue('en'),
             'value' => $this->string(255)
         ]);
-    }
-
-    public function safeUp()
-    {
-        $this->dropIndex('ix-store_attribute_option_translations-attribute_option_id','{{%store_attribute_option_translations}}');
-    }
-
-    public function safeDown()
-    {
-        $this->createIndex('ix-store_attribute_option_translations-attribute_option_id','{{%store_attribute_option_translations}}','attribute_option_id',false);
+        $this->createIndex('ix-store_attribute_option_translations-attribute_option_id','{{%store_attribute_option_translations}}','attribute_option_id', false);
     }
 
     /**

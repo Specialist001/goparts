@@ -23,17 +23,8 @@ class m190518_093526_create_store_order_products_table extends Migration
             'quantity' => $this->integer(11)->defaultValue(0),
             'sku' => $this->string(150)->null(),
         ]);
-    }
-
-    public function safeUp()
-    {
         $this->createIndex('ix-store_order_products-order_id','{{%store_order_products}}','order_id',false);
-        $this->createIndex('ix-store_order_products-product_id','{{%store_order_products}}','product_id',false);    }
-
-    public function safeDown()
-    {
-        $this->dropIndex('ix-store_order_products-order_id','{{%store_order_products}}');
-        $this->dropIndex('ix-store_order_products-product_id','{{%store_order_products}}');
+        $this->createIndex('ix-store_order_products-product_id','{{%store_order_products}}','product_id',false);
     }
 
     /**

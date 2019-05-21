@@ -10,7 +10,7 @@ class m190520_065259_create_foreign_keys extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->addForeignKey('fk-blogs-category_id', '{{%blogs}}', 'category_id', '{{%categories}}', 'id', 'CASCADE');
         $this->addForeignKey('fk-blogs-create_user_id', '{{%blogs}}', 'create_user_id', '{{%user}}', 'id', 'CASCADE');
@@ -28,8 +28,8 @@ class m190520_065259_create_foreign_keys extends Migration
         $this->addForeignKey('fk-post_to_tags-post_id', '{{%post_to_tags}}', 'post_id', '{{%posts}}', 'id', 'CASCADE');
         $this->addForeignKey('fk-post_to_tags-tag_id', '{{%post_to_tags}}', 'tag_id', '{{%tags}}', 'id', 'CASCADE');
 
-        $this->addForeignKey('fk-user_to_blogs-user_id', '{{%user_to_blogs}}', 'user_id', '{{%users}}', 'id', 'CASCADE');
-        $this->addForeignKey('fk-user_to_blogs-blog_id', '{{%user_to_blogs}}', 'blog_id', '{{%blogs}}', 'id', 'CASCADE');
+        $this->addForeignKey('fk-users_blog-user_id', '{{%users_blog}}', 'user_id', '{{%user}}', 'id', 'CASCADE');
+        $this->addForeignKey('fk-users_blog-blog_id', '{{%users_blog}}', 'blog_id', '{{%blogs}}', 'id', 'CASCADE');
 
         $this->addForeignKey('fk-categories-parent_id', '{{%categories}}', 'parent_id', '{{%categories}}', 'id', 'CASCADE');
 
@@ -49,8 +49,8 @@ class m190520_065259_create_foreign_keys extends Migration
         $this->addForeignKey('fk-galleries-preview_id', '{{%galleries}}', 'preview_id', '{{%images}}', 'id', 'CASCADE');
         $this->addForeignKey('fk-galleries-category_id', '{{%galleries}}', 'category_id', '{{%categories}}', 'id', 'CASCADE');
 
-        $this->addForeignKey('fk-alleries_to_images-image_id', '{{%alleries_to_images}}', 'image_id', '{{%images}}', 'id', 'CASCADE');
-        $this->addForeignKey('fk-alleries_to_images-gallery_id', '{{%alleries_to_images}}', 'gallery_id', '{{%galleries}}', 'id', 'CASCADE');
+        $this->addForeignKey('fk-galleries_to_images-image_id', '{{%galleries_to_images}}', 'image_id', '{{%images}}', 'id', 'CASCADE');
+        $this->addForeignKey('fk-galleries_to_images-gallery_id', '{{%galleries_to_images}}', 'gallery_id', '{{%galleries}}', 'id', 'CASCADE');
 
         $this->addForeignKey('fk-mail_templates-event_id', '{{%mail_templates}}', 'event_id', '{{%mail_events}}', 'id', 'CASCADE');
 
@@ -69,9 +69,9 @@ class m190520_065259_create_foreign_keys extends Migration
         $this->addForeignKey('fk-pages-user_id', '{{%pages}}', 'user_id', '{{%user}}', 'id', 'CASCADE');
         $this->addForeignKey('fk-pages-change_user_id', '{{%pages}}', 'change_user_id', '{{%user}}', 'id', 'CASCADE');
 
-        $this->addForeignKey('fk-pages_translation-page_id', '{{%pages_translation}}', 'page_id', '{{%pages_translation}}', 'id', 'CASCADE');
+        $this->addForeignKey('fk-page_translations-page_id', '{{%page_translations}}', 'page_id', '{{%pages}}', 'id', 'CASCADE');
 
-        $this->addForeignKey('fk-query_images-queries_id', '{{%query_images}}', 'queries_id', '{{%queries}}', 'id', 'CASCADE');
+        $this->addForeignKey('fk-query_images-query_id', '{{%query_images}}', 'query_id', '{{%queries}}', 'id', 'CASCADE');
 
         $this->addForeignKey('fk-product_statistics-product_id', '{{%product_statistics}}', 'product_id', '{{%store_products}}', 'id', 'CASCADE');
         $this->addForeignKey('fk-product_statistics-user_id', '{{%product_statistics}}', 'user_id', '{{%user}}', 'id', 'CASCADE');
@@ -83,7 +83,7 @@ class m190520_065259_create_foreign_keys extends Migration
 
         $this->addForeignKey('fk-store_attribute_group_translations-attribute_group_id', '{{%store_attribute_group_translations}}', 'attribute_group_id', '{{%store_attribute_groups}}', 'id', 'CASCADE');
 
-        $this->addForeignKey('fk-store_attribute_options-attribute-attribute_id', '{{%store_attribute_options}}', 'attribute_id', '{{%store_attribute_groups}}', 'id', 'CASCADE');
+        $this->addForeignKey('fk-store_attribute_options-attribute_id', '{{%store_attribute_options}}', 'attribute_id', '{{%store_attribute_groups}}', 'id', 'CASCADE');
 
         $this->addForeignKey('fk-store_attribute_option_translations-attribute_option_id', '{{%store_attribute_option_translations}}', 'attribute_option_id', '{{%store_attribute_options}}', 'id', 'CASCADE');
 
@@ -104,7 +104,7 @@ class m190520_065259_create_foreign_keys extends Migration
         $this->addForeignKey('fk-store_orders-delivery_id', '{{%store_orders}}', 'delivery_id', '{{%store_deliveries}}', 'id', 'CASCADE');
         $this->addForeignKey('fk-store_orders-status_id', '{{%store_orders}}', 'status_id', '{{%store_order_status}}', 'id', 'CASCADE');
         $this->addForeignKey('fk-store_orders-manager_id', '{{%store_orders}}', 'manager_id', '{{%user}}', 'id', 'CASCADE');
-        $this->addForeignKey('fk-store_orders-payment_method_id', '{{%store_orders}}', 'payment_method_id', '{{%store_payment}}', 'id', 'CASCADE');
+        $this->addForeignKey('fk-store_orders-payment_method_id', '{{%store_orders}}', 'payment_method_id', '{{%store_payments}}', 'id', 'CASCADE');
 
         $this->addForeignKey('fk-store_orders_to_coupon-order_id', '{{%store_orders_to_coupon}}', 'order_id', '{{%store_orders}}', 'id', 'CASCADE');
         $this->addForeignKey('fk-store_orders_to_coupon-coupon_id', '{{%store_orders_to_coupon}}', 'coupon_id', '{{%store_coupons}}', 'id', 'CASCADE');
@@ -127,7 +127,7 @@ class m190520_065259_create_foreign_keys extends Migration
 
         $this->addForeignKey('fk-store_product_attribute_values-product_id', '{{%store_product_attribute_values}}', 'product_id', '{{%store_products}}', 'id', 'CASCADE');
         $this->addForeignKey('fk-store_product_attribute_values-attribute_id', '{{%store_product_attribute_values}}', 'attribute_id', '{{%store_attributes}}', 'id', 'CASCADE');
-        $this->addForeignKey('fk-store_product_attribute_values-option_id', '{{%store_product_attribute_values}}', 'option_id', '{{%store_attribute_option}}', 'id', 'CASCADE');
+        $this->addForeignKey('fk-store_product_attribute_values-option_id', '{{%store_product_attribute_values}}', 'option_id', '{{%store_attribute_options}}', 'id', 'CASCADE');
 
         $this->addForeignKey('fk-store_product_to_category-option_id', '{{%store_product_to_category}}', 'product_id', '{{%store_products}}', 'id', 'CASCADE');
         $this->addForeignKey('fk-store_product_to_category-category_id', '{{%store_product_to_category}}', 'category_id', '{{%store_categories}}', 'id', 'CASCADE');
@@ -138,7 +138,7 @@ class m190520_065259_create_foreign_keys extends Migration
         $this->addForeignKey('fk-store_product_images-group_id', '{{%store_product_images}}', 'group_id', '{{%store_product_image_groups}}', 'id', 'CASCADE');
 
         $this->addForeignKey('fk-store_product_links-product_id', '{{%store_product_links}}', 'product_id', '{{%store_products}}', 'id', 'CASCADE');
-        $this->addForeignKey('fk-store_product_links-type_id', '{{%store_product_links}}', 'type_id', '{{%store_product_link_type}}', 'id', 'CASCADE');
+        $this->addForeignKey('fk-store_product_links-type_id', '{{%store_product_links}}', 'type_id', '{{%store_product_link_types}}', 'id', 'CASCADE');
         $this->addForeignKey('fk-store_product_links-linked_product_id', '{{%store_product_links}}', 'linked_product_id', '{{%store_products}}', 'id', 'CASCADE');
 
         $this->addForeignKey('fk-store_product_type_of_car_values-product_id', '{{%store_product_type_of_car_values}}', 'product_id', '{{%store_products}}', 'id', 'CASCADE');
@@ -159,7 +159,7 @@ class m190520_065259_create_foreign_keys extends Migration
 
         $this->addForeignKey('fk-store_type_of_car_translations-type_car_id', '{{%store_type_of_car_translations}}', 'type_car_id', '{{%store_type_of_cars}}', 'id', 'CASCADE');
 
-        $this->addForeignKey('fk-store_user_comissions-user_id', '{{%store_type_of_car_translations}}', 'user_id', '{{%user}}', 'id', 'CASCADE');
+        $this->addForeignKey('fk-store_user_comissions-user_id', '{{%store_user_comissions}}', 'user_id', '{{%user}}', 'id', 'CASCADE');
 
         $this->addForeignKey('fk-subscriptions-user_id', '{{%subscriptions}}', 'user_id', '{{%user}}', 'id', 'CASCADE');
     }
@@ -167,7 +167,7 @@ class m190520_065259_create_foreign_keys extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
         $this->dropForeignKey('fk-blogs-category_id', '{{%blogs}}');
         $this->dropForeignKey('fk-blogs-create_user_id', '{{%blogs}}');
@@ -185,8 +185,8 @@ class m190520_065259_create_foreign_keys extends Migration
         $this->dropForeignKey('fk-post_to_tags-post_id', '{{%post_to_tags}}');
         $this->dropForeignKey('fk-post_to_tags-tag_id', '{{%post_to_tags}}');
 
-        $this->dropForeignKey('fk-user_to_blogs-user_id', '{{%user_to_blogs}}');
-        $this->dropForeignKey('fk-user_to_blogs-blog_id', '{{%user_to_blogs}}');
+        $this->dropForeignKey('fk-users_blog-user_id', '{{%users_blog}}');
+        $this->dropForeignKey('fk-users_blog-blog_id', '{{%users_blog}}');
 
         $this->dropForeignKey('fk-categories-parent_id', '{{%categories}}');
 
@@ -206,8 +206,8 @@ class m190520_065259_create_foreign_keys extends Migration
         $this->dropForeignKey('fk-galleries-preview_id', '{{%galleries}}');
         $this->dropForeignKey('fk-galleries-category_id', '{{%galleries}}');
 
-        $this->dropForeignKey('fk-alleries_to_images-image_id', '{{%alleries_to_images}}');
-        $this->dropForeignKey('fk-alleries_to_images-gallery_id', '{{%alleries_to_images}}');
+        $this->dropForeignKey('fk-galleries_to_images-image_id', '{{%galleries_to_images}}');
+        $this->dropForeignKey('fk-galleries_to_images-gallery_id', '{{%galleries_to_images}}');
 
         $this->dropForeignKey('fk-mail_templates-event_id', '{{%mail_templates}}');
 
@@ -226,9 +226,9 @@ class m190520_065259_create_foreign_keys extends Migration
         $this->dropForeignKey('fk-pages-user_id', '{{%pages}}');
         $this->dropForeignKey('fk-pages-change_user_id', '{{%pages}}');
 
-        $this->dropForeignKey('fk-pages_translation-page_id', '{{%pages_translation}}');
+        $this->dropForeignKey('fk-page_translations-page_id', '{{%page_translations}}');
 
-        $this->dropForeignKey('fk-query_images-queries_id', '{{%query_images}}');
+        $this->dropForeignKey('fk-query_images-query_id', '{{%query_images}}');
 
         $this->dropForeignKey('fk-product_statistics-product_id', '{{%product_statistics}}');
         $this->dropForeignKey('fk-product_statistics-user_id', '{{%product_statistics}}');
@@ -240,7 +240,7 @@ class m190520_065259_create_foreign_keys extends Migration
 
         $this->dropForeignKey('fk-store_attribute_group_translations-attribute_group_id', '{{%store_attribute_group_translations}}');
 
-        $this->dropForeignKey('fk-store_attribute_options-attribute-attribute_id', '{{%store_attribute_options}}');
+        $this->dropForeignKey('fk-store_attribute_options-attribute_id', '{{%store_attribute_options}}');
 
         $this->dropForeignKey('fk-store_attribute_option_translations-attribute_option_id', '{{%store_attribute_option_translations}}');
 

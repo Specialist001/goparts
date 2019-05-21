@@ -20,16 +20,7 @@ class m190518_060550_create_store_attribute_translations_table extends Migration
             'description' => $this->text()->null()
         ]);
 
-    }
-
-    public function safeUp()
-    {
         $this->createIndex('ix-store_attribute_translations-attribute_id','{{%store_attribute_translations}}','attribute_id',false);
-    }
-
-    public function safeDown()
-    {
-        $this->dropIndex('ix-store_attribute_translations-attribute_id','{{%store_attribute_translations}}');
     }
 
     /**

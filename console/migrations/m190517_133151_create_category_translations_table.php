@@ -21,17 +21,9 @@ class m190517_133151_create_category_translations_table extends Migration
             'description' => $this->text(),
         ]);
 
-    }
-
-    public function safeUp()
-    {
         $this->createIndex('ix-category_translations-category_id', '{{%category_translations}}', 'category_id', false);
     }
 
-    public function safeDown()
-    {
-        $this->dropIndex('ix-category_translations-category_id', '{{%category_translations}}');
-    }
 
     /**
      * {@inheritdoc}

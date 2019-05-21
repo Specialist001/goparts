@@ -18,16 +18,7 @@ class m190520_053205_create_store_user_comissions_table extends Migration
             'commission' => $this->integer(11)->null()->defaultValue(8),
         ]);
 
-    }
-
-    public function safeUp()
-    {
         $this->createIndex('ix-store_user_comissions-user_id','{{%store_user_comissions}}','user_id', false);
-    }
-
-    public function safeDown()
-    {
-        $this->dropIndex('ix-store_user_comissions-user_id','{{%store_user_comissions}}');
     }
 
     /**

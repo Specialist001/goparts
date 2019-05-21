@@ -18,20 +18,9 @@ class m190518_061052_create_store_attribute_group_translations_table extends Mig
             'locale' => $this->string(255)->defaultValue('en'),
             'name' => $this->string(255)->null(),
         ]);
-
-    }
-
-    public function safeUp()
-    {
         $this->createIndex('ix-store_attribute_group_translations-attribute_group_id',
             '{{%store_attribute_group_translations}}','attribute_group_id',false);
 
-    }
-
-    public function safeDown()
-    {
-        $this->dropIndex('ix-store_attribute_group_translations-attribute_group_id',
-            '{{%store_attribute_group_translations}}');
     }
 
     /**

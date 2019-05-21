@@ -19,16 +19,7 @@ class m190519_071545_create_store_product_videos_table extends Migration
             'url' => $this->string(255)->null(),
         ]);
 
-    }
-
-    public function safeUp()
-    {
         $this->createIndex('ix-store_product_videos-product_id','{{%store_product_videos}}','product_id',false);
-    }
-
-    public function safeDown()
-    {
-        $this->dropIndex('ix-store_product_videos-product_id','{{%store_product_videos}}');
     }
 
     /**

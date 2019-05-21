@@ -25,16 +25,7 @@ class m190518_071748_create_store_categories_table extends Migration
             'updated_at' => $this->integer(11)->notNull(),
         ]);
 
-    }
-
-    public function safeUp()
-    {
-        $this->dropIndex('ix-store_categories-parent_id','store_categories');
-    }
-
-    public function safeDown()
-    {
-        $this->createIndex('ix-store_categories-parent_id','store_categories','parent_id',false);
+        $this->createIndex('ix-store_categories-parent_id','store_categories','parent_id', false);
     }
 
     /**

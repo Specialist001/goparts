@@ -22,16 +22,7 @@ class m190517_155453_create_page_translations_table extends Migration
             'keywords' => $this->string(255)->null(),
             'description' => $this->string(255)->null(),
         ]);
-    }
-
-    public function safeUp()
-    {
         $this->createIndex('ix-page_translations-page_id', '{{%page_translations}}', 'page_id', false);
-    }
-
-    public function safeDown()
-    {
-        $this->dropIndex('ix-page_translations-page_id', '{{%page_translations}}');
     }
 
     /**

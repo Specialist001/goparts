@@ -24,16 +24,7 @@ class m190520_053609_create_subscriptions_table extends Migration
 
             'created_at' => $this->integer(11)->notNull(),
         ]);
-    }
-
-    public function safeUp()
-    {
         $this->createIndex('ix-subscriptions-user_id','{{%subscriptions}}','user_id',false);
-    }
-
-    public function safeDown()
-    {
-        $this->dropIndex('ix-subscriptions-user_id','{{%subscriptions}}');
     }
 
     /**

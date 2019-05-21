@@ -27,29 +27,18 @@ class m190517_122632_create_blogs_table extends Migration
             'created_at' => $this->integer(11)->notNull(),
             'updated_at' => $this->integer(11)->notNull(),
         ]);
-    }
 
-    public function safeUp()
-    {
         $this->createIndex('ix-blogs_category_id', '{{%blogs}}', 'category_id', false);
         $this->createIndex('ix-blogs_create_user_id', '{{%blogs}}', 'create_user_id', false);
         $this->createIndex('ix-blogs_update_user_id', '{{%blogs}}', 'update_user_id', false);
     }
 
-    public function safeDown()
-    {
-        $this->dropIndex('ix_blogs_category_id', '{{%blogs}}');
-        $this->dropIndex('ix-blogs_create_user_id', '{{%blogs}}');
-        $this->dropIndex('ix-blogs_update_user_id', '{{%blogs}}');
-    }
 
     /**
      * {@inheritdoc}
      */
     public function down()
     {
-        //$this->dropIndex('uq_slug', '{{%blogs}}');
-
         $this->dropTable('{{%blogs}}');
     }
 

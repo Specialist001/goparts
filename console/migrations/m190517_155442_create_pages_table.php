@@ -26,21 +26,11 @@ class m190517_155442_create_pages_table extends Migration
             'created_at' => $this->integer(11)->notNull(),
             'updated_at' => $this->integer(11)->notNull(),
         ]);
-    }
 
-    public function safeUp()
-    {
         $this->createIndex('ix-pages-parent_id','{{%pages}}', 'parent_id', false);
         $this->createIndex('ix-pages-category_id','{{%pages}}', 'category_id', false);
         $this->createIndex('ix-pages-user_id','{{%pages}}', 'user_id', false);
-        $this->createIndex('ix-pages-change_user_id','{{%pages}}', 'change_user_id', false);    }
-
-    public function safeDown()
-    {
-        $this->dropIndex('ix-pages-parent_id','{{%pages}}');
-        $this->dropIndex('ix-pages-category_id','{{%pages}}');
-        $this->dropIndex('ix-pages-user_id','{{%pages}}');
-        $this->dropIndex('ix-pages-change_user_id','{{%pages}}');
+        $this->createIndex('ix-pages-change_user_id','{{%pages}}', 'change_user_id', false);
     }
 
     /**

@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `{{%currencies}}`.
  */
-class m190518094220_create_currencies_table extends Migration
+class m190518_094220_create_currencies_table extends Migration
 {
     /**
      * {@inheritdoc}
@@ -22,16 +22,7 @@ class m190518094220_create_currencies_table extends Migration
             'updated_at' => $this->integer(11)->notNull(),
             'deleted_at' => $this->integer(11)->null(),
         ]);
-    }
-
-    public function safeUp()
-    {
         $this->createIndex('uq-currencies-alpha_code','{{%currencies}}','alpha_code',true);
-    }
-
-    public function safeDown()
-    {
-        $this->dropIndex('uq-currencies-alpha_code','{{%currencies}}');
     }
 
     /**

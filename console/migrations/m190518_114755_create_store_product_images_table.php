@@ -19,16 +19,7 @@ class m190518_114755_create_store_product_images_table extends Migration
             'title' => $this->string(255)->null(),
             'group_id' => $this->integer(11)->null()->comment('store_product_image_groups'),
         ]);
-    }
-
-    public function safeUp()
-    {
         $this->createIndex('ix-store_product_images-product_id','{{%store_product_images}}','product_id', false);
-    }
-
-    public function safeDown()
-    {
-        $this->dropIndex('ix-store_product_images-product_id','{{%store_product_images}}');
     }
 
     /**

@@ -21,19 +21,9 @@ class m190520_065219_create_galleries_table extends Migration
             'preview_id' => $this->integer(11)->null(),
             'category_id' => $this->integer(11)->null(),
         ]);
-    }
-
-    public function safeUp()
-    {
         $this->createIndex('ix-galleries-user_id','{{%galleries}}','user_id',false);
         $this->createIndex('ix-galleries-preview_id','{{%galleries}}','preview_id',false);
-        $this->createIndex('ix-galleries-category_id','{{%galleries}}','category_id',false);    }
-
-    public function safeDown()
-    {
-        $this->dropIndex('ix-galleries-user_id','{{%galleries}}');
-        $this->dropIndex('ix-galleries-preview_id','{{%galleries}}');
-        $this->dropIndex('ix-galleries-category_id','{{%galleries}}');
+        $this->createIndex('ix-galleries-category_id','{{%galleries}}','category_id',false);
     }
 
     /**

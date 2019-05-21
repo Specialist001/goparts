@@ -23,19 +23,9 @@ class m190518_111904_create_store_product_attribute_values_table extends Migrati
 
             'created_at' => $this->integer(11)->notNull(),
         ]);
-    }
-
-    public function safeUp()
-    {
         $this->createIndex('ix-store_product_attribute_values-product_id','{{%store_product_attribute_values}}','product_id', false);
         $this->createIndex('ix-store_product_attribute_values-attribute_id','{{%store_product_attribute_values}}','attribute_id', false);
-        $this->createIndex('ix-store_product_attribute_values-option_id','{{%store_product_attribute_values}}','option_id', false);    }
-
-    public function safeDown()
-    {
-        $this->dropIndex('ix-store_product_attribute_values-product_id','{{%store_product_attribute_values}}');
-        $this->dropIndex('ix-store_product_attribute_values-attribute_id','{{%store_product_attribute_values}}');
-        $this->dropIndex('ix-store_product_attribute_values-option_id','{{%store_product_attribute_values}}');
+        $this->createIndex('ix-store_product_attribute_values-option_id','{{%store_product_attribute_values}}','option_id', false);
     }
 
     /**

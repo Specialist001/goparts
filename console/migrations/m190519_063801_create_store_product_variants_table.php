@@ -22,17 +22,8 @@ class m190519_063801_create_store_product_variants_table extends Migration
             'sku' => $this->string(150)->null(),
             'order' => $this->integer(11)->defaultValue(0),
         ]);
-    }
-
-    public function safeUp()
-    {
         $this->createIndex('ix-store_product_variants-product_id','{{%store_product_variants}}','product_id',false);
-        $this->createIndex('ix-store_product_variants-attribute_id','{{%store_product_variants}}','attribute_id',false);    }
-
-    public function safeDown()
-    {
-        $this->dropIndex('ix-store_product_variants-product_id','{{%store_product_variants}}');
-        $this->dropIndex('ix-store_product_variants-attribute_id','{{%store_product_variants}}');
+        $this->createIndex('ix-store_product_variants-attribute_id','{{%store_product_variants}}','attribute_id',false);
     }
 
     /**

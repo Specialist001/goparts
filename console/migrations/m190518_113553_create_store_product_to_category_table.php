@@ -18,18 +18,8 @@ class m190518_113553_create_store_product_to_category_table extends Migration
             'category_id' => $this->integer(11)->null(),
         ]);
 
-
-    }
-
-    public function safeUp()
-    {
         $this->createIndex('ix-store_product_to_category-product_id','{{%store_product_to_category}}','product_id',false);
-        $this->createIndex('ix-store_product_to_category-category_id','{{%store_product_to_category}}','category_id',false);    }
-
-    public function safeDown()
-    {
-        $this->dropIndex('ix-store_product_to_category-product_id','{{%store_product_to_category}}');
-        $this->dropIndex('ix-store_product_to_category-category_id','{{%store_product_to_category}}');
+        $this->createIndex('ix-store_product_to_category-category_id','{{%store_product_to_category}}','category_id',false);
     }
 
     /**

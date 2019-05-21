@@ -23,16 +23,7 @@ class m190518_060542_create_store_attributes_table extends Migration
             'is_filter' => $this->smallInteger(6)->defaultValue(1),
         ]);
 
-    }
-
-    public function safeUp()
-    {
         $this->createIndex('ix-store_attributes-group_id','{{%store_attributes}}','group_id', false);
-    }
-
-    public function safeDown()
-    {
-        $this->dropIndex('ix-store_attributes-group_id','{{%store_attributes}}');
     }
 
     /**

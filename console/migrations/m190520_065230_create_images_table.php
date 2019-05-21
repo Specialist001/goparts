@@ -27,20 +27,10 @@ class m190520_065230_create_images_table extends Migration
             'created_at' => $this->integer(11)->notNull(),
         ]);
 
-
-    }
-
-    public function safeUp()
-    {
         $this->createIndex('ix-images-user_id','{{%images}}','user_id',false);
         $this->createIndex('ix-images-parent_id','{{%images}}','parent_id',false);
-        $this->createIndex('ix-images-category_id','{{%images}}','category_id',false);    }
-
-    public function safeDown()
-    {
-        $this->dropIndex('ix-images-user_id','{{%images}}');
-        $this->dropIndex('ix-images-parent_id','{{%images}}');
-        $this->dropIndex('ix-images-category_id','{{%images}}');    }
+        $this->createIndex('ix-images-category_id','{{%images}}','category_id',false);
+    }
 
     /**
      * {@inheritdoc}

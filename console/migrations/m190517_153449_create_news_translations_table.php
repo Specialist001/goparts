@@ -24,16 +24,7 @@ class m190517_153449_create_news_translations_table extends Migration
             'description' => $this->string(255)->null(),
         ]);
 
-    }
-
-    public function safeUp()
-    {
         $this->createIndex('ix-news_translations-news_id', '{{%news_translations}}', 'news_id', false);
-    }
-
-    public function safeDown()
-    {
-        $this->dropIndex('ix-news_translations-news_id', '{{%news_translations}}');
     }
 
     /**

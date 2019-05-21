@@ -19,19 +19,9 @@ class m190518_121947_create_store_product_links_table extends Migration
             'linked_product_id' => $this->integer(11)->comment('store_products->id'),
             'order' => $this->integer(),
         ]);
-    }
-
-    public function safeUp()
-    {
         $this->createIndex('ix-store_product_links-type_id','{{%store_product_links}}','type_id', false);
         $this->createIndex('ix-store_product_links-product_id','{{%store_product_links}}','product_id', false);
-        $this->createIndex('ix-store_product_links-linked_product_id','{{%store_product_links}}','linked_product_id', false);    }
-
-    public function safeDown()
-    {
-        $this->dropIndex('ix-store_product_links-type_id','{{%store_product_links}}');
-        $this->dropIndex('ix-store_product_links-product_id','{{%store_product_links}}');
-        $this->dropIndex('ix-store_product_links-linked_product_id','{{%store_product_links}}');
+        $this->createIndex('ix-store_product_links-linked_product_id','{{%store_product_links}}','linked_product_id', false);
     }
 
     /**

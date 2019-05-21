@@ -18,16 +18,7 @@ class m190518_054748_create_query_images_table extends Migration
             'name' => $this->string(255)->null(),
         ]);
 
-    }
-
-    public function safeUp()
-    {
         $this->createIndex('ix-query_images-query_id', '{{%query_images}}', 'query_id', false);
-    }
-
-    public function safeDown()
-    {
-        $this->dropIndex('ix-query_images-query_id', '{{%query_images}}');
     }
 
     /**

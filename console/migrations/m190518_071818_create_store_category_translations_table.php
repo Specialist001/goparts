@@ -14,7 +14,7 @@ class m190518_071818_create_store_category_translations_table extends Migration
     {
         $this->createTable('{{%store_category_translations}}', [
             'id' => $this->primaryKey(),
-            'store_category_id' => $this->integer(11),
+            'category_id' => $this->integer(11),
             'locale' => $this->string(255)->defaultValue('en'),
             'title' => $this->string(255),
             'short' => $this->text()->null(),
@@ -25,17 +25,9 @@ class m190518_071818_create_store_category_translations_table extends Migration
             'meta_keywords' => $this->text()->null(),
         ]);
 
+        $this->createIndex('ix-store_category_translations-category_id','{{%store_category_translations}}', 'category_id', false);
     }
 
-    public function safeUp()
-    {
-        $this->dropIndex('ix-store_category_translations-store_category_id','{{%store_category_translations}}');
-    }
-
-    public function safeDown()
-    {
-        $this->createIndex('ix-store_category_translations-store_category_id','{{%store_category_translations}}','store_category_id',false);
-    }
 
     /**
      * {@inheritdoc}
