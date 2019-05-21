@@ -10,7 +10,7 @@ class m190518_122745_create_store_product_type_of_car_values_table extends Migra
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%store_product_type_of_car_values}}', [
             'id' => $this->primaryKey(),
@@ -19,19 +19,24 @@ class m190518_122745_create_store_product_type_of_car_values_table extends Migra
 
             'created_at' => $this->integer(11)->notNull(),
         ]);
+    }
 
+    public function safeUp()
+    {
         $this->createIndex('ix-store_product_type_of_car_values-product_id','{{%store_product_type_of_car_values}}','product_id', false);
-        $this->createIndex('ix-store_product_type_of_car_values-type_car_id','{{%store_product_type_of_car_values}}','type_car_id', false);
+        $this->createIndex('ix-store_product_type_of_car_values-type_car_id','{{%store_product_type_of_car_values}}','type_car_id', false);    }
+
+    public function safeDown()
+    {
+        $this->dropIndex('ix-store_product_type_of_car_values-product_id','{{%store_product_type_of_car_values}}');
+        $this->dropIndex('ix-store_product_type_of_car_values-type_car_id','{{%store_product_type_of_car_values}}');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
-        $this->dropIndex('ix-store_product_type_of_car_values-product_id','{{%store_product_type_of_car_values}}');
-        $this->dropIndex('ix-store_product_type_of_car_values-type_car_id','{{%store_product_type_of_car_values}}');
-
         $this->dropTable('{{%store_product_type_of_car_values}}');
     }
 }

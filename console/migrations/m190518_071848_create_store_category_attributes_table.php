@@ -10,7 +10,7 @@ class m190518_071848_create_store_category_attributes_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%store_category_attributes}}', [
             'id' => $this->primaryKey(),
@@ -22,7 +22,7 @@ class m190518_071848_create_store_category_attributes_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
         $this->dropTable('{{%store_category_attributes}}');
     }

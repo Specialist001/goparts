@@ -10,7 +10,7 @@ class m190517_150958_create_mail_events_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%mail_events}}', [
             'id' => $this->primaryKey(),
@@ -23,7 +23,7 @@ class m190517_150958_create_mail_events_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
         $this->dropTable('{{%mail_events}}');
     }

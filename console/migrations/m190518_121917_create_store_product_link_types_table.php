@@ -10,7 +10,7 @@ class m190518_121917_create_store_product_link_types_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%store_product_link_types}}', [
             'id' => $this->primaryKey(),
@@ -22,7 +22,7 @@ class m190518_121917_create_store_product_link_types_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
         $this->dropTable('{{%store_product_link_types}}');
     }

@@ -10,7 +10,7 @@ class m190518_083758_create_store_deliveries_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%store_deliveries}}', [
             'id' => $this->primaryKey(),
@@ -21,14 +21,18 @@ class m190518_083758_create_store_deliveries_table extends Migration
             'available_form' => $this->float(10, 2)->null(),
             'order' => $this->integer(11)->defaultValue(0),
             'status' => $this->smallInteger(1)->defaultValue(0),
-            'separate_payment' => $this->smallInteger(2)->defaultValue(0)
+            'separate_payment' => $this->smallInteger(2)->defaultValue(0),
+
+            'created_at' => $this->integer(11)->notNull(),
+            'updated_at' => $this->integer(11)->notNull(),
+            'deleted_at' => $this->integer(11)->null(),
         ]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
         $this->dropTable('{{%store_deliveries}}');
     }

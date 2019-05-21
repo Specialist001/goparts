@@ -10,7 +10,7 @@ class m190518_105039_create_store_products_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%store_products}}', [
             'id' => $this->primaryKey(),
@@ -50,14 +50,13 @@ class m190518_105039_create_store_products_table extends Migration
 
             'created_at' => $this->integer(11)->notNull(),
             'updated_at' => $this->integer(11)->notNull(),
-
         ]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
         $this->dropTable('{{%store_products}}');
     }

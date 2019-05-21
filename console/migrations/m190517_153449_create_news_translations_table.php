@@ -10,12 +10,12 @@ class m190517_153449_create_news_translations_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%news_translations}}', [
             'id' => $this->primaryKey(),
             'news_id' => $this->integer(11),
-            'locale' => $this->string(255),
+            'locale' => $this->string(255)->defaultValue('en'),
             'title' => $this->string(255),
             'slug' => $this->string(255),
             'short_text' => $this->text()->null(),
@@ -24,15 +24,23 @@ class m190517_153449_create_news_translations_table extends Migration
             'description' => $this->string(255)->null(),
         ]);
 
+    }
+
+    public function safeUp()
+    {
         $this->createIndex('ix-news_translations-news_id', '{{%news_translations}}', 'news_id', false);
+    }
+
+    public function safeDown()
+    {
+        $this->dropIndex('ix-news_translations-news_id', '{{%news_translations}}');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
-        $this->dropIndex('ix-news_translations-news_id', '{{%news_translations}}');
 
         $this->dropTable('{{%news_translations}}');
     }

@@ -10,7 +10,7 @@ class m190517_122632_create_blogs_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%blogs}}', [
             'id' => $this->primaryKey(),
@@ -27,33 +27,33 @@ class m190517_122632_create_blogs_table extends Migration
             'created_at' => $this->integer(11)->notNull(),
             'updated_at' => $this->integer(11)->notNull(),
         ]);
+    }
 
+    public function safeUp()
+    {
         $this->createIndex('ix-blogs_category_id', '{{%blogs}}', 'category_id', false);
-        $this->createIndex('ix-blogs_create_user', '{{%blogs}}', 'create_user_id', false);
-        $this->createIndex('ix-blogs_update_user', '{{%blogs}}', 'update_user_id', false);
-        //$this->createIndex('ix-blogs_status', '{{%blogs}}', 'status', false);
-        $this->createIndex('ix-blogs_type', '{{%blogs}}', 'type', false);
-        $this->createIndex('ix-blogs_lang', '{{%blogs}}', 'lang', false);
-        $this->createIndex('ix-blogs_slug', '{{%blogs}}', 'slug', false);
+        $this->createIndex('ix-blogs_create_user_id', '{{%blogs}}', 'create_user_id', false);
+        $this->createIndex('ix-blogs_update_user_id', '{{%blogs}}', 'update_user_id', false);
+    }
 
-        //$this->createIndex('uq_slug', '{{%blogs}}', 'slug' ,false);
+    public function safeDown()
+    {
+        $this->dropIndex('ix_blogs_category_id', '{{%blogs}}');
+        $this->dropIndex('ix-blogs_create_user_id', '{{%blogs}}');
+        $this->dropIndex('ix-blogs_update_user_id', '{{%blogs}}');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
-        $this->dropIndex('ix_blogs_category_id', '{{%blogs}}');
-        $this->dropIndex('ix-blogs_create_user', '{{%blogs}}');
-        $this->dropIndex('ix-blogs_update_user', '{{%blogs}}');
-        //$this->dropIndex('ix-blogs_status', '{{%blogs}}');
-        $this->dropIndex('ix-blogs_type', '{{%blogs}}');
-        $this->dropIndex('ix-blogs_lang', '{{%blogs}}');
-        $this->dropIndex('ix-blogs_slug', '{{%blogs}}');
-
         //$this->dropIndex('uq_slug', '{{%blogs}}');
 
         $this->dropTable('{{%blogs}}');
     }
+
+
+
+
 }

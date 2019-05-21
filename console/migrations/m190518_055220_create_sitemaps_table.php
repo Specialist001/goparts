@@ -10,7 +10,7 @@ class m190518_055220_create_sitemaps_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%sitemaps}}', [
             'id' => $this->primaryKey(),
@@ -24,7 +24,7 @@ class m190518_055220_create_sitemaps_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
         $this->dropTable('{{%sitemaps}}');
     }

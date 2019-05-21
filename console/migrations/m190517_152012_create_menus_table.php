@@ -10,7 +10,7 @@ class m190517_152012_create_menus_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%menus}}', [
             'id' => $this->primaryKey(),
@@ -24,7 +24,7 @@ class m190517_152012_create_menus_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
         $this->dropTable('{{%menus}}');
     }

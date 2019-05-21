@@ -10,7 +10,7 @@ class m190518_061003_create_store_attribute_groups_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%store_attribute_groups}}', [
             'id' => $this->primaryKey(),
@@ -22,7 +22,7 @@ class m190518_061003_create_store_attribute_groups_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
         $this->dropTable('{{%store_attribute_groups}}');
     }

@@ -10,7 +10,7 @@ class m190517_135648_create_comments_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%comments}}', [
             'id' => $this->primaryKey(),
@@ -33,18 +33,25 @@ class m190517_135648_create_comments_table extends Migration
             'updated_at' => $this->integer(11)->notNull(),
         ]);
 
+    }
+
+    public function safeUp()
+    {
         $this->createIndex('ix-comments-parent_id', '{{%comments}}', 'parent_id');
         $this->createIndex('ix-comments-user_id', '{{%comments}}', 'user_id');
+    }
+
+    public function safeDown()
+    {
+        $this->dropIndex('ix-comments-parent_id', '{{%comments}}');
+        $this->dropIndex('ix-comments-user_id', '{{%comments}}');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
-        $this->dropIndex('ix-comments-parent_id', '{{%comments}}');
-        $this->dropIndex('ix-comments-user_id', '{{%comments}}');
-
         $this->dropTable('{{%comments}}');
     }
 }

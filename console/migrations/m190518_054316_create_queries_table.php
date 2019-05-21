@@ -10,7 +10,7 @@ class m190518_054316_create_queries_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%queries}}', [
             'id' => $this->primaryKey(),
@@ -34,7 +34,7 @@ class m190518_054316_create_queries_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
         $this->dropTable('{{%queries}}');
     }

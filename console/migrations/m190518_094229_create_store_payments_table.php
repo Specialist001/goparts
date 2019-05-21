@@ -10,7 +10,7 @@ class m190518_094229_create_store_payments_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%store_payments}}', [
             'id' => $this->primaryKey(),
@@ -21,13 +21,17 @@ class m190518_094229_create_store_payments_table extends Migration
             'currency_id' => $this->integer(11)->null(),
             'order' => $this->integer(11)->defaultValue(1),
             'status' => $this->smallInteger(1)->defaultValue(0),
+
+            'created_at' => $this->integer(11)->notNull(),
+            'updated_at' => $this->integer(11)->notNull(),
+            'deleted_at' => $this->integer(11)->null(),
         ]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
         $this->dropTable('{{%store_payments}}');
     }

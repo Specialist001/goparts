@@ -10,7 +10,7 @@ class m190518_055703_create_product_statistics_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%product_statistics}}', [
             'id' => $this->primaryKey(),
@@ -26,20 +26,27 @@ class m190518_055703_create_product_statistics_table extends Migration
             'updated_at' => $this->integer(11)->notNull(),
         ]);
 
-        $this->createIndex('ix-product_statistics-product_id','{{%product_statistics}}','product_id',false);
-        $this->createIndex('ix-product_statistics-user_id','{{%product_statistics}}','user_id',false);
-        $this->createIndex('ix-product_statistics-category_id','{{%product_statistics}}','category_id',false);
+
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    public function safeUp()
+    {
+        $this->createIndex('ix-product_statistics-product_id','{{%product_statistics}}','product_id',false);
+        $this->createIndex('ix-product_statistics-user_id','{{%product_statistics}}','user_id',false);
+        $this->createIndex('ix-product_statistics-category_id','{{%product_statistics}}','category_id',false);    }
+
     public function safeDown()
     {
         $this->dropIndex('ix-product_statistics-product_id','{{%product_statistics}}');
         $this->dropIndex('ix-product_statistics-user_id','{{%product_statistics}}');
         $this->dropIndex('ix-product_statistics-category_id','{{%product_statistics}}');
+    }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function down()
+    {
         $this->dropTable('{{%product_statistics}}');
     }
 }

@@ -10,7 +10,7 @@ class m190518_084709_create_store_orders_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%store_orders}}', [
             'id' => $this->primaryKey(),
@@ -50,7 +50,7 @@ class m190518_084709_create_store_orders_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
         $this->dropTable('{{%store_orders}}');
     }

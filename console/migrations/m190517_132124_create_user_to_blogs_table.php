@@ -10,7 +10,7 @@ class m190517_132124_create_user_to_blogs_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%user_to_blogs}}', [
             'id' => $this->primaryKey(),
@@ -25,18 +25,25 @@ class m190517_132124_create_user_to_blogs_table extends Migration
             'updated_at' => $this->integer(11)->notNull(),
         ]);
 
+            }
+
+    public function safeUp()
+    {
         $this->createIndex('ix-user_to_blogs-user_id', '{{$user_to_blogs}}','user_id', false);
         $this->createIndex('ix-user_to_blogs-blog_id', '{{$user_to_blogs}}','blog_id', false);
+    }
+
+    public function safeDown()
+    {
+        $this->dropIndex('ix-user_to_blogs-user_id', '{{$user_to_blogs}}');
+        $this->dropIndex('ix-user_to_blogs-blog_id', '{{$user_to_blogs}}');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
-        $this->dropIndex('ix-user_to_blogs-user_id', '{{$user_to_blogs}}');
-        $this->dropIndex('ix-user_to_blogs-blog_id', '{{$user_to_blogs}}');
-
         $this->dropTable('{{%user_to_blogs}}');
     }
 }

@@ -10,7 +10,7 @@ class m190518_114750_create_store_product_image_groups_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%store_product_image_groups}}', [
             'id' => $this->primaryKey(),
@@ -21,7 +21,7 @@ class m190518_114750_create_store_product_image_groups_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
         $this->dropTable('{{%store_product_image_groups}}');
     }

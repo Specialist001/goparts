@@ -10,7 +10,7 @@ class m190518_104336_create_store_producers_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%store_producers}}', [
             'id' => $this->primaryKey(),
@@ -34,7 +34,7 @@ class m190518_104336_create_store_producers_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
         $this->dropTable('{{%store_producers}}');
     }

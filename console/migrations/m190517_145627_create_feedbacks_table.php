@@ -10,7 +10,7 @@ class m190517_145627_create_feedbacks_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%feedbacks}}', [
             'id' => $this->primaryKey(),
@@ -32,17 +32,25 @@ class m190517_145627_create_feedbacks_table extends Migration
             'updated_at' => $this->integer(11)->notNull(),
         ]);
 
+    }
+
+    public function safeUp()
+    {
         $this->createIndex('ix-feedbacks-category_id', '{{%feedbacks}}', 'category_id', false);
         $this->createIndex('ix-feedbacks-user_id', '{{%feedbacks}}', 'user_id', false);
+    }
+
+    public function safeDown()
+    {
+        $this->dropIndex('ix-feedbacks-category_id', '{{%feedbacks}}');
+        $this->dropIndex('ix-feedbacks-user_id', '{{%feedbacks}}');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
-        $this->dropIndex('ix-feedbacks-category_id', '{{%feedbacks}}');
-        $this->dropIndex('ix-feedbacks-user_id', '{{%feedbacks}}');
 
         $this->dropTable('{{%feedbacks}}');
     }

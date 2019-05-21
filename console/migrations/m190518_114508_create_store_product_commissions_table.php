@@ -10,7 +10,7 @@ class m190518_114508_create_store_product_commissions_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%store_product_commissions}}', [
             'id' => $this->primaryKey(),
@@ -18,15 +18,23 @@ class m190518_114508_create_store_product_commissions_table extends Migration
             'comission' => $this->integer(11)->null()
         ]);
 
+    }
+
+    public function safeUp()
+    {
         $this->createIndex('ix-store_product_commissions-product_id','{{%store_product_commissions}}','product_id', false);
+    }
+
+    public function safeDown()
+    {
+        $this->dropIndex('ix-store_product_commissions-product_id','{{%store_product_commissions}}');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
-        $this->dropIndex('ix-store_product_commissions-product_id','{{%store_product_commissions}}');
 
         $this->dropTable('{{%store_product_commissions}}');
     }

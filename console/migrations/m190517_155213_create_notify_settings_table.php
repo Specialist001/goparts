@@ -10,7 +10,7 @@ class m190517_155213_create_notify_settings_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%notify_settings}}', [
             'id' => $this->primaryKey(),
@@ -19,15 +19,23 @@ class m190517_155213_create_notify_settings_table extends Migration
             'my_comment' => $this->smallInteger(1)->defaultValue(1),
         ]);
 
+    }
+
+    public function safeUp()
+    {
         $this->createIndex('ix-notify_settings-user_id', '{{%notify_settings}}', 'user_id', false);
+    }
+
+    public function safeDown()
+    {
+        $this->dropIndex('ix-notify_settings-user_id', '{{%notify_settings}}');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
-        $this->dropIndex('ix-notify_settings-user_id', '{{%notify_settings}}');
 
         $this->dropTable('{{%notify_settings}}');
     }

@@ -10,7 +10,7 @@ class m190517_153431_create_news_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%news}}', [
             'id' => $this->primaryKey(),
@@ -28,7 +28,7 @@ class m190517_153431_create_news_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
         $this->dropTable('{{%news}}');
     }

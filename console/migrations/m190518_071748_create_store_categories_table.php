@@ -10,7 +10,7 @@ class m190518_071748_create_store_categories_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%store_categories}}', [
             'id' => $this->primaryKey(),
@@ -25,15 +25,23 @@ class m190518_071748_create_store_categories_table extends Migration
             'updated_at' => $this->integer(11)->notNull(),
         ]);
 
+    }
+
+    public function safeUp()
+    {
+        $this->dropIndex('ix-store_categories-parent_id','store_categories');
+    }
+
+    public function safeDown()
+    {
         $this->createIndex('ix-store_categories-parent_id','store_categories','parent_id',false);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
-        $this->dropIndex('ix-store_categories-parent_id','store_categories');
 
         $this->dropTable('{{%store_categories}}');
     }

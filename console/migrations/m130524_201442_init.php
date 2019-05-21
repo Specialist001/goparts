@@ -25,8 +25,8 @@ class m130524_201442_init extends Migration
             'last_name' => $this->string(255)->null(),
 
             'gender' => $this->tinyInteger(1)->defaultValue(0)->comment('0-male, 1-female'),
-            'role' => $this->tinyInteger(1)->defaultValue(0)->comment('0-buyer, 1-seller'),
-            'type' => $this->tinyInteger(1)->defaultValue(0)->comment('0-Individual, 1-Legal entity'),
+            'role' => $this->smallInteger(1)->defaultValue(0)->comment('0-buyer, 1-seller'),
+            'type' => $this->smallInteger(1)->defaultValue(0)->comment('0-Individual, 1-Legal entity'),
 
             'birth_date' => $this->date()->null(),
 
@@ -50,6 +50,7 @@ class m130524_201442_init extends Migration
             'status' => $this->smallInteger(6)->notNull()->defaultValue(10),
             'created_at' => $this->integer(11)->notNull(),
             'updated_at' => $this->integer(11)->notNull(),
+            'deleted_at' => $this->integer(11)->null(),
 
         ], $tableOptions);
 

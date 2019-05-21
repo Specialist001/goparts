@@ -10,13 +10,13 @@ class m190518_082818_create_store_coupons_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%store_coupons}}', [
             'id' => $this->primaryKey(),
             'name' => $this->string(255),
             'code' => $this->string(255),
-            'type' => $this->smallInteger(4)->defaultValue(0),
+            'type' => $this->smallInteger(2)->defaultValue(0),
             'value' => $this->decimal(10,2)->defaultValue(0.00),
             'min_order_price' => $this->decimal(10,2)->defaultValue(0.00),
             'registered_user' => $this->smallInteger(4)->defaultValue(0),
@@ -38,7 +38,7 @@ class m190518_082818_create_store_coupons_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
         $this->dropTable('{{%store_coupons}}');
     }

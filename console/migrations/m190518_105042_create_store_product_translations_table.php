@@ -10,12 +10,12 @@ class m190518_105042_create_store_product_translations_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%store_product_translations}}', [
             'id' => $this->primaryKey(),
             'product_id' => $this->integer(11),
-            'locale' => $this->string(255),
+            'locale' => $this->string(255)->defaultValue('en'),
             'name' => $this->string(255),
             'short' => $this->string(255)->null(),
             'description' => $this->text()->null(),
@@ -30,7 +30,7 @@ class m190518_105042_create_store_product_translations_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
         $this->dropTable('{{%store_product_translations}}');
     }

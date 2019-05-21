@@ -10,7 +10,7 @@ class m190517_132621_create_callbacks_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%callbacks}}', [
             'id' => $this->primaryKey(),
@@ -27,7 +27,7 @@ class m190517_132621_create_callbacks_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
         $this->dropTable('{{%callbacks}}');
     }

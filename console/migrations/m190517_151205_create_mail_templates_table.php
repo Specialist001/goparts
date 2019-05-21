@@ -10,7 +10,7 @@ class m190517_151205_create_mail_templates_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%mail_templates}}', [
             'id' => $this->primaryKey(),
@@ -25,15 +25,23 @@ class m190517_151205_create_mail_templates_table extends Migration
             'status' => $this->integer(11)->defaultValue(1),
         ]);
 
+    }
+
+    public function safeUp()
+    {
         $this->createIndex('ix-mail_templates-event_id', '{{%mail_templates}}', 'event_id', false);
+    }
+
+    public function safeDown()
+    {
+        $this->dropIndex('ix-mail_templates-event_id', '{{%mail_templates}}');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
-        $this->dropIndex('ix-mail_templates-event_id', '{{%mail_templates}}');
 
         $this->dropTable('{{%mail_templates}}');
     }

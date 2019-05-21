@@ -10,7 +10,7 @@ class m190518_064323_create_store_attribute_options_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%store_attribute_options}}', [
             'id' => $this->primaryKey(),
@@ -18,15 +18,23 @@ class m190518_064323_create_store_attribute_options_table extends Migration
             'order' => $this->integer(11)
         ]);
 
+    }
+
+    public function safeUp()
+    {
+        $this->dropIndex('ix-store_attribute_options-attribute_id','{{%store_attribute_options}}');
+    }
+
+    public function safeDown()
+    {
         $this->createIndex('ix-store_attribute_options-attribute_id','{{%store_attribute_options}}','attribute_id',false);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
-        $this->dropIndex('ix-store_attribute_options-attribute_id','{{%store_attribute_options}}');
 
         $this->dropTable('{{%store_attribute_options}}');
     }

@@ -10,7 +10,7 @@ class m190518_121947_create_store_product_links_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('{{%store_product_links}}', [
             'id' => $this->primaryKey(),
@@ -19,21 +19,26 @@ class m190518_121947_create_store_product_links_table extends Migration
             'linked_product_id' => $this->integer(11)->comment('store_products->id'),
             'order' => $this->integer(),
         ]);
-
-        $this->createIndex('ix-store_product_links-type_id','{{%store_product_links}}','type_id', false);
-        $this->createIndex('ix-store_product_links-product_id','{{%store_product_links}}','product_id', false);
-        $this->createIndex('ix-store_product_links-linked_product_id','{{%store_product_links}}','linked_product_id', false);
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    public function safeUp()
+    {
+        $this->createIndex('ix-store_product_links-type_id','{{%store_product_links}}','type_id', false);
+        $this->createIndex('ix-store_product_links-product_id','{{%store_product_links}}','product_id', false);
+        $this->createIndex('ix-store_product_links-linked_product_id','{{%store_product_links}}','linked_product_id', false);    }
+
     public function safeDown()
     {
         $this->dropIndex('ix-store_product_links-type_id','{{%store_product_links}}');
         $this->dropIndex('ix-store_product_links-product_id','{{%store_product_links}}');
         $this->dropIndex('ix-store_product_links-linked_product_id','{{%store_product_links}}');
+    }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function down()
+    {
         $this->dropTable('{{%store_product_links}}');
     }
 }
