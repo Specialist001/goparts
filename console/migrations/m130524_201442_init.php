@@ -38,7 +38,7 @@ class m130524_201442_init extends Migration
 
             'visit_time' => $this->integer(11)->null(),
 
-            'avatar' => $this->string(164)->null(),
+            'avatar' => $this->string(255)->null(),
             'email_confirm' => $this->tinyInteger(1)->defaultValue(0),
             'phone' => $this->string(100)->null(),
             'legal_info' => $this->string(255)->null(),

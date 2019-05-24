@@ -87,11 +87,11 @@ class m190520_065259_create_foreign_keys extends Migration
 
         $this->addForeignKey('fk-store_attribute_option_translations-attribute_option_id', '{{%store_attribute_option_translations}}', 'attribute_option_id', '{{%store_attribute_options}}', 'id', 'CASCADE');
 
-        $this->addForeignKey('fk-store_categories-parent_id', '{{%store_categories}}', 'parent_id', '{{%categories}}', 'id', 'CASCADE');
+        $this->addForeignKey('fk-store_categories-parent_id', '{{%store_categories}}', 'parent_id', '{{%store_categories}}', 'id', 'CASCADE');
 
-        $this->addForeignKey('fk-store_category_translations-category_id', '{{%store_category_translations}}', 'category_id', '{{%categories}}', 'id', 'CASCADE');
+        $this->addForeignKey('fk-store_category_translations-category_id', '{{%store_category_translations}}', 'category_id', '{{%store_categories}}', 'id', 'CASCADE');
 
-        $this->addForeignKey('fk-store_category_attributes-category_id', '{{%store_category_attributes}}', 'category_id', '{{%categories}}', 'id', 'CASCADE');
+        $this->addForeignKey('fk-store_category_attributes-category_id', '{{%store_category_attributes}}', 'category_id', '{{%store_categories}}', 'id', 'CASCADE');
 
         $this->addForeignKey('fk-store_category_attribute_values-store_category_id', '{{%store_category_attribute_values}}', 'store_category_id', '{{%store_categories}}', 'id', 'CASCADE');
         $this->addForeignKey('fk-store_category_attribute_values-store_attribute_id', '{{%store_category_attribute_values}}', 'store_attribute_id', '{{%store_attributes}}', 'id', 'CASCADE');

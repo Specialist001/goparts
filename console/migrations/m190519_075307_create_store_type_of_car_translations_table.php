@@ -14,9 +14,9 @@ class m190519_075307_create_store_type_of_car_translations_table extends Migrati
     {
         $this->createTable('{{%store_type_of_car_translations}}', [
             'id' => $this->primaryKey(),
-            'type_car_id' => $this->integer(11),
-            'locale' => $this->string(255)->null()->defaultValue('en'),
-            'name' => $this->string(255)->null(),
+            'type_car_id' => $this->integer(11)->notNull(),
+            'locale' => $this->string(255)->notNull()->defaultValue('en-EN'),
+            'name' => $this->string(255)->notNull(),
         ]);
         $this->createIndex('ix-store_type_of_car_translations-type_car_id','{{%store_type_of_car_translations}}','type_car_id', false);
     }
