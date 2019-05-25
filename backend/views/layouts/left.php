@@ -56,6 +56,18 @@
                             ['label' => 'Create Type', 'icon' => 'plus', 'url' => ['/store-type-car/create'],],
                         ],
                     ],
+                    ['label' => 'Store Attribute', 'icon' => 'car', 'url' => ['#'],
+                        'items' => [
+                            ['label' => 'All Attributes', 'icon' => 'list', 'url' => ['/store-attribute'],],
+                            ['label' => 'Create Attribute', 'icon' => 'plus', 'url' => ['/store-attribute/create'],],
+                        ],
+                    ],
+                    ['label' => 'Store Type', 'icon' => 'list', 'url' => ['#'],
+                        'items' => [
+                            ['label' => 'All Types', 'icon' => 'list', 'url' => ['/store-type'],],
+                            ['label' => 'Create Type', 'icon' => 'plus', 'url' => ['/store-type/create'],],
+                        ],
+                    ],
              
 //                    ['label' => 'Отчеты', 'icon' => 'flag', 'url' => ['/report'],],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],

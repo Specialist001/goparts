@@ -18,6 +18,8 @@ class MyFormatter extends Formatter{
     public $genderFormat;
     public $roleFormat;
     public $typeFormat;
+    public $requiredFormat;
+    public $filterFormat;
 
     public function asPublished($value)
     {
@@ -83,6 +85,16 @@ class MyFormatter extends Formatter{
     {
         if ($value == 0) return $this->typeFormat[0];
         return $this->typeFormat[1];
+    }
+    public function asRequired($value)
+    {
+        if ($value == 0) return $this->requiredFormat[0];
+        return $this->requiredFormat[1];
+    }
+    public function asFilter($value)
+    {
+        if ($value == 0) return $this->filterFormat[0];
+        return $this->filterFormat[1];
     }
 
     public function set_intlLoaded() {
@@ -154,6 +166,18 @@ class MyFormatter extends Formatter{
             $this->typeFormat = [
                 '<span class="text-green">'.FA::i('credit-card').' Individual'.'</span>',
                 '<span class="text-info">'.FA::i('money').' Legal entity'.'</span>',
+            ];
+        }
+        if ($this->requiredFormat === null) {
+            $this->requiredFormat = [
+                '<span class="text-yellow">'.FA::i('exclamation-circle').' Not required'.'</span>',
+                '<span class="text-green">'.FA::i('exclamation-circle').' Required'.'</span>',
+            ];
+        }
+        if ($this->filterFormat === null) {
+            $this->filterFormat = [
+                '<span class="text-yellow">'.FA::i('filter').' Not filtered'.'</span>',
+                '<span class="text-green">'.FA::i('filter').' Is Filtered'.'</span>',
             ];
         }
         parent::init();

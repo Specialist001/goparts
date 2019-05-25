@@ -15,7 +15,7 @@ class m190518_060550_create_store_attribute_translations_table extends Migration
         $this->createTable('{{%store_attribute_translations}}', [
             'id' => $this->primaryKey(),
             'attribute_id' => $this->integer(11),
-            'locale' => $this->string(255)->defaultValue('en'),
+            'locale' => $this->string(255),
             'title' => $this->string(255),
             'description' => $this->text()->null()
         ]);
