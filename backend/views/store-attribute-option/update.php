@@ -12,10 +12,14 @@ $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="store-attribute-option-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<!--    <h1>--><?//= Html::encode($this->title) ?><!--</h1>-->
 
     <?= $this->render('_form', [
         'model' => $model,
+        'attributes' => $attributes,
+        'translation_en' => $translation_en,
+        'translation_ar' => $translation_ar,
+        'translation_ru' => $translation_ru,
     ]) ?>
 
 </div>

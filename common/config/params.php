@@ -32,6 +32,10 @@ return [
             'icon' => [20, 20],
             'image' => [500, 500],
         ],
+        'store-products' => [
+            'icon' => [20, 20],
+            'image' => [500, 500],
+        ],
         'store-type-car' => [
             'icon' => [20, 20],
             'image' => [100, 100],

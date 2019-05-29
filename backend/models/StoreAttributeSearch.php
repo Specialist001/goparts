@@ -20,7 +20,7 @@ class StoreAttributeSearch extends StoreAttribute
     {
         return [
             [['id', 'group_id', 'type', 'required', 'order', 'is_filter'], 'integer'],
-            [['name', 'unit'], 'safe'],
+            [['name', 'unit', 'title'], 'safe'],
         ];
     }
 

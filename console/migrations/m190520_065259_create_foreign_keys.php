@@ -83,7 +83,7 @@ class m190520_065259_create_foreign_keys extends Migration
 
         $this->addForeignKey('fk-store_attribute_group_translations-attribute_group_id', '{{%store_attribute_group_translations}}', 'attribute_group_id', '{{%store_attribute_groups}}', 'id', 'CASCADE');
 
-        $this->addForeignKey('fk-store_attribute_options-attribute_id', '{{%store_attribute_options}}', 'attribute_id', '{{%store_attribute_groups}}', 'id', 'CASCADE');
+        $this->addForeignKey('fk-store_attribute_options-attribute_id', '{{%store_attribute_options}}', 'attribute_id', '{{%store_attributes}}', 'id', 'CASCADE');
 
         $this->addForeignKey('fk-store_attribute_option_translations-attribute_option_id', '{{%store_attribute_option_translations}}', 'attribute_option_id', '{{%store_attribute_options}}', 'id', 'CASCADE');
 

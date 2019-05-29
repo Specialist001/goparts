@@ -50,6 +50,18 @@
                             ['label' => 'Create Category', 'icon' => 'plus', 'url' => ['/store-category/create'],],
                         ],
                     ],
+                    ['label' => 'Products', 'icon' => '', 'url' => ['#'],
+                        'items' => [
+                            ['label' => 'All Products', 'icon' => 'list', 'url' => ['/store-product'],],
+                            ['label' => 'Create Product', 'icon' => 'plus', 'url' => ['/store-product/create'],],
+                        ],
+                    ],
+                    ['label' => 'Cars', 'icon' => 'car', 'url' => ['#'],
+                        'items' => [
+                            ['label' => 'All Cars', 'icon' => 'list', 'url' => ['/car'],],
+                            ['label' => 'Create Car', 'icon' => 'plus', 'url' => ['/car/create'],],
+                        ],
+                    ],
                     ['label' => 'Type of Cars', 'icon' => 'car', 'url' => ['#'],
                         'items' => [
                             ['label' => 'All Types', 'icon' => 'list', 'url' => ['/store-type-car'],],
@@ -66,6 +78,12 @@
                         'items' => [
                             ['label' => 'All Types', 'icon' => 'list', 'url' => ['/store-type'],],
                             ['label' => 'Create Type', 'icon' => 'plus', 'url' => ['/store-type/create'],],
+                        ],
+                    ],
+                    ['label' => 'Store Attribute Option', 'icon' => 'list', 'url' => ['#'],
+                        'items' => [
+                            ['label' => 'All Attribute Options', 'icon' => 'list', 'url' => ['/store-attribute-option'],],
+                            ['label' => 'Create Attribute Option', 'icon' => 'plus', 'url' => ['/store-attribute-option/create'],],
                         ],
                     ],
              

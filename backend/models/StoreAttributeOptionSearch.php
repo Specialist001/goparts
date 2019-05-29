@@ -11,6 +11,9 @@ use common\models\StoreAttributeOption;
  */
 class StoreAttributeOptionSearch extends StoreAttributeOption
 {
+    public $attribute_name;
+    public $value;
+
     /**
      * {@inheritdoc}
      */
@@ -18,6 +21,7 @@ class StoreAttributeOptionSearch extends StoreAttributeOption
     {
         return [
             [['id', 'attribute_id', 'order'], 'integer'],
+            [['attribute_name', 'value'],'safe'],
         ];
     }
 
@@ -39,7 +43,8 @@ class StoreAttributeOptionSearch extends StoreAttributeOption
      */
     public function search($params)
     {
-        $query = StoreAttributeOption::find();
+        $query = StoreAttributeOption::find()
+            ->leftJoin('store_attributes','store_attribute_options.attribute_id=store_attributes.id');
 
         // add conditions that should always apply here
 
@@ -54,6 +59,8 @@ class StoreAttributeOptionSearch extends StoreAttributeOption
             // $query->where('0=1');
             return $dataProvider;
         }
+
+        $query->andFilterWhere(['like', 'store_attributes.name', $this->attribute_name]);
 
         // grid filtering conditions
         $query->andFilterWhere([

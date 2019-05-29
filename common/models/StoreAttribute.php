@@ -66,9 +66,9 @@ class StoreAttribute extends \yii\db\ActiveRecord
     /**
      * @return ActiveQuery
      */
-//    public static function find() {
-//
-//    }
+    public static function find() {
+        return parent::find()->with('translate');
+    }
 
     /**
      * @return \yii\db\ActiveQuery

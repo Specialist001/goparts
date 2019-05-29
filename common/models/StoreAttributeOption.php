@@ -33,7 +33,7 @@ class StoreAttributeOption extends \yii\db\ActiveRecord
     {
         return [
             [['attribute_id', 'order'], 'integer'],
-            [['attribute_id'], 'exist', 'skipOnError' => true, 'targetClass' => StoreAttributeGroup::className(), 'targetAttribute' => ['attribute_id' => 'id']],
+            [['attribute_id'], 'exist', 'skipOnError' => true, 'targetClass' => StoreAttribute::className(), 'targetAttribute' => ['attribute_id' => 'id']],
         ];
     }
 
@@ -62,7 +62,7 @@ class StoreAttributeOption extends \yii\db\ActiveRecord
      */
     public function getAttribute0()
     {
-        return $this->hasOne(StoreAttributeGroup::className(), ['id' => 'attribute_id']);
+        return $this->hasOne(StoreAttribute::className(), ['id' => 'attribute_id']);
     }
 
     /**
@@ -79,5 +79,11 @@ class StoreAttributeOption extends \yii\db\ActiveRecord
     public function getStoreProductAttributeValues()
     {
         return $this->hasMany(StoreProductAttributeValue::className(), ['option_id' => 'id']);
+    }
+
+    public function getTranslate() {
+        return ($this->hasOne(StoreAttributeOptionTranslation::className(), ['attribute_option_id' => 'id'])->where(['locale' => Language::getCurrent()->locale])->all())
+            ? $this->hasOne(StoreAttributeOptionTranslation::className(), ['attribute_option_id' => 'id'])->where(['locale' => Language::getCurrent()->locale])
+            : $this->hasOne(StoreAttributeOptionTranslation::className(), ['attribute_option_id' => 'id'])->where(['locale' => Language::getDefaultLang()->locale]);
     }
 }
