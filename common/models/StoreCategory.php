@@ -20,9 +20,9 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property ProductStatistics[] $productStatistics
  * @property StoreCategory $parent
- * @property StoreCategoryAttributeValues[] $storeCategoryAttributeValues
+ * @property StoreCategoryAttributeValue[] $storeCategoryAttributeValues
  * @property StoreProductToCategory[] $storeProductToCategories
- * @property StoreProducts[] $storeProducts
+ * @property StoreProduct[] $storeProducts
  */
 class StoreCategory extends \yii\db\ActiveRecord
 {
@@ -108,7 +108,7 @@ class StoreCategory extends \yii\db\ActiveRecord
      */
     public function getStoreCategoryAttributeValues()
     {
-        return $this->hasMany(StoreCategoryAttributeValues::className(), ['store_category_id' => 'id']);
+        return $this->hasMany(StoreCategoryAttributeValue::className(), ['store_category_id' => 'id']);
     }
 
     /**
@@ -124,7 +124,7 @@ class StoreCategory extends \yii\db\ActiveRecord
      */
     public function getStoreProducts()
     {
-        return $this->hasMany(StoreProducts::className(), ['category_id' => 'id']);
+        return $this->hasMany(StoreProduct::className(), ['category_id' => 'id']);
     }
 
     public function getTranslate() {
