@@ -28,6 +28,7 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
+    public $password;
 
     /**
      * {@inheritdoc}
@@ -55,6 +56,56 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This login is already taken.', 'on' => 'admin'],
+            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email is already taken.', 'on' => 'admin'],
+            [['username', 'email'], 'required', 'on' => 'admin'],
+            [['password'], 'string', 'min' => 6, 'max' => 16, 'on' => 'admin'],
+
+            [['gender', 'role', 'type', 'access_level', 'visit_time', 'email_confirm', 'status', 'created_at', 'updated_at', 'deleted_at'], 'integer'],
+            [['birth_date'], 'safe'],
+            [['birth_date'], 'string'],
+            [['username', 'password_hash', 'password_reset_token', 'email', 'first_name', 'middle_name', 'last_name', 'site', 'about', 'location', 'legal_info', 'legal_reg_certificate', 'legal_address', 'legal_bank_account', 'legal_vat_number', 'verification_token'], 'string', 'max' => 255],
+            [['auth_key'], 'string', 'max' => 32],
+            [['avatar'], 'string', 'max' => 255],
+            [['phone'], 'string', 'max' => 100],
+            [['username'], 'unique'],
+            [['email'], 'unique'],
+            [['password_reset_token'], 'unique'],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'username' => 'Username',
+            'auth_key' => 'Auth Key',
+            'password' => 'Password',
+            'email' => 'Email',
+            'first_name' => 'First Name',
+            'middle_name' => 'Middle Name',
+            'last_name' => 'Last Name',
+            'gender' => 'Gender',
+            'role' => 'Role',
+            'type' => 'Type',
+            'birth_date' => 'Birth Date',
+            'site' => 'Site',
+            'about' => 'About',
+            'location' => 'Location',
+            'access_level' => 'Access Level',
+            'visit_time' => 'Visit Time',
+            'avatar' => 'Avatar',
+            'email_confirm' => 'Email Confirm',
+            'phone' => 'Phone',
+            'legal_info' => 'Legal Info',
+            'legal_reg_certificate' => 'Legal Reg Certificate',
+            'legal_address' => 'Legal Address',
+            'legal_bank_account' => 'Legal Bank Account',
+            'legal_vat_number' => 'Legal Vat Number',
+            'status' => 'Status',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+            'deleted_at' => 'Deleted At',
         ];
     }
 
@@ -205,5 +256,136 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    public function getBlogs()
+    {
+        return $this->hasMany(Blogs::className(), ['create_user_id' => 'id']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBlogs0()
+    {
+        return $this->hasMany(Blogs::className(), ['update_user_id' => 'id']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComments()
+    {
+        return $this->hasMany(Comments::className(), ['user_id' => 'id']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFeedbacks()
+    {
+        return $this->hasMany(Feedbacks::className(), ['user_id' => 'id']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGalleries()
+    {
+        return $this->hasMany(Galleries::className(), ['user_id' => 'id']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImages()
+    {
+        return $this->hasMany(Images::className(), ['user_id' => 'id']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getNews()
+    {
+        return $this->hasMany(News::className(), ['user_id' => 'id']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getNotifySettings()
+    {
+        return $this->hasMany(NotifySettings::className(), ['user_id' => 'id']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPages()
+    {
+        return $this->hasMany(Pages::className(), ['change_user_id' => 'id']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPages0()
+    {
+        return $this->hasMany(Pages::className(), ['user_id' => 'id']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPosts()
+    {
+        return $this->hasMany(Posts::className(), ['create_user_id' => 'id']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPosts0()
+    {
+        return $this->hasMany(Posts::className(), ['update_user_id' => 'id']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProductStatistics()
+    {
+        return $this->hasMany(ProductStatistics::className(), ['user_id' => 'id']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStoreOrders()
+    {
+        return $this->hasMany(StoreOrders::className(), ['manager_id' => 'id']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStoreOrders0()
+    {
+        return $this->hasMany(StoreOrders::className(), ['user_id' => 'id']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStoreProducts()
+    {
+        return $this->hasMany(StoreProducts::className(), ['user_id' => 'id']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStoreUserComissions()
+    {
+        return $this->hasMany(StoreUserComissions::className(), ['user_id' => 'id']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSubscriptions()
+    {
+        return $this->hasMany(Subscriptions::className(), ['user_id' => 'id']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUsersBlogs()
+    {
+        return $this->hasMany(UsersBlog::className(), ['user_id' => 'id']);
     }
 }

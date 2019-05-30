@@ -118,3 +118,14 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.site-login {
+    padding-top: 5%;
+    width: 20%;
+    margin: 0 auto;
+}
+
+.site-login .login-card {
+    background-color: #ffffff;
+    padding: 15px 0;
+}
