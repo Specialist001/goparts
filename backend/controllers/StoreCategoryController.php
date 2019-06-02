@@ -15,7 +15,7 @@ use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
 /**
- * StoreCategoryController implements the CRUD actions for StoreCategory model.
+ * CategoryController implements the CRUD actions for Category model.
  */
 class StoreCategoryController extends Controller
 {
@@ -35,7 +35,7 @@ class StoreCategoryController extends Controller
     }
 
     /**
-     * Lists all StoreCategory models.
+     * Lists all Category models.
      * @return mixed
      */
     public function actionIndex()
@@ -60,7 +60,7 @@ class StoreCategoryController extends Controller
     }
 
     /**
-     * Displays a single StoreCategory model.
+     * Displays a single Category model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -73,7 +73,7 @@ class StoreCategoryController extends Controller
     }
 
     /**
-     * Creates a new StoreCategory model.
+     * Creates a new Category model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
@@ -156,10 +156,10 @@ class StoreCategoryController extends Controller
             $translation_ru->locale = 'ru-RU';
             $translation_ru->save();
 
-            if (empty(Yii::$app->request->post('StoreCategory')['slug'])) {
+            if (empty(Yii::$app->request->post('Category')['slug'])) {
                 $model->slug = Helper::toSlug($translation_en->title).'_'.$model->id;
             } else {
-                $model->slug = Helper::toSlug(Yii::$app->request->post('StoreCategory')['slug']) . '_'.$model->id;
+                $model->slug = Helper::toSlug(Yii::$app->request->post('Category')['slug']) . '_'.$model->id;
             }
             $model->save();
             return $this->redirect(['update', 'id' => $model->id]);
@@ -179,7 +179,7 @@ class StoreCategoryController extends Controller
     }
 
     /**
-     * Updates an existing StoreCategory model.
+     * Updates an existing Category model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -263,10 +263,10 @@ class StoreCategoryController extends Controller
             $translation_ru->locale = 'ru-RU';
             $translation_ru->save();
 
-            if (empty(Yii::$app->request->post('StoreCategory')['slug'])) {
+            if (empty(Yii::$app->request->post('Category')['slug'])) {
                 $model->slug = Helper::toSlug($translation_en->title).'_'.$model->id;
             } else {
-                $model->slug = Helper::toSlug(Yii::$app->request->post('StoreCategory')['slug']) . '_'.$model->id;
+                $model->slug = Helper::toSlug(Yii::$app->request->post('Category')['slug']) . '_'.$model->id;
             }
             $model->save();
 
@@ -284,7 +284,7 @@ class StoreCategoryController extends Controller
     }
 
     /**
-     * Deletes an existing StoreCategory model.
+     * Deletes an existing Category model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -298,7 +298,7 @@ class StoreCategoryController extends Controller
     }
 
     /**
-     * Finds the StoreCategory model based on its primary key value.
+     * Finds the Category model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
      * @return StoreCategory the loaded model

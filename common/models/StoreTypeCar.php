@@ -69,6 +69,14 @@ class StoreTypeCar extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getActiveCategories()
+    {
+        return $this->hasMany(StoreCategory::className(), ['parent_id' => 'id'])->where(['status' => 1])->orderBy('order')->with('translate');
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getStoreProductTypeOfCarValues()
     {
         return $this->hasMany(StoreProductTypeOfCarValues::className(), ['type_car_id' => 'id']);

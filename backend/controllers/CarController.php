@@ -38,9 +38,15 @@ class CarController extends Controller
         $searchModel = new CarSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $vendor_filter = Cars::getVendors();
+        $car_filter = Cars::getCars();
+
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'vendor_filter' => $vendor_filter,
+            'car_filter' => $car_filter,
         ]);
     }
 

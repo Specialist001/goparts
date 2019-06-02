@@ -75,4 +75,20 @@ class Cars extends ActiveRecord
 
         return $data;
     }
+
+    public function getCars()
+    {
+        $cars = self::find()->all();
+
+        $data = [];
+        if (!empty($cars)) {
+            if (count($cars)) {
+                foreach ($cars as $key=>$car) {
+                    $data[$car['car']] = $car['car'];
+                }
+            }
+        }
+
+        return $data;
+    }
 }

@@ -110,6 +110,11 @@ class StoreAttribute extends \yii\db\ActiveRecord
         return $this->hasMany(StoreProductVariant::className(), ['attribute_id' => 'id']);
     }
 
+    public function getStoreAttributeOptions()
+    {
+        return $this->hasMany(StoreAttributeOption::className(), ['attribute_id' => 'id'])->with('translate');
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

@@ -1,7 +1,7 @@
 <?php
 return [
-    'appName' => 'HaviParts',
-    'appShortName' => 'HP',
+    'appName' => 'UAEParts',
+    'appShortName' => 'UAEP',
     'adminEmail' => 'admin@example.com',
     'supportEmail' => 'support@havi2.com',
     'senderEmail' => 'noreply@example.com',

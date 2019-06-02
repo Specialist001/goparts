@@ -7,7 +7,7 @@ use yii\data\ActiveDataProvider;
 use common\models\StoreCategory;
 
 /**
- * StoreCategorySearch represents the model behind the search form of `common\models\StoreCategory`.
+ * StoreCategorySearch represents the model behind the search form of `common\models\Category`.
  */
 class StoreCategorySearch extends StoreCategory
 {
@@ -41,7 +41,9 @@ class StoreCategorySearch extends StoreCategory
      */
     public function search($params)
     {
-        $query = StoreCategory::find()->leftJoin('store_category_translations','store_category_translations.category_id=store_categories.id AND store_category_translations.locale = "'.\common\models\Language::getCurrent()->getAttribute('locale').'"');
+        $query = StoreCategory::find()->
+        leftJoin('store_category_translations','store_category_translations.category_id=store_categories.id')->with('translate');
+//        leftJoin('store_category_translations','store_category_translations.category_id=store_categories.id AND store_category_translations.locale = "'.\common\models\Language::getCurrent()->getAttribute('locale').'"');
 
         // add conditions that should always apply here
 

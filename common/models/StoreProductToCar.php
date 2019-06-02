@@ -12,7 +12,7 @@ use Yii;
  * @property int $car_id
  *
  * @property Cars $car
- * @property StoreProducts $product
+ * @property StoreProduct $product
  */
 class StoreProductToCar extends \yii\db\ActiveRecord
 {

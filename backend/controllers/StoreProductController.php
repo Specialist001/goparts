@@ -7,6 +7,7 @@ use common\components\SimpleImage;
 use common\models\Cars;
 use common\models\StoreCategory;
 use common\models\StoreProductCommission;
+use common\models\StoreProductToCar;
 use common\models\StoreProductTranslation;
 use common\models\StoreProductVideo;
 use common\models\StoreTypeCar;
@@ -14,6 +15,7 @@ use common\models\User;
 use Yii;
 use common\models\StoreProduct;
 use backend\models\StoreProductSearch;
+use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -210,7 +212,7 @@ class StoreProductController extends Controller
             $store_product_commission->commission = Yii::$app->request->post('product_commission');
             $store_product_commission->save();
 
-            $price = (float)$model->purchase_price * (1 + ((float)$store_product_commission->comission ?: 0) / 100);
+            $price = (float)$model->purchase_price * (1 + ((float)$store_product_commission->commission ?: 0) / 100);
             $price = number_format($price, 2, '.', '');
 
             $model->price = $price;
@@ -223,6 +225,14 @@ class StoreProductController extends Controller
 //                ? Yii::$app->request->post('modification_name') : null;
             $car_year = Yii::$app->request->post('year_name');
 //                ? Yii::$app->request->post('year_name') : null;
+
+            $car = Cars::find()
+                ->where(['vendor'=>$car_vendor, 'car'=>$car_model, 'modification'=>$car_modification, 'year'=>$car_year])->one();
+
+            $productCar = new StoreProductToCar();
+            $productCar->product_id = $model->id;
+            $productCar->car_id = $car->id;
+            $productCar->save();
 
             $car_name = $car_vendor ? $car_vendor . '-' : null . $car_model ? $car_model . '-' : null . $car_modification ? $car_modification . '-' : null . $car_year ? $car_year . '_' : null;
 
@@ -384,14 +394,35 @@ class StoreProductController extends Controller
             $store_product_commission->commission = Yii::$app->request->post('product_commission');
             $store_product_commission->save();
 
-            $car_vendor = Yii::$app->request->post('vendor_name');
-//                ? Yii::$app->request->post('vendor_name') : null;
-            $car_model = Yii::$app->request->post('car_name');
-//                ? Yii::$app->request->post('car_name') : null;
-            $car_modification = Yii::$app->request->post('modification_name');
-//                ? Yii::$app->request->post('modification_name') : null;
-            $car_year = Yii::$app->request->post('year_name');
-//                ? Yii::$app->request->post('year_name') : null;
+            $car_vendor = Yii::$app->request->post('vendor_name')
+                ? Yii::$app->request->post('vendor_name') : null;
+            $car_model = Yii::$app->request->post('car_name')
+                ? Yii::$app->request->post('car_name') : null;
+            $car_modification = Yii::$app->request->post('modification_name')
+                ? Yii::$app->request->post('modification_name') : '*';
+            $car_year = Yii::$app->request->post('year_name')
+                ? Yii::$app->request->post('year_name') : null;
+
+            $car = Cars::find()->groupBy(['id'])
+                ->where(['vendor'=>$car_vendor, 'car'=>$car_model])->min('id');
+            $car_2 = Cars::find()->groupBy(['id'])
+                ->where(['vendor'=>$car_vendor, 'car'=>$car_model])->max('id');
+
+            $query_cars = (new Query())
+                ->select(['min(id)','max(id)'])
+                ->from('cars')
+                ->where(['vendor'=>$car_vendor])
+                ->andWhere(['car'=>$car_model])
+                //->andWhere(['modification'=>$car_modification])
+                ->all();
+
+            echo $car->id;
+            print_r($s_1);exit;
+
+            $productCar = new StoreProductToCar();
+            $productCar->product_id = $model->id;
+            $productCar->car_id = $car->id;
+            $productCar->save();
 
             $car_name = $car_vendor ? $car_vendor . '-' : null . $car_model ? $car_model . '-' : null . $car_modification ? $car_modification . '-' : null . $car_year ? $car_year . '_' : null;
 
