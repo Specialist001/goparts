@@ -15,6 +15,7 @@ return [
     'language' => 'en-EN',
     'components' => [
         'request' => [
+            'class' => 'frontend\components\LanguageRequest',
             'csrfParam' => '_csrf-frontend',
             'baseUrl' => '',
         ],

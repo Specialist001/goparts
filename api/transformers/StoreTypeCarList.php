@@ -23,14 +23,14 @@ class StoreTypeCarList
                 'subCats' => null,
             ];
 
-            foreach ($item->activeCategories as $activeCategory) {
+            foreach ($item->activeTypes as $activeType) {
                 $data[$loop]['subCats'][] = [
-                    'id' => $activeCategory->id,
-                    'title' => $activeCategory->translate->name,
-                    'image' => $activeCategory->image,
-                    'view' => $activeCategory->view,
-                    'external_id' => $activeCategory->external_id ? $activeCategory->external_id : null,
-                    'hasChild' => ($activeCategory->activeCategories)? true: false,
+                    'id' => $activeType->id,
+                    'title' => $activeType->translate->name,
+                    'image' => $activeType->image,
+                    'view' => $activeType->view,
+                    'external_id' => $activeType->external_id ? $activeType->external_id : null,
+                    'hasChild' => ($activeType->activeTypes)? true: false,
                 ];
             }
 

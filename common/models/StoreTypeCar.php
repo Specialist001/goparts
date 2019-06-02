@@ -16,9 +16,9 @@ use Yii;
  * @property string $view
  * @property string $image
  *
- * @property StoreProductTypeOfCarValues[] $storeProductTypeOfCarValues
- * @property StoreProducts[] $storeProducts
- * @property StoreTypeOfCarTranslations[] $storeTypeOfCarTranslations
+ * @property StoreProductTypeOfCarValue[] $storeProductTypeOfCarValues
+ * @property StoreProduct[] $storeProducts
+ * @property StoreTypeCarTranslation[] $storeTypeOfCarTranslations
  * @property StoreTypeCar $parent
  * @property StoreTypeCar[] $storeTypeCars
  */
@@ -69,9 +69,9 @@ class StoreTypeCar extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getActiveCategories()
+    public function getActiveTypes()
     {
-        return $this->hasMany(StoreCategory::className(), ['parent_id' => 'id'])->where(['status' => 1])->orderBy('order')->with('translate');
+        return $this->hasMany(StoreTypeCar::className(), ['parent_id' => 'id'])->where(['status' => 1])->orderBy('order')->with('translate');
     }
 
     /**
@@ -87,7 +87,7 @@ class StoreTypeCar extends \yii\db\ActiveRecord
      */
     public function getStoreProducts()
     {
-        return $this->hasMany(StoreProducts::className(), ['type_car_id' => 'id']);
+        return $this->hasMany(StoreProduct::className(), ['type_car_id' => 'id']);
     }
 
     /**
