@@ -17,6 +17,9 @@ return [
             'class' => 'api\modules\v1\Module'
         ]
     ],
+	'aliases' => [
+        '@api' => dirname(dirname(__DIR__)) . '/api',
+    ],
     'components' => [        
         'user' => [
             'identityClass' => 'common\models\User',
@@ -35,17 +38,24 @@ return [
             'enablePrettyUrl' => true,
             'enableStrictParsing' => true,
             'showScriptName' => false,
+            //http://yii-api.loc/api/v1/countries
             'rules' => [
                 [
-                    'class' => 'yii\rest\UrlRule', 
-                    'controller' => 'v1/country',
-                    'tokens' => [
-                        '{id}' => '<id:\\w+>'
-                    ]
-                    
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['v1/country'],
+                    'pluralize' => false,
+                    //'prefix' => 'api',
+//                    'tokens' => [
+//                        '{id}' => '<id:\\w+>'
+//                    ]
                 ]
             ],        
-        ]
+        ],
+        'request' => [
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
+        ],
     ],
     'params' => $params,
 ];
