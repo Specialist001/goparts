@@ -80,7 +80,7 @@ class AuthController extends \yii\web\Controller
         $username = Yii::$app->request->post('username', null);
         $name = Yii::$app->request->post('name', null);
 
-        $smsService = new SmsService();
+        //$smsService = new SmsService();
 
         if (!$username) {
             return $this->redirect(['site/error', 'message' => 'username is required', 'code' => 422]);
@@ -88,9 +88,9 @@ class AuthController extends \yii\web\Controller
         if (!$this->isEmail($username) && !$this->isPhone($username)) {
             return $this->redirect(['site/error', 'message' => 'username is invalid', 'code' => 422]);
         }
-        if ($this->isPhone($username)) {
-            $username = $smsService->clearPhone($username);
-        }
+//        if ($this->isPhone($username)) {
+//            $username = $smsService->clearPhone($username);
+//        }
 
         $user = User::findByUsername($username);
         if ($user) {
@@ -121,7 +121,7 @@ class AuthController extends \yii\web\Controller
     public function actionReset() {
         $model = new PasswordResetRequestForm();
 
-        $smsService = new SmsService();
+//        $smsService = new SmsService();
         $username = Yii::$app->request->post('username', null);
         if (!$username) {
             return $this->redirect(['site/error', 'message' => 'username is required', 'code' => 422]);
@@ -129,9 +129,9 @@ class AuthController extends \yii\web\Controller
         if (!$this->isEmail($username) && !$this->isPhone($username)) {
             return $this->redirect(['site/error', 'message' => 'username is invalid', 'code' => 422]);
         }
-        if ($this->isPhone($username)) {
-            $username = $smsService->clearPhone($username);
-        }
+//        if ($this->isPhone($username)) {
+//            $username = $smsService->clearPhone($username);
+//        }
 
         $user = User::findByUsername($username);
         if (!$user) {
@@ -156,8 +156,8 @@ class AuthController extends \yii\web\Controller
         return filter_var($username, FILTER_VALIDATE_EMAIL);
     }
 
-    public function isPhone($username) {
-        $smsService = new SmsService();
-        return $smsService->isUzPhone($smsService->clearPhone($username));
-    }
+//    public function isPhone($username) {
+//        $smsService = new SmsService();
+//        return $smsService->isUzPhone($smsService->clearPhone($username));
+//    }
 }
