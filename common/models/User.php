@@ -122,7 +122,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+        return static::findOne(['access_token' => $token]);
     }
 
     /**
@@ -260,42 +260,42 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getBlogs()
     {
-        return $this->hasMany(Blogs::className(), ['create_user_id' => 'id']);
+        return $this->hasMany(Blog::className(), ['create_user_id' => 'id']);
     }
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getBlogs0()
     {
-        return $this->hasMany(Blogs::className(), ['update_user_id' => 'id']);
+        return $this->hasMany(Blog::className(), ['update_user_id' => 'id']);
     }
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getComments()
     {
-        return $this->hasMany(Comments::className(), ['user_id' => 'id']);
+        return $this->hasMany(Comment::className(), ['user_id' => 'id']);
     }
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getFeedbacks()
     {
-        return $this->hasMany(Feedbacks::className(), ['user_id' => 'id']);
+        return $this->hasMany(Feedback::className(), ['user_id' => 'id']);
     }
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getGalleries()
     {
-        return $this->hasMany(Galleries::className(), ['user_id' => 'id']);
+        return $this->hasMany(Gallery::className(), ['user_id' => 'id']);
     }
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getImages()
     {
-        return $this->hasMany(Images::className(), ['user_id' => 'id']);
+        return $this->hasMany(Image::className(), ['user_id' => 'id']);
     }
     /**
      * @return \yii\db\ActiveQuery
@@ -309,35 +309,35 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function getNotifySettings()
     {
-        return $this->hasMany(NotifySettings::className(), ['user_id' => 'id']);
+        return $this->hasMany(NotifySetting::className(), ['user_id' => 'id']);
     }
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getPages()
     {
-        return $this->hasMany(Pages::className(), ['change_user_id' => 'id']);
+        return $this->hasMany(Page::className(), ['change_user_id' => 'id']);
     }
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getPages0()
     {
-        return $this->hasMany(Pages::className(), ['user_id' => 'id']);
+        return $this->hasMany(Page::className(), ['user_id' => 'id']);
     }
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getPosts()
     {
-        return $this->hasMany(Posts::className(), ['create_user_id' => 'id']);
+        return $this->hasMany(Post::className(), ['create_user_id' => 'id']);
     }
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getPosts0()
     {
-        return $this->hasMany(Posts::className(), ['update_user_id' => 'id']);
+        return $this->hasMany(Post::className(), ['update_user_id' => 'id']);
     }
     /**
      * @return \yii\db\ActiveQuery
@@ -351,35 +351,35 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function getStoreOrders()
     {
-        return $this->hasMany(StoreOrders::className(), ['manager_id' => 'id']);
+        return $this->hasMany(StoreOrder::className(), ['manager_id' => 'id']);
     }
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getStoreOrders0()
     {
-        return $this->hasMany(StoreOrders::className(), ['user_id' => 'id']);
+        return $this->hasMany(StoreOrder::className(), ['user_id' => 'id']);
     }
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getStoreProducts()
     {
-        return $this->hasMany(StoreProducts::className(), ['user_id' => 'id']);
+        return $this->hasMany(StoreProduct::className(), ['user_id' => 'id']);
     }
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getStoreUserComissions()
     {
-        return $this->hasMany(StoreUserComissions::className(), ['user_id' => 'id']);
+        return $this->hasMany(StoreUserComission::className(), ['user_id' => 'id']);
     }
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getSubscriptions()
     {
-        return $this->hasMany(Subscriptions::className(), ['user_id' => 'id']);
+        return $this->hasMany(Subscription::className(), ['user_id' => 'id']);
     }
     /**
      * @return \yii\db\ActiveQuery

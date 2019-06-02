@@ -28,8 +28,16 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'vendor',
-            'car',
+//            'vendor',
+            [
+                'attribute' => 'vendor',
+                'filter' => $vendor_filter
+            ],
+            [
+                'attribute' => 'car',
+                'filter' => $car_filter
+            ],
+//            'car',
             'year',
             'modification',
 
@@ -40,3 +48,27 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php Pjax::end(); ?>
 
 </div>
+<?php $this->registerJs('
+    $(document).ready(function() {
+        $(\'select.form-control\').select2(
+            {
+                language: {
+                  noResults: function () {
+                    return "Ничего не найдено";
+                  }
+                }
+            }
+        );
+    });
+    $(document).on(\'ready pjax:success\', function() {
+        $(\'select.form-control\').select2(
+            {
+                language: {
+                  noResults: function () {
+                    return "Ничего не найдено";
+                  }
+                }
+            }
+        );
+    });
+');?>

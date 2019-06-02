@@ -104,7 +104,7 @@ class StoreOrder extends \yii\db\ActiveRecord
             'url' => 'Url',
             'note' => 'Note',
             'zipcode' => 'Zipcode',
-            'country' => 'StoreCategory',
+            'country' => 'Category',
             'city' => 'City',
             'house' => 'House',
             'apartment' => 'Apartment',

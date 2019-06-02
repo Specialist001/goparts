@@ -8,8 +8,9 @@ use yii\widgets\Pjax;
 /* @var $searchModel backend\models\StoreCategorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Store Categories';
+$this->title = Yii::t('backend', 'Store Category');
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="store-category-index">
 
@@ -41,8 +42,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'name',
                 'attribute' => 'title',
                 'format' => 'raw',
-                'value' => function ($data) {
-                    return Html::a(Html::encode($data->translate->title), Url::to(['update', 'id' => $data->id]));
+                'value' => function ($model) {
+                    return Html::a(Html::encode($model->translate->title), Url::to(['update', 'id' => $model->id]));
                 }
             ],
             'slug',
@@ -71,3 +72,27 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php Pjax::end(); ?>
 
 </div>
+<?php $this->registerJs('
+    $(document).ready(function() {
+        $(\'select.form-control\').select2(
+            {
+                language: {
+                  noResults: function () {
+                    return "Ничего не найдено";
+                  }
+                }
+            }
+        );
+    });
+    $(document).on(\'ready pjax:success\', function() {
+        $(\'select.form-control\').select2(
+            {
+                language: {
+                  noResults: function () {
+                    return "Ничего не найдено";
+                  }
+                }
+            }
+        );
+    });
+');?>

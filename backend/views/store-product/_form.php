@@ -439,10 +439,28 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 
 </div>
-
-
-<script>
-
-
-</script>
+<?php $this->registerJs('
+    $(document).ready(function() {
+        $(\'select.form-control\').select2(
+            {
+                language: {
+                  noResults: function () {
+                    return "Ничего не найдено";
+                  }
+                }
+            }
+        );
+    });
+    $(document).on(\'ready pjax:success\', function() {
+        $(\'select.form-control\').select2(
+            {
+                language: {
+                  noResults: function () {
+                    return "Ничего не найдено";
+                  }
+                }
+            }
+        );
+    });
+');?>
 

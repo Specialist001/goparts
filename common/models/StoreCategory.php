@@ -84,8 +84,17 @@ class StoreCategory extends \yii\db\ActiveRecord
      */
     public function getCategories()
     {
-        return $this->hasMany(StoreCategory::className(), ['parent_id' => 'id']);
+        return $this->hasMany(StoreCategory::className(), ['parent_id' => 'id'])->with('translate');
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getActiveCategories()
+    {
+        return $this->hasMany(StoreCategory::className(), ['parent_id' => 'id'])->where(['status' => 1])->orderBy('order')->with('translate');
+    }
+
 
     /**
      * @return \yii\db\ActiveQuery

@@ -1,4 +1,6 @@
 <?php
 return [
-    'adminEmail' => 'admin@example.com',
+    'pageSize' => '10',
+    'recent_count' => '5',
+    'callback_timeout' => '30',
 ];

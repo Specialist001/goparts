@@ -3,6 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use frontend\widgets\WLanguage;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -65,7 +66,10 @@ AppAsset::register($this);
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
+        <div class="pull-right" style="padding-top: 15px;"><?=WLanguage::widget()?></div>
+        <?= Yii::t('backend', 'Store Category') ?>
         <?= $content ?>
+
     </div>
 </div>
 
