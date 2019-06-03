@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'status',
                 'format' => 'activeuser',
-                'filter' => array("0" => "Deleted", "10" => "Active"),
+                'filter' => array("0" => "Deleted", "9" => "Inactive", "10" => "Active"),
             ],
             //'created_at',
             //'updated_at',

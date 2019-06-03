@@ -144,6 +144,10 @@ class StoreProduct extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function find() {
+        return parent::find()->with('translate');
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -294,5 +298,11 @@ class StoreProduct extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public function getTranslate() {
+        return ($this->hasOne(StoreProductTranslation::className(), ['product_id' => 'id'])->where(['locale' => Language::getCurrent()->locale])->all())
+            ? $this->hasOne(StoreProductTranslation::className(), ['product_id' => 'id'])->where(['locale' => Language::getCurrent()->locale])
+            : $this->hasOne(StoreProductTranslation::className(), ['product_id' => 'id'])->where(['locale' => Language::getDefaultLang()->locale]);
     }
 }

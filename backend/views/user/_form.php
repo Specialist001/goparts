@@ -44,16 +44,16 @@ use rmrevin\yii\fontawesome\FA;
     </div>
     <div class="row">
         <div class="col-md-3">
-            <?= $form->field($model, 'type')->dropDownList(['0' => 'Individual', '1' => 'Legal entity']) ?>
-        </div>
-        <div class="col-md-3">
             <?= $form->field($model, 'birth_date')->textInput(['type' => 'date']) ?>
         </div>
         <div class="col-md-3">
-            <?= $form->field($model, 'site')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'type')->dropDownList(['0' => 'Individual', '1' => 'Legal entity']) ?>
         </div>
         <div class="col-md-3">
-            <?= $form->field($model, 'about')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'role')->dropDownList(['0' => 'Buyer', '1' => 'Seller']) ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'site')->textInput(['maxlength' => true]) ?>
         </div>
     </div>
     <div class="row">
@@ -85,6 +85,9 @@ use rmrevin\yii\fontawesome\FA;
         </div>
     </div>
     <div class="row">
+        <div class="col-md-3">
+            <?= $form->field($model, 'about')->textInput(['maxlength' => true]) ?>
+        </div>
         <div class="col-md-3">
             <?= $form->field($model, 'avatar')->textInput(['maxlength' => true]) ?>
         </div>

@@ -78,16 +78,17 @@ class AuthController extends \yii\web\Controller
         $model = new SignupForm();
 
         $username = Yii::$app->request->post('username', null);
-        $name = Yii::$app->request->post('name', null);
+        $password = Yii::$app->request->post('password', null);
+        //$name = Yii::$app->request->post('name', null);
 
         //$smsService = new SmsService();
 
         if (!$username) {
             return $this->redirect(['site/error', 'message' => 'username is required', 'code' => 422]);
         }
-        if (!$this->isEmail($username) && !$this->isPhone($username)) {
-            return $this->redirect(['site/error', 'message' => 'username is invalid', 'code' => 422]);
-        }
+//        if (!$this->isEmail($username)) {
+//            return $this->redirect(['site/error', 'message' => 'username is invalid', 'code' => 422]);
+//        }
 //        if ($this->isPhone($username)) {
 //            $username = $smsService->clearPhone($username);
 //        }
@@ -97,17 +98,20 @@ class AuthController extends \yii\web\Controller
             return $this->redirect(['site/error', 'message' => Yii::t('frontend', 'You are registered already'), 'code' => 401]);
         }
 
-        if (!$name) {
-            return $this->redirect(['site/error', 'message' => 'name is required', 'code' => 422]);
-        }
-        if (strlen($name) < 2) {
-            return $this->redirect(['site/error', 'message' => 'name should be at least 2 characters', 'code' => 422]);
-        }
+//        if (!$name) {
+//            return $this->redirect(['site/error', 'message' => 'name is required', 'code' => 422]);
+//        }
+//        if (strlen($name) < 2) {
+//            return $this->redirect(['site/error', 'message' => 'name should be at least 2 characters', 'code' => 422]);
+//        }
 
         $model->username = $username;
-        $model->name = $name;
-        $password = mt_rand(100000, 999999);
+        //print_r($user);exit;
+        //$model->name = $name;
+        //$password = mt_rand(100000, 999999);
+
         if ($user = $model->signup($password)) {
+            //print_r($user);
             $model->sendEmail($password);
             return $this->asJson([
                 'type' => 'Basic',
