@@ -37,6 +37,11 @@ class SignupForm extends Model
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
+
+//            ['role', 'string', 'max' => 255],
+//            ['legal_info', 'string', 'max' => 255],
+//            ['location', 'string', 'max' => 255],
+//            ['phone', 'string', 'max' => 255],
         ];
     }
 
@@ -47,27 +52,31 @@ class SignupForm extends Model
      */
     public function signup($password)
     {
-        if (!$this->validate()) {
-            return null;
-        }
+//        if (!$this->validate()) {
+//            return null;
+//        }
         
         $user = new User();
         $user->username = $this->username;
         $user->email = $this->email;
+        $user->phone = $this->phone;
+        $user->role = $this->role;
+        $user->legal_info = $this->legal_info;
+        $user->location = $this->location;
         $user->setPassword($password);
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
-
+//        echo 'true';
         if($user->save()){
             $auth = Yii::$app->authManager;
             $role = $auth->getRole('user');
             $auth->assign($role, $user->id);
 
-            return $user && $this->sendEmail($user);
+            return $user;
         }
 
         return null;
-
+//        return $user->save() ? $user : null;
     }
 
     /**

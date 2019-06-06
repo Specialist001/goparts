@@ -1,4 +1,9 @@
 $(document).ready(function () {
+
+    // $("body").niceScroll({
+    //     cursorcolor: "#1c1a1b",
+    // });
+
     function getPrice(purchase_price, commission) {
         $.ajax({
             //async: true,

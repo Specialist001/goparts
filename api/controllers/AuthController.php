@@ -55,7 +55,7 @@ class AuthController extends \yii\web\Controller
         $user = User::findByUsername($username);
 
         if (!$user) {
-            return $this->redirect(['site/error', 'message' => Yii::t('frontend', 'Incorrect username or password.'), 'code' => 401]);
+            return $this->redirect(['site/error', 'message' => Yii::t('frontend', 'Incorrect username or passwordd.'), 'code' => 401]);
         }
 
         $check = $user->validatePassword($password);
@@ -77,8 +77,13 @@ class AuthController extends \yii\web\Controller
     public function actionRegister(){
         $model = new SignupForm();
 
-        $username = Yii::$app->request->post('username', null);
-        $password = Yii::$app->request->post('password', null);
+        $username = Yii::$app->request->post('username');
+        $password = Yii::$app->request->post('password');
+        $email = Yii::$app->request->post('email');
+        $role = Yii::$app->request->post('role', null);
+        $legal_info = Yii::$app->request->post('legal_info', null);
+        $location = Yii::$app->request->post('location', null);
+//        print_r(Yii::$app->request->post());exit;
         //$name = Yii::$app->request->post('name', null);
 
         //$smsService = new SmsService();
@@ -106,13 +111,17 @@ class AuthController extends \yii\web\Controller
 //        }
 
         $model->username = $username;
-        //print_r($user);exit;
+        $model->email = $email;
+        $model->role = $role;
+        $model->legal_info = $legal_info;
+        $model->location = $location;
+
         //$model->name = $name;
         //$password = mt_rand(100000, 999999);
 
+
         if ($user = $model->signup($password)) {
-            //print_r($user);
-            $model->sendEmail($password);
+//            $model->sendEmail($password);
             return $this->asJson([
                 'type' => 'Basic',
                 'token' => base64_encode($user->username.':'.$password),

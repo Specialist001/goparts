@@ -18,11 +18,11 @@ use Yii;
  * @property int $created_at
  * @property int $updated_at
  *
- * @property StoreCategories $category
- * @property StoreProducts $product
+ * @property StoreCategory $category
+ * @property StoreProduct $product
  * @property User $user
  */
-class ProductStatistics extends \yii\db\ActiveRecord
+class ProductStatistic extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -40,8 +40,8 @@ class ProductStatistics extends \yii\db\ActiveRecord
         return [
             [['product_id', 'user_id', 'category_id', 'previews', 'views', 'purchases', 'favorites', 'created_at', 'updated_at'], 'integer'],
             [['created_at', 'updated_at'], 'required'],
-            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => StoreCategories::className(), 'targetAttribute' => ['category_id' => 'id']],
-            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => StoreProducts::className(), 'targetAttribute' => ['product_id' => 'id']],
+            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => StoreCategory::className(), 'targetAttribute' => ['category_id' => 'id']],
+            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => StoreProduct::className(), 'targetAttribute' => ['product_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -70,7 +70,7 @@ class ProductStatistics extends \yii\db\ActiveRecord
      */
     public function getCategory()
     {
-        return $this->hasOne(StoreCategories::className(), ['id' => 'category_id']);
+        return $this->hasOne(StoreCategory::className(), ['id' => 'category_id']);
     }
 
     /**
@@ -78,7 +78,7 @@ class ProductStatistics extends \yii\db\ActiveRecord
      */
     public function getProduct()
     {
-        return $this->hasOne(StoreProducts::className(), ['id' => 'product_id']);
+        return $this->hasOne(StoreProduct::className(), ['id' => 'product_id']);
     }
 
     /**
