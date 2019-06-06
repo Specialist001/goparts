@@ -2,8 +2,10 @@
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \frontend\models\SignupForm */
 
+/* @var $model SignupForm */
+
+use frontend\models\SignupForm;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
@@ -16,20 +18,49 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>Please fill out the following fields to signup:</p>
 
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-lg-12">
             <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
-
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-
-                <?= $form->field($model, 'email') ?>
-
-                <?= $form->field($model, 'password')->passwordInput() ?>
-
-                <div class="form-group">
-                    <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+            <div class="row">
+                <div class="col-md-3">
+                    <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
                 </div>
+                <div class="col-md-3">
+                    <?= $form->field($model, 'email') ?>
+                </div>
+                <div class="col-md-3">
+                    <?= $form->field($model, 'password')->passwordInput() ?>
+                </div>
+                <div class="col-md-3">
+                    <?= $form->field($model, 'phone')->passwordInput() ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <?= $form->field($model, 'location')->textInput() ?>
+                </div>
+                <div class="col-md-3">
+                    <?= $form->field($model, 'role')->dropDownList(['0'=>'Buyer','1'=>'Seller']) ?>
+                </div>
+                <div class="col-md-3 legal-info" style="display: none">
+                    <?= $form->field($model, 'legal_info')->textInput() ?>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+            </div>
 
             <?php ActiveForm::end(); ?>
         </div>
     </div>
 </div>
+<script>
+
+</script>
+<?php //$this->registerJs('$("#signupform-role").change(function(){
+//	if ($("#signupform-role").val() = 1) {
+//		$(\'.legal-info\').show();
+//	} else {
+//		$(\'.legal-info\').hide();
+//	}
+//});'); ?>
