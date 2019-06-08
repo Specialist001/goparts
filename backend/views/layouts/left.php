@@ -44,6 +44,18 @@
                             ['label' => 'Roles', 'icon' => 'exchange', 'url' => ['/rbac/role'],],
                         ]
                     ],
+					['label' => 'News', 'icon' => 'newspaper-o', 'url' => ['#'],
+                        'items' => [
+                            ['label' => 'All News', 'icon' => 'list', 'url' => ['/news'],],
+                            ['label' => 'Create News', 'icon' => 'plus', 'url' => ['/news/create'],],
+                        ],
+                    ],
+					['label' => 'Blog', 'icon' => 'rss', 'url' => ['#'],
+                        'items' => [
+                            ['label' => 'All Blogs', 'icon' => 'list', 'url' => ['/blog'],],
+                            ['label' => 'Create Blog', 'icon' => 'plus', 'url' => ['/blog/create'],],
+                        ],
+                    ],
                     ['label' => 'Store Category', 'icon' => 'list', 'url' => ['#'],
                         'items' => [
                             ['label' => 'All Categories', 'icon' => 'list', 'url' => ['/store-category'],],

@@ -3,10 +3,13 @@
 
 namespace api\controllers;
 
-
+use api\transformers\ProfileProductList;
+use common\models\StoreProduct;
 use common\models\User;
+use api\models\ProfileForm;
 use Yii;
 use yii\filters\auth\HttpBasicAuth;
+use yii\web\UploadedFile;
 
 class ProfileController extends \yii\web\Controller
 {
@@ -58,5 +61,61 @@ class ProfileController extends \yii\web\Controller
             'type' => Yii::$app->user->identity->type==0 ? 'Individual' : 'Legal entry',
             'birth_date' => Yii::$app->user->identity->birth_date,
         ]);
+    }
+
+    public function actionUpdate()
+    {
+        $model = new ProfileForm();
+
+        $model->username = Yii::$app->request->post('name', Yii::$app->user->identity->username);
+//        $model->phone = Yii::$app->request->post('phone', Yii::$app->user->identity->phone);
+        $model->password = Yii::$app->request->post('password');
+        $model->passwordconfirm = Yii::$app->request->post('password_confirm');
+        $model->birth_date = Yii::$app->request->post('birth_date');
+//        $model->push = Yii::$app->request->post('push', 0);
+        $model->avatar = UploadedFile::getInstanceByName('avatar');
+
+
+        if (!$model->validate()) {
+            Yii::$app->getResponse()->setStatusCode(422);
+            return $this->asJson($model->errors);
+        }
+
+        if ($user = $model->updateProfile()) {
+            return $this->asJson([
+                'id' => $user->id,
+//                'name' => $user->name,
+                'username' => $user->username,
+                'avatar' => $user->avatar? $user->avatar: '/uploads/site/default_shop.png',
+                'phone' => $user->username,
+//                'push' => $user->push,
+//                'balance' => $user->balance,
+                'birth_date' => $user->birth_date,
+//                'city_id' => (int) $user->city_id,
+//                'ucard' => $user->ucard,
+            ]);
+        }
+    }
+
+    public function actionProducts($id = null, $category_id = null)
+    {
+        if ($id) {
+            $product = StoreProduct::find()->where(['id'=>$id, 'user_id' => Yii::$app->user->identity->id])->all();
+            return $this->asJson([
+                'data' => ProfileProductList::transform($product),
+            ]);
+        } else {
+            if ($category_id) {
+                $products = StoreProduct::find()->where(['category_id'=>$category_id, 'user_id'=> Yii::$app->user->identity->id])->all();
+                return $this->asJson([
+                    'data' => ProfileProductList::transform($products),
+                ]);
+            } else {
+                $products = StoreProduct::find()->where(['user_id'=>Yii::$app->user->identity->id])->all();
+                return $this->asJson([
+                    'data' => ProfileProductList::transform($products),
+                ]);
+            }
+        }
     }
 }
