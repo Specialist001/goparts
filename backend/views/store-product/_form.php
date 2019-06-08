@@ -98,140 +98,46 @@ use yii\widgets\ActiveForm;
         </div>
     </div>
     <h3>Product Translation</h3>
-    <!--    Translation-->
     <div class="row">
+        <div class="col-md-4">
+            <?= $form->field($translation_en, 'name[en]')->textInput(['value' => $translation_en->name]) ?>
+        </div>
+        <div class="col-md-8">
+            <?= $form->field($translation_en, 'short[en]')->textInput(['value' => $translation_en->short]) ?>
+        </div>
         <div class="col-md-12">
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active">
-                    <a href="#tr_en" aria-controls="tr_en" role="tab" data-toggle="tab">English</a>
-                </li>
-                <li role="presentation" class="text-right">
-                    <a href="#tr_ar" aria-controls="tr_ar" role="tab" data-toggle="tab">عربى</a>
-                </li>
-                <li role="presentation">
-                    <a href="#tr_ru" aria-controls="tr_ru" role="tab" data-toggle="tab">Русский</a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="tr_en">
-                    <p></p>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <?= $form->field($translation_en, 'name[en]')->textInput(['value' => $translation_en->name]) ?>
-                        </div>
-                        <div class="col-md-8">
-                            <?= $form->field($translation_en, 'short[en]')->textInput(['value' => $translation_en->short]) ?>
-                        </div>
-                        <div class="col-md-12">
-                            <!--                            --><? //= $form->field($translation_en, 'description[en]')->textarea(['value' => $translation_en->description, 'style' => 'resize: vertical; height: 128px;']) ?>
-                            <?= $form->field($translation_en, 'description[en]')->widget(TinyMce::className(), [
-                                'options' => ['rows' => 6],
-                                'value' => $translation_en->description,
-                                'language' => 'en',
-                                'clientOptions' => [
-                                    'plugins' => [
-                                        "advlist autolink lists link charmap preview anchor",
-                                        "searchreplace visualblocks code fullscreen",
-                                        "insertdatetime media table contextmenu paste"
-                                    ],
-                                    'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-                                ]
-                            ])->textarea(['value' => $translation_en->description]);
-                            ?>
-                        </div>
-                    </div>
-                    <h3>Product Seo</h3>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <?= $form->field($translation_en, 'meta_title[en]')->textInput(['value' => $translation_en->meta_title]) ?>
-                        </div>
-                        <div class="col-md-4">
-                            <?= $form->field($translation_en, 'meta_description[en]')->textInput(['value' => $translation_en->meta_description]) ?>
-                        </div>
-                        <div class="col-md-4">
-                            <?= $form->field($translation_en, 'meta_keywords[en]')->textInput(['value' => $translation_en->meta_keywords]) ?>
-                        </div>
-                    </div>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="tr_ar">
-                    <p></p>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <?= $form->field($translation_ar, 'name[ar]')->textInput(['value' => $translation_ar->name]) ?>
-                        </div>
-                        <div class="col-md-8">
-                            <?= $form->field($translation_ar, 'short[ar]')->textInput(['value' => $translation_ar->short]) ?>
-                        </div>
-                        <div class="col-md-12">
-                            <?= $form->field($translation_ar, 'description[ar]')->widget(TinyMce::className(), [
-                                'options' => ['rows' => 6],
-                                'value' => $translation_en->description,
-                                'language' => 'ar',
-                                'clientOptions' => [
-                                    'plugins' => [
-                                        "advlist autolink lists link charmap preview anchor",
-                                        "searchreplace visualblocks code fullscreen",
-                                        "insertdatetime media table contextmenu paste"
-                                    ],
-                                    'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-                                ]
-                            ])->textarea(['value' => $translation_ar->description, 'style' => 'resize: vertical; height: 128px;']) ?>
-                        </div>
-                    </div>
-                    <h3>Product Seo</h3>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <?= $form->field($translation_ar, 'meta_title[ar]')->textInput(['value' => $translation_ar->meta_title]) ?>
-                        </div>
-                        <div class="col-md-4">
-                            <?= $form->field($translation_ar, 'meta_description[ar]')->textInput(['value' => $translation_ar->meta_description]) ?>
-                        </div>
-                        <div class="col-md-4">
-                            <?= $form->field($translation_ar, 'meta_keywords[ar]')->textInput(['value' => $translation_ar->meta_keywords]) ?>
-                        </div>
-                    </div>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="tr_ru">
-                    <p></p>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <?= $form->field($translation_ru, 'name[ru]')->textInput(['value' => $translation_ru->name]) ?>
-                        </div>
-                        <div class="col-md-8">
-                            <?= $form->field($translation_ru, 'short[ru]')->textInput(['value' => $translation_ru->short]) ?>
-                        </div>
-                        <div class="col-md-12">
-                            <?= $form->field($translation_ru, 'description[ru]')->widget(TinyMce::className(), [
-                                'options' => ['rows' => 6],
-                                'value' => $translation_en->description,
-                                'language' => 'en',
-                                'clientOptions' => [
-                                    'plugins' => [
-                                        "advlist autolink lists link charmap preview anchor",
-                                        "searchreplace visualblocks code fullscreen",
-                                        "insertdatetime media table contextmenu paste"
-                                    ],
-                                    'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-                                ]
-                            ])->textarea(['value' => $translation_ru->description, 'style' => 'resize: vertical; height: 128px;']) ?>
-                        </div>
-                    </div>
-                    <h3>Product Seo</h3>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <?= $form->field($translation_ru, 'meta_title[ru]')->textInput(['value' => $translation_ru->meta_title]) ?>
-                        </div>
-                        <div class="col-md-4">
-                            <?= $form->field($translation_ru, 'meta_description[ru]')->textInput(['value' => $translation_ru->meta_description]) ?>
-                        </div>
-                        <div class="col-md-4">
-                            <?= $form->field($translation_ru, 'meta_keywords[ru]')->textInput(['value' => $translation_ru->meta_keywords]) ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!--                            --><? //= $form->field($translation_en, 'description[en]')->textarea(['value' => $translation_en->description, 'style' => 'resize: vertical; height: 128px;']) ?>
+            <?= $form->field($translation_en, 'description[en]')->widget(TinyMce::className(), [
+                'options' => ['rows' => 6],
+                'value' => $translation_en->description,
+                'language' => 'en',
+                'clientOptions' => [
+                    'plugins' => [
+                        "advlist autolink lists link charmap preview anchor",
+                        "searchreplace visualblocks code fullscreen",
+                        "insertdatetime media table contextmenu paste"
+                    ],
+                    'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+                ]
+            ])->textarea(['value' => $translation_en->description]);
+            ?>
         </div>
     </div>
+    <br>
+    <h3>Product Seo</h3>
+    <div class="row">
+        <div class="col-md-4">
+            <?= $form->field($translation_en, 'meta_title[en]')->textInput(['value' => $translation_en->meta_title]) ?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($translation_en, 'meta_description[en]')->textInput(['value' => $translation_en->meta_description]) ?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($translation_en, 'meta_keywords[en]')->textInput(['value' => $translation_en->meta_keywords]) ?>
+        </div>
+    </div>
+    <!--    Translation-->
+
     <!--    END Translation-->
 
     <h3 class="text-left">

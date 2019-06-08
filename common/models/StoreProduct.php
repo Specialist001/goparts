@@ -78,8 +78,8 @@ class StoreProduct extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type_id', 'producer_id', 'category_id', 'type_car_id', 'user_id', 'quantity', 'in_stock', 'status', 'order', 'view', 'qid', 'created_at', 'updated_at'], 'integer'],
-            [['price', 'discount_price', 'discount', 'length', 'width', 'height', 'weight', 'average_price', 'purchase_price', 'recommended_price'], 'number'],
+            [['type_id', 'producer_id', 'category_id', 'type_car_id', 'user_id', 'quantity', 'in_stock', 'status', 'order', 'view', 'qid', 'price', 'discount_price', 'discount','average_price', 'purchase_price', 'recommended_price', 'created_at', 'updated_at'], 'integer'],
+            [[ 'length', 'width', 'height', 'weight'], 'number'],
             [['data'], 'string'],
 //            [['created_at', 'updated_at'], 'required'],
             [['sku', 'serial_number'], 'string', 'max' => 150],
@@ -153,7 +153,7 @@ class StoreProduct extends \yii\db\ActiveRecord
      */
     public function getProductStatistics()
     {
-        return $this->hasMany(ProductStatistics::className(), ['product_id' => 'id']);
+        return $this->hasMany(ProductStatistic::className(), ['product_id' => 'id']);
     }
 
     /**

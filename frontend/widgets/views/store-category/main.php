@@ -1,5 +1,6 @@
 <?php
 use common\models\Category;
+use common\models\StoreCategory;
 use rmrevin\yii\fontawesome\FA;
 use yii\helpers\Url;
 
@@ -14,7 +15,7 @@ if(!function_exists('recursiveLeftCatMenu')) {
 function recursiveLeftCatMenu($menu, $parent = 0)
 {
     $active_ids = ['0' => ''];
-    $root_cat = Category::findOne(Yii::$app->session->get('active_category'));
+    $root_cat = StoreCategory::findOne(Yii::$app->session->get('active_category'));
 
     while ($root_cat) {
         $active_ids[] = $root_cat->id;
@@ -34,8 +35,8 @@ function recursiveLeftCatMenu($menu, $parent = 0)
     }
     for ($s = 0; $s < count($menu); $s++) {
         $fa = '';
-        $img = $menu[$s]->icon? '<img src="'.$menu[$s]->icon.'" alt="'.$s.'" class="cat_icon"> ': '';
-        $title = $menu[$s]->translate->name;
+        $img = $menu[$s]->image? '<img src="'.$menu[$s]->image.'" alt="'.$s.'" class="cat_icon"> ': '';
+        $title = $menu[$s]->translate->title;
         if ($menu[$s]->activeCategories) {
             if ($active_ids[$parent] == $menu[$s]->id) $fa = FA::i('angle-right')->addCssClass('pull-right');
             else $fa = FA::i('angle-right')->addCssClass('pull-right');
@@ -66,10 +67,10 @@ function getMenuChild($child, $index = 0) {
             $fa = '<i class="fa fa-angle-right" style="display: table-cell;vertical-align: middle;padding-left: 0.5em;"></i>';
             $childrens = getMenuChild($item->activeCategories, $index + 1);
         }
-        $img = $item->icon? '<img src="'.$item->icon.'" alt="" class="cat_icon"> ': '';
-        $title = /*$img.*/'<span style="display: table-cell;vertical-align: middle;width: 95%;">'.$item->translate->name.'</span>';
+        $img = $item->image? '<img src="'.$item->image.'" alt="" class="cat_icon"> ': '';
+        $title = /*$img.*/'<span style="display: table-cell;vertical-align: middle;width: 95%;">'.$item->translate->title.'</span>';
         $result .= '<li class="dropdown lcm-title">
-            <a href="'.Url::to(['category/index', 'id' => $item->url]).'" class="lcm-link" id="dLabel" data-target="#"  role="button" aria-haspopup="true" aria-expanded="false">
+            <a href="'.Url::to(['category/index', 'id' => $item->slug]).'" class="lcm-link" id="dLabel" data-target="#"  role="button" aria-haspopup="true" aria-expanded="false">
                 '.$title.$fa.' 
             </a>
             '.$childrens.'

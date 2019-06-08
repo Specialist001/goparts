@@ -114,7 +114,7 @@ use rmrevin\yii\fontawesome\FA;
         <div class="modal-content p-3">
             <div class="modal-header border-bottom-0 pb-0 pt-1">
                 <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
-                    <img class="img-fluid" src="assets/svg/close.svg" style="width: 1rem">
+                    <img class="img-fluid" src="svg/close.svg" style="width: 1rem">
                 </button>
             </div>
             <div class="modal-body px-5">
@@ -122,9 +122,9 @@ use rmrevin\yii\fontawesome\FA;
                     <form accept-charset="UTF-8" action="" class="loginBox auth" method="POST">
                         <h4 class="text-center mb-3">Войти в личный кабинет</h4>
                         <div class="input-group text-muted rounded border mb-3">
-                                <span class="input-group-prepend mx-2">
+                                <span class="input-group-prepend mr-1">
                                     <div class="input-group-text bg-transparent border-0">
-                                        <img src="assets/svg/Grey_Phone.svg">
+                                        <img src="svg/Mail_.svg">
                                     </div>
                                 </span>
                             <input class="py-2 border-0 d-block w-75" id="name-email-input"
@@ -133,7 +133,7 @@ use rmrevin\yii\fontawesome\FA;
                         <div class="input-group text-muted rounded border mb-3">
                                 <span class="input-group-prepend mx-1">
                                     <div class="input-group-text bg-transparent border-0">
-                                        <img src="assets/svg/lock.svg">
+                                        <img src="svg/lock.svg">
                                     </div>
                                 </span>
                             <input class="py-2 border-0 d-block w-75" id="name-password-input"
@@ -146,7 +146,7 @@ use rmrevin\yii\fontawesome\FA;
                                         <span class="toggle__text">Запомнить пароль</span>
                                     </span>
                             </label>
-                            <a class="text-form_style_2 float-right font-weight-bold"
+                            <a class="text-form-style_2 float-right font-weight-bold"
                                href="#">Забыли
                                 пароль?</a>
                         </div>
@@ -158,7 +158,7 @@ use rmrevin\yii\fontawesome\FA;
                              style="border-top: 2px dashed #efefef;">
                             <span class="text-center">Все еще нет аккаунта?</span>
                             <p class="d-block message">
-                                <a class="text-form_style_2 reg_btn" href="#">
+                                <a class="text-form-style_2 reg_btn" href="#">
                                     Зарегистрироваться
                                 </a>
                             </p>
@@ -166,64 +166,14 @@ use rmrevin\yii\fontawesome\FA;
                         <div class="text-center pt-2 m-auto">
                                 <span class="text-muted" style="font-size: 0.9rem">
                                     Входя в раздел Мой профиль, Вы принимаете
-                                    <a class="text-form_style_2" href=""> Условия использования сайта</a>
+                                    <a class="text-form-style_2" href=""> Условия использования сайта</a>
                                 </span>
-                        </div>
-                    </form>
-
-                    <form accept-charset="UTF-8" action="" class="registerBox auth" method="POST">
-                        <h4 class="text-center mb-3">Регистрация</h4>
-                        <div class="input-group text-muted rounded border mb-3">
-                                    <span class="input-group-prepend mx-2">
-                                        <div class="input-group-text bg-transparent border-0">
-                                            <img src="assets/svg/Grey_Phone.svg">
-                                        </div>
-                                    </span>
-                            <input class="py-2 border-0 d-block w-75" id=""
-                                   name="email" placeholder="Введите e-mail" type="text">
-                        </div>
-                        <div class="input-group text-muted rounded border mb-3">
-                                    <span class="input-group-prepend mx-1">
-                                        <div class="input-group-text bg-transparent border-0">
-                                            <img src="assets/svg/lock.svg">
-                                        </div>
-                                    </span>
-                            <input class="py-2 border-0 d-block w-75" id=""
-                                   name="password" placeholder="Введите пароль" type="password">
-                        </div>
-                        <div class="input-group text-muted rounded border mb-3">
-                                    <span class="input-group-prepend mx-1">
-                                        <div class="input-group-text bg-transparent border-0">
-                                            <img src="assets/svg/lock.svg">
-                                        </div>
-                                    </span>
-                            <input class="py-2 border-0 d-block w-75" id=""
-                                   name="confirm_password" placeholder="Подтвердите пароль" type="password">
-                        </div>
-                        <div class="text-center mt-3 mb-4">
-                            <input class="btn bg-form_style text-white px-5 btn-login" type="submit"
-                                   value="Регистрация">
-                        </div>
-                        <div class="w-75 text-center pt-3 m-auto text-font-pn_regular"
-                             style="border-top: 2px dashed #efefef;">
-                            <span class="text-center">Есть аккаунт?</span>
-                            <p class="d-block message">
-                                <a class="text-form_style_2 reg_btn" href="#">
-                                    Войти
-                                </a>
-                            </p>
-                        </div>
-                        <div class="text-center pt-2 m-auto">
-                                    <span class="text-muted" style="font-size: 0.9rem">
-                                        Регистрируясь, Вы принимаете
-                                        <a class="text-form_style_2" href="#"> Условия использования сайта</a>
-                                    </span>
                         </div>
                     </form>
                 </div>
 
                 <div class="box">
-                    <div class="content forgetBox" style="display: none">
+                    <div class="content " style="display: none">
                         <div class="error"></div>
                         <div class="form forgetBox">
                             <h3>Восстановить аккаунт</h3>

@@ -23,7 +23,148 @@ $(document).ready(function () {
                 items:1
             }
         }
-    })
+    });
+
+    $('#open-all_menu').on('click', function () {
+        var $menu = $('#all_menu');
+        //var $button = $('#open-all_menu');
+        if($menu.hasClass('visible')) {
+            // $(this).removeClass('btn-view-active');
+            $menu.slideUp(300);
+            $menu.removeClass('visible');
+        } else {
+            // $(this).addClass('btn-view-active');
+            //$button.children(children(children($('.up-down'))))
+            $menu.slideDown(300);
+            $menu.addClass('visible');
+        }
+    });
+
+    $(document).mouseup(function (e){ // событие клика по веб-документу
+        var $div_0 = $('#open-all_menu');
+        var $div = $('#all_menu'); // тут указываем ID элемента
+        if (!$div.is(e.target) && !$div_0.is(e.target) // если клик был не по нашему блоку
+            && $div.has(e.target).length === 0 && $div_0.has(e.target).length === 0) { // и не по его дочерним элементам
+            //$div_0.removeClass('btn-view-active');
+            $('#all_menu').removeClass('visible');
+            $div.slideUp(300);
+        }
+    });
+
+    // Скролл левого меню
+    $('.lcm-root-cat-scroll, .dropdown-menu-leftmenu').scrollbar();
+    $('ul.lcm-root-cat, .dropdown-menu-leftmenu').on('scroll', function () {
+        if(($(this).scrollTop() > 50)){
+            $(this).parent().children('.scroll-x').show();
+        }
+        else if($(this).prop("scrollHeight") > $(this).height()) {
+            $(this).parent().children('.scroll-x').hide();
+        }
+        if(($(this).scrollTop() + $(this).height() + 50) >= $(this).prop("scrollHeight")) {
+            $(this).parent().children('.scroll-y').hide();
+        }
+        else if($(this).prop("scrollHeight") > $(this).height()) {
+            $(this).parent().children('.scroll-y').show();
+        }
+    });
+
+
+    function getCar(vendor) {
+        $.ajax({
+            type: "GET",
+            url: '/admin/store-product/get-car',
+            dataType: "json",
+            data: {
+                vendor: vendor
+            },
+            success: function (response) {
+                // var result = $.parseJSON(response);
+                if (!response.error) {
+                    $('.car_items').html(response);
+                } else {
+                    console.log('Ошибка обработки данных');
+                }
+            },
+            error: function () {
+                console.log('Ошибка обработки данных 2');
+            },
+        });
+    }
+
+    function getModification(vendor, car) {
+        $.ajax({
+            type: "GET",
+            url: '/admin/store-product/get-modification',
+            dataType: "json",
+            data: {
+                vendor: vendor, car: car
+            },
+            success: function (response) {
+                // var result = $.parseJSON(response);
+                if (!response.error) {
+                    $('.car_modifications').html(response);
+
+                } else {
+                    console.log('Ошибка обработки данных');
+                }
+            },
+            error: function () {
+                console.log('Ошибка обработки данных 2');
+            },
+        });
+    }
+
+    function getYear(vendor, car, modification) {
+        $.ajax({
+            type: "GET",
+            url: '/admin/store-product/get-year',
+            dataType: "json",
+            data: {
+                vendor: vendor, car: car, modification: modification
+            },
+            success: function (response) {
+                if (!response.error) {
+                    $('.car_years').html(response);
+                } else {
+                    console.log('Ошибка обработки данных');
+                }
+            },
+            error: function () {
+                console.log('Ошибка обработки данных 2');
+            },
+        });
+    }
+
+    $('.vendor_select').change(function () {
+        var vendor = $('.vendor_select').val();
+
+        getCar(vendor);
+
+        // $('.car_items').prop('disabled', false);
+        // $('.car_modifications').prop('disabled', true);
+        // $('.car_years').prop('disabled', true);
+    });
+
+    $('.car_items').change(function () {
+        var vendor = $('.vendor_select').val();
+        var car = $(this).val();
+
+        getModification(vendor, car);
+
+        // $('.car_modifications').prop('disabled', false);
+        // $('.car_years').prop('disabled', true);
+    });
+
+    $('.car_modifications').change(function () {
+        var vendor = $('.vendor_select').val();
+        var car = $('.car_items').val();
+        var modification = $(this).val();
+
+        getYear(vendor, car, modification);
+
+        // $('.car_years').prop('disabled', false);
+    });
+
 });
 
 $('.owl-related').owlCarousel({
@@ -67,7 +208,6 @@ if($(document).width() > 768) {
 
     let owlDot = $('.product-photo .owl-carousel .owl-dot');
 
-
     owlDot.each(function() {
         $(this).addClass( 'dotnumber' + dotcount);
         $(this).attr('data-info', dotcount);
@@ -81,16 +221,10 @@ if($(document).width() > 768) {
         slidecount=slidecount+1;
     });
 
-
-
     owlDot.each(function() {
-
         grab = $(this).data('info');
-
         slidegrab = $('.slidenumber'+ grab +' img').attr('src');
-
         $(this).css("background-image", "url("+slidegrab+")");
-
     });
 
     amount = owlDot.length;
