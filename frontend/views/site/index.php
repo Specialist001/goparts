@@ -1,53 +1,83 @@
 <?php
-
+use frontend\widgets\WCarSearch;
 /* @var $this yii\web\View */
 
 $this->title = 'My Yii Application';
+
+
 ?>
-<div class="site-index">
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
+<?= WCarSearch::widget()?>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+<section class="slider">
+    <!-- Set up your HTML -->
+    <div class="owl-carousel owl-theme">
+        <div class="slider1">
+            <div class="container">
+                <div class="slider1_name">
+                    <h1>The single web portal <br><span>of selling auto parts</span></h1>
+                    <p>Find or sell car parts, spare parts, find out about your fines<br> and pay online with a cashback <span>up to 5%</span></p>
+                    <button>Registration</button>
+                </div>
+            </div>
+            <div class="slider1_img">
+                <img src="img/car.png" alt="">
+            </div>
+            <div class="slider1_bg"></div>
+        </div>
+        <div class="slider1">
+            <div class="container">
+                <div class="slider1_name">
+                    <h1>The single web portal <br><span>of selling auto parts</span></h1>
+                    <p>Find or sell car parts, spare parts, find out about your fines<br> and pay online with a cashback <span>up to 5%</span></p>
+                    <button>Registration</button>
+                </div>
+            </div>
+            <div class="slider1_img">
+                <img src="img/car.png" alt="">
+            </div>
+            <div class="slider1_bg"></div>
+        </div>
     </div>
+</section>
 
-    <div class="body-content">
-
+<section class="working">
+    <div class="container">
         <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+            <div class="col-md-4">
+                <img src="img/girl.png" alt="" class="working_girl">
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+            <div class="col-md-8 working_top">
+                <h3>Start working with us and <br><span>build your profitable business</span></h3>
+                <p><span><strong>UAEPARTS</strong> is the largest online store in UAE,</span> that offers its customers the widest range of spare auto parts and accessories. With us you will have an option to purchase a product online and pay using our secure online payment system or you can pay upon receiving the product. We also offer an express delivery to any address throughout UAE, so the product is delivered to you as soon as possible.</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="working_list">
+                            <div class="working_list_item">
+                                <p>Widest range of auto spare parts</p>
+                                <p>Detailed information about the product</p>
+                                <img src="img/ok.png" alt="">
+                            </div>
+                            <div class="working_list_item">
+                                <p>Fast and easy way to search a product</p>
+                                <p>Daily update of products</p>
+                                <img src="img/ok.png" alt="">
+                            </div>
+                            <div class="working_list_item">
+                                <p>Convenient multiple payment options</p>
+                                <p>Express delivery</p>
+                                <img src="img/ok.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 working_right">
+                        <h3><span>Our</span> Advantages</h3>
+                        <p>In addition, <span>download our APP</span> and make your business better </p>
+                        <p><a href="#"><img src="img/google.png"></a><a href="#"><img src="img/store.png"></a></p>
+                        <button>Registration</button>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
-</div>
+</section>

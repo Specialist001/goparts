@@ -1,6 +1,6 @@
 <?php
 return [
-    'appName' => 'UAEParts',
+    'appName' => 'UAE parts',
     'appShortName' => 'UAEP',
     'adminEmail' => 'admin@example.com',
     'supportEmail' => 'support@havi2.com',
