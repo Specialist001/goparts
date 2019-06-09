@@ -95,6 +95,22 @@ class StoreProductController extends Controller
     {
         $model = new StoreProduct();
         $video = new StoreProductVideo();
+        $category = !empty(Yii::$app->request->get('category'))? Yii::$app->request->get('category'): false;
+
+        if(empty($category = StoreCategory::findOne(['id' => $category, 'status' => 1]))) $category = false;
+        if(!empty($category)) if(!empty($category->activeCategories))  $category = false;
+        $unset = false;
+        $temp_parent = $category;
+        while ($temp_parent) {
+            if (!$temp_parent->status) {
+                $unset = true;
+                break;
+            }
+            if (empty($temp_parent->parent)) break;
+            $temp_parent = $temp_parent->parent;
+        }
+
+        if ($unset) $category = false;
 
         $translation_en = new StoreProductTranslation();
         $translation_ar = new StoreProductTranslation();
@@ -102,7 +118,7 @@ class StoreProductController extends Controller
 
         $store_product_commission = new StoreProductCommission();
 
-        $cats = StoreCategory::find()->where(['parent_id' => null])->all();
+        $cats = StoreCategory::find()->where(['parent_id' => null, 'status'=>1])->orderBy('`order`')->all();
         $users = User::find()->where(['status' => 10])->all();
         $type_cars = StoreTypeCar::find()->where(['parent_id' => null])->all();
         $cars = Cars::find()->all();
@@ -112,6 +128,8 @@ class StoreProductController extends Controller
         $user_filter = [];
         $type_car_filter = [];
         $cars_array = [];
+
+        $model->sku = time(). '-' . date('dm');
 
 //        if (!empty($cats)) {
 //            foreach ($cats as $cat) {
@@ -250,7 +268,7 @@ class StoreProductController extends Controller
 
             $model->save();
 
-            return $this->redirect(['update', 'id' => $model->id]);
+            return $this->redirect(['update', 'id' => $model->id, 'category' => $model->category_id]);
         }
 
         $errors = $model->errors;
@@ -258,6 +276,8 @@ class StoreProductController extends Controller
         return $this->render('create', [
             'model' => $model,
             'video' => $video,
+            'cats' => $cats,
+            'category' => $category,
             'translation_en' => $translation_en,
             'translation_ar' => $translation_ar,
             'translation_ru' => $translation_ru,
@@ -589,4 +609,6 @@ class StoreProductController extends Controller
 
         return $this->asJson($data);
     }
+
+
 }

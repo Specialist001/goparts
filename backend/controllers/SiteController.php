@@ -1,6 +1,7 @@
 <?php
 namespace backend\controllers;
 
+use common\models\StoreCategory;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -20,13 +21,14 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
+                'only' => ['logout', 'signup', 'index', 'get-cats'],
                 'rules' => [
                     [
                         'actions' => ['login', 'error'],
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index', 'get-cats'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -100,5 +102,16 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    public function actionGetCats() {
+        $this->layout = 'empty';
+        $id = !empty(Yii::$app->request->get('id'))? Yii::$app->request->get('id'): null;
+        $add = !empty(Yii::$app->request->get('add'))? Yii::$app->request->get('add'): '';
+        $cats = StoreCategory::find()->with('categories')->with('parent')->where(['parent_id' => $id, 'status' => 1])->orderBy('`order`')->all();
+        return $this->render('cat-widget', [
+            'cats' => $cats,
+            'add' => $add
+        ]);
     }
 }

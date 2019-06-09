@@ -98,6 +98,18 @@
                             ['label' => 'Create Attribute Option', 'icon' => 'plus', 'url' => ['/store-attribute-option/create'],],
                         ],
                     ],
+                    ['label' => 'Cities', 'icon' => 'globe', 'url' => ['#'],
+                        'items' => [
+                            ['label' => 'All Cities', 'icon' => 'list', 'url' => ['/city'],],
+                            ['label' => 'Create City', 'icon' => 'plus', 'url' => ['/city/create'],],
+                        ],
+                    ],
+                    ['label' => 'Stocks', 'icon' => 'globe', 'url' => ['#'],
+                        'items' => [
+                            ['label' => 'All Stocks', 'icon' => 'list', 'url' => ['/stock'],],
+                            ['label' => 'Create Stock', 'icon' => 'plus', 'url' => ['/stock/create'],],
+                        ],
+                    ],
              
 //                    ['label' => 'Отчеты', 'icon' => 'flag', 'url' => ['/report'],],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],

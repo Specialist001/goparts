@@ -28,9 +28,9 @@ use yii\helpers\Url;
                 </div>
 
                 <div class="widgetform_make px-3 float-md-left d-inline-block border-top border-right border-bottom position-relative">
-                    <select class="form-control vendor_select" name="vendor_name" style="visibility: hidden">
-                        <option disabled selected>Select Vendor</option>
-                        <?= Dropdown::widget() ?>
+                    <select class="form-control vendor_select" name="vendor_name">
+                        <option disabled selected>Select Make</option>
+<!--                        --><?//= Dropdown::widget(); ?>
                         <?php foreach ($cars_array as $car) { ?>
                             <option value="<?= $car ?>"><?= $car ?></option>
                         <?php } ?>

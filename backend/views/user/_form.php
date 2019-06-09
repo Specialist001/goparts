@@ -8,6 +8,10 @@ use rmrevin\yii\fontawesome\FA;
 /* @var $this yii\web\View */
 /* @var $model common\models\User */
 /* @var $form yii\widgets\ActiveForm */
+//echo '<pre>';
+////print_r($seller_car_1);
+////print_r($seller_car_2);
+////echo '</pre>';exit;
 ?>
 
 <div class="user-form">
@@ -90,6 +94,24 @@ use rmrevin\yii\fontawesome\FA;
         </div>
         <div class="col-md-3">
             <?= $form->field($model, 'avatar')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-3">
+            <label>Vendor 1</label>
+            <select class="form-control" name="car_1">
+                <option value="0">No vendor</option>
+                <?php foreach ($cars as $car) { ?>
+                    <option value="<?= $car ?>" <?/*=(in_array($car, $seller_car_1))? 'selected':''*/?> ><?= $car ?></option>
+                <?php } ?>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label>Vendor 2</label>
+            <select class="form-control" name="car_2">
+                <option value="0">No vendor</option>
+                <?php foreach ($cars as $car) { ?>
+                    <option value="<?= $car ?>" <?/*=(in_array($car, $seller_car_2))? 'selected':''*/?> ><?= $car ?></option>
+                <?php } ?>
+            </select>
         </div>
 
         <div class="col-md-12">

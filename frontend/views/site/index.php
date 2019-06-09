@@ -1,5 +1,7 @@
 <?php
 use frontend\widgets\WCarSearch;
+use yii\helpers\Url;
+
 /* @var $this yii\web\View */
 
 $this->title = 'My Yii Application';
@@ -17,7 +19,7 @@ $this->title = 'My Yii Application';
                 <div class="slider1_name">
                     <h1>The single web portal <br><span>of selling auto parts</span></h1>
                     <p>Find or sell car parts, spare parts, find out about your fines<br> and pay online with a cashback <span>up to 5%</span></p>
-                    <button>Registration</button>
+                    <a href="<?= Url::to(['signup'])?>">Registration</a>
                 </div>
             </div>
             <div class="slider1_img">
@@ -30,7 +32,7 @@ $this->title = 'My Yii Application';
                 <div class="slider1_name">
                     <h1>The single web portal <br><span>of selling auto parts</span></h1>
                     <p>Find or sell car parts, spare parts, find out about your fines<br> and pay online with a cashback <span>up to 5%</span></p>
-                    <button>Registration</button>
+                    <a href="<?= Url::to(['signup'])?>">Registration</a>
                 </div>
             </div>
             <div class="slider1_img">
@@ -74,7 +76,7 @@ $this->title = 'My Yii Application';
                         <h3><span>Our</span> Advantages</h3>
                         <p>In addition, <span>download our APP</span> and make your business better </p>
                         <p><a href="#"><img src="img/google.png"></a><a href="#"><img src="img/store.png"></a></p>
-                        <button>Registration</button>
+                        <button href="<?php Url::to(['signup'])?>">Registration</button>
                     </div>
                 </div>
             </div>

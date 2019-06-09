@@ -68,10 +68,10 @@ input, input:focus, textarea, select {
 }
 
 .select2-container .select2-selection--single .select2-selection__rendered {
-    font-size: 1.6rem;
+    /*font-size: 1.6rem;*/
 }
 .select2-results__options li {
-    font-size: 1.6rem;
+    /*font-size: 1.6rem;*/
 }
 
 .form-control:disabled, .form-control[readonly] {
@@ -96,7 +96,10 @@ a, a:hover, a:focus, a:active {
 /*    font-size: 0.9rem;*/
 /*}*/
 
-.bg-form_style {
+.bg-form_style_1 {
+    background-color: #00904c!important;
+}
+.bg-form_style_2 {
     background-color: #fe0000!important;
 }
 .bg-form_style.btn-login:hover {
@@ -109,6 +112,30 @@ a, a:hover, a:focus, a:active {
 
 .text-form-style_2 {
     color: #e40000!important;
+}
+
+label.toggle .toggle__text, label.toggle + a {
+    font-size: 0.9rem;
+}
+.logout-btn:hover,
+.logout-btn:active,
+.logout-btn:focus {
+    color: #262626;
+    text-decoration: none;
+    background-color: #f5f5f5;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.logout-btn {
+    width: 100%;
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap;
 }
 
 .navbar-nav .nav-item a::after {
@@ -389,8 +416,8 @@ a, a:hover, a:focus, a:active {
 .widgetform_make {
     border-top: 1px solid #e3e3e3;
     border-bottom: 1px solid #e3e3e3;
-    padding: 18px 35px;
-    width: 15%;
+    padding: 15px 35px;
+    width: 17%;
     position: relative;
     border-right: 1px solid #e3e3e3;
 }
@@ -414,7 +441,7 @@ a, a:hover, a:focus, a:active {
 .widgetform_model {
     border-top: 1px solid #e3e3e3;
     border-bottom: 1px solid #e3e3e3;
-    padding: 18px 35px;
+    padding: 15px 35px;
     width: 16%;
     position: relative;
     border-right: 1px solid #e3e3e3;
@@ -439,8 +466,8 @@ a, a:hover, a:focus, a:active {
 .widgetform_year {
     border-top: 1px solid #e3e3e3;
     border-bottom: 1px solid #e3e3e3;
-    padding: 18px 35px;
-    width: 15%;
+    padding: 15px 35px;
+    width: 13%;
     position: relative;
     border-right: 1px solid #e3e3e3;
 }
@@ -464,7 +491,7 @@ a, a:hover, a:focus, a:active {
 .widgetform_generation {
     border-top: 1px solid #e3e3e3;
     border-bottom: 1px solid #e3e3e3;
-    padding: 18px 35px;
+    padding: 15px 35px;
     width: 20%;
     position: relative;
     border-right: 1px solid #e3e3e3;
@@ -539,7 +566,7 @@ a, a:hover, a:focus, a:active {
     color: #fe0000;
 }
 
-.slider1_name button {
+.slider1_name a {
     background: none;
     border: 2px solid #fe0000;
     color: #fe0000;
@@ -551,7 +578,7 @@ a, a:hover, a:focus, a:active {
     transition: 0.1s;
 }
 
-.slider1_name button:hover {
+.slider1_name a:hover {
     background: #fe0000;
     border: 2px solid #fe0000;
     color: #fff;
@@ -1477,7 +1504,8 @@ footer {
     color: #000;
 }
 
-.customer_group > input {
+.customer_group > input,
+.customer_group .form-control {
     border: 1px solid #c9c8c8;
     width: 100%;
     padding: 10px 20px 10px;
@@ -1486,7 +1514,8 @@ footer {
     font-size: 15px;
 }
 
-.customer_group > input:focus {
+.customer_group > input:focus,
+.customer_group .form-control:focus {
     outline: 0 !important;
 }
 

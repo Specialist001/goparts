@@ -129,3 +129,9 @@ a.desc:after {
     background-color: #ffffff;
     padding: 15px 0;
 }
+
+.category-widget-list li {
+    padding: 7px 10px;
+    border: 1px solid #dedede;
+    cursor: pointer;
+}
