@@ -47,47 +47,53 @@ use rmrevin\yii\fontawesome\FA;
             </div>
             <div class="topheader_login">
                 <?php if (Yii::$app->user->isGuest) { ?>
-                <a data-target="#loginModal" data-toggle="modal" href="javascript:void(0)">
-                    <img src="svg/Login.svg" class="topheader_login_img" alt="">
-                    <span class="topheader_login_text">Login</span>
-                </a>
+<!--                <a data-target="#loginModal" data-toggle="modal" href="javascript:void(0)">-->
+<!--                    <img src="svg/Login.svg" class="topheader_login_img" alt="">-->
+<!--                    <span class="topheader_login_text">Login</span>-->
+<!--                </a>-->
+
+                    <div class="dropdown">
+                        <a id="dropdown_login" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <img src="/svg/Login.svg" class="topheader_login_img" alt="">
+                            <span class="topheader_login_text">Login</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right text-right" aria-labelledby="dropdown_login">
+                            <li>
+                                <a href="<?= Url::to(['login']) ?>"> Login</a>
+                            </li>
+                            <li>
+                                <a href="<?= Url::to(['signup']) ?>"> Signup</a>
+                            </li>
+                        </ul>
+                    </div>
 
                 <?php } else { ?>
                 <div class="dropdown" style="padding-right: 5px;">
                     <a type="" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        <img src="svg/Login.svg" alt="Profile" style="width: 16px;vertical-align: middle;margin-right: 5px;">
+                        <img src="/svg/Login.svg" alt="Profile" style="width: 16px;vertical-align: middle;margin-right: 5px;">
                         Profile
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu3">
+                    <ul class="dropdown-menu dropdown-menu-right px-2 py-1" aria-labelledby="dropdownMenu3">
                         <li>
-                            <a href="<?= Url::to(['user/index']) ?>"><?=FA::i('user')->addCssClass('text-secondary')?> My Profile</a>
+                            <a class="text-form-style_2" href="<?= Url::to(['user/index']) ?>"><?=FA::i('user')->addCssClass('text-secondary text-form-style_2')?> My Profile</a>
                         </li>
                         <li>
-                            <a href="<?= Url::to(['user/orders']) ?>"><?=FA::i('shopping-cart')->addCssClass('text-secondary')?> My Orders</a>
-                        </li>
+                            <a class="text-form-style_2" href="<?= Url::to(['user/orders']) ?>"><?=FA::i('shopping-cart')->addCssClass('text-secondary text-form-style_2')?> My Orders</a>
+                        </li >
                     <?php if (Yii::$app->user->identity->role == 1) {?>
-                        <li>
-                            <a href="<?= Url::to(['user/products']) ?>"><?=FA::i('comment')->addCssClass('text-secondary')?> My Products</a>
+                        <li >
+                            <a class="text-form-style_2" href="<?= Url::to(['user/products']) ?>"><?=FA::i('comment')->addCssClass('text-secondary text-form-style_2')?> My Products</a>
                         </li>
                     <?php } ?>
+                        <hr>
                         <li>
                             <?= Html::beginForm(['/site/logout'], 'post') .
                             Html::submitButton(
-                                FA::icon('sign-out')->addCssClass('text-danger') . ' Log Out',
-                                ['class' => 'btn-link logout-btn logout']
+                                FA::icon('sign-out')->addCssClass('text-danger text-form-style_2') . ' Log Out',
+                                ['class' => 'btn-link logout-btn logout text-form-style_2']
                             )
                             . Html::endForm()
                             ?>
-                        </li>
-                        <li>
-                            <?= Html::beginForm(['/site/logout'], 'post') ?>
-                            <?= FA::icon('sign-out') ?>
-                            <input type="submit" class="btn-link logout-btn logout" value="Log Out">
-<!--                            Html::submitButton(-->
-<!--                                FA::icon('sign-out')->addCssClass('text-danger') . ' Log Out',-->
-<!--                                ['class' => 'btn-link logout-btn logout']-->
-<!--                            )-->
-                            <?php Html::endForm() ?>
                         </li>
                     </ul>
                 </div>
@@ -115,7 +121,7 @@ use rmrevin\yii\fontawesome\FA;
                     <div class="col-md-4">
                         <div class="header_city">
                             <div class="header_city_icon">
-                                <img src="svg/loaction.svg" alt="">
+                                <img src="/svg/loaction.svg" alt="">
                             </div>
                             <div class="header_city_text">
                                 <span>Your City</span>
@@ -126,7 +132,7 @@ use rmrevin\yii\fontawesome\FA;
                     <div class="col-md-4">
                         <div class="header_phone">
                             <div class="header_phone_icon">
-                                <img src="svg/phone.svg" alt="">
+                                <img src="/svg/phone.svg" alt="">
                             </div>
                             <div class="header_phone_text">
                                 <span>Sa-Th 9:00-20:00</span>
@@ -138,7 +144,7 @@ use rmrevin\yii\fontawesome\FA;
                     <div class="col-md-4">
                         <div class="header_shop">
                             <div class="header_shop_icon">
-                                <img src="img/header_shop_icon.png" alt="">
+                                <img src="/img/header_shop_icon.png" alt="">
                             </div>
                             <div class="header_shop_text">
                                 <h4>In basket</h4>
@@ -157,7 +163,7 @@ use rmrevin\yii\fontawesome\FA;
         <div class="modal-content p-3">
             <div class="modal-header border-bottom-0 pb-0 pt-1">
                 <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
-                    <img class="img-fluid" src="svg/close.svg" style="width: 1rem">
+                    <img class="img-fluid" src="/svg/close.svg" style="width: 1rem">
                 </button>
             </div>
             <div class="modal-body px-5">
@@ -168,7 +174,7 @@ use rmrevin\yii\fontawesome\FA;
                         <div class="input-group text-muted rounded border mb-3">
                                 <span class="input-group-prepend mr-1">
                                     <div class="input-group-text bg-transparent border-0">
-                                        <img src="svg/Mail_.svg">
+                                        <img src="/svg/Mail_.svg">
                                     </div>
                                 </span>
                             <input class="py-2 border-0 d-block w-75" id="LoginForm[username]"
@@ -177,7 +183,7 @@ use rmrevin\yii\fontawesome\FA;
                         <div class="input-group text-muted rounded border mb-3">
                                 <span class="input-group-prepend mx-1">
                                     <div class="input-group-text bg-transparent border-0">
-                                        <img src="svg/lock.svg">
+                                        <img src="/svg/lock.svg">
                                     </div>
                                 </span>
                             <input class="py-2 border-0 d-block w-75" id="LoginForm[password]"

@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\StoreCategory;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -90,11 +91,11 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goHome();
+            return $this->goBack();
         } else {
             $model->password = '';
 
-            return $this->render('index', [
+            return $this->render('login', [
                 'model' => $model,
             ]);
         }
@@ -255,6 +256,17 @@ class SiteController extends Controller
 
         return $this->render('resendVerificationEmail', [
             'model' => $model
+        ]);
+    }
+
+    public function actionGetCats() {
+        $this->layout = 'empty';
+        $id = !empty(Yii::$app->request->get('id'))? Yii::$app->request->get('id'): null;
+        $add = !empty(Yii::$app->request->get('add'))? Yii::$app->request->get('add'): '';
+        $cats = StoreCategory::find()->with('categories')->with('parent')->where(['parent_id' => $id, 'status' => 1])->orderBy('`order`')->all();
+        return $this->render('cat-widget', [
+            'cats' => $cats,
+            'add' => $add
         ]);
     }
 }

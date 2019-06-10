@@ -2,6 +2,9 @@
 namespace backend\controllers;
 
 use common\models\StoreCategory;
+use common\models\StoreOrder;
+use common\models\StoreProduct;
+use common\models\User;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -62,7 +65,20 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $counter = [];
+
+        $users = User::find()->all();
+        $counter['user_count'] = count($users);
+
+        $products  = StoreProduct::find()->all();
+        $counter['product_count'] = count($products);
+
+        $orders = StoreOrder::find()->all();
+        $counter['order_count'] = count($orders);
+
+        return $this->render('index', [
+            'counter' => $counter,
+        ]);
     }
 
     /**

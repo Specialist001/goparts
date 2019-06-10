@@ -38,6 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'middle_name',
             'last_name',
             [
+//                'class' => 'bootstrap.widgets.TbEditableColumn',
                 'attribute' => 'gender',
                 'format' => 'gender',
                 'filter' => array("0" => "Male", "1" => "Female"),

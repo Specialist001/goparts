@@ -95,12 +95,13 @@ use rmrevin\yii\fontawesome\FA;
         <div class="col-md-3">
             <?= $form->field($model, 'avatar')->textInput(['maxlength' => true]) ?>
         </div>
+        <?php if($model->role == $model::ROLE_SELLER) {?>
         <div class="col-md-3">
             <label>Vendor 1</label>
             <select class="form-control" name="car_1">
                 <option value="0">No vendor</option>
                 <?php foreach ($cars as $car) { ?>
-                    <option value="<?= $car ?>" <?/*=(in_array($car, $seller_car_1))? 'selected':''*/?> ><?= $car ?></option>
+                    <option value="<?= $car ?>" <?= $car == $car_1->vendor_name ? 'selected':''?> ><?= $car ?></option>
                 <?php } ?>
             </select>
         </div>
@@ -109,10 +110,11 @@ use rmrevin\yii\fontawesome\FA;
             <select class="form-control" name="car_2">
                 <option value="0">No vendor</option>
                 <?php foreach ($cars as $car) { ?>
-                    <option value="<?= $car ?>" <?/*=(in_array($car, $seller_car_2))? 'selected':''*/?> ><?= $car ?></option>
+                    <option value="<?= $car ?>" <?= $car == $car_2->vendor_name ? 'selected':''?> ><?= $car ?></option>
                 <?php } ?>
             </select>
         </div>
+        <?php } ?>
 
         <div class="col-md-12">
             <div class="form-group">

@@ -48,6 +48,11 @@ class StoreProductToCar extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function find()
+    {
+        return parent::find()->with('car');
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

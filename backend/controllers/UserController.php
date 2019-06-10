@@ -93,23 +93,7 @@ class UserController extends Controller
 
         $car_1 = (!empty(SellerCar::findOne(['user_id'=>$model->id, 'order'=>1]))) ? SellerCar::findOne(['user_id'=>$model->id, 'order'=>1]) : new SellerCar();
         $car_2 = (!empty(SellerCar::findOne(['user_id'=>$model->id, 'order'=>2]))) ? SellerCar::findOne(['user_id'=>$model->id, 'order'=>2]) : new SellerCar();
-        $seller_car_1 = SellerCar::find()->where(['user_id'=>$model->id, 'order'=>1])->one();
-        $seller_car_2 = SellerCar::find()->where(['user_id'=>$model->id, 'order'=>2])->one();
 
-//        if (!empty($seller_car_1)) {
-//            $seller_car_1 = ArrayHelper::map($seller_car_1, 'order', 'vendor_name');
-//        }
-//        if (!empty($seller_car_2)) {
-//            $seller_car_2 = ArrayHelper::map($seller_car_2, 'order', 'vendor_name');
-//        }
-//        echo '<pre>';
-//        print_r($seller_car_1);
-//        print_r($seller_car_2);
-//        echo '</pre>';exit;
-
-//        echo '<pre>';
-//        print_r(Yii::$app->request->post());
-//        echo '</pre>';
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->save();
 
@@ -139,8 +123,6 @@ class UserController extends Controller
             'cars' => $cars,
             'car_1' => $car_1,
             'car_2' => $car_2,
-            'seller_car_1' => $seller_car_1,
-            'seller_car_2' => $seller_car_2,
         ]);
     }
 

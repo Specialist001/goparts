@@ -28,6 +28,9 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
+    const ROLE_BUYER = 0;
+    const ROLE_SELLER = 1;
+
     public $password;
 
     /**

@@ -33,8 +33,8 @@ function recursiveLeftCatMenu($menu, $parent = 0)
     }
     for ($s = 0; $s < count($menu); $s++) {
         $fa = '';
-        $img = $menu[$s]->icon? '<img src="'.$menu[$s]->icon.'" alt="'.$s.'" class="cat_icon"> ': '';
-        $title = $menu[$s]->translate->name;
+        $img = $menu[$s]->image ? '<img src="'.$menu[$s]->image.'" alt="'.$s.'" class="cat_icon"> ': '';
+        $title = $menu[$s]->translate->title;
         if ($menu[$s]->activeCategories) {
             if ($active_ids[$parent] == $menu[$s]->id) $fa = FA::i('angle-up')->addCssClass('pull-right');
             else $fa = FA::i('angle-down')->addCssClass('pull-right');
@@ -43,7 +43,7 @@ function recursiveLeftCatMenu($menu, $parent = 0)
             $title = '<strong>' . $title . '</strong>';
         }
         $result .= '<li class="'.$class.'">
-                        <a href="' . Url::to(['category/index', 'id' => $menu[$s]->url]) . '" class="'.$link.'">
+                        <a href="' . Url::to(['category/index', 'id' => $menu[$s]->slug]) . '" class="'.$link.'">
                         ' . $title . '
                         ' . $fa . '
                         </a>';

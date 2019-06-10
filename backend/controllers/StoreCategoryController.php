@@ -7,7 +7,7 @@ use common\components\SimpleImage;
 use common\models\StoreCategoryTranslation;
 use Yii;
 use common\models\StoreCategory;
-use backend\models\StoreCategorySearch;
+use backend\models\CategorySearch;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -40,7 +40,7 @@ class StoreCategoryController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new StoreCategorySearch();
+        $searchModel = new CategorySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         $parents = StoreCategory::find()->select('parent_id')->orderBy('parent_id')->groupBy('parent_id')->all();

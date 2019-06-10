@@ -21,8 +21,8 @@ class AppAsset extends AssetBundle
         'css/style.css',
     ];
     public $js = [
-        'js/jquery-3.3.1.slim.min.js',
-        'js/jquery.min.js',
+//        'js/jquery-3.3.1.slim.min.js',
+//        'js/jquery.min.js',
         'js/owl.carousel.min.js',
         'js/popper.min.js',
         'js/bootstrap.min.js',
