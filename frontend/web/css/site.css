@@ -82,3 +82,7 @@ body {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.help-block.help-block-error {
+    color: #aa0000;
+}

@@ -9,12 +9,14 @@ use yii\web\AssetBundle;
  */
 class AdminLtePluginAsset extends AssetBundle
 {
-    public $basePath = '@vendor/almasaeed2010/adminlte/plugins';
+    public $basePath = '@vendor/almasaeed2010/adminlte';
     public $css = [
-        'datatables/dataTables.bootstrap.css',
+        'plugins/datatables/dataTables.bootstrap.css',
+        'plugins/datatables/dataTables.bootstrap.css',
+        'bower_components/Ionicons/ionicons.min.css',
     ];
     public $js = [
-        'datatables/dataTables.bootstrap.min.js',
+        'plugins/datatables/dataTables.bootstrap.min.js',
     ];
     public $depends = [
         'dmstr\web\AdminLteAsset',

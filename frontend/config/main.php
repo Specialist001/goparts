@@ -47,6 +47,8 @@ return [
             'rules' => [
                 'login' => 'site/login',
                 'signup' => 'site/signup',
+                'user/products' => 'product/index',
+                'user/product/create' => 'product/create',
                 'reset-password' => 'site/request-password-reset',
             ],
         ],

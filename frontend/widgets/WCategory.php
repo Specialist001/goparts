@@ -21,7 +21,7 @@ class WCategory extends Widget
     public function run() {
         if($this->key == 'menu') {
             return $this->render('store-category/view', [
-                'menu' => Category::find()->where(['status' => 1, 'parent_id' => null])->orderBy('order')->all()
+                'menu' => StoreCategory::find()->where(['status' => 1, 'parent_id' => null])->orderBy('order')->all()
             ]);
         }
         if($this->key == 'preview') {

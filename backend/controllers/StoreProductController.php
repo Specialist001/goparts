@@ -129,7 +129,7 @@ class StoreProductController extends Controller
         $type_car_filter = [];
         $cars_array = [];
 
-        $model->sku = time(). '-' . date('dm');
+
 
 //        if (!empty($cats)) {
 //            foreach ($cats as $cat) {
@@ -195,6 +195,8 @@ class StoreProductController extends Controller
             } else $model->image = '/uploads/site/default_cat.png';
 
             $model->save();
+
+            $model->sku = Yii::$app->user->getId() .'-'. date('dmy') .'-'. $model->id;
 
             $translation_en->product_id = $model->id;
             $translation_en->name = (Yii::$app->request->post('StoreProductTranslation')['name']['en'] != '') ? Yii::$app->request->post('StoreProductTranslation')['name']['en'] : '';
@@ -436,8 +438,7 @@ class StoreProductController extends Controller
                 //->andWhere(['modification'=>$car_modification])
                 ->all();
 
-            echo $car->id;
-            print_r($s_1);exit;
+
 
             $productCar = new StoreProductToCar();
             $productCar->product_id = $model->id;

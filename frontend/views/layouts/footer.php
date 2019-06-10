@@ -11,15 +11,15 @@ use rmrevin\yii\fontawesome\FA;
     <div class="container">
         <div class="row">
             <div class="col-md-4 topfooter_div">
-                <img src="svg/phone.svg" alt="">
+                <img src="/svg/phone.svg" alt="">
                 <span class="topfooter_div_span1">+97155 689 22 01</span>
             </div>
             <div class="col-md-4 topfooter_div">
-                <img src="svg/schedule.svg" alt="">
+                <img src="/svg/schedule.svg" alt="">
                 <span>Sa-Th 9:00-20:00</span>
             </div>
             <div class="col-md-4 topfooter_div topfooter_div3">
-                <img src="svg/loaction.svg" alt="">
+                <img src="/svg/loaction.svg" alt="">
                 <span>Emirates Industrial City,<br> shop No. 5. , United Arab<br> Emirates , Sharjah</span>
             </div>
         </div>
@@ -57,11 +57,11 @@ use rmrevin\yii\fontawesome\FA;
                 <div class="row">
                     <div class="col-md-6 footer_left_div3">
                         <h3>Download our APP</h3>
-                        <img src="img/google.png" alt="">
-                        <img src="img/store.png" alt="">
+                        <img src="/img/google.png" alt="">
+                        <img src="/img/store.png" alt="">
                         <p>You can pay by bank cards</p>
-                        <img src="img/visa.png" alt="">
-                        <img src="img/mastercard.png" alt="">
+                        <img src="/img/visa.png" alt="">
+                        <img src="/img/mastercard.png" alt="">
                     </div>
                     <div class="col-md-6 footer_left_div4">
                         <h3>Contact with Us</h3>
@@ -69,11 +69,11 @@ use rmrevin\yii\fontawesome\FA;
                         <input type="button" name="button" value="Send" class="footer_left_div4_button">
                         <div class="footer_rightblock">
                             <div class="rightblock_div1">
-                                <img src="img/wallet.png" alt="">
+                                <img src="/img/wallet.png" alt="">
                                 <a href="#">Payment</a>
                             </div>
                             <div class="rightblock_div2">
-                                <img src="img/develry.png" alt="">
+                                <img src="/img/develry.png" alt="">
                                 <a href="#">Delivery</a>
                             </div>
                             <div class="rightblock_div3">

@@ -5,7 +5,7 @@ use yii\grid\GridView;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\StoreCategorySearch */
+/* @var $searchModel backend\models\CategorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('backend', 'Store Category');
