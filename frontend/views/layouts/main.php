@@ -66,9 +66,9 @@ AppAsset::register($this);
         */?>
 
 <!--        <div class="container">-->
-            <?= Breadcrumbs::widget([
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ]) ?>
+<!--            --><?//= Breadcrumbs::widget([
+//                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+//            ]) ?>
             <?= Alert::widget() ?>
 <!--            <div class="pull-right" style="padding-top: 15px;">--><?//= WLanguage::widget() ?><!--</div>-->
 <!--            --><?//= Yii::t('backend', 'Store Category') ?>

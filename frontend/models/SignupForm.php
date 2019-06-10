@@ -15,6 +15,7 @@ class SignupForm extends Model
     public $password;
     public $role;
     public $legal_info;
+    public $legal_address;
     public $location;
     public $phone;
 

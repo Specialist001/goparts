@@ -45,6 +45,9 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'login' => 'site/login',
+                'signup' => 'site/signup',
+                'reset-password' => 'site/request-password-reset',
             ],
         ],
 

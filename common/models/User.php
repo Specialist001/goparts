@@ -97,7 +97,7 @@ class User extends ActiveRecord implements IdentityInterface
             'avatar' => 'Avatar',
             'email_confirm' => 'Email Confirm',
             'phone' => 'Phone',
-            'legal_info' => 'Legal Info',
+            'legal_info' => 'Name of Company',
             'legal_reg_certificate' => 'Legal Reg Certificate',
             'legal_address' => 'Legal Address',
             'legal_bank_account' => 'Legal Bank Account',
@@ -387,5 +387,13 @@ class User extends ActiveRecord implements IdentityInterface
     public function getUsersBlogs()
     {
         return $this->hasMany(UsersBlog::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSellerCars()
+    {
+        return $this->hasMany(SellerCar::className(), ['user_id' => 'id']);
     }
 }

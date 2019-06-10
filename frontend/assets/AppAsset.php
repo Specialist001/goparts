@@ -16,6 +16,7 @@ class AppAsset extends AssetBundle
         'css/owl.carousel.min.css',
         'css/owl.theme.default.min.css',
         'css/select2.min.css',
+        'css/checkbox.css',
         'css/site.css',
         'css/style.css',
     ];

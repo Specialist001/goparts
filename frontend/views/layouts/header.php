@@ -4,7 +4,7 @@ use common\models\Page;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use rmrevin\yii\fontawesome\FA;
-
+//print_r(Yii::$app->user->identity);exit;
 ?>
 
 
@@ -46,10 +46,53 @@ use rmrevin\yii\fontawesome\FA;
                 </a>
             </div>
             <div class="topheader_login">
-                <a data-target="#loginModal" data-toggle="modal" href="javascript:void(0)"">
-                <img src="svg/Login.svg" class="topheader_login_img" alt="">
-                <span class="topheader_login_text">Login</span>
+                <?php if (Yii::$app->user->isGuest) { ?>
+                <a data-target="#loginModal" data-toggle="modal" href="javascript:void(0)">
+                    <img src="svg/Login.svg" class="topheader_login_img" alt="">
+                    <span class="topheader_login_text">Login</span>
                 </a>
+
+                <?php } else { ?>
+                <div class="dropdown" style="padding-right: 5px;">
+                    <a type="" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <img src="svg/Login.svg" alt="Profile" style="width: 16px;vertical-align: middle;margin-right: 5px;">
+                        Profile
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu3">
+                        <li>
+                            <a href="<?= Url::to(['user/index']) ?>"><?=FA::i('user')->addCssClass('text-secondary')?> My Profile</a>
+                        </li>
+                        <li>
+                            <a href="<?= Url::to(['user/orders']) ?>"><?=FA::i('shopping-cart')->addCssClass('text-secondary')?> My Orders</a>
+                        </li>
+                    <?php if (Yii::$app->user->identity->role == 1) {?>
+                        <li>
+                            <a href="<?= Url::to(['user/products']) ?>"><?=FA::i('comment')->addCssClass('text-secondary')?> My Products</a>
+                        </li>
+                    <?php } ?>
+                        <li>
+                            <?= Html::beginForm(['/site/logout'], 'post') .
+                            Html::submitButton(
+                                FA::icon('sign-out')->addCssClass('text-danger') . ' Log Out',
+                                ['class' => 'btn-link logout-btn logout']
+                            )
+                            . Html::endForm()
+                            ?>
+                        </li>
+                        <li>
+                            <?= Html::beginForm(['/site/logout'], 'post') ?>
+                            <?= FA::icon('sign-out') ?>
+                            <input type="submit" class="btn-link logout-btn logout" value="Log Out">
+<!--                            Html::submitButton(-->
+<!--                                FA::icon('sign-out')->addCssClass('text-danger') . ' Log Out',-->
+<!--                                ['class' => 'btn-link logout-btn logout']-->
+<!--                            )-->
+                            <?php Html::endForm() ?>
+                        </li>
+                    </ul>
+                </div>
+                <?php } ?>
+
             </div>
         </div>
     </nav>
@@ -119,16 +162,17 @@ use rmrevin\yii\fontawesome\FA;
             </div>
             <div class="modal-body px-5">
                 <div class="form">
-                    <form accept-charset="UTF-8" action="" class="loginBox auth" method="POST">
-                        <h4 class="text-center mb-3">Войти в личный кабинет</h4>
+                    <form id="login-form" accept-charset="UTF-8" action="<?= Url::to(['login']) ?>" class="loginBox auth" method="POST">
+                        <input type="hidden" name="<?=Yii::$app->request->csrfParam; ?>" value="<?=Yii::$app->request->getCsrfToken(); ?>" />
+                        <h4 class="text-center mb-3">Log In</h4>
                         <div class="input-group text-muted rounded border mb-3">
                                 <span class="input-group-prepend mr-1">
                                     <div class="input-group-text bg-transparent border-0">
                                         <img src="svg/Mail_.svg">
                                     </div>
                                 </span>
-                            <input class="py-2 border-0 d-block w-75" id="name-email-input"
-                                   name="email" placeholder="Введите e-mail" type="text">
+                            <input class="py-2 border-0 d-block w-75" id="LoginForm[username]"
+                                   name="email" placeholder="Username" type="text" required>
                         </div>
                         <div class="input-group text-muted rounded border mb-3">
                                 <span class="input-group-prepend mx-1">
@@ -136,37 +180,37 @@ use rmrevin\yii\fontawesome\FA;
                                         <img src="svg/lock.svg">
                                     </div>
                                 </span>
-                            <input class="py-2 border-0 d-block w-75" id="name-password-input"
-                                   name="password" placeholder="Введите пароль" type="password">
+                            <input class="py-2 border-0 d-block w-75" id="LoginForm[password]"
+                                   name="password" placeholder="Password" type="password" required>
                         </div>
                         <div class="d-inline-block w-100">
                             <label class="toggle float-left">
-                                <input class="toggle__input" name="check" type="checkbox">
+                                <input type="hidden" name="LoginForm[rememberMe]" value="0">
+                                <input class="toggle__input" name="LoginForm[rememberMe]" type="checkbox" value="1" checked>
                                 <span class="toggle__label">
-                                        <span class="toggle__text">Запомнить пароль</span>
+                                        <span class="toggle__text">Remember password</span>
                                     </span>
                             </label>
-                            <a class="text-form-style_2 float-right font-weight-bold"
-                               href="#">Забыли
-                                пароль?</a>
+                            <a class="text-form-style_2 float-right font-weight-bold pt-1"
+                               href="<?= Url::to(['reset-password']); ?>">Forgot your password?</a>
                         </div>
                         <div class="text-center mt-3 mb-4">
-                            <input class="btn bg-form_style text-white px-5 btn-login"
-                                   type="submit" value="Войти">
+                            <input class="btn bg-form_style_1 text-white px-5 btn-login"
+                                   type="submit" value="Login">
                         </div>
                         <div class="w-75 text-center pt-3 m-auto text-font-pn_regular"
                              style="border-top: 2px dashed #efefef;">
-                            <span class="text-center">Все еще нет аккаунта?</span>
+                            <span class="text-center">Still no account?</span>
                             <p class="d-block message">
-                                <a class="text-form-style_2 reg_btn" href="#">
-                                    Зарегистрироваться
+                                <a class="text-form-style_2 reg_btn" href="<?= Url::to(['signup']) ?>">
+                                    Register Here
                                 </a>
                             </p>
                         </div>
                         <div class="text-center pt-2 m-auto">
                                 <span class="text-muted" style="font-size: 0.9rem">
-                                    Входя в раздел Мой профиль, Вы принимаете
-                                    <a class="text-form-style_2" href=""> Условия использования сайта</a>
+                                    By entering the My Profile section, you accept the
+                                    <a class="text-form-style_2" href=""> Terms of Use.</a>
                                 </span>
                         </div>
                     </form>
@@ -182,22 +226,6 @@ use rmrevin\yii\fontawesome\FA;
 
                                 <input class="btn btn-default btn-login" onclick="forgetAjax()" type="button"
                                        value="Отправить">
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="content registerBox" style="display:none;">
-                        <h3>Регистрация</h3>
-                        <div class="form">
-                            <form accept-charset="UTF-8" action="" data-remote="true" method="">
-                                <input class="form-control" id="" name="email" placeholder="E-mail" type="text">
-                                <input class="form-control" id="" name="password" placeholder="Пароль"
-                                       type="password">
-                                <input class="form-control" id=" " name="password_confirmation"
-                                       placeholder="Подтверждение пароля" type="password">
-                                <input class="btn btn-default btn-register" name="commit" type="button"
-                                       value="Регистрация">
                             </form>
                         </div>
                     </div>

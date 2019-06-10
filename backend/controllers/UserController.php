@@ -2,9 +2,12 @@
 
 namespace backend\controllers;
 
+use common\models\Cars;
+use common\models\SellerCar;
 use Yii;
 use common\models\User;
 use backend\models\UserSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -86,8 +89,40 @@ class UserController extends Controller
     {
         $model = $this->findModel($id);
         $model->scenario= 'admin';
+        $cars = Cars::getVendors();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $car_1 = (!empty(SellerCar::findOne(['user_id'=>$model->id, 'order'=>1]))) ? SellerCar::findOne(['user_id'=>$model->id, 'order'=>1]) : new SellerCar();
+        $car_2 = (!empty(SellerCar::findOne(['user_id'=>$model->id, 'order'=>2]))) ? SellerCar::findOne(['user_id'=>$model->id, 'order'=>2]) : new SellerCar();
+        $seller_car_1 = SellerCar::find()->where(['user_id'=>$model->id, 'order'=>1])->one();
+        $seller_car_2 = SellerCar::find()->where(['user_id'=>$model->id, 'order'=>2])->one();
+
+//        if (!empty($seller_car_1)) {
+//            $seller_car_1 = ArrayHelper::map($seller_car_1, 'order', 'vendor_name');
+//        }
+//        if (!empty($seller_car_2)) {
+//            $seller_car_2 = ArrayHelper::map($seller_car_2, 'order', 'vendor_name');
+//        }
+//        echo '<pre>';
+//        print_r($seller_car_1);
+//        print_r($seller_car_2);
+//        echo '</pre>';exit;
+
+//        echo '<pre>';
+//        print_r(Yii::$app->request->post());
+//        echo '</pre>';
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->save();
+
+            $car_1->user_id = $model->id;
+            $car_1->order = '1';
+            $car_1->vendor_name = Yii::$app->request->post('car_1');
+            $car_1->save();
+
+            $car_2->user_id = $model->id;
+            $car_2->order = '2';
+            $car_2->vendor_name = Yii::$app->request->post('car_2');
+            $car_2->save();
+
             $model->phone = ($model->phone == '')? null: $model->phone;
 
             if($model->password != '') {
@@ -101,6 +136,11 @@ class UserController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'cars' => $cars,
+            'car_1' => $car_1,
+            'car_2' => $car_2,
+            'seller_car_1' => $seller_car_1,
+            'seller_car_2' => $seller_car_2,
         ]);
     }
 
