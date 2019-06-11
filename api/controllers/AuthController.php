@@ -55,7 +55,7 @@ class AuthController extends \yii\web\Controller
         $user = User::findByUsername($username);
 
         if (!$user) {
-            return $this->redirect(['site/error', 'message' => Yii::t('frontend', 'Incorrect username or passwordd.'), 'code' => 401]);
+            return $this->redirect(['site/error', 'message' => Yii::t('frontend', 'User not found.'), 'code' => 401]);
         }
 
         $check = $user->validatePassword($password);
@@ -71,7 +71,7 @@ class AuthController extends \yii\web\Controller
             $siteToken_model->save();
         }
 
-        return $this->asJson(['type' => 'Basic', 'token' => base64_encode($username.':'.$password),'user'=>$user, 'user_role'=>$user->role]);
+        return $this->asJson(['type' => 'Basic', 'token' => base64_encode($username.':'.$password),'user_status'=>$user->status, 'user_role'=>$user->role]);
 //        return $this->asJson([]);
     }
 
