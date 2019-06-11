@@ -72,7 +72,7 @@ $(document).ready(function () {
     function getCar(vendor) {
         $.ajax({
             type: "GET",
-            url: '/admin/store-product/get-car',
+            url: '/product/get-car',
             dataType: "json",
             data: {
                 vendor: vendor
@@ -94,7 +94,7 @@ $(document).ready(function () {
     function getModification(vendor, car) {
         $.ajax({
             type: "GET",
-            url: '/admin/store-product/get-modification',
+            url: '/product/get-modification',
             dataType: "json",
             data: {
                 vendor: vendor, car: car
@@ -117,7 +117,7 @@ $(document).ready(function () {
     function getYear(vendor, car, modification) {
         $.ajax({
             type: "GET",
-            url: '/admin/store-product/get-year',
+            url: '/product/get-year',
             dataType: "json",
             data: {
                 vendor: vendor, car: car, modification: modification

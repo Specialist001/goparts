@@ -12,6 +12,8 @@ use common\models\User;
  */
 class UserSearch extends User
 {
+    public $commission;
+
     /**
      * {@inheritdoc}
      */
@@ -41,7 +43,8 @@ class UserSearch extends User
      */
     public function search($params)
     {
-        $query = User::find();
+        $query = User::find()->leftJoin('{{%user_commission}}',
+            'user_commission.user_id = user.id');
 
         // add conditions that should always apply here
 
@@ -59,6 +62,8 @@ class UserSearch extends User
             // $query->where('0=1');
             return $dataProvider;
         }
+
+        $query->andFilterWhere(['like','user_commissions.commission',$this->commission]);
 
         // grid filtering conditions
         $query->andFilterWhere([

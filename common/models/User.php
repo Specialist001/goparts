@@ -399,4 +399,12 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(SellerCar::className(), ['user_id' => 'id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCommission()
+    {
+        return $this->hasOne(UserCommission::className(), ['user_id' => 'id']);
+    }
 }

@@ -575,10 +575,17 @@ class StoreProductController extends Controller
         $cars_array = [];
 
         if (count($cars)) {
-            foreach ($cars as $key => $car) {
-                $cars_array[$car['modification']] = $car['modification'];
+            foreach ($cars as $key => $car_1) {
+                $cars_array[$car_1['modification']] = $car_1['modification'];
             }
         }
+        $query_years = (new Query())
+            ->select(['min(id)','max(id)'])
+            ->from('cars')
+            ->where(['vendor'=>$car_vendor])
+            ->andWhere(['car'=>$car])
+            //->andWhere(['modification'=>$car_modification])
+            ->all();
 
         $data = '<option disabled selected>' . Yii::t("StoreModule.store", "Modification") . '</option>';
         if (count($cars_array)) {

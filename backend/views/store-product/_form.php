@@ -54,7 +54,9 @@ $model->category_id = $category->id;
             <!--            --><? //= $form->field($model, 'producer_id')->textInput() ?>
             <!--        </div>-->
             <div class="col-md-3">
-                <?= $form->field($model, 'serial_number')->textInput(['maxlength' => true]) ?>
+                <input type="text" readonly="readonly" id="category_id" class="form-control"
+                       value="<?= $category->translate->name ?>"/>
+<!--                --><?//= $form->field($model, 'serial_number')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-md-3">
                 <?= $form->field($model, 'category_id')->textInput(['readonly' => true, 'disabled' => true]); ?>

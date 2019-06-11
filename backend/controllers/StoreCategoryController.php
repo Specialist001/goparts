@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\StoreCategorySearch;
 use common\components\Helper;
 use common\components\SimpleImage;
 use common\models\StoreCategoryTranslation;
@@ -40,7 +41,7 @@ class StoreCategoryController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new CategorySearch();
+        $searchModel = new StoreCategorySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         $parents = StoreCategory::find()->select('parent_id')->orderBy('parent_id')->groupBy('parent_id')->all();

@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\Cars;
 use common\models\SellerCar;
+use common\models\UserCommission;
 use Yii;
 use common\models\User;
 use backend\models\UserSearch;
@@ -94,6 +95,8 @@ class UserController extends Controller
         $car_1 = (!empty(SellerCar::findOne(['user_id'=>$model->id, 'order'=>1]))) ? SellerCar::findOne(['user_id'=>$model->id, 'order'=>1]) : new SellerCar();
         $car_2 = (!empty(SellerCar::findOne(['user_id'=>$model->id, 'order'=>2]))) ? SellerCar::findOne(['user_id'=>$model->id, 'order'=>2]) : new SellerCar();
 
+        $user_commission = (!empty(UserCommission::findOne(['user_id'=>$model->id]))) ? UserCommission::findOne(['user_id'=>$model->id]) : new UserCommission();
+
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->save();
 
@@ -106,6 +109,10 @@ class UserController extends Controller
             $car_2->order = '2';
             $car_2->vendor_name = Yii::$app->request->post('car_2');
             $car_2->save();
+
+            $user_commission->user_id = $model->id;
+            $user_commission->commission = Yii::$app->request->post('commission') ? Yii::$app->request->post('commission') : 0;
+            $user_commission->save();
 
             $model->phone = ($model->phone == '')? null: $model->phone;
 
@@ -121,6 +128,7 @@ class UserController extends Controller
         return $this->render('update', [
             'model' => $model,
             'cars' => $cars,
+            'user_commission' => $user_commission,
             'car_1' => $car_1,
             'car_2' => $car_2,
         ]);
