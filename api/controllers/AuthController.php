@@ -71,7 +71,8 @@ class AuthController extends \yii\web\Controller
             $siteToken_model->save();
         }
 
-        return $this->asJson(['type' => 'Basic', 'token' => base64_encode($username.':'.$password)]);
+        return $this->asJson(['type' => 'Basic', 'token' => base64_encode($username.':'.$password),'user'=>$user, 'user_role'=>$user->role]);
+//        return $this->asJson([]);
     }
 
     public function actionRegister(){

@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Page;
+use common\models\User;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use rmrevin\yii\fontawesome\FA;
@@ -38,6 +39,7 @@ use rmrevin\yii\fontawesome\FA;
                         Shop <?= FA::i('chevron-right topheader_shop_button_i') ?> </button>
                 </a>
             </div>
+            <?php if(Yii::$app->user->identity->role == User::ROLE_BUYER || Yii::$app->user->isGuest) { ?>
             <div class="topheader_favorites">
                 <a href="#">
                     <img src="/svg/Favorites.svg" class="topheader_favorites_img" alt="">
@@ -45,7 +47,8 @@ use rmrevin\yii\fontawesome\FA;
                     <span class="topheader_favorites_text">Favourites</span>
                 </a>
             </div>
-            <div class="topheader_login">
+            <?php } ?>
+            <div class="topheader_login float-md-left">
                 <?php if (Yii::$app->user->isGuest) { ?>
 <!--                <a data-target="#loginModal" data-toggle="modal" href="javascript:void(0)">-->
 <!--                    <img src="svg/Login.svg" class="topheader_login_img" alt="">-->
@@ -125,7 +128,9 @@ use rmrevin\yii\fontawesome\FA;
                             </div>
                             <div class="header_city_text">
                                 <span>Your City</span>
-                                <h4>Abu Dhabi</h4>
+                                <h4><?php $city = \common\models\City::findOne(['default'=>1]);
+                                echo $city->name;
+                                ?></h4>
                             </div>
                         </div>
                     </div>

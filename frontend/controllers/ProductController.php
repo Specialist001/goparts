@@ -2,10 +2,12 @@
 namespace frontend\controllers;
 
 
+use common\models\Cars;
 use common\models\StoreCategory;
 use common\models\StoreProduct;
 use common\models\User;
 use Yii;
+use yii\db\Query;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 
@@ -71,5 +73,90 @@ class ProductController extends Controller
         }
 
         return $this->goBack();
+    }
+
+    public function actionGetCar($vendor)
+    {
+//        if (Yii::$app->request->isAjax) {
+//            $car_vendor = Yii::$app->request->post('vendor_name');
+        $car_vendor = $vendor;
+
+        $cars = Cars::find()->where(['vendor' => $car_vendor])->all();
+        $cars_array = [];
+
+        if (count($cars)) {
+            foreach ($cars as $key => $car) {
+                $cars_array[$car['car']] = $car['car'];
+            }
+        }
+
+//        $data = '<div class="form-group">';
+//        $data .= '<label class="control-label" for="car">Car</label>';
+//        $data .= '<select name="car[]" id="car_items" class="form-control car_items">';
+        $data = '<option disabled selected>' . Yii::t("StoreModule.store", "Car model") . '</option>';
+        if (count($cars_array)) {
+            foreach ($cars_array as $key => $car_array) {
+                $data .= '<option value="' . $car_array . '">' . $car_array . '</option>';
+            }
+        }
+//        $data .= "</select>";
+//        $data .= "</div>";
+
+//        echo json_encode(array('data => $data, 'error' => $error));
+        return $this->asJson($data);
+//        } else {
+//            return null;
+//        }
+    }
+
+    public function actionGetModification($vendor, $car)
+    {
+        $car_vendor = $vendor;
+
+        $cars = Cars::find()->where(['vendor' => $car_vendor, 'car' => $car])->all();
+        $cars_array = [];
+
+        if (count($cars)) {
+            foreach ($cars as $key => $car_1) {
+                $cars_array[$car_1['modification']] = $car_1['modification'];
+            }
+        }
+        $query_years = (new Query())
+            ->select(['min(id)','max(id)'])
+            ->from('cars')
+            ->where(['vendor'=>$car_vendor])
+            ->andWhere(['car'=>$car])
+            //->andWhere(['modification'=>$car_modification])
+            ->all();
+
+        $data = '<option disabled selected>' . Yii::t("StoreModule.store", "Modification") . '</option>';
+        if (count($cars_array)) {
+            foreach ($cars_array as $key => $car_array) {
+                $data .= '<option value="' . $car_array . '">' . $car_array . '</option>';
+            }
+        }
+
+        return $this->asJson($data);
+    }
+
+    public function actionGetYear($vendor, $car, $modification)
+    {
+        $cars = Cars::find()->where(['vendor' => $vendor, 'car' => $car, 'modification' => $modification])->all();
+        $cars_array = [];
+
+        if (count($cars)) {
+            foreach ($cars as $key => $car) {
+                $cars_array[$car['year']] = $car['year'];
+            }
+        }
+
+        $data = '<option disabled selected>' . Yii::t("StoreModule.store", "Year") . '</option>';
+        if (count($cars_array)) {
+            foreach ($cars_array as $key => $car_array) {
+                $data .= '<option value="' . $car_array . '">' . $car_array . '</option>';
+            }
+        }
+
+        return $this->asJson($data);
     }
 }

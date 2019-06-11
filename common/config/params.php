@@ -2,7 +2,7 @@
 return [
     'appName' => 'UAE parts',
     'appShortName' => 'UAEP',
-    'adminEmail' => 'admin@example.com',
+    'adminEmail' => 'darking-uz@yandex.com',
     'supportEmail' => 'support@havi2.com',
     'senderEmail' => 'noreply@example.com',
     'senderName' => 'Example.com mailer',

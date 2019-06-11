@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use kartik\editable\Editable;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -35,14 +36,14 @@ $this->params['breadcrumbs'][] = $this->title;
             //'password_reset_token',
             'email:email',
             'first_name',
-            'middle_name',
+//            'middle_name',
             'last_name',
-            [
-//                'class' => 'bootstrap.widgets.TbEditableColumn',
-                'attribute' => 'gender',
-                'format' => 'gender',
-                'filter' => array("0" => "Male", "1" => "Female"),
-            ],
+//            [
+////                'class' => 'bootstrap.widgets.TbEditableColumn',
+//                'attribute' => 'gender',
+//                'format' => 'gender',
+//                'filter' => array("0" => "Male", "1" => "Female"),
+//            ],
             [
                 'attribute' => 'role',
                 'format' => 'role',
@@ -52,6 +53,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'type',
                 'format' => 'type',
                 'filter' => array("0" => "Individual", "1" => "Legal entity"),
+            ],
+            [
+                'attribute' => 'commission',
+                'format' => 'raw',
+                'value' => function($model) {
+                    return $model->commission->commission ? $model->commission->commission : 0;
+                }
             ],
             //'role',
             //'type',

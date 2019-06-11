@@ -93,7 +93,10 @@ use rmrevin\yii\fontawesome\FA;
             <?= $form->field($model, 'about')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-3">
-            <?= $form->field($model, 'avatar')->textInput(['maxlength' => true]) ?>
+            <div class="form-group">
+                <label>Commission</label>
+                <input type="number" class="form-control" name="commission" value="<?= $user_commission->commission ? $user_commission->commission : ''?>">
+            </div>
         </div>
         <?php if($model->role == $model::ROLE_SELLER) {?>
         <div class="col-md-3">
@@ -115,8 +118,12 @@ use rmrevin\yii\fontawesome\FA;
             </select>
         </div>
         <?php } ?>
+        <div class="col-md-3">
+            <?= $form->field($model, 'avatar')->textInput(['maxlength' => true]) ?>
+        </div>
 
         <div class="col-md-12">
+
             <div class="form-group">
                 <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
             </div>
