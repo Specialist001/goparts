@@ -347,7 +347,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function getProductStatistics()
     {
-        return $this->hasMany(ProductStatistics::className(), ['user_id' => 'id']);
+        return $this->hasMany(ProductStatistic::className(), ['user_id' => 'id']);
     }
     /**
      * @return \yii\db\ActiveQuery

@@ -1,6 +1,7 @@
 <?php
 namespace api\controllers;
 
+use common\models\User;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -167,10 +168,10 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-//    public function actionAbout()
-//    {
-//        return $this->render('about');
-//    }
+    public function actionAbout()
+    {
+        return ('about');
+    }
 
     /**
      * Signs user up.
@@ -284,4 +285,6 @@ class SiteController extends Controller
 //            'model' => $model
 //        ]);
 //    }
+
+
 }
