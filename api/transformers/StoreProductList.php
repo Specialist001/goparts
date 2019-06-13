@@ -13,6 +13,10 @@ class StoreProductList
         foreach ($list as $item) {
             $data[$loop] = [
                 'id' => $item->id,
+                'sku' => $item->sku,
+                'car_id' => $item->car->id,
+                'car_vendor' => $item->car->vendor,
+                'car_modification' => $item->car->modification,
                 'type_id' => $item->type_id ? $item->type_id : null,
                 'producer_id' => $item->producer_id ? $item->producer_id : null,
                 'category' => $item->category->translate->title ? $item->category->translate->title : null,
@@ -22,7 +26,8 @@ class StoreProductList
                 'short' => $item->translate->short,
                 'description' => $item->translate->description,
                 'serial_number' => $item->serial_number ? $item->serial_number : null,
-                'price' => $item->price ? $item->price : null,
+//                'price' => $item->price ? $item->price : null,
+                'price' => $item->purchase_price ? $item->purchase_price : null,
                 'discount_price' => $item->discount_price ? $item->discount_price : null,
                 'discount' => $item->discount ? $item->discount : null,
                 'data' => $item->data ? $item->data : null,
@@ -35,7 +40,7 @@ class StoreProductList
                 'quantity' => $item->quantity ? $item->quantity : null,
                 'image' => $item->image ? $item->image : null,
                 'average_price' => $item->average_price ? $item->average_price : null,
-                'purchase_price' => $item->purchase_price ? $item->purchase_price : null,
+
                 'recommended_price' => $item->recommended_price ? $item->recommended_price : null,
                 'view' => $item->view ? $item->view : null,
 

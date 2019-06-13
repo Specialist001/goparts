@@ -91,4 +91,68 @@ class Cars extends ActiveRecord
 
         return $data;
     }
+
+    public function getCar($vendor)
+    {
+        $cars = self::find()->where(['vendor'=>$vendor])->all();
+
+        $data = [];
+        if (!empty($cars)) {
+            if (count($cars)) {
+                foreach ($cars as $key=>$car) {
+                    $data[$car['car']] = $car['car'];
+                }
+            }
+        }
+
+        return $data;
+    }
+
+    public function getModifications($vendor, $car)
+    {
+        $cars = self::find()->where(['vendor'=>$vendor,'car'=>$car])->orderBy(['modification'=>SORT_ASC, 'year'=>SORT_DESC])->all();
+        $cars_array = [];
+        $years = [];
+        $min_max = [];
+
+        $data = [];
+        if (!empty($cars)) {
+
+            if (count($cars)) {
+                foreach ($cars as $key => $car_1) {
+                    $cars_array[$car_1['modification']] = $car_1['modification'];
+                    $years[$car_1['modification']] = self::getYear($vendor, $car, $car_1['modification']);
+
+                    $min_max[$car_1['modification']] =  [
+                        'min'=>$min = min($years[$car_1['modification']]),
+                        'max'=>$max = max($years[$car_1['modification']])
+                    ];
+                }
+            }
+
+//            if (count($min_max)) {
+//                foreach ($min_max as $key => $car_array) {
+//                    $data .= '<option value="' . $key . '">' . $key .' ('. $car_array['min'].' - '.$car_array['max'] .')' . '</option>';
+//                }
+//            }
+
+            $data = $min_max;
+        }
+
+        return $data;
+    }
+
+    public function getYear($vendor, $car, $modification)
+    {
+        $cars = Cars::find()->where(['vendor' => $vendor, 'car' => $car, 'modification' => $modification])->all();
+        $cars_array = [];
+
+        if (count($cars)) {
+            foreach ($cars as $key => $car) {
+                $cars_array[$car['year']] = $car['year'];
+            }
+        }
+
+        return $cars_array;
+    }
 }

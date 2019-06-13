@@ -141,7 +141,9 @@ $(document).ready(function () {
         getCar(vendor);
 
         // $('.car_items').prop('disabled', false);
-        // $('.car_modifications').prop('disabled', true);
+
+        $('.car_modifications').empty().html('<option disabled selected>Select Generation</option>');
+
         // $('.car_years').prop('disabled', true);
     });
 
@@ -166,6 +168,7 @@ $(document).ready(function () {
     });
 
 });
+
 
 $('.owl-related').owlCarousel({
     loop:true,

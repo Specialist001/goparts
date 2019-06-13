@@ -124,19 +124,21 @@ class ProfileForm extends Model
         }
 
         $user->username = $this->username;
-        $user->phone = $this->phone? $this->phone: null;
-        $user->role = $this->role ? $this->role : 0;
-        $user->type = $this->type ? $this->type : 0;
-        $user->birth_date = $this->birth_date ? $this->birth_date : null;
-        $user->gender = $this->gender ? $this->gender : 0;
+        $user->phone = $this->phone ? $this->phone : $user->phone;
+        $user->email = $this->email ? $this->email : $user->email;
+        $user->avatar = $this->avatar ? $this->avatar : $user->avatar;
+//        $user->role = $this->role ? $this->role : 0;
+//        $user->type = $this->type ? $this->type : 0;
+//        $user->birth_date = $this->birth_date ? $this->birth_date : null;
+//        $user->gender = $this->gender ? $this->gender : 0;
 
-        $user->first_name = $this->first_name ? $this->first_name : null;
-        $user->middle_name = $this->middle_name ? $this->middle_name : null;
-        $user->last_name = $this->last_name ? $this->last_name : null;
+        $user->first_name = $this->first_name ? $this->first_name : $user->first_name;
+//        $user->middle_name = $this->middle_name ? $this->middle_name : $user->middle_name;
+        $user->last_name = $this->last_name ? $this->last_name : $user->last_name;
 
-        $user->site = $this->site ? $this->site : null;
-        $user->about = $this->about ? $this->about : null;
-        $user->location = $this->location ? $this->location : null;
+//        $user->site = $this->site ? $this->site : $user->site;
+        $user->location = $this->site ? $this->site : $user->location;
+
 //
 //        $user->push = $this->push;
 

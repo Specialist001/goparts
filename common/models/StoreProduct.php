@@ -78,13 +78,14 @@ class StoreProduct extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type_id', 'producer_id', 'category_id', 'type_car_id', 'user_id', 'quantity', 'in_stock', 'status', 'order', 'view', 'qid', 'price', 'discount_price', 'discount','average_price', 'purchase_price', 'recommended_price', 'created_at', 'updated_at'], 'integer'],
+            [['type_id', 'car_id', 'producer_id', 'category_id', 'type_car_id', 'user_id', 'quantity', 'in_stock', 'status', 'order', 'view', 'qid', 'price', 'discount_price', 'discount','average_price', 'purchase_price', 'recommended_price', 'created_at', 'updated_at'], 'integer'],
             [[ 'length', 'width', 'height', 'weight'], 'number'],
             [['data'], 'string'],
 //            [['created_at', 'updated_at'], 'required'],
             [['sku', 'serial_number'], 'string', 'max' => 150],
             [['slug', 'title', 'image'], 'string', 'max' => 255],
             [['external_id'], 'string', 'max' => 100],
+            [['car_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cars::className(), 'targetAttribute' => ['car_id' => 'id']],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => StoreCategory::className(), 'targetAttribute' => ['category_id' => 'id']],
             [['producer_id'], 'exist', 'skipOnError' => true, 'targetClass' => StoreProducer::className(), 'targetAttribute' => ['producer_id' => 'id']],
             [['type_car_id'], 'exist', 'skipOnError' => true, 'targetClass' => StoreTypeCar::className(), 'targetAttribute' => ['type_car_id' => 'id']],
@@ -100,6 +101,7 @@ class StoreProduct extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'car_id' => 'Car ID',
             'type_id' => 'Type ID',
             'producer_id' => 'Producer ID',
             'category_id' => 'Category ID',
@@ -145,7 +147,7 @@ class StoreProduct extends \yii\db\ActiveRecord
     }
 
     public static function find() {
-        return parent::find()->with('translate');
+        return parent::find()->with('translate','car');
     }
 
     /**
@@ -258,6 +260,14 @@ class StoreProduct extends \yii\db\ActiveRecord
     public function getStoreProductVideo()
     {
         return $this->hasMany(StoreProductVideo::className(), ['product_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCar()
+    {
+        return $this->hasOne(Cars::className(), ['id' => 'car_id']);
     }
 
     /**

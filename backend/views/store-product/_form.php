@@ -18,6 +18,13 @@ $model->category_id = $category->id;
 ?>
 
 <div class="store-product-form">
+    <?php if(!$car_id) { ?>
+        <form action="<?= Url::current() ?>" id="car-form">
+
+        </form>
+    <?php } ?>
+
+
     <?php if (!$category) { ?>
 
         <form action="<?= Url::current() ?>" id="cat-form">
@@ -54,13 +61,14 @@ $model->category_id = $category->id;
             <!--            --><? //= $form->field($model, 'producer_id')->textInput() ?>
             <!--        </div>-->
             <div class="col-md-3">
+                <label>Category</label>
                 <input type="text" readonly="readonly" id="category_id" class="form-control"
-                       value="<?= $category->translate->name ?>"/>
+                       value="<?= $category->translate->title ?>"/>
 <!--                --><?//= $form->field($model, 'serial_number')->textInput(['maxlength' => true]) ?>
             </div>
-            <div class="col-md-3">
-                <?= $form->field($model, 'category_id')->textInput(['readonly' => true, 'disabled' => true]); ?>
-            </div>
+<!--            <div class="col-md-3">-->
+<!--                --><?//= $form->field($model, 'category_id')->textInput(['readonly' => true, 'disabled' => true]); ?>
+<!--            </div>-->
             <div class="col-md-2">
                 <?= $form->field($model, 'type_car_id')->dropDownList($type_car_filter) ?>
             </div>
@@ -95,7 +103,7 @@ $model->category_id = $category->id;
                     <label class="">Vendor</label>
                     <select class="form-control vendor_select" name="vendor_name">
                         <option disabled selected>Select Vendor</option>
-                        <?= Dropdown::widget() ?>
+<!--                        --><?//= Dropdown::widget() ?>
                         <?php foreach ($cars_array as $car) { ?>
                             <option value="<?= $car ?>"><?= $car ?></option>
                         <?php } ?>

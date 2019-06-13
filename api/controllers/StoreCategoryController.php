@@ -18,7 +18,13 @@ class StoreCategoryController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        return false;
+        $category = null;
+        $category = StoreCategory::find()->where(['status' => 1, 'parent_id' => null])->orderBy('order')->all();
+        if($category) {
+            return $this->asJson(['data' => StoreCategoryList::transform($category)]);
+        } else {
+            return $this->redirect(['site/error', 'message' => 'Not Found', 'code' => 404]);
+        }
     }
 
     public function actionCategory($id = null)

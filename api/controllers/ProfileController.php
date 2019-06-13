@@ -67,11 +67,16 @@ class ProfileController extends \yii\web\Controller
     {
         $model = new ProfileForm();
 
-        $model->username = Yii::$app->request->post('name', Yii::$app->user->identity->username);
+        $model->username = Yii::$app->request->post('username', Yii::$app->user->identity->username);
+        $model->email = Yii::$app->request->post('name', Yii::$app->user->identity->email);
 //        $model->phone = Yii::$app->request->post('phone', Yii::$app->user->identity->phone);
         $model->password = Yii::$app->request->post('password');
         $model->passwordconfirm = Yii::$app->request->post('password_confirm');
-        $model->birth_date = Yii::$app->request->post('birth_date');
+        $model->first_name = Yii::$app->request->post('first_namr', Yii::$app->user->identity->first_name);
+        $model->last_name = Yii::$app->request->post('last_name', Yii::$app->user->identity->last_name);
+        $model->location = Yii::$app->request->post('location', Yii::$app->user->identity->location);
+        $model->phone = Yii::$app->request->post('phone', Yii::$app->user->identity->phone);
+
 //        $model->push = Yii::$app->request->post('push', 0);
         $model->avatar = UploadedFile::getInstanceByName('avatar');
 
@@ -86,15 +91,21 @@ class ProfileController extends \yii\web\Controller
                 'id' => $user->id,
 //                'name' => $user->name,
                 'username' => $user->username,
+                'email' => $user->email,
+                'first_name' => $user->first_name,
+                'last_name' => $user->last_name,
+                'location' => $user->location,
                 'avatar' => $user->avatar? $user->avatar: '/uploads/site/default_shop.png',
-                'phone' => $user->username,
+                'phone' => $user->phone,
 //                'push' => $user->push,
 //                'balance' => $user->balance,
-                'birth_date' => $user->birth_date,
+//                'birth_date' => $user->birth_date,
 //                'city_id' => (int) $user->city_id,
 //                'ucard' => $user->ucard,
             ]);
         }
+
+        return null;
     }
 
     public function actionProducts($id = null, $category_id = null)

@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'video' => $video,
         'cats' => $cats,
+        'category' => $category,
         'translation_en' => $translation_en,
         'translation_ar' => $translation_ar,
         'translation_ru' => $translation_ru,
