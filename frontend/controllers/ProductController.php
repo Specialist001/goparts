@@ -21,7 +21,7 @@ class ProductController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['?'],
                     ],
                 ],
             ],
@@ -113,28 +113,54 @@ class ProductController extends Controller
     {
         $car_vendor = $vendor;
 
-        $cars = Cars::find()->where(['vendor' => $car_vendor, 'car' => $car])->all();
+        $cars = Cars::find()->where(['vendor' => $car_vendor, 'car' => $car])->orderBy(['modification'=>SORT_ASC])->all();
         $cars_array = [];
+        $years = [];
 
         if (count($cars)) {
             foreach ($cars as $key => $car_1) {
+//                foreach ($car_1['modification'])
                 $cars_array[$car_1['modification']] = $car_1['modification'];
+                $years[$car_1['modification']] = self::getYear($vendor, $car, $car_1['modification']);
             }
         }
-        $query_years = (new Query())
-            ->select(['min(id)','max(id)'])
-            ->from('cars')
-            ->where(['vendor'=>$car_vendor])
-            ->andWhere(['car'=>$car])
-            //->andWhere(['modification'=>$car_modification])
-            ->all();
 
-        $data = '<option disabled selected>' . Yii::t("StoreModule.store", "Modification") . '</option>';
+
+        echo '<pre>';
+        print_r($cars_array);
+        print_r($years);
+        echo '</pre>';exit;
+
+//        $query_years = (new Query())
+//            ->select(['modification, min(year) AS min, max(year) AS max'])
+//            ->from('cars')
+//            ->distinct()
+//            ->where(['vendor'=>$car_vendor])
+//            ->andWhere(['car'=>$car])
+//            ->groupBy(['car'])
+//            //->andWhere(['modification'=>$car_modification])
+//            ->all();
+//        $query_years = Cars::find()
+//            ->select(['modification, min(year) AS min, max(year) AS max'])
+//            ->where(['vendor'=>$car_vendor])
+//            ->andWhere(['car'=>$car])
+//            ->groupBy('year')
+//            ->all();
+
+        $data = '<option disabled selected>' . Yii::t("StoreModule.store", "Select generation") . '</option>';
         if (count($cars_array)) {
             foreach ($cars_array as $key => $car_array) {
                 $data .= '<option value="' . $car_array . '">' . $car_array . '</option>';
             }
         }
+
+
+//        $data = '<option disabled selected>' . Yii::t("StoreModule.store", "Select generation") . '</option>';
+//        if (count($query_years)) {
+//            foreach ($query_years as $key => $query_year) {
+//                $data .= '<option value="' . $query_year . '">' . $car_array . '</option>';
+//            }
+//        }
 
         return $this->asJson($data);
     }
@@ -150,7 +176,7 @@ class ProductController extends Controller
             }
         }
 
-        $data = '<option disabled selected>' . Yii::t("StoreModule.store", "Year") . '</option>';
+        $data = '<option disabled selected>' . 'Year' . '</option>';
         if (count($cars_array)) {
             foreach ($cars_array as $key => $car_array) {
                 $data .= '<option value="' . $car_array . '">' . $car_array . '</option>';
@@ -158,5 +184,19 @@ class ProductController extends Controller
         }
 
         return $this->asJson($data);
+    }
+
+    public function getYear($vendor, $car, $modification)
+    {
+        $cars = Cars::find()->where(['vendor' => $vendor, 'car' => $car, 'modification' => $modification])->all();
+        $cars_array = [];
+
+        if (count($cars)) {
+            foreach ($cars as $key => $car) {
+                $cars_array[$car['year']] = $car['year'];
+            }
+        }
+
+        return $cars_array;
     }
 }

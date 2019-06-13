@@ -46,11 +46,11 @@ use yii\helpers\Url;
                         <option disabled selected>Select generation</option>
                     </select>
                 </div>
-                <div class="widgetform_year px-3 float-md-left d-inline-block border-top border-right border-bottom position-relative">
-                    <select class="form-control car_years" name="year_name">
-                        <option disabled selected>Year</option>
-                    </select>
-                </div>
+<!--                <div class="widgetform_year px-3 float-md-left d-inline-block border-top border-right border-bottom position-relative">-->
+<!--                    <select class="form-control car_years" name="year_name">-->
+<!--                        <option disabled selected>Year</option>-->
+<!--                    </select>-->
+<!--                </div>-->
                 <div class="widgetform_button float-md-left d-inline-block">
                     <button class="button"><img src="svg/search.svg" alt=""> <span>Search</span></button>
                 </div>
