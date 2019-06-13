@@ -28,6 +28,7 @@ class StoreProductList
                 'serial_number' => $item->serial_number ? $item->serial_number : null,
 //                'price' => $item->price ? $item->price : null,
                 'price' => $item->purchase_price ? $item->purchase_price : null,
+                'purchase_price' => $item->purchase_price ? $item->purchase_price : null,
                 'discount_price' => $item->discount_price ? $item->discount_price : null,
                 'discount' => $item->discount ? $item->discount : null,
                 'data' => $item->data ? $item->data : null,
