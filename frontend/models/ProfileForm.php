@@ -15,6 +15,8 @@ class ProfileForm extends Model
     public $phone;
     public $password;
     public $passwordconfirm;
+    public $legal_info;
+    public $legal_address;
 
 
     /**
@@ -33,6 +35,7 @@ class ProfileForm extends Model
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
+            [['legal_info','legal_address'],'string'],
 
             ['phone', 'unique', 'targetClass' => '\common\models\User', 'when' => function($model) {return $model->phone != Yii::$app->getUser()->identity->phone;}],
 
@@ -53,6 +56,8 @@ class ProfileForm extends Model
             'username' => Yii::t('frontend', 'Name'),
             'phone' => Yii::t('frontend', 'Phone'),
             'email' => 'E-mail',
+            'legal_address' => 'Legal Address',
+            'legal_info' => 'Name of Company',
             'password' => Yii::t('frontend', 'New password'),
             'passwordconfirm' => Yii::t('frontend', 'New password confirm'),
         ];
@@ -73,6 +78,8 @@ class ProfileForm extends Model
         $user->username = $this->username; //$this->username;
         $user->email = $this->email;
         $user->phone = $this->phone? $this->phone: null; //$this->username;
+        $user->legal_info = $this->legal_info; //$this->username;
+        $user->legal_address = $this->legal_address; //$this->username;
         if($this->password) {
             $user->setPassword($this->password);
         }

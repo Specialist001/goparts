@@ -23,13 +23,15 @@ $this->params['breadcrumbs'][] = 'Update';
                 <?= $this->render('_form', [
                     'model' => $model,
                     'video' => $video,
+                    'cats' => $cats,
+                    'category' => $category,
                     'translation_en' => $translation_en,
                     'translation_ar' => $translation_ar,
                     'translation_ru' => $translation_ru,
                     'cat_filter' => $cat_filter,
                     'type_car_filter' => $type_car_filter,
                     'cars_array' => $cars_array,
-                    'store_product_commission' => $store_product_commission,
+//                    'store_product_commission' => $store_product_commission,
                     //'errors' => $errors,
                 ]) ?>
 

@@ -28,6 +28,7 @@ class UserController extends \yii\web\Controller
     {
         Yii::$app->session->set('active_category', '');
         $model = new ProfileForm();
+
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->updateProfile()) {
                 if (Yii::$app->getUser()->login($user)) {
@@ -35,6 +36,7 @@ class UserController extends \yii\web\Controller
                 }
             }
         }
+
 
         return $this->render('index',[
             'model' => $model

@@ -3,6 +3,7 @@
 namespace api\models;
 
 use common\models\User;
+use common\models\UserNotification;
 use yii\base\InvalidArgumentException;
 use yii\base\Model;
 
@@ -53,7 +54,25 @@ class VerifyEmailForm extends Model
     public function verifyEmailAdmin()
     {
         $user = $this->_user;
-        $user->status = User::STATUS_ACTIVE;
-        return $user->save(false) ? $user : null;
+
+        if ($user->email_confirm == 1) {
+            $user->status = User::STATUS_ACTIVE;
+
+            $notification = new UserNotification();
+            $notification->user_id = $user->id;
+            $notification->title = 'Account Activated';
+            $notification->description =
+                'Hello,' . $user->username . '.<br>'.
+                'Your account is activated';
+            $notification->priority = UserNotification::NORMAL_PRIORITY;
+            $notification->status = UserNotification::STATUS_UNREAD;
+            $notification->save();
+
+            return $user->save(false) ? $user : null;
+
+        }
+
+
+        return null;
     }
 }

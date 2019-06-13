@@ -112,6 +112,12 @@ class StoreProductController extends Controller
 
         if ($unset) $category = false;
 
+        $car_id = !empty(Yii::$app->request->get('car_id')) ? Yii::$app->request->get('car_id') : false;
+
+        if (empty($car_id = Cars::findOne(['id'=>$car_id]))) $car_id = false;
+        if(!empty($car_id)) $car_id = false;
+
+
         $translation_en = new StoreProductTranslation();
         $translation_ar = new StoreProductTranslation();
         $translation_ru = new StoreProductTranslation();
@@ -232,10 +238,12 @@ class StoreProductController extends Controller
             $store_product_commission->commission = Yii::$app->request->post('product_commission');
             $store_product_commission->save();
 
-            $price = (float)$model->purchase_price * (1 + ((float)$store_product_commission->commission ?: 0) / 100);
-            $price = number_format($price, 2, '.', '');
+            $price = $model->price;
 
-            $model->price = $price;
+            $purchase_price = $price * (1 + ($model->user->commission->commission ? : 0) / 100);
+//            $purchase_price = number_format($price, 2, '.', '');
+
+            $model->purchase_price = $purchase_price;
 
             $car_vendor = Yii::$app->request->post('vendor_name');
 //                ? Yii::$app->request->post('vendor_name') : null;
@@ -415,6 +423,10 @@ class StoreProductController extends Controller
             $store_product_commission->product_id = $model->id;
             $store_product_commission->commission = Yii::$app->request->post('product_commission');
             $store_product_commission->save();
+
+            $price = $model->price;
+            $purchase_price = $price * (1 + ($model->user->commission->commission ? : 0) / 100);
+            $model->purchase_price = $purchase_price;
 
             $car_vendor = Yii::$app->request->post('vendor_name')
                 ? Yii::$app->request->post('vendor_name') : null;

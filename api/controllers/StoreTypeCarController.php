@@ -33,4 +33,16 @@ class StoreTypeCarController extends \yii\web\Controller
         }
     }
 
+    public function actionAll()
+    {
+        $typeCar = null;
+        $typeCar = StoreTypeCar::find()->where(['status'=>1])->andWhere(['not', ['parent_id' => null]])->orderBy('order')->all();
+
+        if ($typeCar) {
+            return $this->asJson(['data' => StoreTypeCarList::transform($typeCar)]);
+        } else {
+            return $this->redirect(['site/error', 'message'=> 'Not Found', 'code'=>404]);
+        }
+    }
+
 }
