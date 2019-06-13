@@ -22,7 +22,7 @@ class StoreProductList
                 'category' => $item->category->translate->title ? $item->category->translate->title : null,
                 'type_car' => $item->typeCar->translate->name ? $item->typeCar->translate->name : null,
                 'user' => $item->user->username ? $item->user->username : null,
-                'title' => $item->translate->name,
+                'name' => $item->translate->name.', '.$item->car->vendor.' '.$item->car->car.' '.$item->car->modification.' '.$item->car->year,
                 'short' => $item->translate->short,
                 'description' => $item->translate->description,
                 'serial_number' => $item->serial_number ? $item->serial_number : null,
