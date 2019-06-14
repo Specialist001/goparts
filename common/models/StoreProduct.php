@@ -78,8 +78,8 @@ class StoreProduct extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type_id', 'car_id', 'producer_id', 'category_id', 'type_car_id', 'user_id', 'quantity', 'in_stock', 'status', 'order', 'view', 'qid', 'price', 'discount_price', 'discount','average_price', 'purchase_price', 'recommended_price', 'created_at', 'updated_at'], 'integer'],
-            [[ 'length', 'width', 'height', 'weight'], 'number'],
+            [['type_id', 'car_id', 'producer_id', 'category_id', 'type_car_id', 'user_id', 'quantity', 'in_stock', 'status', 'order', 'view', 'qid', 'price', 'discount_price', 'discount','average_price', 'recommended_price', 'created_at', 'updated_at'], 'integer'],
+            [[ 'length', 'width', 'height', 'weight', 'purchase_price'], 'number'],
             [['data'], 'string'],
 //            [['created_at', 'updated_at'], 'required'],
             [['sku', 'serial_number'], 'string', 'max' => 150],

@@ -112,6 +112,12 @@
                             ['label' => 'Create Stock', 'icon' => 'plus', 'url' => ['/stock/create'],],
                         ],
                     ],
+                    ['label' => 'Store Commissions', 'icon' => 'globe', 'url' => ['#'],
+                        'items' => [
+                            ['label' => 'All Store Commissions', 'icon' => 'list', 'url' => ['/store-commission'],],
+                            ['label' => 'Create Store Commission', 'icon' => 'plus', 'url' => ['/store-commission/create'],],
+                        ],
+                    ],
              
 //                    ['label' => 'Отчеты', 'icon' => 'flag', 'url' => ['/report'],],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],

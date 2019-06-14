@@ -113,7 +113,7 @@ use rmrevin\yii\fontawesome\FA;
         <div class="row">
             <div class="col-lg-4 col-md-4 col-12">
                 <div class="header_logo">
-                    <a href="#">
+                    <a href="<?= Url::to(['/']) ?>">
                         <h1><?= Yii::$app->params['appName'] ?></h1>
                         <span>Auto parts</span>
                     </a>

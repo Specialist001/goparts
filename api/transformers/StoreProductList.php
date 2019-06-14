@@ -21,6 +21,7 @@ class StoreProductList
                 'producer_id' => $item->producer_id ? $item->producer_id : null,
                 'category' => $item->category->translate->title ? $item->category->translate->title : null,
                 'type_car' => $item->typeCar->translate->name ? $item->typeCar->translate->name : null,
+                'type_of_car' => $item->car->vendor.'>'.$item->car->car.'>'.$item->car->modification.'>'.$item->car->year.' - '.$item->typeCar->translate->name,
                 'user' => $item->user->username ? $item->user->username : null,
                 'name' => $item->translate->name.', '.$item->car->vendor.' '.$item->car->car.' '.$item->car->modification.' '.$item->car->year,
                 'short' => $item->translate->short,
@@ -44,6 +45,7 @@ class StoreProductList
 
                 'recommended_price' => $item->recommended_price ? $item->recommended_price : null,
                 'view' => $item->view ? $item->view : null,
+                'date' => date('d/m/Y', $item->created_at),
 
             ];
 

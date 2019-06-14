@@ -135,6 +135,29 @@ $(document).ready(function () {
         });
     }
 
+    function getOneCar(vendor, car, modification, year) {
+        $.ajax({
+            type: "GET",
+            url: '/product/get-one-car',
+            // dataType: "json",
+            data: {
+                vendor: vendor, car: car, modification: modification, year: year
+            },
+            success: function (response) {
+                if (!response.error) {
+                    console.log(response);
+                    $('#car_id').val(response);
+                    $('.car_name').html(vendor+car+modification+year);
+                } else {
+                    console.log('Ошибка обработки данных');
+                }
+            },
+            error: function () {
+                console.log('Ошибка обработки данных 2');
+            },
+        });
+    }
+
     $('.vendor_select').change(function () {
         var vendor = $('.vendor_select').val();
 
@@ -163,6 +186,18 @@ $(document).ready(function () {
         var modification = $(this).val();
 
         getYear(vendor, car, modification);
+
+        // $('.car_years').prop('disabled', false);
+    });
+
+    $('.car_years').change(function () {
+        var vendor = $('.vendor_select').val();
+        var car = $('.car_items').val();
+        var modification = $('.car_modifications').val();
+        var year = $(this).val();
+        console.log('year');
+
+        getOneCar(vendor, car, modification, year);
 
         // $('.car_years').prop('disabled', false);
     });
