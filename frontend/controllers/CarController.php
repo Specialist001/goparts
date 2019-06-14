@@ -7,18 +7,23 @@ use yii\web\Controller;
 
 class CarController extends Controller
 {
-    public function actionSearch($vendor, $car, $modification, $category_id = null, $type_car_id = null)
+    public function actionSearch($vendor, $car=null, $modification=null, $category_id = null, $type_car_id = null)
     {
 //        self::getCar()
         $cars = Cars::find()->where(['vendor' => $vendor, 'car'=>$car, 'modification'=>$modification])->all();
-//        $cars_1 = Cars::find()->select([
-//            'minId' => new Expression('MIN(cars.id)'),
-//            'maxId' => new Expression('MAX(cars.id)'),
-//        ])->where(['vendor' => $vendor, 'car'=>$car, 'modification'=>$modification])->all();
 
-        $car_id_min = Cars::find()->where(['vendor' => $vendor, 'car'=>$car, 'modification'=>$modification])->min('id');
-        $car_id_max = Cars::find()->where(['vendor' => $vendor, 'car'=>$car, 'modification'=>$modification])->max('id');
-
+        if (!empty($car)) {
+            if (!empty($modification)) {
+                $car_id_min = Cars::find()->where(['vendor' => $vendor, 'car'=>$car, 'modification'=>$modification])->min('id');
+                $car_id_max = Cars::find()->where(['vendor' => $vendor, 'car'=>$car, 'modification'=>$modification])->max('id');
+            } else {
+                $car_id_min = Cars::find()->where(['vendor' => $vendor, 'car'=>$car])->min('id');
+                $car_id_max = Cars::find()->where(['vendor' => $vendor, 'car'=>$car])->max('id');
+            }
+        } else {
+            $car_id_min = Cars::find()->where(['vendor' => $vendor])->min('id');
+            $car_id_max = Cars::find()->where(['vendor' => $vendor])->max('id');
+        }
 
         $products = StoreProduct::find()->where(['between','car_id',$car_id_min,$car_id_max])->andWhere(['status'=>1])->all();
 

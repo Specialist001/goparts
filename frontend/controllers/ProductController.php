@@ -27,18 +27,18 @@ class ProductController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'get-car', 'get-modification', 'get-year'],
+                'only' => ['index', 'get-car', 'get-modification', 'get-year', 'get-one-car'],
                 'rules' => [
 
 //                        'allow' => true,
 //                        'roles' => ['?'],
                     [
-                        'actions' => ['index', 'get-car', 'get-modification', 'get-year', 'search'],
+                        'actions' => ['index', 'get-car', 'get-modification', 'get-year', 'get-one-car', 'search'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['index', 'get-car', 'get-modification', 'get-year', 'search', 'create', 'update'],
+                        'actions' => ['index', 'get-car', 'get-modification', 'get-year', 'get-one-car', 'search', 'create', 'update'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -90,7 +90,8 @@ class ProductController extends Controller
             $modification_name = !empty(Yii::$app->request->post('modification')) ? Yii::$app->request->post('modification') : null;
             $year = !empty(Yii::$app->request->post('year')) ? Yii::$app->request->post('year') : null;
 
-            $car_id = Cars::find()->where(['vendor'=>$vendor_name, 'car'=>$car_name, 'modification'=>$modification_name,'year'=>$year])->one();
+            $car = Cars::findOne(['id'=>Yii::$app->request->get('car_id')]);
+            $car_id = $car->id;
 
 //            $car_id = !empty(Yii::$app->request->get('car_id')) ? Yii::$app->request->get('car_id') : false;
 
@@ -142,6 +143,7 @@ class ProductController extends Controller
 
                 $model->save();
 
+                $model->car_id = $car_id;
                 $model->sku = Yii::$app->user->getId() .'-'. date('dmy') .'-'. $model->id;
 
                 $translation_en->product_id = $model->id;
@@ -174,6 +176,12 @@ class ProductController extends Controller
                 $translation_ru->locale = 'ru-RU';
                 $translation_ru->save();
 
+                $price = $model->price ? $model->price : 1;
+
+                $purchase_price = $price * (1 + ($model->user->commission->commission ? $model->user->commission->commission : 0) / 100);
+
+                $model->purchase_price = $purchase_price;
+                $model->save();
 //                $store_product_commission->product_id = $model->id;
 //                $store_product_commission->commission = Yii::$app->request->post('product_commission');
 //                $store_product_commission->save();
@@ -192,13 +200,13 @@ class ProductController extends Controller
                 $car_year = Yii::$app->request->post('year_name');
 //                ? Yii::$app->request->post('year_name') : null;
 
-                $car = Cars::find()
-                    ->where(['vendor'=>$car_vendor, 'car'=>$car_model, 'modification'=>$car_modification, 'year'=>$car_year])->one();
+//                $car = Cars::find()
+//                    ->where(['vendor'=>$vendor_name, 'car'=>$car_name, 'modification'=>$modification_name, 'year'=>$year])->one();
 
-                $productCar = new StoreProductToCar();
-                $productCar->product_id = $model->id;
-                $productCar->car_id = $car->id;
-                $productCar->save();
+//                $productCar = new StoreProductToCar();
+//                $productCar->product_id = $model->id;
+//                $productCar->car_id = $car->id;
+//                $productCar->save();
 
                 $car_name = $car_vendor ? $car_vendor . '-' : null . $car_model ? $car_model . '-' : null . $car_modification ? $car_modification . '-' : null . $car_year ? $car_year . '_' : null;
 
@@ -216,7 +224,7 @@ class ProductController extends Controller
 
                 $model->save();
 
-                return $this->redirect(['update', 'id' => $model->id, 'category' => $model->category_id]);
+                return $this->redirect(['update', 'id' => $model->id, 'category' => $model->category_id, 'car_id'=>$car_id]);
             }
 
             return $this->render('create',[
@@ -240,26 +248,33 @@ class ProductController extends Controller
         $model = $this->findModel($id);
         $video = StoreProductVideo::findAll(['product_id'=>$model->id]);
 
+        $vendor_name = !empty(Yii::$app->request->post('vendor')) ? Yii::$app->request->post('vendor') : null;
+        $car_name = !empty(Yii::$app->request->post('car')) ? Yii::$app->request->post('car') : null;
+        $modification_name = !empty(Yii::$app->request->post('modification')) ? Yii::$app->request->post('modification') : null;
+        $year = !empty(Yii::$app->request->post('year')) ? Yii::$app->request->post('year') : null;
+
+//        $car_id = (!empty(Cars::find()->where(['vendor'=>$vendor_name, 'car'=>$car_name, 'modification'=>$modification_name,'year'=>$year])->one()))
+//            ? Cars::find()->where(['vendor'=>$vendor_name, 'car'=>$car_name, 'modification'=>$modification_name,'year'=>$year])->one()
+//            : $model->car_id;
+
+        $car = !empty(Cars::findOne(['id'=>Yii::$app->request->get('car_id')]))
+            ? Cars::findOne(['id'=>Yii::$app->request->get('car_id')])
+            : Cars::findOne(['id'=>$model->car_id]);
+
+        $car_id = $car->id;
+
         if (Yii::$app->user->identity->role == User::ROLE_SELLER) {
             if (Yii::$app->user->identity->id == $model->user_id) {
 
                 $old_cat = $model->category_id;
                 $unset_opt = false;
+                $cats = StoreCategory::find()->where(['parent_id' => null, 'status'=>1])->orderBy('`order`')->all();
+                $type_cars = StoreTypeCar::find()->where(['parent_id' => null])->all();
 
                 $category = !empty(Yii::$app->request->get('category'))? Yii::$app->request->get('category'): false;
 
                 if(empty($category = StoreCategory::findOne(['id' => $category, 'status' => 1]))) $category = false;
                 if(!empty($category)) if(!empty($category->activeCategories))  $category = false;
-
-
-                $vendor_name = !empty(Yii::$app->request->post('vendor')) ? Yii::$app->request->post('vendor') : null;
-                $car_name = !empty(Yii::$app->request->post('car')) ? Yii::$app->request->post('car') : null;
-                $modification_name = !empty(Yii::$app->request->post('modification')) ? Yii::$app->request->post('modification') : null;
-                $year = !empty(Yii::$app->request->post('year')) ? Yii::$app->request->post('year') : null;
-
-                $car_id = (!empty(Cars::find()->where(['vendor'=>$vendor_name, 'car'=>$car_name, 'modification'=>$modification_name,'year'=>$year])->one()))
-                ? Cars::find()->where(['vendor'=>$vendor_name, 'car'=>$car_name, 'modification'=>$modification_name,'year'=>$year])->one()
-                : $model->car_id;
 
                 $translation_en = StoreProductTranslation::findOne(['product_id' => $model->id, 'locale' => 'en-EN']);
                 $translation_ar = (!empty(StoreProductTranslation::findOne(['product_id' => $model->id, 'locale' => 'ar-AE']))) ? StoreProductTranslation::findOne(['product_id' => $model->id, 'locale' => 'ar-AE']) : new StoreProductTranslation();
@@ -291,6 +306,7 @@ class ProductController extends Controller
                         }
                     } else $model->image = $old_image;
 
+                    $model->car_id = $car_id;
                     $model->save();
 
                     $translation_en->product_id = $model->id;
@@ -311,15 +327,58 @@ class ProductController extends Controller
                     $translation_ru->name = (Yii::$app->request->post('StoreProductTranslation')['name']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['name']['ru'] : $translation_en->name;
                     $translation_ru->short = (Yii::$app->request->post('StoreProductTranslation')['short']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['short']['ru'] : $translation_en->short;
                     $translation_ru->description = (Yii::$app->request->post('StoreProductTranslation')['description']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['description']['ru'] : $translation_en->description;
-
                     $translation_ru->locale = 'ru-RU';
                     $translation_ru->save();
+
+                    $price = $model->price ? $model->price : 1;
+
+                    $purchase_price = $price * (1 + ($model->user->commission->commission ? $model->user->commission->commission : 0) / 100);
+
+                    $model->purchase_price = $purchase_price;
+                    $model->save();
+
+//                    $car = Cars::find()
+//                        ->where(['vendor'=>$vendor_name, 'car'=>$car_name, 'modification'=>$modification_name, 'year'=>$year])->one();
+
+                    $productCar = StoreProductToCar::findOne(['product_id'=>$model->id]);
+                    $productCar->product_id = $model->id;
+                    $productCar->car_id = $car->id;
+                    $productCar->save();
+
+                    if (empty(Yii::$app->request->post('StoreProduct')['title'])) {
+                        $model->title = Helper::toSlug($translation_en->name) . '_' . $model->id;
+                    } else {
+                        $model->title = Helper::toSlug(Yii::$app->request->post('StoreProduct')['title']) . '_' . $model->id;
+                    }
+                    if (empty($model->slug)) {
+                        if (empty(Yii::$app->request->post('StoreProduct')['slug'])) {
+                            $model->slug = Helper::toSlug($translation_en->name) . '_' . $model->id;
+                        } else {
+                            $model->slug = Helper::toSlug(Yii::$app->request->post('StoreProduct')['slug']) . '_' . $model->id;
+                        }
+                    }
+
+                    $model->save();
 
                     return $this->redirect(['update', 'id' => $model->id, 'category' => $model->category_id, 'car_id'=>$car_id]);
                 }
 
+                return $this->render('update',[
+                    'model' => $model,
+                    'video' => $video,
+                    'cats' => $cats,
+                    'category' => $category,
+                    'translation_en' => $translation_en,
+                    'translation_ar' => $translation_ar,
+                    'translation_ru' => $translation_ru,
+                    'type_cars' => $type_cars,
+                    'car_id' => $car_id,
+                ]);
+
             }
+            return $this->goBack();
         }
+        return $this->goBack();
     }
 
     public function actionSearch($vendor, $car, $modification, $category_id = null, $type_car_id = null)
@@ -508,5 +567,18 @@ class ProductController extends Controller
             }
         }
         return $result;
+    }
+
+    public function actionGetOneCar($vendor, $car, $modification, $year)
+    {
+//        $vendor = Yii::$app->request->get('vendor');
+//        $car = Yii::$app->request->get('car');
+//        $modification = Yii::$app->request->get('modification');
+//        $year = Yii::$app->request->get('year');
+
+        $oneCar = Cars::find()->where(['vendor' => $vendor, 'car' => $car, 'modification' => $modification, 'year'=>$year])->one();
+        $id = $oneCar->id;
+
+        return $id;
     }
 }

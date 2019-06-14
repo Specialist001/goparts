@@ -144,7 +144,7 @@ class Cars extends ActiveRecord
 
     public function getYear($vendor, $car, $modification)
     {
-        $cars = Cars::find()->where(['vendor' => $vendor, 'car' => $car, 'modification' => $modification])->all();
+        $cars = Cars::find()->where(['vendor' => $vendor, 'car' => $car, 'modification' => $modification])->orderBy(['year'=>SORT_ASC])->all();
         $cars_array = [];
 
         if (count($cars)) {
@@ -154,5 +154,12 @@ class Cars extends ActiveRecord
         }
 
         return $cars_array;
+    }
+
+    public function getOneCar($vendor, $car, $modification, $year)
+    {
+        $oneCar = Cars::find()->where(['vendor' => $vendor, 'car' => $car, 'modification' => $modification, 'year'=>$year])->one();
+
+        return $oneCar;
     }
 }

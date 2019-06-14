@@ -14,33 +14,67 @@ use yii\widgets\ActiveForm;
 /* @var $model common\models\StoreProduct */
 /* @var $form yii\widgets\ActiveForm */
 //echo '<pre>';
-//print_r($errors);
+//print_r($models_array);
 //echo '</pre>';
+//exit;
+
 $model->category_id = $category->id;
 
 if(!empty($model->car_id)) {
-    $car_name = Cars::find()->where(['id'=>$model->car_id])->one();
+    $car = Cars::findOne(['id'=>$model->car_id]);
+    $car_name = $car->vendor .' '.$car->car.' '.$car->modification.' '.$car->year;
+    echo $car_name;
+    if (!empty(Yii::$app->request->get('vendor'))) {
+        $vendor_name = Yii::$app->request->get('vendor');
+    } else {
+        $vendor_name = $car->vendor;
+    }
+    if (!empty(Yii::$app->request->get('car'))) {
+        $model_name = Yii::$app->request->get('car');
+    } else {
+        $model_name = $car->car;
+    }
+    if (!empty(Yii::$app->request->get('modification'))) {
+        $modification_name = Yii::$app->request->get('modification');
+    } else {
+        $modification_name = $car->modification;
+    }
+    if (!empty(Yii::$app->request->get('year'))) {
+        $year_name = Yii::$app->request->get('year');
+    } else {
+        $year_name = $car->year;
+    }
+} else {
+    $car = Cars::findOne(['id'=>Yii::$app->request->get('car_id')]);
+
+    $vendor_name = $car->vendor;
+    $model_name = $car->car;
+    $modification_name = $car->modification;
+    $year_name = $car->year;
+
+    $car_id = $car->id;
+
+    $car_name = $vendor_name .' '.$model_name.' '.$modification_name.' '.$year_name;
 }
 
 $cars_array = Cars::getVendors();
-$models_array = Cars::getCar(Yii::$app->request->get('vendor')) ? Cars::getCar(Yii::$app->request->get('vendor')) : null;
-
+//$models_array = Cars::getCar(Yii::$app->request->get('vendor')) ? Cars::getCar(Yii::$app->request->get('vendor')) : (Cars::getCar($vendor_name) ? Cars::getCar($vendor_name) : null);
+$models_array = Cars::getCar(Yii::$app->request->get('vendor')) ? Cars::getCar(Yii::$app->request->get('vendor')) : (Cars::getCar($vendor_name) ? Cars::getCar($vendor_name) : null);
 $modifications_array =
     (!empty(Cars::getModifications(Yii::$app->request->get('vendor'), Yii::$app->request->get('car'))))
         ? Cars::getModifications(Yii::$app->request->get('vendor'), Yii::$app->request->get('car'))
-        : null;
+        : (!empty(Cars::getModifications($vendor_name, $model_name)) ? Cars::getModifications($vendor_name, $model_name) : null);
 
 $year_array =
     (!empty(Cars::getYear(Yii::$app->request->get('vendor'), Yii::$app->request->get('car'), Yii::$app->request->get('modification'))))
         ? Cars::getYear(Yii::$app->request->get('vendor'), Yii::$app->request->get('car'), Yii::$app->request->get('modification'))
-        : null;
+        : ( !empty(Cars::getYear($vendor_name, $model_name, $modification_name)) ? Cars::getYear($vendor_name, $model_name, $modification_name) : null);
 
 
 $cat_filter = [];
 $type_car_filter = [];
 
 if (!empty($cats)) {
-    //$cat_filter = ArrayHelper::toArray($cats,['id','title']);
     foreach ($cats as $cat) {
         $cat_filter += [$cat->id => $cat->translate->title];
     }
@@ -87,42 +121,47 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
 ?>
 
     <div class="store-product-form pt-3">
+<!--        --><?php //if(!$car_id) {?>
+<!--            <form action="--><?//= Url::current()?><!--" id="car-form">-->
+<!--                -->
+<!--            </form>-->
+<!--        --><?php //}?>
+
         <?php if (!$category) { ?>
             <form action="<?= Url::current() ?>" id="cat-form">
                 <h4>Select car</h4>
                 <div class="row car_search">
                     <div class="col-md-3">
                         <div class="position-relative">
-                            <select class="form-control vendor_select" name="vendor" required>
+                            <select class="form-control vendor_select" required>
                                 <option disabled selected>Select Car</option>
                                 <!--                        --><? //= Dropdown::widget(); ?>
-                                <?php foreach ($cars_array as $car) { ?>
-                                    <option value="<?= $car ?>" <?= $car == Yii::$app->request->get('vendor') ? 'selected' : '' ?>><?= $car ?></option>
+                                <?php foreach ($cars_array as $vendor) { ?>
+                                    <option value="<?= $vendor ?>" <?= $vendor == $vendor_name ? 'selected' : '' ?>><?= $vendor ?></option>
                                 <?php } ?>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="position-relative">
-                            <select class="form-control car_items" name="car" required>
+                            <select class="form-control car_items" required>
                                 <option disabled selected>Select Model</option>
 
-                                <?php if (Yii::$app->request->get('car')) { ?>
+                                <?php if (!empty(Yii::$app->request->get('car')) || !empty($model->car_id) ) { ?>
                                     <?php foreach ($models_array as $car_model) { ?>
-                                        <option value="<?= $car_model ?>" <?= $car_model == Yii::$app->request->get('car') ? 'selected' : '' ?>><?= $car_model ?></option>
+                                        <option value="<?= $car_model ?>" <?= $car_model == $model_name ? 'selected' : '' ?>><?= $car_model ?></option>
                                     <?php } ?>
                                 <? } ?>
-
                             </select>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="position-relative">
-                            <select class="form-control car_modifications" name="modification" required>
+                            <select class="form-control car_modifications" required>
                                 <option disabled selected>Select Generation</option>
-                                <?php if (Yii::$app->request->get('modification')) { ?>
+                                <?php if (!empty(Yii::$app->request->get('modification')) || !empty($model->car_id)) { ?>
                                     <?php foreach ($mod_array as $key => $car_modification) { ?>
-                                        <option value="<?= $key ?>" <?= $key == Yii::$app->request->get('modification') ? 'selected' : '' ?>> <?= $car_modification ?></option>
+                                        <option value="<?= $key ?>" <?= $key == $modification_name ? 'selected' : '' ?>> <?= $car_modification ?></option>
                                     <?php } ?>
                                 <? } ?>
                             </select>
@@ -130,17 +169,27 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                     </div>
                     <div class="col-md-3">
                         <div class="position-relative">
-                            <select class="form-control car_years" name="year" required>
+                            <select class="form-control car_years" required>
                                 <option disabled selected>Year</option>
-                                <?php if (Yii::$app->request->get('year')) { ?>
+                                <?php if (!empty(Yii::$app->request->get('year')) || !empty($model->car_id)) { ?>
                                     <?php foreach ($year_array as $key => $car_year) { ?>
-                                        <option value="<?= $key ?>" <?= $key == Yii::$app->request->get('year') ? 'selected' : '' ?>> <?= $car_year ?></option>
+                                        <option value="<?= $key ?>" <?= $key == $year_name ? 'selected' : '' ?>> <?= $car_year ?></option>
                                     <?php } ?>
                                 <? } ?>
                             </select>
                         </div>
                     </div>
                 </div>
+                <row>
+                    <div class="car_name" id="car_name">
+
+                    </div>
+                </row>
+                <input type="hidden" name="car_id" id="car_id" value=""/>
+                <?php if (!empty($prod_id = Yii::$app->request->get('id'))) { ?>
+                    <input type="hidden" name="id" value="<?= $prod_id ?>"/>
+                <?php } ?>
+
                 <div class="row pt-3">
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
@@ -166,7 +215,6 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
 
             <?php $form = ActiveForm::begin(); ?>
             <div class="row">
-
                 <div class="col-md-4">
                     <label>Category</label>
                     <input type="text" readonly="readonly" id="category_id" class="form-control"
@@ -201,7 +249,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                     <div class="form-group">
                         <label>Car</label>
                         <input class="form-control" type="text"
-                               value="<?= Yii::$app->request->get('vendor') ?> <?= Yii::$app->request->get('car') ?> <?= Yii::$app->request->get('modification') ?> <?= Yii::$app->request->get('year') ?>" readonly>
+                               value="<?=$car_name?>" readonly>
                     </div>
                 </div>
 
@@ -256,7 +304,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
 <!--                    </div>-->
 <!--                </div>-->
             </div>
-            <h3>Product Translation</h3>
+            <h3 class="pt-2">Product Description</h3>
             <div class="row">
                 <div class="col-md-4">
                     <?= $form->field($translation_en, 'name[en]')->textInput(['value' => $translation_en->name]) ?>
@@ -475,9 +523,92 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
         );
     });
 '); ?>
+<script>
+
+</script>
+
+<?php //$this->registerJs('
+//    $(document).ready(function() {
+//        $(document).on(\'click\', \'.cat-widget-li\', function () {
+//            id = $(this).data(\'id\');
+//            has_childs = $(this).data(\'childs\');
+//
+//            li = $(this);
+//            if(has_childs != \'\') {
+//                $.ajax({
+//                    url: "/site/get-cats",
+//                    data: {\'id\': li.data(\'id\')}, //data: {}
+//                    type: "get",
+//                    success: function (t) {
+//                        $(\'.category-widget-list\').html(t);
+//                    }
+//                });
+//            }
+//            else {
+//                $(\'#category_id\').val(id);
+//                $(\'#cat-form\').submit();
+//            }
+//        });
+//    });
+//    });
+//
+////        $(\'#add_cat_btn\').on(\'click\', function() {
+////            $($(\'#add-cat-temp\').html()).appendTo($(\'#added_cats\'));
+////            $(this).hide();
+////            return false;
+////        });
+////        $(document).on(\'click\', \'.add_cat_delete\', function () {
+////            $(this).parent().remove();
+////            return false;
+////        });
+//            var title = [];
+//        $(document).on(\'click\', \'.add-cat-widget-li\', function () {
+//            id = $(this).data(\'id\');
+//            has_childs = $(this).data(\'childs\');
+//            li = $(this);
+//            if(has_childs != \'\') {
+//                $.ajax({
+//                    url: "/site/get-cats",
+//                    data: {\'id\': li.data(\'id\'), \'add\': \'add-\'}, //data: {}
+//                    type: "get",
+//                    success: function (t) {
+//                        if(li.text() != \' Назад\') {
+//                            title.push(li.text() + \' > \');
+//                        }
+//                        else {
+//                            title.splice(title.length - 1, 1);
+//                        }
+//                        $(\'#added_cats .add-category-widget-list\').html(t);
+//                    }
+//                });
+//            }
+//            else {
+//                title.push(li.text() + \' > \');
+//                title = title.join(\'\');
+//                btn = \' <i class="fa fa-remove add_cat_delete btn btn-danger"></i>\';
+//                input = \' <input type="hidden" name="add_cats[]" value="\' + id + \'"/>\';
+//                input_title = \' <input type="hidden" name="add_cats_titles[\' + id + \']" value="\' + title.substr(0, title.length - 3) + \'"/>\';
+//                $(\'#adding_cats\').html($(\'#adding_cats\').html() + \'<p>\' + title.substr(0, title.length - 3) + btn + input + input_title + \'</p>\');
+//                title = [];
+//                $(\'#added_cats .add-category-widget-list\').remove();
+//                $(\'#add_cat_btn\').show();
+//            }
+//            return false;
+//        });
+//    });
+//'); ?>
 
 <?php $this->registerJs('
     $(document).ready(function() {
+        $(\'select.form-control\').select2(
+            {
+                language: {
+                  noResults: function () {
+                    return "Ничего не найдено";
+                  }
+                }
+            }
+        );
         $(document).on(\'click\', \'.cat-widget-li\', function () {
             id = $(this).data(\'id\');
             has_childs = $(this).data(\'childs\');
@@ -498,15 +629,15 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                 $(\'#cat-form\').submit();
             }
         });
-//        $(\'#add_cat_btn\').on(\'click\', function() {
-//            $($(\'#add-cat-temp\').html()).appendTo($(\'#added_cats\'));
-//            $(this).hide();
-//            return false;
-//        });
-//        $(document).on(\'click\', \'.add_cat_delete\', function () {
-//            $(this).parent().remove();
-//            return false;
-//        });
+        $(\'#add_cat_btn\').on(\'click\', function() {
+            $($(\'#add-cat-temp\').html()).appendTo($(\'#added_cats\'));
+            $(this).hide();
+            return false;
+        });
+        $(document).on(\'click\', \'.add_cat_delete\', function () {
+            $(this).parent().remove();
+            return false;
+        });
             var title = [];
         $(document).on(\'click\', \'.add-cat-widget-li\', function () {
             id = $(this).data(\'id\');
@@ -542,4 +673,4 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
             return false;
         });
     });
-'); ?>
+');?>
