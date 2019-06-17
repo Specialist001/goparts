@@ -22,6 +22,7 @@ $model->category_id = $category->id;
 
 if(!empty($model->car_id)) {
     $car = Cars::findOne(['id'=>$model->car_id]);
+    //$car = Cars::findOne(['id'=>Yii::$app->request->get('car_id')]);
     $car_name = $car->vendor .' '.$car->car.' '.$car->modification.' '.$car->year;
     echo $car_name;
     if (!empty(Yii::$app->request->get('vendor'))) {
@@ -55,21 +56,24 @@ if(!empty($model->car_id)) {
     $car_id = $car->id;
 
     $car_name = $vendor_name .' '.$model_name.' '.$modification_name.' '.$year_name;
+    //print_r($car_name);
 }
 
 $cars_array = Cars::getVendors();
 //$models_array = Cars::getCar(Yii::$app->request->get('vendor')) ? Cars::getCar(Yii::$app->request->get('vendor')) : (Cars::getCar($vendor_name) ? Cars::getCar($vendor_name) : null);
-$models_array = Cars::getCar(Yii::$app->request->get('vendor')) ? Cars::getCar(Yii::$app->request->get('vendor')) : (Cars::getCar($vendor_name) ? Cars::getCar($vendor_name) : null);
+$models_array = Cars::getCar(Yii::$app->request->get('vendor'))
+    ? Cars::getCar(Yii::$app->request->get('vendor'))
+    : (Cars::getCar($vendor_name) ? Cars::getCar($vendor_name) : null);
 $modifications_array =
-    (!empty(Cars::getModifications(Yii::$app->request->get('vendor'), Yii::$app->request->get('car'))))
+    Cars::getModifications(Yii::$app->request->get('vendor'), Yii::$app->request->get('car'))
         ? Cars::getModifications(Yii::$app->request->get('vendor'), Yii::$app->request->get('car'))
-        : (!empty(Cars::getModifications($vendor_name, $model_name)) ? Cars::getModifications($vendor_name, $model_name) : null);
+        : (Cars::getModifications($vendor_name, $model_name) ? Cars::getModifications($vendor_name, $model_name) : null);
 
 $year_array =
-    (!empty(Cars::getYear(Yii::$app->request->get('vendor'), Yii::$app->request->get('car'), Yii::$app->request->get('modification'))))
+    Cars::getYear(Yii::$app->request->get('vendor'), Yii::$app->request->get('car'), Yii::$app->request->get('modification'))
         ? Cars::getYear(Yii::$app->request->get('vendor'), Yii::$app->request->get('car'), Yii::$app->request->get('modification'))
-        : ( !empty(Cars::getYear($vendor_name, $model_name, $modification_name)) ? Cars::getYear($vendor_name, $model_name, $modification_name) : null);
-
+        : ( Cars::getYear($vendor_name, $model_name, $modification_name) ? Cars::getYear($vendor_name, $model_name, $modification_name) : null);
+//print_r($models_array);
 
 $cat_filter = [];
 $type_car_filter = [];
@@ -147,7 +151,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                             <select class="form-control car_items" required>
                                 <option disabled selected>Select Model</option>
 
-                                <?php if (!empty(Yii::$app->request->get('car')) || !empty($model->car_id) ) { ?>
+                                <?php if (!empty(Yii::$app->request->get('car_id')) || !empty($model->car_id)) { ?>
                                     <?php foreach ($models_array as $car_model) { ?>
                                         <option value="<?= $car_model ?>" <?= $car_model == $model_name ? 'selected' : '' ?>><?= $car_model ?></option>
                                     <?php } ?>
@@ -159,7 +163,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                         <div class="position-relative">
                             <select class="form-control car_modifications" required>
                                 <option disabled selected>Select Generation</option>
-                                <?php if (!empty(Yii::$app->request->get('modification')) || !empty($model->car_id)) { ?>
+                                <?php if (!empty(Yii::$app->request->get('car_id')) || !empty($model->car_id)) { ?>
                                     <?php foreach ($mod_array as $key => $car_modification) { ?>
                                         <option value="<?= $key ?>" <?= $key == $modification_name ? 'selected' : '' ?>> <?= $car_modification ?></option>
                                     <?php } ?>
@@ -171,7 +175,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                         <div class="position-relative">
                             <select class="form-control car_years" required>
                                 <option disabled selected>Year</option>
-                                <?php if (!empty(Yii::$app->request->get('year')) || !empty($model->car_id)) { ?>
+                                <?php if (!empty(Yii::$app->request->get('car_id')) || !empty($model->car_id)) { ?>
                                     <?php foreach ($year_array as $key => $car_year) { ?>
                                         <option value="<?= $key ?>" <?= $key == $year_name ? 'selected' : '' ?>> <?= $car_year ?></option>
                                     <?php } ?>
@@ -185,7 +189,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
 
                     </div>
                 </row>
-                <input type="hidden" name="car_id" id="car_id" value=""/>
+                <input type="hidden" name="car_id" id="car_id" value="<?= Yii::$app->request->get('car_id')?>"/>
                 <?php if (!empty($prod_id = Yii::$app->request->get('id'))) { ?>
                     <input type="hidden" name="id" value="<?= $prod_id ?>"/>
                 <?php } ?>
@@ -215,7 +219,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
 
             <?php $form = ActiveForm::begin(); ?>
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <label>Category</label>
                     <input type="text" readonly="readonly" id="category_id" class="form-control"
                            value="<?= $category->translate->title ?>"/>
@@ -227,7 +231,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                     <?= $form->field($model, 'serial_number')->textInput(['maxlength' => true]) ?>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <?= $form->field($model, 'type_car_id')->dropDownList($type_car_filter)->label('Body type') ?>
                 </div>
                 <!--        <div class="col-md-2">-->

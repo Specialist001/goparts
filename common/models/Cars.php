@@ -162,4 +162,11 @@ class Cars extends ActiveRecord
 
         return $oneCar;
     }
+
+    public function getCarName($id)
+    {
+        $car = Cars::findOne(['id'=>$id]);
+//        var_dump($car);
+        return $car->vendor . ' ' . $car->car .' '. $car->modification .' '.$car->year;
+    }
 }

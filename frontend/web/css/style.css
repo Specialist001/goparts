@@ -118,6 +118,11 @@ li {
     color: #e40000!important;
 }
 
+.select2-container--default .select2-selection--single {
+    padding: .275rem .75rem;
+    height: calc(1.5em + .75rem + 2px);
+}
+
 label.toggle .toggle__text, label.toggle + a {
     font-size: 0.9rem;
 }
