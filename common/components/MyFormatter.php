@@ -20,6 +20,7 @@ class MyFormatter extends Formatter{
     public $typeFormat;
     public $requiredFormat;
     public $filterFormat;
+    public $queryFormat;
 
     public function asPublished($value)
     {
@@ -58,7 +59,6 @@ class MyFormatter extends Formatter{
 
     public function asOrderstatus($value)
     {
-
         if($value == 0) return $this->orderstatusFormat[0];
         if($value == 1) return $this->orderstatusFormat[2];
         return $this->orderstatusFormat[1];
@@ -95,6 +95,13 @@ class MyFormatter extends Formatter{
     {
         if ($value == 0) return $this->filterFormat[0];
         return $this->filterFormat[1];
+    }
+    public function asQuery($value)
+    {
+        if ($value == 1) return $this->queryFormat[1];
+        if ($value == 2) return $this->queryFormat[2];
+        if ($value == -1) return $this->queryFormat[3];
+        return $this->queryFormat[0];
     }
 
     public function set_intlLoaded() {
@@ -178,6 +185,14 @@ class MyFormatter extends Formatter{
             $this->filterFormat = [
                 '<span class="text-yellow">'.FA::i('filter').' Not filtered'.'</span>',
                 '<span class="text-green">'.FA::i('filter').' Is Filtered'.'</span>',
+            ];
+        }
+        if ($this->queryFormat === null) {
+            $this->queryFormat = [
+                '<span class="text-warning">'.FA::i('times-circle').' Moderate'.'</span>',
+                '<span class="text-info">'.FA::i('check').' Verified'.'</span>',
+                '<span class="text-success">'.FA::i('cash-register').' Purchased'.'</span>',
+                '<span class="text-danger">'.FA::i('crosshairs').' Deleted'.'</span>',
             ];
         }
         parent::init();

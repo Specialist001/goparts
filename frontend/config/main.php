@@ -40,7 +40,9 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-
+        'formatter' => [
+            'class' => 'common\components\MyFormatter',
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -49,6 +51,7 @@ return [
                 'signup' => 'site/signup',
                 'user/products' => 'product/index',
                 'user/product/create' => 'product/create',
+                'user/requests' => 'seller-query',
                 'reset-password' => 'site/request-password-reset',
             ],
         ],

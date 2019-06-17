@@ -142,7 +142,7 @@ use rmrevin\yii\fontawesome\FA;
                             <div class="header_phone_text">
                                 <span>Sa-Th 9:00-20:00</span>
                                 <h4>+97155 689 22 01</h4>
-                                <a href="#">Leave a request</a>
+                                <a href="<?= Url::to(['query/create']) ?>">Leave a request</a>
                             </div>
                         </div>
                     </div>

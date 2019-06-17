@@ -10,17 +10,16 @@ class m190614_125724_add_columnd_to_queries extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
-        $this->addColumn('{{%queries}}','name',$this->string(150)->notNull());
-        $this->addColumn('{{%queries}}','phone',$this->string(255));
-        $this->addColumn('{{%queries}}','email',$this->string(255)->notNull());
+        $this->addColumn('{{%queries}}','phone',$this->string(255)->after('name'));
+        $this->addColumn('{{%queries}}','email',$this->string(255)->notNull()->after('phone'));
     }
 
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
         echo "m190614_125724_add_columnd_to_queries cannot be reverted.\n";
 

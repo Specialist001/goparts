@@ -82,24 +82,20 @@
                             ['label' => 'Create Type', 'icon' => 'plus', 'url' => ['/store-type-car/create'],],
                         ],
                     ],
-                    ['label' => 'Store Attribute', 'icon' => 'car', 'url' => ['#'],
+                    ['label' => 'Store Options', 'icon' => 'car', 'url' => ['#'],
                         'items' => [
-                            ['label' => 'All Attributes', 'icon' => 'list', 'url' => ['/store-attribute'],],
-                            ['label' => 'Create Attribute', 'icon' => 'plus', 'url' => ['/store-attribute/create'],],
+                            ['label' => 'All Options', 'icon' => 'list', 'url' => ['/store-option'],],
+                            ['label' => 'Create Option', 'icon' => 'plus', 'url' => ['/store-option/create'],],
                         ],
                     ],
-                    ['label' => 'Store Type', 'icon' => 'list', 'url' => ['#'],
+                    ['label' => 'Store Option Values', 'icon' => 'car', 'url' => ['#'],
                         'items' => [
-                            ['label' => 'All Types', 'icon' => 'list', 'url' => ['/store-type'],],
-                            ['label' => 'Create Type', 'icon' => 'plus', 'url' => ['/store-type/create'],],
+                            ['label' => 'All Option Values', 'icon' => 'list', 'url' => ['/store-option-value'],],
+                            ['label' => 'Create Option Value', 'icon' => 'plus', 'url' => ['/store-option-value/create'],],
                         ],
                     ],
-                    ['label' => 'Store Attribute Option', 'icon' => 'list', 'url' => ['#'],
-                        'items' => [
-                            ['label' => 'All Attribute Options', 'icon' => 'list', 'url' => ['/store-attribute-option'],],
-                            ['label' => 'Create Attribute Option', 'icon' => 'plus', 'url' => ['/store-attribute-option/create'],],
-                        ],
-                    ],
+
+
                     ['label' => 'Cities', 'icon' => 'globe', 'url' => ['#'],
                         'items' => [
                             ['label' => 'All Cities', 'icon' => 'list', 'url' => ['/city'],],

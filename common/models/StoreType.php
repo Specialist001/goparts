@@ -30,7 +30,7 @@ class StoreType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'string', 'max' => 255],
+            [['name','slug'], 'string', 'max' => 255],
         ];
     }
 
@@ -42,6 +42,7 @@ class StoreType extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
+            'slug' => 'Slug',
         ];
     }
 
