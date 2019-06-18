@@ -18,6 +18,7 @@ class AppAsset extends AssetBundle
     public $js = [
         'js/select2.min.js',
         'js/jquery-nicescroll/jquery.nicescroll.min.js',
+        'js/notify.min.js',
         'js/main.js',
     ];
     public $depends = [

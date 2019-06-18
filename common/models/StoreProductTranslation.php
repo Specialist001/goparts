@@ -18,7 +18,7 @@ use Yii;
  * @property string $meta_keywords
  * @property string $meta_canonical
  *
- * @property StoreProducts $product
+ * @property StoreProduct $product
  */
 class StoreProductTranslation extends \yii\db\ActiveRecord
 {

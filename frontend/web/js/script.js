@@ -25,6 +25,51 @@ $(document).ready(function () {
         }
     });
 
+    $('.add_cart').on('click', function () {
+        var form = $('form#cart_form');
+        var data = form.serialize();
+        // if(form.find('input[name="count"]').val() < 1) {
+        //     form.find('input[name="count"]').focus();
+        //     return false;
+        // }
+        console.log('true1');
+
+        form.submit(function(e){
+            e.preventDefault();
+            console.log('true-form');
+            $.ajax({
+                url: "/cart/add",
+                data: data,
+                type: "post",
+                success: function (t) {
+                    console.log(t);
+                    t = JSON.parse(t);
+                    console.log(t);
+                    if (t.error !== true) {
+                        console.log('true-t');
+                        //$('.header-cart-icon').html(t.product.cart_count);
+                        $('#cart_popup').html(
+                            '<p class="alert alert-info">' + t.product.page_title + '</p>' +
+                            '<div class="row" id="product_' + t.product.id + '">' +
+                            '<div class="col-md-3"><img src="' + t.product.img + '" alt="' + t.product.name + '" class="img-responsive center-block"></div>' +
+                            '<div class="col-md-8"><h4>' + t.product.name + '</h4><p class="muted">' + t.product.cat + '</p><p class="text-success">' + t.product.shop + '</p></div>' +
+                            '</div>'
+                        );
+                        $("#cartModal").modal('show');
+                        //window.location.reload();
+                    }
+                }
+            });
+            return false;
+        });
+    });
+
+    if ($('.catalog_top_link').attr('aria-expanded','true')) {
+        $('.catalog_top_link').children('i').removeClass('fa-chevron-down').addClass('fa-chevron-up');
+    } else if($('.catalog_top_link').attr('aria-expanded','false')){
+        $('.catalog_top_link').children('i').removeClass('fa-chevron-up').addClass('fa-chevron-down');
+    }
+
     $('#open-all_menu').on('click', function () {
         var $menu = $('#all_menu');
         //var $button = $('#open-all_menu');

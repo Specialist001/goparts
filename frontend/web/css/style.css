@@ -1290,6 +1290,11 @@ footer {
     color: #fe0000;
     font-family: 'GothamPro';
     font-size: 14px;
+    transition: .3s;
+}
+.buybuttons .buybuttons2:hover {
+    color: #ffffff;
+    background-color: #fe0000;
 }
 
 .star {
@@ -1345,9 +1350,6 @@ footer {
 }
 
 .catalog_top_link i {
-    position: absolute;
-    right: 5px;
-    top: 5px;
     color: #00904c;
 }
 
@@ -1745,7 +1747,7 @@ footer {
 
 .catalog_cart .card {
     border: 2px solid #efefef;
-    border-radius: 10px;
+    border-radius: 0.25rem!important;
     margin-bottom: 20px;
 }
 

@@ -41,7 +41,7 @@ use yii\behaviors\TimestampBehavior;
  * @property int $created_at
  * @property int $updated_at
  *
- * @property ProductStatistics[] $productStatistics
+ * @property ProductStatistic[] $productStatistics
  * @property StoreOrderProduct[] $storeOrderProducts
  * @property StoreProductAttributeValue[] $storeProductAttributeValues
  * @property StoreProductAttribute[] $storeProductAttributes
@@ -147,7 +147,7 @@ class StoreProduct extends \yii\db\ActiveRecord
     }
 
     public static function find() {
-        return parent::find()->with('translate','car');
+        return parent::find()->with('translate','car','category');
     }
 
     /**

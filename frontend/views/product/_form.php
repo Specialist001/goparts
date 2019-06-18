@@ -131,100 +131,100 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
 <!--            </form>-->
 <!--        --><?php //}?>
 
-        <?php if (!$category) { ?>
-            <form action="<?= Url::current() ?>" id="cat-form">
-                <h4>Select car</h4>
-                <div class="row car_search">
-                    <div class="col-md-3">
-                        <div class="position-relative">
-                            <select class="form-control vendor_select" required>
-                                <option disabled selected>Select Car</option>
-                                <!--                        --><? //= Dropdown::widget(); ?>
-                                <?php foreach ($cars_array as $vendor) { ?>
-                                    <option value="<?= $vendor ?>" <?= $vendor == $vendor_name ? 'selected' : '' ?>><?= $vendor ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="position-relative">
-                            <select class="form-control car_items" required>
-                                <option disabled selected>Select Model</option>
-
-                                <?php if (!empty(Yii::$app->request->get('car_id')) || !empty($model->car_id)) { ?>
-                                    <?php foreach ($models_array as $car_model) { ?>
-                                        <option value="<?= $car_model ?>" <?= $car_model == $model_name ? 'selected' : '' ?>><?= $car_model ?></option>
-                                    <?php } ?>
-                                <? } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="position-relative">
-                            <select class="form-control car_modifications" required>
-                                <option disabled selected>Select Generation</option>
-                                <?php if (!empty(Yii::$app->request->get('car_id')) || !empty($model->car_id)) { ?>
-                                    <?php foreach ($mod_array as $key => $car_modification) { ?>
-                                        <option value="<?= $key ?>" <?= $key == $modification_name ? 'selected' : '' ?>> <?= $car_modification ?></option>
-                                    <?php } ?>
-                                <? } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="position-relative">
-                            <select class="form-control car_years" required>
-                                <option disabled selected>Year</option>
-                                <?php if (!empty(Yii::$app->request->get('car_id')) || !empty($model->car_id)) { ?>
-                                    <?php foreach ($year_array as $key => $car_year) { ?>
-                                        <option value="<?= $key ?>" <?= $key == $year_name ? 'selected' : '' ?>> <?= $car_year ?></option>
-                                    <?php } ?>
-                                <? } ?>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <row>
-                    <div class="car_name" id="car_name">
-
-                    </div>
-                </row>
-                <input type="hidden" name="car_id" id="car_id" value="<?= Yii::$app->request->get('car_id')?>"/>
-                <?php if (!empty($prod_id = Yii::$app->request->get('id'))) { ?>
-                    <input type="hidden" name="id" value="<?= $prod_id ?>"/>
-                <?php } ?>
-
-                <div class="row pt-3">
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="category_id">Select category</label>
-                        </div>
-                        <?php if (!empty($cats)) { ?>
-                            <ul class="list-unstyled category-widget-list">
-                                <?php foreach ($cats as $cat) { ?>
-                                    <li data-id="<?= $cat->id ?>"
-                                        data-childs="<?= (!empty($cat->categories)) ? $cat->id : '' ?>"
-                                        class="cat-widget-li"><?= $cat->translate->title ?></li>
-                                <?php } ?>
-                            </ul>
-                        <?php } ?>
-                        <input type="text" name="category" id="category_id" value="" style="visibility: hidden;"/>
-                        <?php if (!empty($prod_id = Yii::$app->request->get('id'))) { ?>
-                            <input type="hidden" name="id" value="<?= $prod_id ?>"/>
-                        <?php } ?>
-                    </div>
-                </div>
-            </form>
-        <?php } else { ?>
+<!--        --><?php //if (!$category) { ?>
+<!--            <form action="--><?//= Url::current() ?><!--" id="cat-form">-->
+<!--                <h4>Select car</h4>-->
+<!--                <div class="row car_search">-->
+<!--                    <div class="col-md-3">-->
+<!--                        <div class="position-relative">-->
+<!--                            <select class="form-control vendor_select" required>-->
+<!--                                <option disabled selected>Select Car</option>-->
+<!--                                                        --><?// //= Dropdown::widget(); ?>
+<!--                                --><?php //foreach ($cars_array as $vendor) { ?>
+<!--                                    <option value="--><?//= $vendor ?><!--" --><?//= $vendor == $vendor_name ? 'selected' : '' ?><!----><?//= $vendor ?><!--</option>-->
+<!--                                --><?php //} ?>
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-3">-->
+<!--                        <div class="position-relative">-->
+<!--                            <select class="form-control car_items" required>-->
+<!--                                <option disabled selected>Select Model</option>-->
+<!---->
+<!--                                --><?php //if (!empty(Yii::$app->request->get('car_id')) || !empty($model->car_id)) { ?>
+<!--                                    --><?php //foreach ($models_array as $car_model) { ?>
+<!--                                        <option value="--><?//= $car_model ?><!--" --><?//= $car_model == $model_name ? 'selected' : '' ?><!----><?//= $car_model ?><!--</option>-->
+<!--                                    --><?php //} ?>
+<!--                                --><?// } ?>
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-3">-->
+<!--                        <div class="position-relative">-->
+<!--                            <select class="form-control car_modifications" required>-->
+<!--                                <option disabled selected>Select Generation</option>-->
+<!--                                --><?php //if (!empty(Yii::$app->request->get('car_id')) || !empty($model->car_id)) { ?>
+<!--                                    --><?php //foreach ($mod_array as $key => $car_modification) { ?>
+<!--                                        <option value="--><?//= $key ?><!--" --><?//= $key == $modification_name ? 'selected' : '' ?><!-- --><?//= $car_modification ?><!--</option>-->
+<!--                                    --><?php //} ?>
+<!--                                --><?// } ?>
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-3">-->
+<!--                        <div class="position-relative">-->
+<!--                            <select class="form-control car_years" required>-->
+<!--                                <option disabled selected>Year</option>-->
+<!--                                --><?php //if (!empty(Yii::$app->request->get('car_id')) || !empty($model->car_id)) { ?>
+<!--                                    --><?php //foreach ($year_array as $key => $car_year) { ?>
+<!--                                        <option value="--><?//= $key ?><!--" --><?//= $key == $year_name ? 'selected' : '' ?><!-- --><?//= $car_year ?><!--</option>-->
+<!--                                    --><?php //} ?>
+<!--                                --><?// } ?>
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <row>-->
+<!--                    <div class="car_name" id="car_name">-->
+<!---->
+<!--                    </div>-->
+<!--                </row>-->
+<!--                <input type="hidden" name="car_id" id="car_id" value="--><?//= Yii::$app->request->get('car_id')?><!--"/>-->
+<!--                --><?php //if (!empty($prod_id = Yii::$app->request->get('id'))) { ?>
+<!--                    <input type="hidden" name="id" value="--><?//= $prod_id ?><!--"/>-->
+<!--                --><?php //} ?>
+<!---->
+<!--                <div class="row pt-3">-->
+<!--                    <div class="col-sm-6 col-md-4">-->
+<!--                        <div class="form-group">-->
+<!--                            <label for="category_id">Select category</label>-->
+<!--                        </div>-->
+<!--                        --><?php //if (!empty($cats)) { ?>
+<!--                            <ul class="list-unstyled category-widget-list">-->
+<!--                                --><?php //foreach ($cats as $cat) { ?>
+<!--                                    <li data-id="--><?//= $cat->id ?><!--"-->
+<!--                                        data-childs="--><?//= (!empty($cat->categories)) ? $cat->id : '' ?><!--"-->
+<!--                                        class="cat-widget-li">--><?//= $cat->translate->title ?><!--</li>-->
+<!--                                --><?php //} ?>
+<!--                            </ul>-->
+<!--                        --><?php //} ?>
+<!--                        <input type="text" name="category" id="category_id" value="" style="visibility: hidden;"/>-->
+<!--                        --><?php //if (!empty($prod_id = Yii::$app->request->get('id'))) { ?>
+<!--                            <input type="hidden" name="id" value="--><?//= $prod_id ?><!--"/>-->
+<!--                        --><?php //} ?>
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        --><?php //} else { ?>
 
             <?php $form = ActiveForm::begin(); ?>
             <div class="row">
                 <div class="col-md-5">
                     <label>Category</label>
                     <input type="text" readonly="readonly" id="category_id" class="form-control"
-                           value="<?= $category->translate->title ?>"/>
-                    <a href="<?= Url::current(['category' => '']) ?>"
-                       onclick="if(!confirm('Expected form to save. Cancel?'))return false;">Choose another category</a>
+                           value="<?= $category->translate->title ? $category->translate->title : $model->category->translate->title ?>"/>
+<!--                    <a href="--><?//= Url::current(['category' => '']) ?><!--"-->
+<!--                       onclick="if(!confirm('Expected form to save. Cancel?'))return false;">Choose another category</a>-->
                     <?= $form->field($model, 'category_id')->hiddenInput()->label(false) ?>
                 </div>
                 <div class="col-md-4">
@@ -234,14 +234,6 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                 <div class="col-md-3">
                     <?= $form->field($model, 'type_car_id')->dropDownList($type_car_filter)->label('Body type') ?>
                 </div>
-                <!--        <div class="col-md-2">-->
-                <!--            --><? //= $form->field($model, 'user_id')->dropDownList($user_filter) ?>
-                <!--            --><? //= $form->field($model, 'user_id')->textInput(['value'=>Yii::$app->user->identity->username, 'readonly' => true]) ?>
-                <!--        </div>-->
-
-                <!--            <div class="col-md-2">-->
-                <!--                --><? //= $form->field($model, 'is_special')->dropDownList(['0' => 'Not special', 1 => 'Special']) ?>
-                <!--            </div>-->
             </div>
             <input type="hidden" name="vendor" value="<?= Yii::$app->request->get('vendor') ?>" readonly>
             <input type="hidden" name="car" value="<?= Yii::$app->request->get('car') ?>" readonly>
@@ -267,46 +259,6 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                 <!--            <div class="col-md-3">-->
                 <!--                --><? //= $form->field($model, 'order')->textInput(['type' => 'number', 'min' => 0]) ?>
                 <!--            </div>-->
-            </div>
-
-<!--            <h3>Selection by car</h3>-->
-            <div class="row">
-<!--                <div class="col-md-3">-->
-<!--                    <div class="form-group">-->
-<!--                        <label class="">Vendor</label>-->
-<!--                            <select class="form-control vendor_select" name="vendor_name">-->
-<!--                                <option disabled selected>Select Vendor</option>-->
-<!---->
-<!--                                --><?php //foreach (Cars::getVendors() as $car) { ?>
-<!--                                    <option value="--><?//= $car ?><!--">--><?//= $car ?><!--</option>-->
-<!--                                --><?php //} ?>
-<!--                            </select>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="col-md-3 car_select">-->
-<!--                    <div class="form-group">-->
-<!--                        <label>Car</label>-->
-<!--                        <select class="form-control car_items" name="car_name" disabled>-->
-<!--                            <option disabled selected>Select Car</option>-->
-<!--                        </select>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="col-md-3 modification_select">-->
-<!--                    <div class="form-group">-->
-<!--                        <label>Modification</label>-->
-<!--                        <select class="form-control car_modifications" name="modification_name" disabled>-->
-<!--                            <option disabled selected>Modification</option>-->
-<!--                        </select>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="col-md-3 year_select">-->
-<!--                    <div class="form-group">-->
-<!--                        <label>Year</label>-->
-<!--                        <select class="form-control car_years" name="year_name" disabled>-->
-<!--                            <option disabled selected>Year</option>-->
-<!--                        </select>-->
-<!--                    </div>-->
-<!--                </div>-->
             </div>
             <h3 class="pt-2">Product Description</h3>
             <div class="row">
@@ -500,7 +452,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
             </div>
 
             <?php ActiveForm::end(); ?>
-        <?php } ?>
+<!--        --><?php //} ?>
 
     </div>
 <?php $this->registerJs('

@@ -21,6 +21,7 @@ class MyFormatter extends Formatter{
     public $requiredFormat;
     public $filterFormat;
     public $queryFormat;
+    public $sellerQueryFormat;
 
     public function asPublished($value)
     {
@@ -102,6 +103,11 @@ class MyFormatter extends Formatter{
         if ($value == 2) return $this->queryFormat[2];
         if ($value == -1) return $this->queryFormat[3];
         return $this->queryFormat[0];
+    }
+    public function asSellerQuery($value)
+    {
+        if ($value == 1) return $this->sellerQueryFormat[1];
+        return $this->sellerQueryFormat[0];
     }
 
     public function set_intlLoaded() {
@@ -193,6 +199,12 @@ class MyFormatter extends Formatter{
                 '<span class="text-info">'.FA::i('check').' Verified'.'</span>',
                 '<span class="text-success">'.FA::i('cash-register').' Purchased'.'</span>',
                 '<span class="text-danger">'.FA::i('crosshairs').' Deleted'.'</span>',
+            ];
+        }
+        if ($this->sellerQueryFormat === null) {
+            $this->sellerQueryFormat = [
+                '<span class="text-warning">'.FA::i('times-circle').' Waited'.'</span>',
+                '<span class="text-success">'.FA::i('cash-register').' Purchased'.'</span>',
             ];
         }
         parent::init();

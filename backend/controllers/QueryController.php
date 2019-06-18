@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\SellerCar;
+use common\models\SellerQuery;
 use Yii;
 use common\models\Query;
 use backend\models\QuerySearch;
@@ -26,6 +27,15 @@ class QueryController extends Controller
                 'actions' => [
                     'delete' => ['POST'],
                 ],
+            ],
+        ];
+    }
+
+    public function actions()
+    {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
             ],
         ];
     }
@@ -133,6 +143,28 @@ class QueryController extends Controller
 
     public function actionSendSellers()
     {
+        $posts = Yii::$app->request->post();
+        $data = [];
+        $query_id = $posts['query_id'];
+        $model = $this->findModel($query_id);
 
+        $sellers = $posts['sellers'];
+
+        foreach ($sellers as $seller_id) {
+            $seller_query = new SellerQuery();
+            $seller_query->query_id = $query_id;
+            $seller_query->seller_id = $seller_id;
+            $seller_query->status = SellerQuery::STATUS_WAITED;
+
+            if ($seller_query->save()) {
+                $model->status = Query::STATUS_VERIFIED;
+                $model->save();
+                $data['status'] = 'Request send to sellers';
+            } else {
+                $data['status'] = 'Request not send';
+            }
+        }
+
+        return $this->asJson($data);
     }
 }

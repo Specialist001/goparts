@@ -2,8 +2,11 @@
 namespace frontend\controllers;
 
 use common\models\Cars;
+use common\models\StoreCategory;
 use common\models\StoreProduct;
+use common\models\StoreTypeCar;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 class CarController extends Controller
 {
@@ -11,6 +14,8 @@ class CarController extends Controller
     {
 //        self::getCar()
         $cars = Cars::find()->where(['vendor' => $vendor, 'car'=>$car, 'modification'=>$modification])->all();
+        $categories = StoreCategory::find()->where(['IS','parent_id',null])->all();
+        $body_types = StoreTypeCar::find()->where(['IS NOT','parent_id',null])->all();
 
         if (!empty($car)) {
             if (!empty($modification)) {
@@ -48,6 +53,24 @@ class CarController extends Controller
 
         return $this->render('search',[
             'products' => $products,
+            'categories' => $categories,
+            'body_types' => $body_types,
         ]);
+    }
+
+    public function actionProduct($id)
+    {
+        return $this->render('product', [
+            'product' => $this->findModel($id),
+        ]);
+    }
+
+    protected function findModel($id)
+    {
+        if (($model = StoreProduct::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

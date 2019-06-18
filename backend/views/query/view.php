@@ -10,11 +10,17 @@ $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Queries', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+
+$seller_queries = \common\models\SellerQuery::find()->all();
+$seller_query_array = [];
+foreach ($seller_queries as $seller_query) {
+    $seller_query_array[$seller_query->seller_id] += $seller_query->seller_id;
+}
+//print_r($seller_query_array);exit;
 ?>
 <div class="query-view">
     <div class="container">
-        <h1><?= Html::encode($this->title) ?></h1>
-
+<!--        <h1>--><?//= Html::encode($this->title) ?><!--</h1>-->
         <p>
             <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a('Delete', ['delete', 'id' => $model->id], [
@@ -182,33 +188,94 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
         <hr>
+
         <div class="sellers">
             <h4>Sellers</h4>
             <div class="row">
                 <?php foreach ($sellers as $seller) {?>
-                    <div>
-                        <input class="" type="checkbox" name="seller" value="<?= $seller->user->id ?>" id="seller_<?= $seller->user->id?>">
+                    <div class="seller-list">
+                        <input class="sellers" type="checkbox" name="Seller[<?=$seller->user->id?>]"
+                               value="<?= $seller->user->id ?>"
+                               id="seller_<?= $seller->user->id?>" checked
+                                <?php if(in_array($seller->user->id, $seller_query_array)) $disabled = 'disabled'; else $disabled=''; echo $disabled  ?>
+                        >
                         <label for="seller_<?= $seller->user->id?>"><?= $seller->user->username; ?>
                     </div>
                 <?php } ?>
+                <a class="seller-send btn btn-success <?php echo $disabled ?>" <?php echo $disabled ?>>Send</a>
+                <p></p>
+                <?php if($disabled!='') { ?>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="alert alert-warning" role="alert">
+                                Data already send
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+
             </div>
         </div>
     </div>
 </div>
+<div class="data">
+    <input type="hidden" class="query_id" name="query_id"  value="<?= $model->id?>">
+<!--    <input type="hidden" name="seller_id" value="--><?//= $model->id?><!--">-->
+</div>
+<script>
+    // $(document).ready(function () {
+    //
+    //     var query_id = 1;
+    //     var seller_id = 1;
+    //
+    //     $('.seller-send').click(function () {
+    //         $.ajax({
+    //             type: "POST",
+    //             url: "admin/query/seller-send",
+    //             // data: {query_id: query_id, seller_id: seller_id, status: status
+    //             data: {},
+    //             success: function (response) {
+    //                 console.log(response)
+    //             }
+    //         });
+    //     });
+    //
+    // });
+</script>
 
 <?php $this->registerJs('
     $(document).ready(function () {
 
-    var query_id = 1;
-    var seller_id = 1;
-    $.ajax({
-        type: "POST",
-        url: \'admin/query/seller-send\',
-        data: {query_id: query_id, seller_id: seller_id, status: status
-        },
-        success: function (response) {
-            console.log(response)
-        }
+        var query_id = $(".query_id").val();
+        var sellers = [];
+        $(".sellers").each(function () {
+            if($(this).is(":checked")) {
+                sellers.push($(this).val());
+            }
+        });
+        
+        
+         var disabled = $(\'.seller-send\').attr("disabled"); 
+
+        $(\'.seller-send\').click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "send-sellers",
+                    data: {query_id: query_id, sellers: sellers, status: status},
+                    success: function (data) {
+                        console.log(data);
+                        $(".sellers").prop(\'disabled\', true);
+                        $(".seller-send").attr(\'disabled\', true);
+                        $(\'.seller-send\').addClass(\'disabled\');
+                        $.notify(data[\'status\'], "success");
+                    },
+                    error: function (data) {
+                        $.notify("Data not send", "error");
+                    }
+                });
+            
+        });
+
     });
-});'); ?>
+'); ?>
 
