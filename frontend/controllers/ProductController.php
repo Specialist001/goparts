@@ -230,8 +230,9 @@ class ProductController extends Controller
                         }
 
                         $model->save();
+
                         $seller->product_id = $model->id;
-                        $seller->status = SellerQuery::STATUS_PURCHASED;
+                        $seller->status = SellerQuery::STATUS_PUBLISHED;
                         $seller->save();
 
                         return $this->redirect(['update', 'id' => $model->id, 'category' => $model->category_id, 'car_id' => $car_id]);
@@ -282,7 +283,7 @@ class ProductController extends Controller
                 $cats = StoreCategory::find()->where(['parent_id' => null, 'status'=>1])->orderBy('`order`')->all();
                 $type_cars = StoreTypeCar::find()->where(['parent_id' => null])->all();
 
-                $category = !empty(Yii::$app->request->get('category'))? Yii::$app->request->get('category'): false;
+                $category = !empty(Yii::$app->request->get('category')) ? Yii::$app->request->get('category'): $old_cat;
 
                 if(empty($category = StoreCategory::findOne(['id' => $category, 'status' => 1]))) $category = false;
                 if(!empty($category)) if(!empty($category->activeCategories))  $category = false;
@@ -351,10 +352,10 @@ class ProductController extends Controller
 //                    $car = Cars::find()
 //                        ->where(['vendor'=>$vendor_name, 'car'=>$car_name, 'modification'=>$modification_name, 'year'=>$year])->one();
 
-                    $productCar = StoreProductToCar::findOne(['product_id'=>$model->id]);
-                    $productCar->product_id = $model->id;
-                    $productCar->car_id = $car->id;
-                    $productCar->save();
+//                    $productCar = StoreProductToCar::findOne(['product_id'=>$model->id]);
+//                    $productCar->product_id = $model->id;
+//                    $productCar->car_id = $car->id;
+//                    $productCar->save();
 
                     if (empty(Yii::$app->request->post('StoreProduct')['title'])) {
                         $model->title = Helper::toSlug($translation_en->name) . '_' . $model->id;
@@ -371,7 +372,7 @@ class ProductController extends Controller
 
                     $model->save();
 
-                    return $this->redirect(['update', 'id' => $model->id, 'category' => $model->category_id, 'car_id'=>$car_id]);
+                    return $this->redirect(['update', 'id' => $model->id]);
                 }
 
                 return $this->render('update',[

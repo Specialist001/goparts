@@ -1,9 +1,7 @@
 <?php
 
-namespace app\models;
+namespace common\models;
 
-use common\models\StoreProduct;
-use common\models\User;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 
@@ -36,7 +34,7 @@ class UserCart extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'product_id', 'created_at', 'updated_at'], 'required'],
+            [['user_id', 'product_id'], 'required'],
             [['user_id', 'product_id', 'status', 'count', 'created_at', 'updated_at'], 'integer'],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => StoreProduct::className(), 'targetAttribute' => ['product_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],

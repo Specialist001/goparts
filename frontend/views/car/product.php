@@ -11,18 +11,18 @@ use yii\helpers\Url; ?>
                 <div class="col-xl-12">
                     <ul class="owl-carousel">
                         <li>
-                            <a href="/img/product-1.png" data-fancybox="gallery">
-                                <img src="/img/product-1.png">
+                            <a href="<?=$product->image ?>" data-fancybox="gallery" class="w-75">
+                                <img src="<?=$product->image ?>" alt="<?=$product->translate->name ?>" class="img-fluid">
                             </a>
                         </li>
                         <li>
-                            <a href="/img/product-2.png" data-fancybox="gallery">
-                                <img src="/img/product-2.png">
+                            <a href="<?=$product->image ?>" data-fancybox="gallery" class="w-75">
+                                <img src="<?=$product->image ?>" alt="<?=$product->translate->name ?>" class="img-fluid">
                             </a>
                         </li>
                         <li>
-                            <a href="/img/product-3.png" data-fancybox="gallery">
-                                <img src="/img/product-3.png">
+                            <a href="<?=$product->image ?>" data-fancybox="gallery" class="w-75">
+                                <img src="<?=$product->image ?>" alt="<?=$product->translate->name ?>" class="img-fluid">
                             </a>
                         </li>
                         <li>
@@ -48,16 +48,17 @@ use yii\helpers\Url; ?>
                             <div class="count float-right w-25">
                                 <input class="form-control" type="number"
                                        required="required" name="count"
-                                       min="1" value="1">
+                                       min="1" value="4">
                             </div>
                         </div>
                         <br>
                         <input type="hidden" name="product_id" value="<?= $product->id?>">
-
+                        <input type="hidden" name="_csrf-frontend"
+                               value="<?=Yii::$app->request->getCsrfToken()?>" />
                         <div class="buybuttons">
                             <button class="buybuttons1 add_cart">Add to cart <img src="/svg/White_bakset.svg" alt="">
                             </button>
-                            <button class="buybuttons2">Buy now</button>
+                            <a href="<?= Url::to(['/cart']) ?>" class="buybuttons2">Buy now</a>
                         </div>
                         <div class="star d-none">
                             <i class="fas fa-star"></i>
@@ -86,14 +87,7 @@ use yii\helpers\Url; ?>
 <!--                        --><?//= Yii::t('frontend', 'Ask a question') ?>
 <!--                    </a>-->
                 </div>
-                <div class="pull-right">
-                <?php if ($userCart->product_id == $product->id) { ?>
-                    <a href="<?= Url::to(['deal/index', 'id' => $userCart->id]) ?>" class="btn btn-secondary">
-                        <?//= Yii::t('frontend', 'Interested') ?>
-                        К сделку
-                    </a>
-                <?php }?>
-                </div>
+
             </div>
         </div>
     </div>

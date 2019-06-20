@@ -158,7 +158,7 @@ use rmrevin\yii\fontawesome\FA;
                             </div>
                             <div class="header_shop_text">
                                 <h4>In basket</h4>
-                                <span>250 500 000 AED</span>
+                                <span><div id="cart-count" class="d-inline-block"><?= \frontend\widgets\WBasket::widget(['key' => 'main']) ?> </div> AED</span>
                             </div>
                         </div>
                     </div>

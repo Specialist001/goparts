@@ -61,7 +61,7 @@ input, input:focus, textarea, select {
     padding-left: 0;
 }
 .widgetform_form .select2-container--default .select2-selection--single .select2-selection__arrow {
-    height: 10px;
+    height: 23px;
 }
 .widgetform_form .select2-container .select2-selection--single {
     height: auto;
@@ -438,8 +438,8 @@ label.toggle .toggle__text, label.toggle + a {
 .widgetform_make {
     border-top: 1px solid #e3e3e3;
     border-bottom: 1px solid #e3e3e3;
-    padding: 15px 35px;
-    width: 17%;
+    padding: 0.83rem 35px;
+    width: 20%;
     position: relative;
     border-right: 1px solid #e3e3e3;
 }
@@ -463,8 +463,8 @@ label.toggle .toggle__text, label.toggle + a {
 .widgetform_model {
     border-top: 1px solid #e3e3e3;
     border-bottom: 1px solid #e3e3e3;
-    padding: 15px 35px;
-    width: 16%;
+    padding: 0.83rem 35px;
+    width: 20%;
     position: relative;
     border-right: 1px solid #e3e3e3;
 }
@@ -488,7 +488,7 @@ label.toggle .toggle__text, label.toggle + a {
 .widgetform_year {
     border-top: 1px solid #e3e3e3;
     border-bottom: 1px solid #e3e3e3;
-    padding: 15px 35px;
+    padding: 0.83rem 35px;
     width: 13%;
     position: relative;
     border-right: 1px solid #e3e3e3;
@@ -513,8 +513,8 @@ label.toggle .toggle__text, label.toggle + a {
 .widgetform_generation {
     border-top: 1px solid #e3e3e3;
     border-bottom: 1px solid #e3e3e3;
-    padding: 15px 35px;
-    width: 20%;
+    padding: 0.83rem 35px;
+    width: 22%;
     position: relative;
     border-right: 1px solid #e3e3e3;
 }
@@ -537,7 +537,7 @@ label.toggle .toggle__text, label.toggle + a {
 
 .widgetform_button {
     background: #fe0000;
-    width: 16%;
+    width: 18%;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
 }
@@ -1038,10 +1038,10 @@ footer {
     text-align: right;
 }
 
-.basket_table_bottom_right button {
+.basket_table_bottom_right a {
     border: 1px solid #fe0000;
     border-radius: 50px;
-    color: #fe0000;
+    color: #fe0000!important;
     text-align: center;
     background: none;
     font-size: 15px;
@@ -1049,10 +1049,11 @@ footer {
     font-family: 'GothamProMedium';
     position: absolute;
     right: 0;;
+    cursor: pointer;
 }
 
-.basket_table_bottom_left button i {
-    color: #fe0000;
+.basket_table_bottom_left a i {
+    color: #fe0000!important;
     margin-right: 10px;
 }
 
@@ -1855,7 +1856,7 @@ footer {
     line-height: 31px;
 }
 
-.sidebar_top button {
+.sidebar_top a {
     position: absolute;
     right: 10px;
     top: -5px;
@@ -1865,7 +1866,13 @@ footer {
     background: none;
     font-family: 'GothamProMedium';
     font-size: 15px;
-    color: #fe0000;
+    color: #fe0000!important;
+    transition: 0.2s;
+    cursor: pointer;
+}
+.sidebar_top a:hover {
+    color: #ffffff!important;
+    background-color: #fe0000;
 }
 
 .sidebar_center {
@@ -1914,6 +1921,7 @@ footer {
     color: #00904c;
     font-family: 'GothamProBold';
     font-size: 15px;
+    cursor: pointer;
 }
 
 .sidebar_bottom .sidebar_bottom1 i {
@@ -1935,6 +1943,7 @@ footer {
     color: #00904c;
     font-family: 'GothamProBold';
     font-size: 15px;
+    cursor: pointer;
 }
 
 .sidebar_bottom .sidebar_bottom2 i {
@@ -1975,9 +1984,9 @@ footer {
     margin-top: 20px;
 }
 
-.sidebar_bottom4 button {
-    color: #fff;
-    background: #00904c;
+.sidebar_bottom4 a {
+    color: #fff!important;
+    background: #00904c!important;
     border: 0;
     padding: 15px 55px;
     border-radius: 25px;

@@ -12,6 +12,11 @@ $products = \common\models\StoreProduct::find()->where(['user_id'=>Yii::$app->us
 if (!empty($products)) {
     $product = $products->count();
 }
+$orders = \common\models\StoreOrder::find()->where(['user_id'=>Yii::$app->user->identity->getId()]);
+if (!empty($orders)) {
+    $order = $orders->count();
+}
+
 
 ?>
 <div class="py-3">
@@ -39,7 +44,8 @@ if (!empty($products)) {
             <a href="<?= Url::to(['user/index']) ?>"><li><i class="fa fa-user"></i> Profile</li></a>
             <a href="<?= Url::to(['user/index']) ?>"><li><img src="/svg/Orders_hostory.svg" alt=""> Orders history</li></a>
             <a href="<?= Url::to(['user/orders']) ?>"><li><img src="/svg/My_orders.svg" alt=""> My orders </li></a>
-            <?php if (Yii::$app->user->identity->role == 1) { ?>
+            <a href="<?= Url::to(['user/purchases']) ?>"><li><img src="/svg/My_orders.svg" alt="">Purchases (<?= $order ?>)</li></a>
+            <?php if (Yii::$app->user->identity->role == \common\models\User::ROLE_SELLER) { ?>
             <a href="<?= Url::to(['user/requests']) ?>"><li><img src="/svg/My_orders.svg" alt=""> Requests (<?= $request ?>)</li></a>
             <a href="<?= Url::to(['user/products']) ?>"><li><img src="/svg/My_orders.svg" alt=""> My products (<?= $product ?>)</li></a>
             <?php } ?>

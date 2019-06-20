@@ -10,7 +10,7 @@ return [
     'price' => [
         'decimals' => '0',
         'dec_pointer' => '',
-        'thousands_sep' => '.',
+        'thousands_sep' => ' ',
     ],
     'price_dec' => [
         'decimals' => '2',

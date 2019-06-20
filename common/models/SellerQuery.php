@@ -23,7 +23,8 @@ use yii\behaviors\TimestampBehavior;
 class SellerQuery extends \yii\db\ActiveRecord
 {
     const STATUS_WAITED = 0;
-    const STATUS_PURCHASED = 1;
+    const STATUS_PUBLISHED = 1;
+    const STATUS_PURCHASED = 2;
 
     /**
      * {@inheritdoc}

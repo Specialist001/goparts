@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "store_orders".
@@ -61,19 +62,19 @@ class StoreOrder extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'delivery_id', 'status_id', 'manager_id', 'payment_method_id', 'paid', 'payment_time', 'separate_delivery', 'created_at', 'updated_at'], 'integer'],
+            [['user_id', 'delivery_id', 'status', 'manager_id', 'payment_method_id', 'paid', 'payment_time', 'separate_delivery', 'created_at', 'updated_at'], 'integer'],
             [['delivery_price', 'total_price', 'discount', 'coupon_discount'], 'number'],
             [['payment_details', 'comment', 'note'], 'string'],
-            [['created_at', 'updated_at'], 'required'],
+//            [['created_at', 'updated_at'], 'required'],
             [['name', 'street', 'phone', 'email', 'url', 'country', 'city', 'house', 'apartment'], 'string', 'max' => 255],
             [['ip', 'zipcode'], 'string', 'max' => 30],
             [['delivery_id'], 'exist', 'skipOnError' => true, 'targetClass' => StoreDelivery::className(), 'targetAttribute' => ['delivery_id' => 'id']],
             [['manager_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['manager_id' => 'id']],
             [['payment_method_id'], 'exist', 'skipOnError' => true, 'targetClass' => StorePayment::className(), 'targetAttribute' => ['payment_method_id' => 'id']],
-            [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => StoreOrderStatus::className(), 'targetAttribute' => ['status_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
+
 
     /**
      * {@inheritdoc}
@@ -84,7 +85,7 @@ class StoreOrder extends \yii\db\ActiveRecord
             'id' => 'ID',
             'user_id' => 'User ID',
             'delivery_id' => 'Delivery ID',
-            'status_id' => 'Status ID',
+            'status' => 'Status',
             'manager_id' => 'Manager ID',
             'delivery_price' => 'Delivery Price',
             'payment_method_id' => 'Payment Method ID',
@@ -112,6 +113,17 @@ class StoreOrder extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
         ];
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
 
     /**
      * @return \yii\db\ActiveQuery
@@ -168,4 +180,5 @@ class StoreOrder extends \yii\db\ActiveRecord
     {
         return $this->hasMany(StoreOrdersToCoupon::className(), ['order_id' => 'id']);
     }
+
 }
