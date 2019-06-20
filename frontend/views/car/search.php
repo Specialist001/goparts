@@ -24,38 +24,47 @@ $this->title = 'Product Search: ' . Yii::$app->request->get('vendor') .' '. Yii:
             <div class="col-md-3">
                 <div class="catalog_top">
                     <a class="catalog_top_link" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                        Category <i class="fa fa-chevron-down"></i>
+                        Category <i class="fa fa-chevron-down float-right"></i>
                     </a>
                     <div class="collapse" id="collapseExample">
                         <div class="">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                <label class="custom-control-label" for="customCheck1">Check</label>
+                            <?php foreach ($categories as $category) { ?>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" name="Category" id="customCheck<?=$category->id ?>">
+                                <label class="custom-control-label" for="customCheck<?=$category->id ?>"><?=$category->translate->title ?></label>
                             </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                <label class="custom-control-label" for="customCheck2">This custom</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="customCheck3">
-                                <label class="custom-control-label" for="customCheck3">Checkbox</label>
-                            </div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
                 <div class="catalog_body">
-                    <h3>Body type</h3>
-                    <div class="catalog_body_opt">
-                        <span>Sedan</span>
-                        <i class="fa fa-times-circle"></i>
+<!--                    <h3>Body type</h3>-->
+<!--                    <div class="catalog_body_opt">-->
+<!--                        <span>Sedan</span>-->
+<!--                        <i class="fa fa-times-circle"></i>-->
+<!--                    </div>-->
+                    <a class="catalog_top_link" data-toggle="collapse" href="#collapseBody" role="button" aria-expanded="false" aria-controls="collapseBody">
+                        Body type <i class="fa fa-chevron-down float-right"></i>
+                    </a>
+                    <div class="collapse catalog_body_opt" id="collapseBody">
+                        <div class="">
+                            <?php foreach ($body_types as $body_type) { ?>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" name="BodyType" id="bodyCheck<?=$body_type->id ?>">
+                                    <label class="custom-control-label" for="bodyCheck<?=$body_type->id ?>"><?=$body_type->translate->name ?></label>
+                                </div>
+                            <?php } ?>
+                        </div>
                     </div>
                 </div>
                 <div class="catalog_radio">
                     <h3>Condition</h3>
-                    <div class="custom-control custom-radio">
-                        <input type="radio" id="bodytype1" name="customRadio" class="custom-control-input">
-                        <label class="custom-control-label" for="bodytype1">Toggle</label>
-                    </div>
+<!--                    --><?php //foreach ($body_types as $body_type) { ?>
+<!--                    <div class="custom-control custom-radio">-->
+<!--                        <input type="radio" id="bodytype--><?//= $body_type->id ?><!--" name="BodyType" class="custom-control-input">-->
+<!--                        <label class="custom-control-label" for="bodytype--><?//= $body_type->id ?><!--">--><?//= $body_type->translate->name ?><!--</label>-->
+<!--                    </div>-->
+<!--                    --><?php //} ?>
                     <div class="custom-control custom-radio">
                         <input type="radio" id="bodytype2" name="customRadio" class="custom-control-input">
                         <label class="custom-control-label" for="bodytype2">Or</label>
@@ -78,7 +87,7 @@ $this->title = 'Product Search: ' . Yii::$app->request->get('vendor') .' '. Yii:
                     <?php foreach ($products as $product) { ?>
                     <div class="col-md-4">
                         <div class="card">
-                            <div class="img w-75">
+                            <div class="img w-100">
                                 <img src="<?= $product->image?>" class="img-fluid card-img-top" alt="<?= $product->translate->name?>">
                             </div>
                             <div class="card-body card_hover">
@@ -88,8 +97,11 @@ $this->title = 'Product Search: ' . Yii::$app->request->get('vendor') .' '. Yii:
                             </div>
                             <div class="card-body">
                                 <a href="#" class="cat"><?= Yii::$app->request->get('vendor')?></a>
-                                <h5 class="card-title"><?= $product->translate->name?>,
-                                    <?= $product->car->vendor .' '.$product->car->car.' '.$product->car->modification.' '.$product->car->year?> </h5>
+                                <a href="<?= \yii\helpers\Url::to(['car/product', 'id'=>$product->id]) ?>">
+                                    <h5 class="card-title"><?= $product->translate->name?>,
+                                        <?= $product->car->vendor .' '.$product->car->car.' '.$product->car->modification.' '.$product->car->year?>
+                                    </h5>
+                                </a>
                                 <div class="card_price">
                                     <h4><?=$product->purchase_price ?> <span>AED</span></h4>
                                 </div>

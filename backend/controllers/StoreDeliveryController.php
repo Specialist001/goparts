@@ -2,19 +2,17 @@
 
 namespace backend\controllers;
 
-use common\models\SellerCar;
-use common\models\SellerQuery;
 use Yii;
-use common\models\Query;
-use backend\models\QuerySearch;
+use common\models\StoreDelivery;
+use backend\models\StoreDeliverySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * QueryController implements the CRUD actions for Query model.
+ * StoreDeliveryController implements the CRUD actions for StoreDelivery model.
  */
-class QueryController extends Controller
+class StoreDeliveryController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -31,22 +29,29 @@ class QueryController extends Controller
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function actions()
     {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
+//            'captcha' => [
+//                'class' => 'yii\captcha\CaptchaAction',
+//                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+//            ],
         ];
     }
 
     /**
-     * Lists all Query models.
+     * Lists all StoreDelivery models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new QuerySearch();
+        $searchModel = new StoreDeliverySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -56,31 +61,26 @@ class QueryController extends Controller
     }
 
     /**
-     * Displays a single Query model.
+     * Displays a single StoreDelivery model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-        $model = $this->findModel($id);
-
-        $sellers = SellerCar::find()->where(['vendor_name'=>$model->vendor])->all();
-
         return $this->render('view', [
-            'model' => $model,
-            'sellers' => $sellers,
+            'model' => $this->findModel($id),
         ]);
     }
 
     /**
-     * Creates a new Query model.
+     * Creates a new StoreDelivery model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Query();
+        $model = new StoreDelivery();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -92,7 +92,7 @@ class QueryController extends Controller
     }
 
     /**
-     * Updates an existing Query model.
+     * Updates an existing StoreDelivery model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -112,7 +112,7 @@ class QueryController extends Controller
     }
 
     /**
-     * Deletes an existing Query model.
+     * Deletes an existing StoreDelivery model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -126,45 +126,18 @@ class QueryController extends Controller
     }
 
     /**
-     * Finds the Query model based on its primary key value.
+     * Finds the StoreDelivery model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Query the loaded model
+     * @return StoreDelivery the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Query::findOne($id)) !== null) {
+        if (($model = StoreDelivery::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-    public function actionSendSellers()
-    {
-        $posts = Yii::$app->request->post();
-        $data = [];
-        $query_id = $posts['query_id'];
-        $model = $this->findModel($query_id);
-
-        $sellers = $posts['sellers'];
-
-        foreach ($sellers as $seller_id) {
-            $seller_query = new SellerQuery();
-            $seller_query->query_id = $query_id;
-            $seller_query->seller_id = $seller_id;
-            $seller_query->status = SellerQuery::STATUS_WAITED;
-
-            if ($seller_query->save()) {
-                $model->status = Query::STATUS_VERIFIED;
-                $model->save();
-                $data['status'] = 'Request send to sellers';
-            } else {
-                $data['status'] = 'Request not send';
-            }
-        }
-
-        return $this->asJson($data);
     }
 }

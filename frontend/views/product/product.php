@@ -15,13 +15,13 @@ use yii\helpers\Url; ?>
                     </h3>
                 </div>
             </div>
-            <div class="row mb-2">
-                <div class="col-md-12">
-                    <span class="float-md-right">
-                        <a class="btn btn-info" href="<?= Url::to(['user/product/create']) ?>">Add product</a>
-                    </span>
-                </div>
-            </div>
+<!--            <div class="row mb-2">-->
+<!--                <div class="col-md-12">-->
+<!--                    <span class="float-md-right">-->
+<!--                        <a class="btn btn-info" href="--><?//= Url::to(['user/product/create']) ?><!--">Add product</a>-->
+<!--                    </span>-->
+<!--                </div>-->
+<!--            </div>-->
 
 
             <div class="">
@@ -42,8 +42,8 @@ use yii\helpers\Url; ?>
                         <?php foreach ($products as $product) { ?>
                             <tr>
                                 <td><?= $product->id ?></td>
-                                <td><?= $product->translate->name ?></td>
-                                <td><?= $product->storeProductToCars->car->vendor ?></td>
+                                <td><a href="<?=Url::to(['user/product/update', 'id'=>$product->id]) ?>"><?=$product->translate->name?></a> </td>
+                                <td><?= $product->storeProductToCars->car->vendor ? $product->storeProductToCars->car->vendor : $product->car->vendor ?></td>
                                 <td><?= $product->category->translate->title ?></td>
                                 <td><?= $product->typeCar->translate->name ?></td>
                                 <td><?= $product->price ?></td>

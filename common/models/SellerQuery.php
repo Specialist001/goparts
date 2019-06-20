@@ -22,6 +22,10 @@ use yii\behaviors\TimestampBehavior;
  */
 class SellerQuery extends \yii\db\ActiveRecord
 {
+    const STATUS_WAITED = 0;
+    const STATUS_PUBLISHED = 1;
+    const STATUS_PURCHASED = 2;
+
     /**
      * {@inheritdoc}
      */
@@ -47,7 +51,7 @@ class SellerQuery extends \yii\db\ActiveRecord
     {
         return [
             [['query_id', 'seller_id', 'product_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['created_at', 'updated_at'], 'required'],
+//            [['created_at', 'updated_at'], 'required'],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => StoreProduct::className(), 'targetAttribute' => ['product_id' => 'id']],
             [['query_id'], 'exist', 'skipOnError' => true, 'targetClass' => Query::className(), 'targetAttribute' => ['query_id' => 'id']],
             [['seller_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['seller_id' => 'id']],

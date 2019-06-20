@@ -16,6 +16,7 @@ class AppAsset extends AssetBundle
         'css/owl.carousel.min.css',
         'css/owl.theme.default.min.css',
         'css/select2.min.css',
+        'css/jquery.fancybox.min.css',
         'css/checkbox.css',
         'css/site.css',
         'css/style.css',
@@ -27,6 +28,7 @@ class AppAsset extends AssetBundle
         'js/popper.min.js',
         'js/bootstrap.min.js',
         'js/select2.min.js',
+        'js/jquery.fancybox.min.js',
         'js/jquery.scrollbar.js',
         'js/script.js',
     ];

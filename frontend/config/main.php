@@ -51,6 +51,7 @@ return [
                 'signup' => 'site/signup',
                 'user/products' => 'product/index',
                 'user/product/create' => 'product/create',
+                'user/product/update' => 'product/update',
                 'user/requests' => 'seller-query',
                 'reset-password' => 'site/request-password-reset',
             ],

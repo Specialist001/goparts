@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "store_deliveries".
@@ -42,7 +43,7 @@ class StoreDelivery extends \yii\db\ActiveRecord
             [['description'], 'string'],
             [['price', 'free_form', 'available_form'], 'number'],
             [['order', 'status', 'separate_payment', 'created_at', 'updated_at', 'deleted_at'], 'integer'],
-            [['created_at', 'updated_at'], 'required'],
+//            [['created_at', 'updated_at'], 'required'],
             [['name'], 'string', 'max' => 255],
         ];
     }
@@ -65,6 +66,16 @@ class StoreDelivery extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'deleted_at' => 'Deleted At',
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
         ];
     }
 

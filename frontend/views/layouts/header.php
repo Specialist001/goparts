@@ -85,6 +85,9 @@ use rmrevin\yii\fontawesome\FA;
                         </li >
                     <?php if (Yii::$app->user->identity->role == 1) {?>
                         <li >
+                            <a class="text-form-style_2" href="<?= Url::to(['user/requests']) ?>"><?=FA::i('comment')->addCssClass('text-secondary text-form-style_2')?> Requests</a>
+                        </li>
+                        <li >
                             <a class="text-form-style_2" href="<?= Url::to(['user/products']) ?>"><?=FA::i('comment')->addCssClass('text-secondary text-form-style_2')?> My Products</a>
                         </li>
                     <?php } ?>
@@ -142,7 +145,9 @@ use rmrevin\yii\fontawesome\FA;
                             <div class="header_phone_text">
                                 <span>Sa-Th 9:00-20:00</span>
                                 <h4>+97155 689 22 01</h4>
+                                <?php if (Yii::$app->user->identity->role == User::ROLE_BUYER || Yii::$app->user->isGuest) { ?>
                                 <a href="<?= Url::to(['query/create']) ?>">Leave a request</a>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
@@ -153,7 +158,7 @@ use rmrevin\yii\fontawesome\FA;
                             </div>
                             <div class="header_shop_text">
                                 <h4>In basket</h4>
-                                <span>250 500 000 AED</span>
+                                <span><div id="cart-count" class="d-inline-block"><?= \frontend\widgets\WBasket::widget(['key' => 'main']) ?> </div> AED</span>
                             </div>
                         </div>
                     </div>
