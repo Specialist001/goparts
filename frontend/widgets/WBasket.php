@@ -16,7 +16,7 @@ class WBasket extends Widget
 
     public function run() {
         if($this->key == 'main') {
-            if (Yii::$app->user->identity->getId()) {
+            if (Yii::$app->user->id) {
                 $userCart = UserCart::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->all();
                 $total_price = 0;
                 if ($userCart) {
