@@ -92,6 +92,11 @@ class QueryController extends Controller
             $model = new Query();
             $category = !empty(Yii::$app->request->get('category'))? Yii::$app->request->get('category'): false;
 
+            $car_id = !empty(Yii::$app->request->get('car_id')) ? Yii::$app->request->get('car_id') : false;
+
+            $car = Cars::findOne(['id'=>$car_id]);
+            $car_id = $car->id;
+
             $fuel_types = StoreOption::find()->where(['slug'=>'fuel-type'])->one();
             $fuel_array = [];
             foreach ($fuel_types->storeOptionValues as $fuel_type) {
@@ -112,9 +117,6 @@ class QueryController extends Controller
 
             $cats = StoreCategory::find()->where(['parent_id' => null, 'status'=>1])->orderBy('`order`')->all();
 
-            $car = Cars::findOne(['id'=>Yii::$app->request->get('car_id')]);
-            $car_id = $car->id;
-
             if(empty($category = StoreCategory::findOne(['id' => $category, 'status' => 1]))) $category = false;
             if(!empty($category)) if(!empty($category->activeCategories))  $category = false;
             $unset = false;
@@ -129,7 +131,10 @@ class QueryController extends Controller
             }
 
             if ($unset) $category = false;
-
+            echo '<pre>';
+            print_r(Yii::$app->request->post());
+            echo '</pre>';
+            exit;
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
                 $model->user_id = Yii::$app->user->getId() ? Yii::$app->user->getId() : null;

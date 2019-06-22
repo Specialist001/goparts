@@ -8,7 +8,7 @@ use yii\helpers\Url; ?>
     <div class="container">
         <form id="basket-form" action="<?= Url::to(['order/make']) ?>" method="post">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col">
                     <?php if (!empty($cart_products)) { ?>
                         <div class="row basket_top">
                             <div class="col-md-5">
@@ -105,11 +105,14 @@ use yii\helpers\Url; ?>
 
                     <?php } else { ?>
                         <div class="alert alert-warning" role="alert">
-                            No products in cart
+                            Your cart is currently empty
                         </div>
+                        <a href="<?= Url::to(['/'])?>" class="basket_table_bottom_left">
+                            <i class="fa fa-arrow-left"></i> Back to shop
+                        </a>
                     <?php } ?>
                 </div>
-
+                <?php if (!empty($cart_products)) { ?>
                 <div class="col-md-4">
                     <div class="sidebar">
                         <div class="sidebar_top">
@@ -121,8 +124,6 @@ use yii\helpers\Url; ?>
                             <h6 id="cart_amount"><?= WBasket::widget(['key' => 'main']) ?> </h6><span> AED</span>
                             <input type="hidden" id="cart_amount_uf" name="TotalCount" value="<?= str_replace(" ","", WBasket::widget(['key' => 'main'])) ?>">
                             <hr>
-
-                            <h5 class="sidebar_center_delevery">Delivery <span>John Smith</span></h5>
                         </div>
                         <div class="sidebar_bottom">
                             <div class="sidebar_bottom1">
@@ -156,6 +157,7 @@ use yii\helpers\Url; ?>
                         </div>
                     </div>
                 </div>
+                <?php } ?>
             </div>
 
             <div class="modal fade" id="modalCheckout" tabindex="-1" role="dialog" aria-labelledby="contShopLabel">

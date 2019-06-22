@@ -9,7 +9,7 @@ $this->title = 'Create Query';
 $this->params['breadcrumbs'][] = ['label' => 'Queries', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="container pt-3">
+<div class="container pt-3 mb-5">
     <div class="row">
     <?php if (!Yii::$app->user->isGuest) { ?>
         <div class="col-md-3">

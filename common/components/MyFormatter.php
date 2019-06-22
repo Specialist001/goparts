@@ -22,6 +22,7 @@ class MyFormatter extends Formatter{
     public $filterFormat;
     public $queryFormat;
     public $sellerQueryFormat;
+    public $paidFormat;
 
     public function asPublished($value)
     {
@@ -60,9 +61,10 @@ class MyFormatter extends Formatter{
 
     public function asOrderstatus($value)
     {
-        if($value == 0) return $this->orderstatusFormat[0];
-        if($value == 1) return $this->orderstatusFormat[2];
-        return $this->orderstatusFormat[1];
+        if($value == 1) return $this->orderstatusFormat[0];
+        if($value == 2) return $this->orderstatusFormat[1];
+        if($value == 3) return $this->orderstatusFormat[2];
+        return $this->orderstatusFormat[3];
     }
 
     public function asPaytype($value)
@@ -109,6 +111,11 @@ class MyFormatter extends Formatter{
         if ($value == 1) return $this->sellerQueryFormat[1];
         return $this->sellerQueryFormat[0];
     }
+    public function asPaid($value)
+    {
+        if ($value == 1) return $this->paidFormat[1];
+        return $this->paidFormat[0];
+    }
 
     public function set_intlLoaded() {
         parent::_intlLoaded();
@@ -138,9 +145,10 @@ class MyFormatter extends Formatter{
         }
         if ($this->orderstatusFormat === null) {
             $this->orderstatusFormat = [
-                '<span class="text-info">'.FA::i('info').' Не обработан'.'</span>',
-                '<span class="text-danger">'.FA::i('remove').' Отменен'.'</span>',
-                '<span class="text-success">'.FA::i('check').' Принят'.'</span>'
+                '<span class="text-info">'.FA::i('info').' New'.'</span>',
+                '<span class="text-success">'.FA::i('check').' Accepted'.'</span>',
+                '<span class="text-primary">'.FA::i('check').' Completed'.'</span>',
+                '<span class="text-danger">'.FA::i('remove').' Cancelled'.'</span>'
             ];
         }
         if ($this->productStatusFormat === null) {
@@ -203,8 +211,15 @@ class MyFormatter extends Formatter{
         }
         if ($this->sellerQueryFormat === null) {
             $this->sellerQueryFormat = [
-                '<span class="text-warning">'.FA::i('times-circle').' Waited'.'</span>',
-                '<span class="text-success">'.FA::i('cash-register').' Purchased'.'</span>',
+                '<span class="text-warning">'.' Waited'.'</span>',
+                '<span class="text-info">'.' Published'.'</span>',
+                '<span class="text-success">'.' Purchased'.'</span>',
+            ];
+        }
+        if ($this->paidFormat === null) {
+            $this->paidFormat = [
+                '<span class="text-warning">'.FA::i('times-circle').' Not paid'.'</span>',
+                '<span class="text-success">'.FA::i('cash-register').' Paid'.'</span>',
             ];
         }
         parent::init();

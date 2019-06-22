@@ -122,6 +122,9 @@ li {
     padding: .275rem .75rem;
     height: calc(1.5em + .75rem + 2px);
 }
+.select_category {
+    z-index: 2;
+}
 
 label.toggle .toggle__text, label.toggle + a {
     font-size: 0.9rem;

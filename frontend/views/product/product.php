@@ -47,7 +47,7 @@ use yii\helpers\Url; ?>
                                 <td><?= $product->category->translate->title ?></td>
                                 <td><?= $product->typeCar->translate->name ?></td>
                                 <td><?= $product->price ?></td>
-                                <td><?= $product->status ?></td>
+                                <td><?= $product->status == 1 ? '<span class="text-success">Active</span>' : '<span class="text-danger">Inactive</span>' ?></td>
                             </tr>
                         <?php } ?>
                     <?php } else { ?>

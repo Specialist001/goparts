@@ -10,6 +10,8 @@ use yii\widgets\Pjax;
 
 $this->title = 'Seller Queries';
 $this->params['breadcrumbs'][] = $this->title;
+
+//print_r($dataProvider);
 ?>
 <div class="seller-query-index mh-100">
     <div class="container-fluid pt-3">
@@ -33,24 +35,32 @@ $this->params['breadcrumbs'][] = $this->title;
                     'filterModel' => $searchModel,
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
-                        [
-                            'attribute'=>'id',
-                            'headerOptions' => ['style' => 'width:80px'],
-                        ],
+//                        [
+//                            'attribute'=>'id',
+//                            'headerOptions' => ['style' => 'width:80px'],
+//                        ],
                         [
                             'attribute'=>'query_id',
                             'headerOptions' => ['style' => 'width:100px'],
                         ],
                         [
-                            'label' => 'Category',
-                            'value' => function ($model) {
-                                return $model->query->category->translate->title;
+                            'label'=>'Name',
+                            'format' => 'raw',
+                            'headerOptions' => ['style' => 'width:100px'],
+                            'value' => function($model) {
+                                return "<a href=".Url::to(['user/request', 'id'=>$model->id]).">". $model->query->title."</a>";
                             }
                         ],
                         [
                             'label' => 'Car',
                             'value' => function ($model) {
                                 return $model->query->vendor . ' '.$model->query->car;
+                            }
+                        ],
+                        [
+                            'label' => 'Category',
+                            'value' => function ($model) {
+                                return $model->query->category->translate->title;
                             }
                         ],
 //                        'seller_id',
@@ -61,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'status',
                             'format' => 'sellerQuery',
-                            'filter' => ['0'=>'Waited', '1'=>'Purchased']
+                            'filter' => ['0'=>'Waited', '1'=>'Published', '2'=>'Purchased']
                         ],
                         [
                             'label'=>'Action',
@@ -69,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'value' => function ($model) {
 //                                return Url::to(['user/product/create', 'car_id'=>$model->query->car_id, 'category'=>$model->query->category_id]);
                                 return $model->status == 0
-                                    ? Html::a('Create Product', Url::to(['user/product/create', 'car_id'=>$model->query->car_id, 'category'=>$model->query->category_id]))
+                                    ? Html::a('Create Product', Url::to(['user/product/create', 'query_id'=>$model->query->id , 'car_id'=>$model->query->car_id, 'category'=>$model->query->category_id]))
                                     : Html::a('Update Product', Url::to(['user/product/update', 'id'=>$model->product_id]));
                             }
                         ],
