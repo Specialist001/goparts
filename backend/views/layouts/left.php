@@ -1,3 +1,8 @@
+<?php
+
+use mdm\admin\components\Helper;
+
+?>
 <aside class="main-sidebar">
 
     <section class="sidebar">
@@ -27,7 +32,9 @@
         <!-- /.search form -->
 
 
-
+        <?php  $auth = Yii::$app->getAuthManager();
+            if ($auth->checkAccess(Yii::$app->user->getId(), 'superAdminAccess')) {
+        ?>
         <?= dmstr\widgets\Menu::widget(
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
@@ -46,7 +53,14 @@
                             ['label' => 'Roles', 'icon' => 'exchange', 'url' => ['/rbac/role'],],
                         ]
                     ],
-					['label' => 'News', 'icon' => 'newspaper-o', 'url' => ['#'],
+                    ['label' => 'Queries', 'icon' => 'users', 'url' => ['/query'],],
+					['label' => 'Orders', 'icon' => 'newspaper-o', 'url' => ['#'],
+                        'items' => [
+                            ['label' => 'All Orders', 'icon' => 'list', 'url' => ['/order'],],
+                            ['label' => 'Create Order', 'icon' => 'plus', 'url' => ['/order/create'],],
+                        ],
+                    ],
+                    ['label' => 'News', 'icon' => 'newspaper-o', 'url' => ['#'],
                         'items' => [
                             ['label' => 'All News', 'icon' => 'list', 'url' => ['/news'],],
                             ['label' => 'Create News', 'icon' => 'plus', 'url' => ['/news/create'],],
@@ -146,6 +160,7 @@
                 ],
             ]
         ) ?>
+        <?php } ?>
 
     </section>
 

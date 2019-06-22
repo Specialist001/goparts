@@ -123,13 +123,13 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
     <!--            </form>-->
     <!--        --><?php //}?>
 
-    <?php if (!$category) { ?>
+    <?php if (!$car_id) { ?>
         <form action="<?= Url::current() ?>" id="cat-form">
             <h4>Select car</h4>
             <div class="row car_search">
                 <div class="col-md-3">
                     <div class="position-relative">
-                        <select class="form-control vendor_select" required>
+                        <select class="form-control vendor_select" id="car_vendor" required>
                             <option disabled selected>Select Car</option>
                             <!--                        --><? //= Dropdown::widget(); ?>
                             <?php foreach ($cars_array as $vendor) { ?>
@@ -140,7 +140,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                 </div>
                 <div class="col-md-3">
                     <div class="position-relative">
-                        <select class="form-control car_items" required>
+                        <select class="form-control car_items" id="car_car" required>
                             <option disabled selected>Select Model</option>
 
                             <?php if (!empty(Yii::$app->request->get('car_id')) || !empty($model->car_id)) { ?>
@@ -151,9 +151,9 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                         </select>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="position-relative">
-                        <select class="form-control car_modifications" required>
+                        <select class="form-control car_modifications" id="car_modification" required>
                             <option disabled selected>Select Generation</option>
                             <?php if (!empty(Yii::$app->request->get('car_id')) || !empty($model->car_id)) { ?>
                                 <?php foreach ($mod_array as $key => $car_modification) { ?>
@@ -163,9 +163,9 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                         </select>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="position-relative">
-                        <select class="form-control car_years" required>
+                        <select class="form-control car_years" id="car_year" required>
                             <option disabled selected>Year</option>
                             <?php if (!empty(Yii::$app->request->get('car_id')) || !empty($model->car_id)) { ?>
                                 <?php foreach ($year_array as $key => $car_year) { ?>
@@ -175,37 +175,44 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                         </select>
                     </div>
                 </div>
+                <div class="col-md-2">
+                    <div class="position-relative">
+                        <a class="btn btn-success save_car">Save</a>
+                    </div>
+                </div>
             </div>
             <row>
                 <div class="car_name" id="car_name">
 
                 </div>
             </row>
-            <input type="hidden" name="car_id" id="car_id" value="<?= Yii::$app->request->get('car_id') ?>"/>
+            <input type="hidden" name="car_id" id="car_id" value=""/>
             <?php if (!empty($prod_id = Yii::$app->request->get('id'))) { ?>
                 <input type="hidden" name="id" value="<?= $prod_id ?>"/>
             <?php } ?>
 
-            <div class="row pt-3">
-                <div class="col-sm-6 col-md-4">
-                    <div class="form-group">
-                        <label for="category_id">Select category</label>
-                    </div>
-                    <?php if (!empty($cats)) { ?>
-                        <ul class="list-unstyled category-widget-list">
-                            <?php foreach ($cats as $cat) { ?>
-                                <li data-id="<?= $cat->id ?>"
-                                    data-childs="<?= (!empty($cat->categories)) ? $cat->id : '' ?>"
-                                    class="cat-widget-li"><?= $cat->translate->title ?></li>
-                            <?php } ?>
-                        </ul>
-                    <?php } ?>
-                    <input type="text" name="category" id="category_id" value="" style="visibility: hidden;"/>
-                    <?php if (!empty($prod_id = Yii::$app->request->get('id'))) { ?>
-                        <input type="hidden" name="id" value="<?= $prod_id ?>"/>
-                    <?php } ?>
-                </div>
-            </div>
+            <!--            <div class="row pt-3">-->
+            <!--                <div class="col-sm-6 col-md-4">-->
+            <!--                    <div class="form-group">-->
+            <!--                        <label for="category_id">Select category</label>-->
+            <!--                    </div>-->
+            <!--                    --><?php //if (!empty($cats)) { ?>
+            <!--                        <ul class="list-unstyled category-widget-list">-->
+            <!--                            --><?php //foreach ($cats as $cat) { ?>
+            <!--                                <li data-id="--><? //= $cat->id ?><!--"-->
+            <!--                                    data-childs="-->
+            <? //= (!empty($cat->categories)) ? $cat->id : '' ?><!--"-->
+            <!--                                    class="cat-widget-li">-->
+            <? //= $cat->translate->title ?><!--</li>-->
+            <!--                            --><?php //} ?>
+            <!--                        </ul>-->
+            <!--                    --><?php //} ?>
+            <!--                    <input type="text" name="category" id="category_id" value="" style="visibility: hidden;"/>-->
+            <!--                    --><?php //if (!empty($prod_id = Yii::$app->request->get('id'))) { ?>
+            <!--                        <input type="hidden" name="id" value="--><? //= $prod_id ?><!--"/>-->
+            <!--                    --><?php //} ?>
+            <!--                </div>-->
+            <!--            </div>-->
         </form>
     <?php } else { ?>
 
@@ -213,68 +220,208 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
 
         <div class="row">
 
-            <div class="col-md-4">
-                <label>Category</label>
-                <input type="text" readonly="readonly" id="category_id" class="form-control"
-                       value="<?= $category->translate->title ?>"/>
-                <a href="<?= Url::current(['category' => '']) ?>"
-                   onclick="if(!confirm('Expected form to save. Cancel?'))return false;">Choose another category and
-                    Car</a>
-                <?= $form->field($model, 'category_id')->hiddenInput()->label(false) ?>
-            </div>
+            <!--            <div class="col-md-4">-->
+            <!--                <label>Category</label>-->
+            <!--                <input type="text" readonly="readonly" id="category_id" class="form-control"-->
+            <!--                       value="--><? //= $category->translate->title ?><!--"/>-->
+            <!--                <a href="--><? //= Url::current(['category' => '']) ?><!--"-->
+            <!--                   onclick="if(!confirm('Expected form to save. Cancel?'))return false;">Choose another category and-->
+            <!--                    Car</a>-->
+            <?= $form->field($model, 'category_id')->hiddenInput()->label(false) ?>
+            <!--            </div>-->
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Car</label>
                     <input class="form-control" type="text"
                            value="<?= $car_name ?>" readonly>
+                    <a href="<?= Url::current(['car_id' => '']) ?>"
+                       onclick="if(!confirm('Expected form to save. Cancel?'))return false;">Choose another Car</a>
                 </div>
             </div>
+            <!--            <div class="col-md-2 float-md-right">-->
+            <!--                <label class="w-100"></label>-->
+            <!--                <button class="btn bg-form_style_1 px-3 py-2 text-white" id="btn_add_part" style="cursor: pointer"><i class="fa fa-plus"></i> Add Part</button>-->
+            <!--            </div>-->
         </div>
-        <div class="row">
-            <div class="col-md-6 col-12">
-                <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-            </div>
-        </div>
+
         <input type="hidden" name="vendor" value="<?= Yii::$app->request->get('vendor') ?>" readonly>
         <input type="hidden" name="car" value="<?= Yii::$app->request->get('car') ?>" readonly>
         <input type="hidden" name="modification" value="<?= Yii::$app->request->get('modification') ?>" readonly>
         <input type="hidden" name="year_name" value="<?= Yii::$app->request->get('year_name') ?>" readonly>
 
-        <div class="row">
+        <?= $form->field($model, 'car_id')->hiddenInput(['value' => Yii::$app->request->get('car_id')])->label(false) ?>
+        <?= $form->field($model, 'vendor')->hiddenInput(['value' => $vendor_name])->label(false) ?>
 
-            <?= $form->field($model, 'car_id')->hiddenInput(['value' => Yii::$app->request->get('car_id')])->label(false) ?>
-            <?= $form->field($model, 'vendor')->hiddenInput(['value' => $vendor_name])->label(false) ?>
+        <?= $form->field($model, 'car')->hiddenInput(['value' => $model_name])->label(false) ?>
 
-            <?= $form->field($model, 'car')->hiddenInput(['value' => $model_name])->label(false) ?>
+        <?= $form->field($model, 'modification')->hiddenInput(['value' => $modification_name])->label(false) ?>
 
-            <?= $form->field($model, 'modification')->hiddenInput(['value' => $modification_name])->label(false) ?>
+        <?= $form->field($model, 'year')->hiddenInput(['value' => $year_name])->label(false) ?>
 
-            <?= $form->field($model, 'year')->hiddenInput(['value' => $year_name])->label(false) ?>
+        <div class="query_parts" id="query_parts">
+            <div class="query_part py-3">
+                <h4 class="pb-2 text-form-style_2">Part</h4>
 
-            <div class="col-md-3">
-                <?= $form->field($model, 'fueltype')->dropDownList($fuel_array) ?>
+                <div class="row">
+                    <div class="col-md-6 col-12">
+                        <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Category</label>
+                            <input class="form-control category_id" type="hidden" name="Query[category_id]" value="">
+                            <input class="form-control cat_select bg-gray" type="button" value="Select category">
+                            <div class="position-absolute select_category d-none">
+                                <?php if (!empty($cats)) { ?>
+                                    <ul class="list-unstyled category-widget-list bg-white">
+                                        <?php foreach ($cats as $cat) { ?>
+                                            <li data-id="<?= $cat->id ?>"
+                                                data-childs="<?= (!empty($cat->categories)) ? $cat->id : '' ?>"
+                                                data-title="<?= $cat->translate->title ?>"
+                                                class="cat-widget-li">
+                                                <?= $cat->translate->title ?></li>
+                                        <?php } ?>
+                                    </ul>
+                                <?php } ?>
+                                <input type="text" name="category" id="category_id" value=""
+                                       style="visibility: hidden;"/>
+                                <?php if (!empty($prod_id = Yii::$app->request->get('id'))) { ?>
+                                    <input type="hidden" name="id" value="<? //= $prod_id ?>"/>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Fuel Type</label>
+                            <select class="form-control" name="Query[fueltype]">
+                                <?php foreach ($fuel_array as $key => $fuel) { ?>
+                                    <option value="<?= $key ?>"><?= $fuel ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Engine Type</label>
+                            <select class="form-control" name="Query[engine]">
+                                <?php foreach ($engines_array as $key => $engine) { ?>
+                                    <option value="<?= $key ?>"><?= $engine ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Transmission</label>
+                            <select class="form-control" name="Query[transmission]">
+                                <?php foreach ($transmissions_array as $key => $transmissions) { ?>
+                                    <option value="<?= $key ?>"><?= $transmissions ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <?= $form->field($model, 'drivetype')->textInput(['maxlength' => true]) ?>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-3">
-                <?= $form->field($model, 'engine')->dropDownList($engines_array) ?>
+
+            <!-- Additional Part -->
+            <div class="query_part py-3 d-none">
+                <div class="row">
+                    <div class="col">
+                        <h4 class="pb-2 text-form-style_2">New Part</h4>
+                    </div>
+                    <div class="col-md-2">
+                        <a class="btn btn-danger button-delete-part text-white float-md-right">Delete Part</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-12">
+                        <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Category</label>
+                            <input class="form-control category_id" type="hidden" name="Query[category_id]" value="">
+                            <input class="form-control cat_select bg-grey" type="button" value="Select category">
+                            <div class="position-absolute select_category d-none ">
+                                <?php if (!empty($cats)) { ?>
+                                    <ul class="list-unstyled category-widget-list bg-white">
+                                        <?php foreach ($cats as $cat) { ?>
+                                            <li data-id="<?= $cat->id ?>"
+                                                data-childs="<?= (!empty($cat->categories)) ? $cat->id : '' ?>"
+                                                data-title="<?= $cat->translate->title ?>"
+                                                class="cat-widget-li">
+                                                <?= $cat->translate->title ?></li>
+                                        <?php } ?>
+                                    </ul>
+                                <?php } ?>
+                                <input type="text" name="category" id="category_id" value=""
+                                       style="visibility: hidden;"/>
+                                <?php if (!empty($prod_id = Yii::$app->request->get('id'))) { ?>
+                                    <input type="hidden" name="id" value="<? //= $prod_id ?>"/>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Fuel Type</label>
+                            <select class="form-control" name="Query[fueltype]">
+                                <?php foreach ($fuel_array as $key => $fuel) { ?>
+                                    <option value="<?= $key ?>"><?= $fuel ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Engine Type</label>
+                            <select class="form-control" name="Query[engine]">
+                                <?php foreach ($engines_array as $key => $engine) { ?>
+                                    <option value="<?= $key ?>"><?= $engine ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Transmission</label>
+                            <select class="form-control" name="Query[transmission]">
+                                <?php foreach ($transmissions_array as $key => $transmissions) { ?>
+                                    <option value="<?= $key ?>"><?= $transmissions ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <?= $form->field($model, 'drivetype')->textInput(['maxlength' => true]) ?>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-3">
-                <?= $form->field($model, 'transmission')->dropDownList($transmissions_array) ?>
-            </div>
-            <div class="col-md-3">
-                <?= $form->field($model, 'drivetype')->textInput(['maxlength' => true]) ?>
+            <div class="text-center m-auto btn_add_part">
+                <button class="btn bg-form_style_1 px-3 py-2 text-white text-center" id="btn_add_part"
+                        style="cursor: pointer"><i class="fa fa-plus"></i> Add Part
+                </button>
             </div>
         </div>
-        <h3 class="pt-3">Contacts</h3>
+        <h3 class="pt-5">Contacts</h3>
         <div class="row">
 
             <div class="col-md-4">
-                <?= $form->field($model, 'name')->textInput(['value'=> Yii::$app->user->identity->username ? Yii::$app->user->identity->username : $model->name,'maxlength' => true]) ?>
+                <?= $form->field($model, 'name')->textInput(['value' => Yii::$app->user->identity->username ? Yii::$app->user->identity->username : $model->name, 'maxlength' => true]) ?>
             </div>
             <div class="col-md-4">
-                <?= $form->field($model, 'phone')->textInput(['value'=> Yii::$app->user->identity->phone ? Yii::$app->user->identity->phone : $model->phone, 'maxlength' => true]) ?>
+                <?= $form->field($model, 'phone')->textInput(['value' => Yii::$app->user->identity->phone ? Yii::$app->user->identity->phone : $model->phone, 'maxlength' => true]) ?>
             </div>
             <div class="col-md-4">
-                <?= $form->field($model, 'email')->textInput(['value'=> Yii::$app->user->identity->email ? Yii::$app->user->identity->email : $model->email,'maxlength' => true]) ?>
+                <?= $form->field($model, 'email')->input('email') ?>
             </div>
 
             <!--        --><? //= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
@@ -311,30 +458,32 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
     <?php } ?>
 
 </div>
-<?php $this->registerJs('
-    $(document).ready(function() {
-        $(\'select.form-control\').select2(
-            {
-                language: {
-                  noResults: function () {
-                    return "Ничего не найдено";
-                  }
-                }
-            }
-        );
-    });
-    $(document).on(\'ready pjax:success\', function() {
-        $(\'select.form-control\').select2(
-            {
-                language: {
-                  noResults: function () {
-                    return "Ничего не найдено";
-                  }
-                }
-            }
-        );
-    });
-'); ?>
+
+
+<?php //$this->registerJs('
+//    $(document).ready(function() {
+//        $(\'select.form-control\').select2(
+//            {
+//                language: {
+//                  noResults: function () {
+//                    return "Ничего не найдено";
+//                  }
+//                }
+//            }
+//        );
+//    });
+//    $(document).on(\'ready pjax:success\', function() {
+//        $(\'select.form-control\').select2(
+//            {
+//                language: {
+//                  noResults: function () {
+//                    return "Ничего не найдено";
+//                  }
+//                }
+//            }
+//        );
+//    });
+//'); ?>
 <script>
 
 </script>
@@ -412,17 +561,21 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
 
 <?php $this->registerJs('
     $(document).ready(function() {
-        $(\'select.form-control\').select2(
-            {
-                language: {
-                  noResults: function () {
-                    return "Ничего не найдено";
-                  }
-                }
-            }
-        );
-        $(document).on(\'click\', \'.cat-widget-li\', function () {
+        
+        $(document).on(\'click\',\'.save_car\', function () {
+            //getOneCar($(\'#car_vendor\').val(), $(\'#car_car\').val(), $(\'#car_modification\').val(), $(\'#$car_year\').val());
+            $(\'#cat-form\').submit();
+        });
+        $(document).on(\'click\', \'.cat_select\', function () {
+            console.log(\'btn\');
+            $(this).next().toggleClass(\'d-none\');
+            var input_btn = $(this);
+            
+            $(document).on(\'click\', \'.cat-widget-li\', function () {
+            
             id = $(this).data(\'id\');
+            title = $(this).data(\'title\');
+            
             has_childs = $(this).data(\'childs\');
             
             li = $(this);
@@ -437,10 +590,35 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                 });
             }
             else {
-                $(\'#category_id\').val(id);
-                $(\'#cat-form\').submit();
+                input_btn.prev(\'.category_id\').val(id);
+//                $(\'#category_id\').val(id);
+                input_btn.val(title);
+                input_btn.next().addClass(\'d-none\');
+//                $(\'#cat-form\').submit();
             }
         });
+        });
+                
+//        $(document).on(\'click\', \'.cat-widget-li\', function () {
+//            id = $(this).data(\'id\');
+//            has_childs = $(this).data(\'childs\');
+//            
+//            li = $(this);
+//            if(has_childs != \'\') {
+//                $.ajax({
+//                    url: "/site/get-cats",
+//                    data: {\'id\': li.data(\'id\')}, //data: {}
+//                    type: "get",
+//                    success: function (t) {
+//                        $(\'.category-widget-list\').html(t);
+//                    }
+//                });
+//            }
+//            else {
+//                $(\'#category_id\').val(id);
+//                $(\'#cat-form\').submit();
+//            }
+//        });
         $(\'#add_cat_btn\').on(\'click\', function() {
             $($(\'#add-cat-temp\').html()).appendTo($(\'#added_cats\'));
             $(this).hide();

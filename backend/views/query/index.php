@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'user_id',
+//            'user_id',
             'name',
             'phone',
             'email:email',
@@ -36,12 +36,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'vendor',
             [
                 'attribute' => 'category_id',
+                'options' => ['style' => 'width:80px'],
                 'label' => 'Category',
                 'value' => function($model) {
                     return $model->category->translate->title;
                 }
-            ],            'vendor',
-
+            ],
             //'year',
             //'modification',
             //'fueltype',
@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'created_at',
                 'label' => 'Create Date',
                 'value' => function($model) {
-                    return date('d.m.Y H:i', $model->created_at);
+                    return date('d.m.Y', $model->created_at);
                 }
             ],
 

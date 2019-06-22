@@ -53,6 +53,7 @@ return [
                 'user/product/create' => 'product/create',
                 'user/product/update' => 'product/update',
                 'user/requests' => 'seller-query',
+                'user/request/' => 'seller-query/view',
                 'reset-password' => 'site/request-password-reset',
             ],
         ],

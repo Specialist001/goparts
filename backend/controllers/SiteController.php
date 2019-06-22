@@ -1,6 +1,7 @@
 <?php
 namespace backend\controllers;
 
+use common\models\Query;
 use common\models\StoreCategory;
 use common\models\StoreOrder;
 use common\models\StoreProduct;
@@ -75,6 +76,9 @@ class SiteController extends Controller
 
         $orders = StoreOrder::find()->all();
         $counter['order_count'] = count($orders);
+
+        $queries = Query::find()->all();
+        $counter['query_count'] = count($queries);
 
         return $this->render('index', [
             'counter' => $counter,

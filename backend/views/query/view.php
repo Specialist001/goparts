@@ -12,11 +12,19 @@ $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 
 $seller_queries = \common\models\SellerQuery::find()->all();
+$seller_seller_array = [];
 $seller_query_array = [];
 foreach ($seller_queries as $seller_query) {
-    $seller_query_array[$seller_query->seller_id] += $seller_query->seller_id;
+    $seller_seller_array += [$seller_query->seller_id => $seller_query->seller_id];
+    $seller_query_array+= [$seller_query->query_id => $seller_query->query_id] ;
 }
-//print_r($seller_query_array);exit;
+//echo '<pre>';
+//print_r($seller_seller_array);
+//echo '</pre>';
+//echo '<pre>';
+//print_r($seller_query_array);
+//echo '</pre>';
+//exit;
 ?>
 <div class="query-view">
     <div class="container">
@@ -197,7 +205,7 @@ foreach ($seller_queries as $seller_query) {
                         <input class="sellers" type="checkbox" name="Seller[<?=$seller->user->id?>]"
                                value="<?= $seller->user->id ?>"
                                id="seller_<?= $seller->user->id?>" checked
-                                <?php if(in_array($seller->user->id, $seller_query_array)) $disabled = 'disabled'; else $disabled=''; echo $disabled  ?>
+                                <?php if(in_array($seller->user->id, $seller_query_array) && in_array($model->id, $seller_query_array)) $disabled = 'disabled'; else $disabled=''; echo $disabled  ?>
                         >
                         <label for="seller_<?= $seller->user->id?>"><?= $seller->user->username; ?>
                     </div>

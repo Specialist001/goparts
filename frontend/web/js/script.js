@@ -271,6 +271,9 @@ $(document).ready(function () {
             success: function (response) {
                 if (!response.error) {
                     $('.car_years').html(response);
+                    if( $('#cat-form').is('#car_id')) {
+
+                    }
                 } else {
                     console.log('Ошибка обработки данных');
                 }
@@ -347,6 +350,27 @@ $(document).ready(function () {
 
         // $('.car_years').prop('disabled', false);
     });
+
+    $('#btn_add_part').click(function () {
+
+        var query_parts = $('#query_parts');
+        var newPart = $('.query_parts .query_part.d-none').clone().removeClass('d-none');
+        var key = $.now();
+
+        newPart.appendTo(query_parts).after($('.btn_add_part'));
+
+        // newPart.find('.image-url').attr('name', 'ProductImage[new_' + key + '][url]');
+        return false;
+    });
+
+    $('#query_parts').on('click', '.button-delete-part', function () {
+        $(this).closest('.query_part').remove();
+    });
+
+    // $('.cat_select').click(function () {
+    //     console.log('btn');
+    //      $(this).next().toggleClass('d-none');
+    // });
 
 });
 
