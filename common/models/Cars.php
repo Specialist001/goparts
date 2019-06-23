@@ -60,7 +60,7 @@ class Cars extends ActiveRecord
         return $this->hasMany(StoreProductToCar::className(), ['car_id' => 'id']);
     }
 
-    public function getVendors()
+    public static function getVendors()
     {
         $vendors = self::find()->all();
 
@@ -76,7 +76,7 @@ class Cars extends ActiveRecord
         return $data;
     }
 
-    public function getCars()
+    public static function getCars()
     {
         $cars = self::find()->all();
 
@@ -92,7 +92,7 @@ class Cars extends ActiveRecord
         return $data;
     }
 
-    public function getCar($vendor)
+    public static function getCar($vendor)
     {
         $cars = self::find()->where(['vendor'=>$vendor])->all();
 
@@ -108,7 +108,7 @@ class Cars extends ActiveRecord
         return $data;
     }
 
-    public function getModifications($vendor, $car)
+    public static function getModifications($vendor, $car)
     {
         $cars = self::find()->where(['vendor'=>$vendor,'car'=>$car])->orderBy(['modification'=>SORT_ASC, 'year'=>SORT_DESC])->all();
         $cars_array = [];
@@ -142,7 +142,7 @@ class Cars extends ActiveRecord
         return $data;
     }
 
-    public function getYear($vendor, $car, $modification)
+    public static function getYear($vendor, $car, $modification)
     {
         $cars = Cars::find()->where(['vendor' => $vendor, 'car' => $car, 'modification' => $modification])->orderBy(['year'=>SORT_ASC])->all();
         $cars_array = [];
@@ -156,14 +156,14 @@ class Cars extends ActiveRecord
         return $cars_array;
     }
 
-    public function getOneCar($vendor, $car, $modification, $year)
+    public static function getOneCar($vendor, $car, $modification, $year)
     {
         $oneCar = Cars::find()->where(['vendor' => $vendor, 'car' => $car, 'modification' => $modification, 'year'=>$year])->one();
 
         return $oneCar;
     }
 
-    public function getCarName($id)
+    public static function getCarName($id)
     {
         $car = Cars::findOne(['id'=>$id]);
 //        var_dump($car);
