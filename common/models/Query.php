@@ -56,7 +56,7 @@ class Query extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'car_id', 'category_id', 'status', 'created_at'], 'integer'],
-            [['title', 'email'], 'required'],
+            [['email'], 'required'],
             [['title'], 'string', 'max' => 150],
             [['vendor', 'car', 'year', 'modification', 'fueltype', 'engine', 'transmission', 'drivetype', 'description', 'name', 'phone', 'email', 'image'], 'string', 'max' => 255],
             [['car_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cars::className(), 'targetAttribute' => ['car_id' => 'id']],

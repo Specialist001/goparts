@@ -11,6 +11,11 @@ $this->title = 'Queries';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="query-index">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -51,5 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 
     <?php Pjax::end(); ?>
-
+            </div>
+        </div>
+    </div>
 </div>

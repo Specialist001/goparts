@@ -351,6 +351,8 @@ $(document).ready(function () {
         // $('.car_years').prop('disabled', false);
     });
 
+    var part_counter = 0;
+
     $('#btn_add_part').click(function () {
 
         var query_parts = $('#query_parts');
@@ -358,8 +360,15 @@ $(document).ready(function () {
         var key = $.now();
 
         newPart.appendTo(query_parts).after($('.btn_add_part'));
-
+        part_counter++;
         // newPart.find('.image-url').attr('name', 'ProductImage[new_' + key + '][url]');
+        newPart.find('.query_title').attr('name', 'Query['+part_counter+'][title]');
+        newPart.find('.category_id').attr('name', 'Query['+part_counter+'][category_id]');
+        newPart.find('.query_fueltype').attr('name', 'Query['+part_counter+'][fueltype]');
+        newPart.find('.query_engine').attr('name', 'Query['+part_counter+'][engine]');
+        newPart.find('.query_transmission').attr('name', 'Query['+part_counter+'][transmission]');
+        newPart.find('.query_drivetype').attr('name', 'Query['+part_counter+'][drivetype]');
+
         return false;
     });
 
