@@ -443,6 +443,13 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <input class="query_image" type="file">
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="text-center m-auto btn_add_part">
                 <button class="btn bg-form_style_1 px-3 py-2 text-white text-center" id="btn_add_part"

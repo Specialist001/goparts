@@ -135,23 +135,15 @@ class QueryController extends Controller
             $query_part = Yii::$app->request->post()['Query'];
             $query_data = Yii::$app->request->post()['QueryData'];
 
-//            echo '<pre>';
-//            print_r(Yii::$app->request->post());
-//            echo '</pre>';
-//            exit;
-            if ($model->load(Yii::$app->request->post())) {
+            $parts_array = [];
+
+            if (Yii::$app->request->post()) {
 
 //                echo '<pre>';
 //                var_dump($query_part);
 //                echo '</pre>';
 //                exit;
 
-//		foreach ($query_part as $part) {
-//		echo '<pre>';
-//		print_r($part);
-//		echo '</pre>';
-//		}
-//		exit;
 
                 foreach ($query_part as $key => $part) {
                     $model = new Query();
@@ -194,33 +186,10 @@ class QueryController extends Controller
                     $model->email = $query_data['email'];
 
                     $model->save();
+
+                    $parts_array[$key] += [$model];
                 }
 
-
-
-//                $model->user_id = Yii::$app->user->getId() ? Yii::$app->user->getId() : null;
-//
-//                $model->save();
-//
-//                $dir = (__DIR__) . '/../../uploads/queries/';
-//                $model->image = UploadedFile::getInstance($model, 'image');
-//
-//                if ($model->image) {
-//                    $path = $model->image->baseName . '.' . $model->image->extension;
-//                    if ($model->image->saveAs($dir . $path)) {
-//                        $resizer = new SimpleImage();
-//                        $resizer->load($dir . $path);
-//                        $resizer->resize(Yii::$app->params['imageSizes']['store-products']['image'][0], Yii::$app->params['imageSizes']['store-products']['image'][1]);
-//                        $image_name = uniqid() . '.' . $model->image->extension;
-//                        $resizer->save($dir . $image_name);
-//                        $model->image = '/uploads/queries/' . $image_name;
-//                        if (is_file($dir . $path)) if (file_exists($dir . $path)) unlink($dir . $path);
-//                    }
-//                } else $model->image = null;
-//
-//                $model->car_id = $car_id;
-//
-//                $model->save();
 
 
                 return $this->redirect(['/query']);
