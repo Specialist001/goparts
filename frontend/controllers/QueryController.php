@@ -131,38 +131,68 @@ class QueryController extends Controller
             }
 
             if ($unset) $category = false;
-            echo '<pre>';
-            print_r(Yii::$app->request->post());
-            echo '</pre>';
-            exit;
-            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
-                $model->user_id = Yii::$app->user->getId() ? Yii::$app->user->getId() : null;
+            $query_part = Yii::$app->request->post()['Query'];
+            $query_data = Yii::$app->request->post()['QueryData'];
 
-                $model->save();
+            $parts_array = [];
 
-                $dir = (__DIR__) . '/../../uploads/queries/';
-                $model->image = UploadedFile::getInstance($model, 'image');
+            if (Yii::$app->request->post()) {
 
-                if ($model->image) {
-                    $path = $model->image->baseName . '.' . $model->image->extension;
-                    if ($model->image->saveAs($dir . $path)) {
-                        $resizer = new SimpleImage();
-                        $resizer->load($dir . $path);
-                        $resizer->resize(Yii::$app->params['imageSizes']['store-products']['image'][0], Yii::$app->params['imageSizes']['store-products']['image'][1]);
-                        $image_name = uniqid() . '.' . $model->image->extension;
-                        $resizer->save($dir . $image_name);
-                        $model->image = '/uploads/queries/' . $image_name;
-                        if (is_file($dir . $path)) if (file_exists($dir . $path)) unlink($dir . $path);
-                    }
-                } else $model->image = null;
-
-                $model->car_id = $car_id;
-
-                $model->save();
+//                echo '<pre>';
+//                var_dump($query_part);
+//                echo '</pre>';
+//                exit;
 
 
-                return $this->redirect(['view', 'id' => $model->id]);
+                foreach ($query_part as $key => $part) {
+                    $model = new Query();
+                    $model->car_id = $query_data['car_id'];
+                    $model->vendor = $query_data['vendor'];
+                    $model->car = $query_data['car'];
+                    $model->modification = $query_data['modification'];
+                    $model->year = $query_data['year'];
+
+                    $model->title = $part['title'];
+                    $model->category_id = $part['category_id'];
+                    $model->fueltype = $part['fueltype'];
+                    $model->engine = $part['engine'];
+                    $model->drivetype = $part['drivetype'];
+
+                    $model->user_id = Yii::$app->user->getId() ? Yii::$app->user->getId() : null;
+
+//                    $model->save();
+
+                    $dir = (__DIR__) . '/../../uploads/queries/';
+                    $image = UploadedFile::getInstanceByName('Query['.$key.'][image]');
+//                    print_r($image);exit;
+
+                    if ($image) {
+                        $path = $image->baseName . '.' . $image->extension;
+                        if ($image->saveAs($dir . $path)) {
+                            $resizer = new SimpleImage();
+                            $resizer->load($dir . $path);
+                            $resizer->resize(Yii::$app->params['imageSizes']['store-products']['image'][0], Yii::$app->params['imageSizes']['store-products']['image'][1]);
+                            $image_name = uniqid() . '.' . $image->extension;
+                            $resizer->save($dir . $image_name);
+                            $model->image = '/uploads/queries/' . $image_name;
+                            if (is_file($dir . $path)) if (file_exists($dir . $path)) unlink($dir . $path);
+                        }
+                    } else $model->image = null;
+
+
+                    $model->name = $query_data['name'];
+                    $model->phone = $query_data['phone'];
+                    $model->email = $query_data['email'];
+
+                    $model->save();
+
+                    $parts_array[$key] += [$model];
+                }
+
+
+
+                return $this->redirect(['/query']);
             }
 //            print_r(Yii::$app->request->post());exit;
 

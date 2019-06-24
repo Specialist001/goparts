@@ -2,6 +2,7 @@
 
 namespace api\controllers;
 
+use api\transformers\QueryAddList;
 use api\transformers\StoreCategoryList;
 use common\components\SimpleImage;
 use common\models\Cars;
@@ -74,37 +75,75 @@ class QueryController extends \yii\web\Controller
 
             if ($unset) $category = false;
 
-            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-                $model->user_id = Yii::$app->user->id ? Yii::$app->user->id : null;
-                //$model->car_id = $car_id;
-                //$model->category_id = $category;
-                $model->save();
+            $query_part = Yii::$app->request->post()['Query'];
+            $query_data = Yii::$app->request->post()['QueryData'];
 
-                $dir = (__DIR__) . '/../../uploads/queries/';
-                $model->image = UploadedFile::getInstance($model, 'image');
+            $parts_array = [];
 
-                if ($model->image) {
-                    $path = $model->image->baseName . '.' . $model->image->extension;
-                    if ($model->image->saveAs($dir . $path)) {
-                        $resizer = new SimpleImage();
-                        $resizer->load($dir . $path);
-                        $resizer->resize(Yii::$app->params['imageSizes']['store-products']['image'][0], Yii::$app->params['imageSizes']['store-products']['image'][1]);
-                        $image_name = uniqid() . '.' . $model->image->extension;
-                        $resizer->save($dir . $image_name);
-                        $model->image = '/uploads/queries/' . $image_name;
-                        if (is_file($dir . $path)) if (file_exists($dir . $path)) unlink($dir . $path);
-                    }
-                } else $model->image = '';
+            if (Yii::$app->request->post()) {
 
-                $model->save();
-//                if (!$model->save()){
-//
-//                return $this->redirect(['site/error', 'message' => 'Not saved', 'code' => 404]);
-//                }
-                return $this->asJson(['data'=>$model,'query_status'=>'Added']);
-//                return $this->asJson(['model'=>$model]);
+                foreach ($query_part as $key => $part) {
+                    $model = new Query();
+                    $model->car_id = $query_data['car_id'];
+                    $model->vendor = $query_data['vendor'];
+                    $model->car = $query_data['car'];
+                    $model->modification = $query_data['modification'];
+                    $model->year = $query_data['year'];
+
+                    $model->title = $part['title'];
+                    $model->category_id = $part['category_id'];
+                    $model->fueltype = $part['fueltype'];
+                    $model->engine = $part['engine'];
+                    $model->drivetype = $part['drivetype'];
+
+                    $model->user_id = Yii::$app->user->getId() ? Yii::$app->user->getId() : null;
+
+//                    $model->save();
+
+                    $dir = (__DIR__) . '/../../uploads/queries/';
+                    $image = UploadedFile::getInstanceByName('Query['.$key.'][image]');
+//                    print_r($image);exit;
+
+                    if ($image) {
+                        $path = $image->baseName . '.' . $image->extension;
+                        if ($image->saveAs($dir . $path)) {
+                            $resizer = new SimpleImage();
+                            $resizer->load($dir . $path);
+                            $resizer->resize(Yii::$app->params['imageSizes']['store-products']['image'][0], Yii::$app->params['imageSizes']['store-products']['image'][1]);
+                            $image_name = uniqid() . '.' . $image->extension;
+                            $resizer->save($dir . $image_name);
+                            $model->image = '/uploads/queries/' . $image_name;
+                            if (is_file($dir . $path)) if (file_exists($dir . $path)) unlink($dir . $path);
+                        }
+                    } else $model->image = null;
+
+
+                    $model->name = $query_data['name'];
+                    $model->phone = $query_data['phone'];
+                    $model->email = $query_data['email'];
+
+                    $model->save();
+                    $parts_array[$key] = [
+                        'id' => $model->id,
+                        'title' => $model->title,
+                        'Car' => $model->vendor.' '.$model->car.' '.$model->modification.' '.$model->year,
+                        'category_id' => $model->category_id,
+                        'fueltype' => $model->fueltype,
+                        'engine' => $model->engine,
+                        'transmission' => $model->transmission,
+                        'drivetype' => $model->drivetype,
+                        'name' => $model->name,
+                        'phone' => $model->phone,
+                        'email' => $model->email,
+                    ];
+
+                }
+
+                return $this->asJson(['parts'=>$parts_array,
+//                    'data'=>QueryAddList::transform($model),
+                    'query_status'=>'Added']);
             }
-            return $this->redirect(['site/error', 'message' => 'Not validate', 'code' => 404]);
+            return $this->redirect(['site/error', 'message' => 'Not post data', 'code' => 404]);
         }
         return $this->redirect(['site/error', 'message' => 'You have not permission for add request', 'code' => 404]);
     }

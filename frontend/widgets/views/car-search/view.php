@@ -89,7 +89,7 @@ use yii\helpers\Url;
             {
                 language: {
                   noResults: function () {
-                    return "Ничего не найдено";
+                    return "Nothing not found";
                   }
                 }
             }
@@ -100,7 +100,7 @@ use yii\helpers\Url;
             {
                 language: {
                   noResults: function () {
-                    return "Ничего не найдено";
+                    return "Nothing not found";
                   }
                 }
             }
