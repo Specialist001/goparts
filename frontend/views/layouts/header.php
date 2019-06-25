@@ -1,10 +1,13 @@
 <?php
 
+use common\models\City;
 use common\models\Page;
 use common\models\User;
+use frontend\widgets\WBasket;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use rmrevin\yii\fontawesome\FA;
+
 //print_r(Yii::$app->user->identity);exit;
 ?>
 
@@ -33,27 +36,29 @@ use rmrevin\yii\fontawesome\FA;
                     </li>
                 </ul>
             </div>
-            <div class="topheader_shop">
-                <a href="#">
-                    <button class="topheader_shop_button">
-                        Shop <?= FA::i('chevron-right topheader_shop_button_i') ?> </button>
-                </a>
-            </div>
-            <?php if(Yii::$app->user->identity->role == User::ROLE_BUYER || Yii::$app->user->isGuest) { ?>
-            <div class="topheader_favorites">
-                <a href="#">
-                    <img src="/svg/Favorites.svg" class="topheader_favorites_img" alt="">
-                    <span class="topheader_favorites_number">15</span>
-                    <span class="topheader_favorites_text">Favourites</span>
-                </a>
-            </div>
-            <?php } ?>
+            <!--            <div class="topheader_shop">-->
+            <!--                <a href="#">-->
+            <!--                    <button class="topheader_shop_button">-->
+            <!--                        Shop -->
+            <? //= FA::i('chevron-right topheader_shop_button_i') ?><!-- </button>-->
+            <!--                </a>-->
+            <!--            </div>-->
+            <!--            --><?php //if(Yii::$app->user->identity->role == User::ROLE_BUYER || Yii::$app->user->isGuest) { ?>
+            <!--            <div class="topheader_favorites">-->
+            <!--                <a href="#">-->
+            <!--                    <img src="/svg/Favorites.svg" class="topheader_favorites_img" alt="">-->
+            <!--                    <span class="topheader_favorites_number">15</span>-->
+            <!--                    <span class="topheader_favorites_text">Favourites</span>-->
+            <!--                </a>-->
+            <!--            </div>-->
+            <!--            --><?php //} ?>
+
             <div class="topheader_login float-md-left">
                 <?php if (Yii::$app->user->isGuest) { ?>
-<!--                <a data-target="#loginModal" data-toggle="modal" href="javascript:void(0)">-->
-<!--                    <img src="svg/Login.svg" class="topheader_login_img" alt="">-->
-<!--                    <span class="topheader_login_text">Login</span>-->
-<!--                </a>-->
+                    <!--                <a data-target="#loginModal" data-toggle="modal" href="javascript:void(0)">-->
+                    <!--                    <img src="svg/Login.svg" class="topheader_login_img" alt="">-->
+                    <!--                    <span class="topheader_login_text">Login</span>-->
+                    <!--                </a>-->
 
                     <div class="dropdown">
                         <a id="dropdown_login" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -71,40 +76,87 @@ use rmrevin\yii\fontawesome\FA;
                     </div>
 
                 <?php } else { ?>
-                <div class="dropdown" style="padding-right: 5px;">
-                    <a type="" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        <img src="/svg/Login.svg" alt="Profile" style="width: 16px;vertical-align: middle;margin-right: 5px;">
-                        Profile
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-right px-2 py-1" aria-labelledby="dropdownMenu3">
-                        <li>
-                            <a class="text-form-style_2" href="<?= Url::to(['user/index']) ?>"><?=FA::i('user')->addCssClass('text-secondary text-form-style_2')?> My Profile</a>
-                        </li>
-                        <li>
-                            <a class="text-form-style_2" href="<?= Url::to(['user/orders']) ?>"><?=FA::i('shopping-cart')->addCssClass('text-secondary text-form-style_2')?> My Orders</a>
-                        </li >
-                    <?php if (Yii::$app->user->identity->role == 1) {?>
-                        <li >
-                            <a class="text-form-style_2" href="<?= Url::to(['user/requests']) ?>"><?=FA::i('comment')->addCssClass('text-secondary text-form-style_2')?> Requests</a>
-                        </li>
-                        <li >
-                            <a class="text-form-style_2" href="<?= Url::to(['user/products']) ?>"><?=FA::i('comment')->addCssClass('text-secondary text-form-style_2')?> My Products</a>
-                        </li>
-                    <?php } ?>
-                        <hr>
-                        <li>
-                            <?= Html::beginForm(['/site/logout'], 'post') .
-                            Html::submitButton(
-                                FA::icon('sign-out')->addCssClass('text-danger text-form-style_2') . ' Log Out',
-                                ['class' => 'btn-link logout-btn logout text-form-style_2']
-                            )
-                            . Html::endForm()
-                            ?>
-                        </li>
-                    </ul>
-                </div>
+                    <div class="dropdown" style="padding-right: 5px;">
+                        <a type="" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <img src="/svg/Login.svg" alt="Profile"
+                                 style="width: 16px;vertical-align: middle;margin-right: 5px;">
+                            Profile
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right px-2 py-1" aria-labelledby="dropdownMenu3">
+                            <li>
+                                <a class="text-form-style_2"
+                                   href="<?= Url::to(['user/index']) ?>"><?= FA::i('user')->addCssClass('text-secondary text-form-style_2') ?>
+                                    My Profile</a>
+                            </li>
+                            <li>
+                                <a class="text-form-style_2"
+                                   href="<?= Url::to(['user/orders']) ?>"><?= FA::i('shopping-cart')->addCssClass('text-secondary text-form-style_2') ?>
+                                    My Orders</a>
+                            </li>
+                            <?php if (Yii::$app->user->identity->role == 1) { ?>
+                                <li>
+                                    <a class="text-form-style_2"
+                                       href="<?= Url::to(['user/requests']) ?>"><?= FA::i('comment')->addCssClass('text-secondary text-form-style_2') ?>
+                                        Requests</a>
+                                </li>
+                                <li>
+                                    <a class="text-form-style_2"
+                                       href="<?= Url::to(['user/products']) ?>"><?= FA::i('comment')->addCssClass('text-secondary text-form-style_2') ?>
+                                        My Products</a>
+                                </li>
+                            <?php } ?>
+                            <hr>
+                            <li>
+                                <?= Html::beginForm(['/site/logout'], 'post') .
+                                Html::submitButton(
+                                    FA::icon('sign-out')->addCssClass('text-danger text-form-style_2') . ' Log Out',
+                                    ['class' => 'btn-link logout-btn logout text-form-style_2']
+                                )
+                                . Html::endForm()
+                                ?>
+                            </li>
+                        </ul>
+                    </div>
                 <?php } ?>
 
+            </div>
+        </div>
+        <div class="container d-md-none">
+            <div class="row m-auto w-100">
+                <div class="col px-2 d-none text-center">
+                    <div class="">
+                        <div class="header_city_icon">
+                            <img src="/svg/loaction.svg" alt="">
+                        </div>
+                        <div class="header_city_text">
+                            <span>Your City</span>
+                            <h4><?php $city = City::findOne(['default' => 1]);
+                                echo $city->name;
+                                ?></h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col text-center">
+                    <div class="">
+                        <div class="header_phone_icon">
+                            <img src="/svg/phone.svg" alt="">
+                        </div>
+                        <div class="header_phone_text">
+                            <span>Sa-Th 9:00-20:00</span>
+                            <h4>+97155 689 22 01</h4>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-auto pt-2">
+                <div class="col">
+                    <div class="header_phone_text">
+                    <?php if (Yii::$app->user->identity->role == User::ROLE_BUYER || Yii::$app->user->isGuest) { ?>
+                        <a href="<?= Url::to(['query/create']) ?>">Leave a request</a>
+                    <?php } ?>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -124,20 +176,20 @@ use rmrevin\yii\fontawesome\FA;
             </div>
             <div class="col-lg-8 col-md-8 col-12">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-4 d-none d-sm-none d-md-block">
                         <div class="header_city">
                             <div class="header_city_icon">
                                 <img src="/svg/loaction.svg" alt="">
                             </div>
                             <div class="header_city_text">
                                 <span>Your City</span>
-                                <h4><?php $city = \common\models\City::findOne(['default'=>1]);
-                                echo $city->name;
-                                ?></h4>
+                                <h4><?php $city = City::findOne(['default' => 1]);
+                                    echo $city->name;
+                                    ?></h4>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 d-none d-sm-none d-md-block">
                         <div class="header_phone">
                             <div class="header_phone_icon">
                                 <img src="/svg/phone.svg" alt="">
@@ -146,7 +198,7 @@ use rmrevin\yii\fontawesome\FA;
                                 <span>Sa-Th 9:00-20:00</span>
                                 <h4>+97155 689 22 01</h4>
                                 <?php if (Yii::$app->user->identity->role == User::ROLE_BUYER || Yii::$app->user->isGuest) { ?>
-                                <a href="<?= Url::to(['query/create']) ?>">Leave a request</a>
+                                    <a href="<?= Url::to(['query/create']) ?>">Leave a request</a>
                                 <?php } ?>
                             </div>
                         </div>
@@ -158,7 +210,8 @@ use rmrevin\yii\fontawesome\FA;
                             </div>
                             <div class="header_shop_text">
                                 <h4>In basket</h4>
-                                <span><div id="cart-count" class="d-inline-block"><?= \frontend\widgets\WBasket::widget(['key' => 'main']) ?> </div> AED</span>
+                                <span><div id="cart-count"
+                                           class="d-inline-block"><?= WBasket::widget(['key' => 'main']) ?> </div> AED</span>
                             </div>
                         </div>
                     </div>
@@ -178,8 +231,10 @@ use rmrevin\yii\fontawesome\FA;
             </div>
             <div class="modal-body px-5">
                 <div class="form">
-                    <form id="login-form" accept-charset="UTF-8" action="<?= Url::to(['login']) ?>" class="loginBox auth" method="POST">
-                        <input type="hidden" name="<?=Yii::$app->request->csrfParam; ?>" value="<?=Yii::$app->request->getCsrfToken(); ?>" />
+                    <form id="login-form" accept-charset="UTF-8" action="<?= Url::to(['login']) ?>"
+                          class="loginBox auth" method="POST">
+                        <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>"
+                               value="<?= Yii::$app->request->getCsrfToken(); ?>"/>
                         <h4 class="text-center mb-3">Log In</h4>
                         <div class="input-group text-muted rounded border mb-3">
                                 <span class="input-group-prepend mr-1">
@@ -202,7 +257,8 @@ use rmrevin\yii\fontawesome\FA;
                         <div class="d-inline-block w-100">
                             <label class="toggle float-left">
                                 <input type="hidden" name="LoginForm[rememberMe]" value="0">
-                                <input class="toggle__input" name="LoginForm[rememberMe]" type="checkbox" value="1" checked>
+                                <input class="toggle__input" name="LoginForm[rememberMe]" type="checkbox" value="1"
+                                       checked>
                                 <span class="toggle__label">
                                         <span class="toggle__text">Remember password</span>
                                     </span>
@@ -232,20 +288,6 @@ use rmrevin\yii\fontawesome\FA;
                     </form>
                 </div>
 
-                <div class="box">
-                    <div class="content " style="display: none">
-                        <div class="error"></div>
-                        <div class="form forgetBox">
-                            <h3>Восстановить аккаунт</h3>
-                            <form accept-charset="UTF-8" action="" method="">
-                                <input class="form-control" id="" name="email" placeholder="E-mail" type="text">
-
-                                <input class="btn btn-default btn-login" onclick="forgetAjax()" type="button"
-                                       value="Отправить">
-                            </form>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

@@ -2087,11 +2087,11 @@ li.lcm-title:hover {
     }
 
     .working_top > h3 {
-        font-size: 45px;
+        font-size: 34px;
     }
 
     .working_top > h3 > span {
-        font-size: 35px;
+        font-size: 18px;
     }
 
     .working_top > p {
@@ -2099,7 +2099,8 @@ li.lcm-title:hover {
     }
 
     .working_list_item > p {
-        font-size: 13px;
+        font-size: 14px;
+        line-height: 18px;
     }
 
     .working_list_item > img {
@@ -2107,7 +2108,7 @@ li.lcm-title:hover {
     }
 
     .working_right > h3 {
-        font-size: 25px;
+        font-size: 34px;
     }
 
     .working_right > p {
@@ -2233,6 +2234,7 @@ li.lcm-title:hover {
 
     .slider1_name h1 {
         font-size: 30px;
+        line-height: 40px;
     }
 
     .slider1_name h1 span {

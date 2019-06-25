@@ -10,15 +10,15 @@ use rmrevin\yii\fontawesome\FA;
 <section class="topfooter">
     <div class="container">
         <div class="row">
-            <div class="col-md-4 topfooter_div">
+            <div class="col topfooter_div">
                 <img src="/svg/phone.svg" alt="">
                 <span class="topfooter_div_span1">+97155 689 22 01</span>
             </div>
-            <div class="col-md-4 topfooter_div">
+            <div class="col topfooter_div">
                 <img src="/svg/schedule.svg" alt="">
                 <span>Sa-Th 9:00-20:00</span>
             </div>
-            <div class="col-md-4 topfooter_div topfooter_div3">
+            <div class="col d-none topfooter_div topfooter_div3">
                 <img src="/svg/loaction.svg" alt="">
                 <span>Emirates Industrial City,<br> shop No. 5. , United Arab<br> Emirates , Sharjah</span>
             </div>
@@ -33,7 +33,7 @@ use rmrevin\yii\fontawesome\FA;
         <div class="row">
             <div class="col-md-5">
                 <div class="row">
-                    <div class="col-md-6 footer_left_div1">
+                    <div class="col-6 footer_left_div1">
                         <h3>Services</h3>
                         <ul>
                             <li><a href="#">Sell</a></li>
@@ -41,7 +41,7 @@ use rmrevin\yii\fontawesome\FA;
                             <li><a href="#">Search</a></li>
                         </ul>
                     </div>
-                    <div class="col-md-6 footer_left_div2">
+                    <div class="col-6 footer_left_div2">
                         <h3>Company</h3>
                         <ul>
                             <li><a href="#">About Us</a></li>

@@ -90,21 +90,7 @@ class StoreProductController extends \yii\web\Controller
         }
         $data = $cars_array;
 
-//        $data = '<div class="form-group">';
-//        $data .= '<label class="control-label" for="car">Car</label>';
-//        $data .= '<select name="car[]" id="car_items" class="form-control car_items">';
-        //$data = '<option disabled selected>' . 'Select Model' . '</option>';
-//        if (count($cars_array)) {
-//            foreach ($cars_array as $key => $car_array) {
-//                $data += $car_array;
-//            }
-//        }
-//        $data .= "</select>";
-//        $data .= "</div>";
-
-//        echo json_encode(array('data => $data, 'error' => $error));
         return $this->asJson($data);
-
     }
 
     public function actionGetVendors()
@@ -218,6 +204,11 @@ class StoreProductController extends \yii\web\Controller
         }
 
         return $cars_array;
+    }
+
+    public function actionCreate()
+    {
+
     }
 
 }

@@ -126,7 +126,7 @@ class QueryController extends \yii\web\Controller
                     $parts_array[$key] = [
                         'id' => $model->id,
                         'title' => $model->title,
-                        'Car' => $model->vendor.' '.$model->car.' '.$model->modification.' '.$model->year,
+                        'car' => $model->vendor.' '.$model->car.' '.$model->modification.' '.$model->year,
                         'category_id' => $model->category_id,
                         'fueltype' => $model->fueltype,
                         'engine' => $model->engine,
@@ -138,6 +138,20 @@ class QueryController extends \yii\web\Controller
                     ];
 
                 }
+
+                Yii::$app
+                    ->mailer
+                    ->compose(
+                        ['html' => 'makeQuery-html', 'text' => 'makeQuery-text'],
+                        [
+                            'type' => 'buyer',
+                            'parts' => $parts_array
+                        ]
+                    )
+                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                    ->setTo($query_data['email'])
+                    ->setSubject('Your request  | '.Yii::$app->name)
+                    ->send();
 
                 return $this->asJson(['parts'=>$parts_array,
 //                    'data'=>QueryAddList::transform($model),
