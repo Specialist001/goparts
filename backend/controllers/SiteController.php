@@ -67,21 +67,27 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $counter = [];
+        $latest = [];
 
         $users = User::find()->all();
         $counter['user_count'] = count($users);
 
-        $products  = StoreProduct::find()->all();
+        $product  = StoreProduct::find();
+        $latest['products'] = $product->orderBy('id DESC')->limit(5)->all();
+        $products = $product->all();
         $counter['product_count'] = count($products);
 
         $orders = StoreOrder::find()->all();
         $counter['order_count'] = count($orders);
 
-        $queries = Query::find()->all();
+        $query = Query::find();
+        $latest['queries'] = $query->orderBy('id DESC')->limit(10)->all();
+        $queries = $query->all();
         $counter['query_count'] = count($queries);
 
         return $this->render('index', [
             'counter' => $counter,
+            'latest' => $latest,
         ]);
     }
 

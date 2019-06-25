@@ -42,38 +42,39 @@ class StoreQueryList
                     'status' => $item->query->status,
                 ];
 
-            foreach ($item->product as $product) {
+                if ($item->product_id !=0 ) {
                 $data[$loop]['product'][] = [
-                    'product_id' => $product->id,
-                    'car_id' => $product->car_id,
-                    'category' => $product->category->translate->title ? $product->category->translate->title : null,
-                    'type_of_car' => $product->typeCar->translate->name ? $product->typeCar->translate->name : null,
-                    'user' => $product->user->username ? $product->user->username : null,
-                    'name' => $product->translate->name.', '.$product->car->vendor.' '.$product->car->car.' '.$product->car->modification.' '.$product->car->year,
-                    'short' => $product->translate->short,
-                    'description' => $product->translate->description,
-                    'serial_number' => $product->serial_number ? $product->serial_number : null,
-//                'price' => $product->price ? $product->price : null,
-                    'price' => $product->purchase_price ? $product->purchase_price : null,
-                    'purchase_price' => $product->purchase_price ? $product->purchase_price : null,
-                    'discount_price' => $product->discount_price ? $product->discount_price : null,
-                    'discount' => $product->discount ? $product->discount : null,
-                    'data' => $product->data ? $product->data : null,
-                    'is_special' => $product->is_special ? $product->is_special : null,
-                    'length' => $product->length ? $product->length : null,
-                    'width' => $product->width ? $product->width : null,
-                    'height' => $product->height ? $product->height : null,
-                    'weight' => $product->weight ? $product->weight : null,
-                    'in_stock' => $product->in_stock ? $product->in_stock : null,
-                    'quantity' => $product->quantity ? $product->quantity : null,
-                    'image' => $product->image ? $product->image : null,
-                    'average_price' => $product->average_price ? $product->average_price : null,
+                    'product_id' => $item->product->id,
+                    'car_id' => $item->product->car_id,
+                    'category' => $item->product->category->translate->title ? $item->product->category->translate->title : null,
+                    'type_of_car' => $item->product->typeCar->translate->name ? $item->product->typeCar->translate->name : null,
+                    'user' => $item->product->user->username ? $item->product->user->username : null,
+                    'name' => $item->product->translate->name.', '.$item->product->car->vendor.' '.$item->product->car->car.' '.$item->product->car->modification.' '.$item->product->car->year,
+                    'short' => $item->product->translate->short,
+                    'description' => $item->product->translate->description,
+                    'serial_number' => $item->product->serial_number ? $item->product->serial_number : null,
+//                'price' => $item->product->price ? $item->product->price : null,
+                    'price' => $item->product->purchase_price ? $item->product->purchase_price : null,
+                    'purchase_price' => $item->product->purchase_price ? $item->product->purchase_price : null,
+                    'discount_price' => $item->product->discount_price ? $item->product->discount_price : null,
+                    'discount' => $item->product->discount ? $item->product->discount : null,
+                    'data' => $item->product->data ? $item->product->data : null,
+                    'is_special' => $item->product->is_special ? $item->product->is_special : null,
+                    'length' => $item->product->length ? $item->product->length : null,
+                    'width' => $item->product->width ? $item->product->width : null,
+                    'height' => $item->product->height ? $item->product->height : null,
+                    'weight' => $item->product->weight ? $item->product->weight : null,
+                    'in_stock' => $item->product->in_stock ? $item->product->in_stock : null,
+                    'quantity' => $item->product->quantity ? $item->product->quantity : null,
+                    'image' => $item->product->image ? $item->product->image : null,
+                    'average_price' => $item->product->average_price ? $item->product->average_price : null,
 
-                    'recommended_price' => $product->recommended_price ? $product->recommended_price : null,
-                    'view' => $product->view ? $product->view : null,
-                    'date' => date('d/m/Y', $product->created_at),
+                    'recommended_price' => $item->product->recommended_price ? $item->product->recommended_price : null,
+                    'view' => $item->product->view ? $item->product->view : null,
+                    'date' => date('d/m/Y', $item->product->created_at),
                 ];
-            }
+                }
+
 
             $loop++;
         }

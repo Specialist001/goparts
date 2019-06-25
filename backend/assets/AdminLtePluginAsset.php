@@ -12,11 +12,12 @@ class AdminLtePluginAsset extends AssetBundle
     public $basePath = '@vendor/almasaeed2010/adminlte';
     public $css = [
         'plugins/datatables/dataTables.bootstrap.css',
-        'plugins/datatables/dataTables.bootstrap.css',
-        'bower_components/Ionicons/ionicons.min.css',
+        'bower_components/Ionicons/css/ionicons.min.css',
+//        'bower_components/Ionicons/css/ionicons.min.css',
     ];
     public $js = [
-        'plugins/datatables/dataTables.bootstrap.min.js',
+        'datatables/dataTables.bootstrap.min.js',
+        'bower_components/morris.js/morris.min.js',
     ];
     public $depends = [
         'dmstr\web\AdminLteAsset',

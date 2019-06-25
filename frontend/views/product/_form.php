@@ -253,7 +253,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                     <?= $form->field($model, 'sku')->textInput(['maxlength' => true, 'readonly' => true, 'disabled' => true]) ?>
                 </div>
                 <div class="col-md-3">
-                    <?= $form->field($model, 'status')->dropDownList(['0' => 'Not active', 1 => 'Active']) ?>
+                    <?= $form->field($model, 'status')->dropDownList([1 => 'Active','0' => 'Not active']) ?>
                 </div>
                 <!---->
                 <!--            <div class="col-md-3">-->

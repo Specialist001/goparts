@@ -66,7 +66,7 @@ class ProductController extends Controller
     public function actionCreate($query_id)
     {
         if (Yii::$app->user->identity->role == User::ROLE_SELLER) {
-            $seller = SellerQuery::find()->where(['seller_id' => Yii::$app->user->identity->getId(), 'query_id' => $query_id])->one();
+            $seller = SellerQuery::find()->where(['seller_id' => Yii::$app->user->identity->getId(), 'query_id' => $query_id])->with('query')->one();
 
             if ($seller->seller_id == Yii::$app->user->identity->getId()) {
                 if ($seller->query->car_id == Yii::$app->request->get('car_id')) {
@@ -203,11 +203,13 @@ class ProductController extends Controller
                                 ->mailer
                                 ->compose(
                                     ['html' => 'makeProduct-html', 'text' => 'makeProduct-text'],
-                                    ['type' => 'buyer'],
-                                    ['product_id' => $model->id],
-                                    ['query_name' => $seller->query->title],
-                                    ['query_date' => $seller->query->created_at],
-                                    ['query_car_name' => $seller->query->vendor .' '.$seller->query->car.' '.$seller->query->modification.' '.$seller->query->year]
+                                    [
+                                        'type' => 'buyer',
+                                        'product_id' => $model->id,
+                                        'query_name' => $seller->query->title,
+                                        'query_date' => $seller->query->created_at,
+                                        'query_car_name' => $seller->query->vendor .' '.$seller->query->car.' '.$seller->query->modification.' '.$seller->query->year
+                                    ]
                                 )
                                 ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
                                 ->setTo($seller->query->email)
@@ -218,11 +220,12 @@ class ProductController extends Controller
                                 ->mailer
                                 ->compose(
                                     ['html' => 'makeProduct-html', 'text' => 'makeProduct-text'],
-                                    ['type' => 'admin'],
-                                    ['product_id' => $model->id],
-                                    ['query_name' => $seller->query->title],
-                                    ['query_date' => $seller->query->created_at],
-                                    ['query_car_name' => $seller->query->vendor .' '.$seller->query->car.' '.$seller->query->modification.' '.$seller->query->year]
+                                    ['type' => 'admin',
+                                        'product_id' => $model->id,
+                                        'query_name' => $seller->query->title,
+                                        'query_date' => $seller->query->created_at,
+                                        'query_car_name' => $seller->query->vendor .' '.$seller->query->car.' '.$seller->query->modification.' '.$seller->query->year
+                                    ]
                                 )
                                 ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
                                 ->setTo(Yii::$app->params['adminEmail'])

@@ -247,23 +247,23 @@ class SiteController extends Controller
      * @throws BadRequestHttpException
      * @return yii\web\Response
      */
-//    public function actionVerifyEmail($token)
-//    {
-//        try {
-//            $model = new VerifyEmailForm($token);
-//        } catch (InvalidArgumentException $e) {
-//            throw new BadRequestHttpException($e->getMessage());
-//        }
-//        if ($user = $model->verifyEmail()) {
-//            if (Yii::$app->user->login($user)) {
-//                Yii::$app->session->setFlash('success', 'Your email has been confirmed!');
-//                return $this->goHome();
-//            }
-//        }
-//
-//        Yii::$app->session->setFlash('error', 'Sorry, we are unable to verify your account with provided token.');
-//        return $this->goHome();
-//    }
+    public function actionVerifyEmail($token)
+    {
+        try {
+            $model = new VerifyEmailForm($token);
+        } catch (InvalidArgumentException $e) {
+            throw new BadRequestHttpException($e->getMessage());
+        }
+        if ($user = $model->verifyEmail()) {
+            if (Yii::$app->user->login($user)) {
+                Yii::$app->session->setFlash('success', 'Your email has been confirmed!');
+                return $this->goHome();
+            }
+        }
+
+        Yii::$app->session->setFlash('error', 'Sorry, we are unable to verify your account with provided token.');
+        return $this->goHome();
+    }
 
     /**
      * Resend verification email
