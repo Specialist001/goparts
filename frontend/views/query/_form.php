@@ -186,7 +186,8 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
 
                 </div>
             </row>
-            <input type="hidden" name="QueryData[car_id]" id="car_id" value=""/>
+            <input type="hidden" name="car_id" id="car_id" value=""/>
+<!--            <input type="hidden" name="QueryData[car_id]" id="car_id" value=""/>-->
             <?php if (!empty($prod_id = Yii::$app->request->get('id'))) { ?>
                 <input type="hidden" name="id" value="<?= $prod_id ?>"/>
             <?php } ?>

@@ -64,14 +64,6 @@ class CarController extends Controller
                 $products = StoreProduct::find()->where(['between', 'car_id', $car_id_min, $car_id_max])->andWhere(['category_id' => $category_id, 'type_car_id' => $type_car_id])->andWhere(['status' => 1])->all();
             }
 
-//        return $this->asJson($products);
-//        return $products;
-
-//        echo '<pre>';
-//        print_r($products);
-//        echo '</pre>';
-//        exit;
-
 
             return $this->render('search', [
                 'products' => $products,

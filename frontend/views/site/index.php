@@ -9,7 +9,7 @@ $this->title = Yii::$app->params['appName'];
 
 ?>
 
-<?= WCarSearch::widget()?>
+<?//= WCarSearch::widget()?>
 
 <section class="slider">
     <!-- Set up your HTML -->
