@@ -83,6 +83,7 @@ $this->title = 'Product Search: ' . Yii::$app->request->get('vendor') .' '. Yii:
                 </div>
             </div>
             <div class="col-md-9">
+                <?php if ($products) {?>
                 <div class="row catalog_cart">
                     <?php foreach ($products as $product) { ?>
                     <div class="col-md-4">
@@ -96,7 +97,7 @@ $this->title = 'Product Search: ' . Yii::$app->request->get('vendor') .' '. Yii:
                                 <h5>Type of car: <span>Sedan</span></h5>
                             </div>
                             <div class="card-body">
-                                <a href="#" class="cat"><?= Yii::$app->request->get('vendor')?></a>
+                                <a href="#" class="cat"><?= $product->car->vendor ?></a>
                                 <a href="<?= \yii\helpers\Url::to(['car/product', 'id'=>$product->id]) ?>">
                                     <h5 class="card-title"><?= $product->translate->name?>,
                                         <?= $product->car->vendor .' '.$product->car->car.' '.$product->car->modification.' '.$product->car->year?>
@@ -113,6 +114,9 @@ $this->title = 'Product Search: ' . Yii::$app->request->get('vendor') .' '. Yii:
                     </div>
                     <?php } ?>
                 </div>
+                <?php } else {?>
+                    <div>Product(s) not found</div>
+                <?php } ?>
             </div>
         </div>
     </div>

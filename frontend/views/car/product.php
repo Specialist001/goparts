@@ -108,7 +108,7 @@ use yii\helpers\Url; ?>
 <section class="related">
     <div class="container">
         <h3>Also we recommend for this car</h3>
-        <div class="owl-carousel owl-theme owl-related">
+        <div class="owl-carousel owl-theme row row-eq-height owl-related">
             <div class="related">
                 <div class="card" style="width: 100%;">
                     <img src="/img/product.png" class="card-img-top" alt="...">

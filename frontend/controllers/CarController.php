@@ -21,18 +21,38 @@ class CarController extends Controller
 
             if (!empty($car)) {
                 if (!empty($modification)) {
-                    $car_id_min = Cars::find()->where(['vendor' => $vendor, 'car' => $car, 'modification' => $modification])->min('id');
-                    $car_id_max = Cars::find()->where(['vendor' => $vendor, 'car' => $car, 'modification' => $modification])->max('id');
+                    $car_id_min = Cars::find()->where(['vendor' => $vendor, 'car' => $car, 'modification' => $modification])->min('id')
+                        ? Cars::find()->where(['vendor' => $vendor, 'car' => $car, 'modification' => $modification])->min('id')
+                        : false;
+                    $car_id_max = Cars::find()->where(['vendor' => $vendor, 'car' => $car, 'modification' => $modification])->max('id')
+                        ? Cars::find()->where(['vendor' => $vendor, 'car' => $car, 'modification' => $modification])->max('id')
+                        : false;
+                    if ($car_id_min!=false && $car_id_max!=false) {
+                        $products = StoreProduct::find()->where(['between', 'car_id', $car_id_min, $car_id_max])->andWhere(['status' => 1])->all();
+                    }
                 } else {
-                    $car_id_min = Cars::find()->where(['vendor' => $vendor, 'car' => $car])->min('id');
-                    $car_id_max = Cars::find()->where(['vendor' => $vendor, 'car' => $car])->max('id');
+                    $car_id_min = Cars::find()->where(['vendor' => $vendor, 'car' => $car])->min('id')
+                        ? Cars::find()->where(['vendor' => $vendor, 'car' => $car])->min('id')
+                        : false;
+                    $car_id_max = Cars::find()->where(['vendor' => $vendor, 'car' => $car])->max('id')
+                        ? Cars::find()->where(['vendor' => $vendor, 'car' => $car])->max('id')
+                        : false;
+                    if ($car_id_min!=false && $car_id_max!=false) {
+                        $products = StoreProduct::find()->where(['between', 'car_id', $car_id_min, $car_id_max])->andWhere(['status' => 1])->all();
+                    }
                 }
             } else {
-                $car_id_min = Cars::find()->where(['vendor' => $vendor])->min('id');
-                $car_id_max = Cars::find()->where(['vendor' => $vendor])->max('id');
+                $car_id_min = Cars::find()->where(['vendor' => $vendor])->min('id') ? Cars::find()->where(['vendor' => $vendor])->min('id') : false;
+                $car_id_max = Cars::find()->where(['vendor' => $vendor])->max('id') ? Cars::find()->where(['vendor' => $vendor])->max('id') : false;
+
+                if ($car_id_min!=false && $car_id_max!=false) {
+                    $products = StoreProduct::find()->where(['between', 'car_id', $car_id_min, $car_id_max])->andWhere(['status' => 1])->all();
+                } else {
+                    $products = null;
+                }
             }
 
-            $products = StoreProduct::find()->where(['between', 'car_id', $car_id_min, $car_id_max])->andWhere(['status' => 1])->all();
+//            $products = StoreProduct::find()->where([])->andWhere(['status' => 1])->all();
 
             if (!empty($category_id)) {
                 $products = StoreProduct::find()->where(['between', 'car_id', $car_id_min, $car_id_max])->andWhere(['category_id' => $category_id])->andWhere(['status' => 1])->all();
