@@ -272,7 +272,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="form-group">
+                        <div class="form-group cat-parent">
                             <label>Category</label>
                             <input class="form-control category_id" type="hidden" name="Query[0][category_id]" value="">
                             <input class="form-control cat_select bg-gray" type="button" value="Select category">
@@ -381,7 +381,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="form-group">
+                        <div class="form-group cat-parent">
                             <label>Category</label>
                             <input class="form-control category_id" type="hidden" value="">
                             <input class="form-control cat_select bg-grey" type="button" value="Select category">
@@ -625,37 +625,40 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
             //getOneCar($(\'#car_vendor\').val(), $(\'#car_car\').val(), $(\'#car_modification\').val(), $(\'#$car_year\').val());
             $(\'#cat-form\').submit();
         });
+        
         $(document).on(\'click\', \'.cat_select\', function () {
-            console.log(\'btn\');
+            //console.log(\'btn\');
             $(this).next().toggleClass(\'d-none\');
+            
+            var parent_form = $(this).parent(\'.cat-parent\');
+//            console.log(parent_form);
             var input_btn = $(this);
             
             $(document).on(\'click\', \'.cat-widget-li\', function () {
             
-            id = $(this).data(\'id\');
-            title = $(this).data(\'title\');
+                id = $(this).data(\'id\');
+                title = $(this).data(\'title\');
+                
+                has_childs = $(this).data(\'childs\');
             
-            has_childs = $(this).data(\'childs\');
-            
-            li = $(this);
-            if(has_childs != \'\') {
-                $.ajax({
-                    url: "/site/get-cats",
-                    data: {\'id\': li.data(\'id\')}, //data: {}
-                    type: "get",
-                    success: function (t) {
-                        $(\'.category-widget-list\').html(t);
-                    }
-                });
-            }
-            else {
-                console.log(input_btn);
-                input_btn.prev(\'.category_id\').val(id);
-//                $(\'#category_id\').val(id);
-                input_btn.val(title);
-                input_btn.next().addClass(\'d-none\');
-//                $(\'#cat-form\').submit();
-            }
+                li = $(this);
+                if(has_childs != \'\') {
+                    $.ajax({
+                        url: "/site/get-cats",
+                        data: {\'id\': li.data(\'id\')}, //data: {}
+                        type: "get",
+                        success: function (t) {
+                            $(\'.category-widget-list\').html(t);
+                        }
+                    });
+                }
+                else {
+//                    console.log(input_btn);
+                    parent_form.children(\'.category_id\').val(id);
+    
+                    input_btn.val(title);
+                    input_btn.next().addClass(\'d-none\');
+                }
         });
         });
                 

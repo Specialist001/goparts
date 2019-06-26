@@ -32,7 +32,6 @@ $(document).ready(function () {
         //     form.find('input[name="count"]').focus();
         //     return false;
         // }
-        console.log('true1');
 
         form.submit(function(e){
             e.preventDefault();

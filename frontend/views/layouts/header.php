@@ -53,7 +53,7 @@ use rmrevin\yii\fontawesome\FA;
             <!--            </div>-->
             <!--            --><?php //} ?>
 
-            <div class="topheader_login float-md-left">
+            <div class="topheader_login float-md-left pr-3 pr-md-0">
                 <?php if (Yii::$app->user->isGuest) { ?>
                     <!--                <a data-target="#loginModal" data-toggle="modal" href="javascript:void(0)">-->
                     <!--                    <img src="svg/Login.svg" class="topheader_login_img" alt="">-->
@@ -65,12 +65,12 @@ use rmrevin\yii\fontawesome\FA;
                             <img src="/svg/Login.svg" class="topheader_login_img" alt="">
                             <span class="topheader_login_text">Login</span>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-right text-right" aria-labelledby="dropdown_login">
-                            <li>
-                                <a href="<?= Url::to(['login']) ?>"> Login</a>
+                        <ul class="dropdown-menu dropdown-menu-right text-right mt-2" aria-labelledby="dropdown_login">
+                            <li class="px-2">
+                                <a class="text-form-style_2" href="<?= Url::to(['login']) ?>"> Login</a>
                             </li>
-                            <li>
-                                <a href="<?= Url::to(['signup']) ?>"> Signup</a>
+                            <li class="px-2">
+                                <a class="text-form-style_2" href="<?= Url::to(['signup']) ?>"> Signup</a>
                             </li>
                         </ul>
                     </div>
@@ -121,45 +121,58 @@ use rmrevin\yii\fontawesome\FA;
 
             </div>
         </div>
-        <div class="container d-md-none">
-            <div class="row m-auto w-100">
-                <div class="col px-2 d-none text-center">
-                    <div class="">
-                        <div class="header_city_icon">
-                            <img src="/svg/loaction.svg" alt="">
-                        </div>
-                        <div class="header_city_text">
-                            <span>Your City</span>
-                            <h4><?php $city = City::findOne(['default' => 1]);
-                                echo $city->name;
-                                ?></h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="col text-center">
-                    <div class="">
-                        <div class="header_phone_icon">
-                            <img src="/svg/phone.svg" alt="">
-                        </div>
-                        <div class="header_phone_text">
-                            <span>Sa-Th 9:00-20:00</span>
-                            <h4>+97155 689 22 01</h4>
 
-                        </div>
+    </nav>
+    <div class="container ">
+        <div class="row">
+            <div class="col">
+                <div class="float-right">
+                    <div class="header_city_icon">
+                        <img src="/svg/loaction.svg" alt="">
+                    </div>
+                    <div class="header_city_text float-left">
+                        <span class="mb-0 pt-1">Your City</span>
+                        <h4><?php $city = City::findOne(['default' => 1]);
+                            echo $city->name;
+                            ?></h4>
                     </div>
                 </div>
             </div>
-            <div class="row m-auto pt-2">
-                <div class="col">
+            <div class="col text-center">
+                <div class="float-left">
+                    <div class="header_shop_icon">
+                        <img src="/img/header_shop_icon.png" class="img-fluid" alt="" style="width: 40px">
+                    </div>
+                    <div class="header_shop_text float-left">
+                        <h4>In basket</h4>
+                        <span><div id="cart-count"
+                                   class="d-inline-block"><?= WBasket::widget(['key' => 'main']) ?> </div> AED</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col text-center d-none">
+                <div class="">
+                    <div class="header_phone_icon">
+                        <img src="/svg/phone.svg" alt="">
+                    </div>
                     <div class="header_phone_text">
-                    <?php if (Yii::$app->user->identity->role == User::ROLE_BUYER || Yii::$app->user->isGuest) { ?>
-                        <a href="<?= Url::to(['query/create']) ?>">Leave a request</a>
-                    <?php } ?>
+                        <span>Sa-Th 9:00-20:00</span>
+                        <h4>+97155 689 22 01</h4>
+
                     </div>
                 </div>
             </div>
         </div>
-    </nav>
+        <div class="row m-auto py-2">
+            <div class="col text-center">
+                <div class="header_phone_text">
+                    <?php if (Yii::$app->user->identity->role == User::ROLE_BUYER || Yii::$app->user->isGuest) { ?>
+                        <a href="<?= Url::to(['query/create']) ?>">Leave a request</a>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -167,14 +180,15 @@ use rmrevin\yii\fontawesome\FA;
     <div class="container">
         <div class="row">
             <div class="col-lg-4 col-md-4 col-12">
-                <div class="header_logo">
-                    <a href="<?= Url::to(['/']) ?>">
-                        <h1><?= Yii::$app->params['appName'] ?></h1>
-                        <span>Auto parts</span>
+                <div class="header_logo w-75 d-inline-block">
+                    <a href="<?= Url::to(['/']) ?>" class="d-inline-block">
+<!--                        <h1>--><?//= Yii::$app->params['appName'] ?><!--</h1>-->
+<!--                        <span>Auto parts</span>-->
+                        <img src="/svg/goparts_logo_1.svg" class="img-fluid">
                     </a>
                 </div>
             </div>
-            <div class="col-lg-8 col-md-8 col-12">
+            <div class="col-lg-8 col-md-8 col-12 d-none">
                 <div class="row">
                     <div class="col-md-4 d-none d-sm-none d-md-block">
                         <div class="header_city">
