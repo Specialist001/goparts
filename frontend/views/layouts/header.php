@@ -4,6 +4,7 @@ use common\models\City;
 use common\models\Page;
 use common\models\User;
 use frontend\widgets\WBasket;
+use frontend\widgets\WCarSearch;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use rmrevin\yii\fontawesome\FA;
@@ -35,6 +36,32 @@ use rmrevin\yii\fontawesome\FA;
                         <a class="nav-link" href="#">Contacts</a>
                     </li>
                 </ul>
+            </div>
+            <div class="col">
+                <div class="float-right">
+                    <div class="header_city_icon">
+                        <img src="/svg/loaction.svg" class="p-0" alt="" style="margin-top: 2px">
+                    </div>
+                    <div class="header_city_text float-left pt-1">
+                        <span class="mb-0 pt-1 d-none">Your City</span>
+                        <h4><?php $city = City::findOne(['default' => 1]);
+                            echo $city->name;
+                            ?></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col text-center">
+                <div class="float-left">
+                    <div class="header_shop_icon">
+                        <img src="/svg/shopping-cart.svg" class="img-fluid" alt="" style="width: 22px">
+                    </div>
+                    <div class="header_shop_text float-left">
+                        <h4 class="d-none">In basket</h4>
+                        <span class=" font-weight-bold">
+                            <div id="cart-count" class="d-inline-block"><?= WBasket::widget(['key' => 'main']) ?> </div> AED
+                        </span>
+                    </div>
+                </div>
             </div>
             <!--            <div class="topheader_shop">-->
             <!--                <a href="#">-->
@@ -125,31 +152,7 @@ use rmrevin\yii\fontawesome\FA;
     </nav>
     <div class="container ">
         <div class="row">
-            <div class="col">
-                <div class="float-right">
-                    <div class="header_city_icon">
-                        <img src="/svg/loaction.svg" alt="">
-                    </div>
-                    <div class="header_city_text float-left">
-                        <span class="mb-0 pt-1">Your City</span>
-                        <h4><?php $city = City::findOne(['default' => 1]);
-                            echo $city->name;
-                            ?></h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col text-center">
-                <div class="float-left">
-                    <div class="header_shop_icon">
-                        <img src="/img/header_shop_icon.png" class="img-fluid" alt="" style="width: 40px">
-                    </div>
-                    <div class="header_shop_text float-left">
-                        <h4>In basket</h4>
-                        <span><div id="cart-count"
-                                   class="d-inline-block"><?= WBasket::widget(['key' => 'main']) ?> </div> AED</span>
-                    </div>
-                </div>
-            </div>
+
             <div class="col text-center d-none">
                 <div class="">
                     <div class="header_phone_icon">
@@ -158,7 +161,6 @@ use rmrevin\yii\fontawesome\FA;
                     <div class="header_phone_text">
                         <span>Sa-Th 9:00-20:00</span>
                         <h4>+97155 689 22 01</h4>
-
                     </div>
                 </div>
             </div>
@@ -188,7 +190,11 @@ use rmrevin\yii\fontawesome\FA;
                     </a>
                 </div>
             </div>
+            <div class="col-lg-8">
+<!--                --><?//= WCarSearch::widget()?>
+            </div>
             <div class="col-lg-8 col-md-8 col-12 d-none">
+
                 <div class="row">
                     <div class="col-md-4 d-none d-sm-none d-md-block">
                         <div class="header_city">

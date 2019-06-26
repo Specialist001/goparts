@@ -65,6 +65,7 @@ input, input:focus, textarea, select {
 }
 .widgetform_form .select2-container .select2-selection--single {
     height: auto;
+    background: transparent;
 }
 
 .widgetform_form .select2-container .select2-selection--single .select2-selection__rendered {
@@ -405,8 +406,8 @@ label.toggle .toggle__text, label.toggle + a {
 
 .header_shop_text span {
     color: #000;
-    font-family: 'GothamProLight';
-    font-size: 14px;
+    font-family: 'GothamProBold';
+    font-size: 16px;
     display: block;
     margin-bottom: 0px;
 }
@@ -441,8 +442,9 @@ label.toggle .toggle__text, label.toggle + a {
 .widgetform_make {
     border-top: 1px solid #e3e3e3;
     border-bottom: 1px solid #e3e3e3;
+    border-left: 1px solid #e3e3e3;
     padding: 0.83rem 35px;
-    width: 20%;
+    width: 25%;
     position: relative;
     border-right: 1px solid #e3e3e3;
 }
