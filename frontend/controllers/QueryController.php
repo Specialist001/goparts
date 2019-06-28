@@ -106,13 +106,19 @@ class QueryController extends Controller
             $engines_types = StoreOption::find()->where(['slug'=>'engines-type'])->one();
             $engines_array = [];
             foreach ($engines_types->storeOptionValues as $engines_type) {
-                    $engines_array += [$engines_type->value => $engines_type->value];
+                $engines_array += [$engines_type->value => $engines_type->value];
             }
 
             $transmissions = StoreOption::find()->where(['slug'=>'transmission'])->one();
             $transmissions_array = [];
             foreach ($transmissions->storeOptionValues as $transmission) {
-                    $transmissions_array += [$transmission->value => $transmission->value];
+                $transmissions_array += [$transmission->value => $transmission->value];
+            }
+
+            $drive_types = StoreOption::find()->where(['slug'=>'drive-type'])->one();
+            $drive_array = [];
+            foreach ($drive_types->storeOptionValues as $drive) {
+                $drive_array += [$drive->value => $drive->value];
             }
 
             $cats = StoreCategory::find()->where(['parent_id' => null, 'status'=>1])->orderBy('`order`')->all();
@@ -208,6 +214,7 @@ class QueryController extends Controller
                 'fuel_array' => $fuel_array,
                 'transmissions_array' => $transmissions_array,
                 'engines_array' => $engines_array,
+                'drive_array' => $drive_array,
             ]);
         }
 
