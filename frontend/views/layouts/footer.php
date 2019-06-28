@@ -68,14 +68,14 @@ use rmrevin\yii\fontawesome\FA;
                         <input type="email" name="email" placeholder="Enter email" class="footer_left_div4_input">
                         <input type="button" name="button" value="Send" class="footer_left_div4_button">
                         <div class="footer_rightblock">
-                            <div class="rightblock_div1">
-                                <img src="/img/wallet.png" alt="">
-                                <a href="#">Payment</a>
-                            </div>
-                            <div class="rightblock_div2">
-                                <img src="/img/develry.png" alt="">
-                                <a href="#">Delivery</a>
-                            </div>
+<!--                            <div class="rightblock_div1">-->
+<!--                                <img src="/img/wallet.png" alt="">-->
+<!--                                <a href="#">Payment</a>-->
+<!--                            </div>-->
+<!--                            <div class="rightblock_div2">-->
+<!--                                <img src="/img/develry.png" alt="">-->
+<!--                                <a href="#">Delivery</a>-->
+<!--                            </div>-->
                             <div class="rightblock_div3">
                                 <ul>
                                     <li><a href="#"><?= FA::i('vk') ?></a></li>

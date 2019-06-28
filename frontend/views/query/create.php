@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="query-create col">
 
-        <h2><?= Html::encode($this->title) ?></h2>
+        <h2 class="text-center"><?= Html::encode($this->title) ?></h2>
 
         <?= $this->render('_form', [
             'model' => $model,
