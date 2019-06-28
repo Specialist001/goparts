@@ -168,8 +168,10 @@ use rmrevin\yii\fontawesome\FA;
         <div class="row m-auto py-2">
             <div class="col text-center">
                 <div class="header_phone_text">
-                    <?php if (Yii::$app->user->identity->role == User::ROLE_BUYER || Yii::$app->user->isGuest) { ?>
-                        <a href="<?= Url::to(['query/create']) ?>">Leave a request</a>
+                    <?php if (Yii::$app->controller->route != 'query/create') { ?>
+                        <?php if (Yii::$app->user->identity->role == User::ROLE_BUYER || Yii::$app->user->isGuest) { ?>
+                            <a href="<?= Url::to(['query/create']) ?>">Leave a request</a>
+                        <?php } ?>
                     <?php } ?>
                 </div>
             </div>

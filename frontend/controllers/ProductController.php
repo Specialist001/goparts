@@ -70,7 +70,7 @@ class ProductController extends Controller
 
             if ($seller->seller_id == Yii::$app->user->identity->getId()) {
                 if ($seller->query->car_id == Yii::$app->request->get('car_id')) {
-                    if ($seller->query->category_id == Yii::$app->request->get('category')) {
+//                    if ($seller->query->category_id == Yii::$app->request->get('category')) {
 
                         $model = new StoreProduct();
                         $video = new StoreProductVideo();
@@ -85,9 +85,9 @@ class ProductController extends Controller
                         $car = Cars::findOne(['id' => Yii::$app->request->get('car_id')]);
                         $car_id = $car->id;
 
-//                  $car_id = !empty(Yii::$app->request->get('car_id')) ? Yii::$app->request->get('car_id') : false;
+//                        $car_id = !empty(Yii::$app->request->get('car_id')) ? Yii::$app->request->get('car_id') : false;
 
-//                  if(empty($car_id = Cars::findOne(['id'=>$car_id]))) $car_id = false;
+//                        if(empty($car_id = Cars::findOne(['id'=>$car_id]))) $car_id = false;
 
                         if (empty($category = StoreCategory::findOne(['id' => $category, 'status' => 1]))) $category = false;
                         if (!empty($category)) if (!empty($category->activeCategories)) $category = false;
@@ -246,7 +246,7 @@ class ProductController extends Controller
                             'type_cars' => $type_cars,
                             'car_id' => $car_id,
                         ]);
-                    }
+//                    }
 
                 } else {
                     return $this->goBack()->fla;
