@@ -151,13 +151,13 @@ foreach ($seller_queries as $seller_query) {
                         'id',
 //                        'user_id',
 //                        'car_id',
+                        'title',
                         [
                             'label' => 'Car',
                             'value' => function($model){
                                 return $model->vendor.' '.$model->car.' '.$model->modification.' '.$model->year;
                             }
                         ],
-//                        'category_id',
                         [
                             'attribute' => 'category_id',
                             'label' => 'Category',

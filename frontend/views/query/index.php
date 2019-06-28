@@ -33,10 +33,24 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'user_id',
-            'car_id',
-            'category_id',
-            'vendor',
+//            'user_id',
+//            'car_id',
+            [
+                'attribute' => 'vendor',
+                'label' => 'Car',
+                'value' => function ($model) {
+                    return $model->vendor.' '.$model->car.' ';
+                }
+            ],
+//            'category_id',
+            [
+                'attribute' => 'category_id',
+                'label' => 'Category',
+                'value' => function ($model) {
+                    return $model->category->translate->title;
+                }
+            ],
+//            'vendor',
             //'car',
             //'year',
             //'modification',
@@ -44,12 +58,19 @@ $this->params['breadcrumbs'][] = $this->title;
             //'engine',
             //'transmission',
             //'drivetype',
-            //'name',
+            'name',
             //'phone',
             //'email:email',
             //'image',
-            //'status',
+//            'status',
             //'created_at',
+            [
+                'attribute' => 'created_at',
+                'label' => 'Date',
+                'value' => function ($model) {
+                    return date('d/m/Y', $model->created_at);
+                }
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

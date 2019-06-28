@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Query;
@@ -18,7 +19,7 @@ class QuerySearch extends Query
     {
         return [
             [['id', 'user_id', 'car_id', 'category_id', 'status', 'created_at'], 'integer'],
-            [['vendor', 'car', 'year', 'modification', 'fueltype', 'engine', 'transmission', 'drivetype', 'name','phone','email', 'image'], 'safe'],
+            [['vendor', 'car', 'year', 'modification', 'fueltype', 'engine', 'transmission','title', 'drivetype', 'name','phone','email', 'image'], 'safe'],
         ];
     }
 
@@ -46,6 +47,9 @@ class QuerySearch extends Query
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => Yii::$app->params['pageSize'],
+            ],
         ]);
 
         $this->load($params);
@@ -68,6 +72,7 @@ class QuerySearch extends Query
 
         $query->andFilterWhere(['like', 'vendor', $this->vendor])
             ->andFilterWhere(['like', 'car', $this->car])
+            ->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'year', $this->year])
             ->andFilterWhere(['like', 'modification', $this->modification])
             ->andFilterWhere(['like', 'fueltype', $this->fueltype])

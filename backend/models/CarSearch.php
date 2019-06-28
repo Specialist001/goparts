@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Cars;
@@ -46,6 +47,9 @@ class CarSearch extends Cars
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => Yii::$app->params['pageSize'],
+            ],
         ]);
 
         $this->load($params);

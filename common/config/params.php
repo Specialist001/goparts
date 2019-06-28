@@ -1,6 +1,6 @@
 <?php
 return [
-    'appName' => 'UAE parts',
+    'appName' => 'Go Parts',
     'appShortName' => 'UAEP',
     'adminEmail' => 'darking-uz@yandex.com',
     'supportEmail' => 'support@havi2.com',

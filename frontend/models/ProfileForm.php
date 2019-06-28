@@ -1,9 +1,11 @@
 <?php
 namespace frontend\models;
 
+use common\components\SimpleImage;
 use Yii;
 use yii\base\Model;
 use common\models\User;
+use yii\web\UploadedFile;
 
 /**
  * Signup form
@@ -13,6 +15,7 @@ class ProfileForm extends Model
     public $username;
     public $email;
     public $phone;
+    public $avatar;
     public $password;
     public $passwordconfirm;
     public $legal_info;
@@ -36,6 +39,8 @@ class ProfileForm extends Model
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
             [['legal_info','legal_address'],'string'],
+
+            ['avatar', 'file'],
 
             ['phone', 'unique', 'targetClass' => '\common\models\User', 'when' => function($model) {return $model->phone != Yii::$app->getUser()->identity->phone;}],
 
@@ -73,16 +78,63 @@ class ProfileForm extends Model
         if (!$this->validate()) {
             return null;
         }
-        
+
+        $image = $this->uploadProfilePicture();
+
         $user = User::findOne(Yii::$app->user->id);
+        $root = realpath(dirname(__FILE__).'/../../');
+
+        $oldFile = $user->avatar;
+
+        if($image !== false) {
+            if($image->saveAs($root.'/uploads/users/'.$this->avatar)) {
+                $resizer = new SimpleImage();
+                $resizer->load($root.'/uploads/users/'.$this->avatar);
+                $resizer->resize(200, 200);
+                $image_name = uniqid().'.'.$image->extension;
+                $resizer->save($root.'/uploads/users/'.$image_name);
+                if(is_file($root.'/uploads/users/'.$this->avatar) && file_exists($root.'/uploads/users/'.$this->avatar)) {
+                    unlink($root.'/uploads/users/'.$this->avatar);
+                }
+                $user->avatar = '/uploads/users/'.$image_name; //$this->username;
+                if(!empty($oldFile) && file_exists($root.$oldFile)) {
+                    unlink($root.$oldFile);
+                }
+            }
+        }
+        
         $user->username = $this->username; //$this->username;
         $user->email = $this->email;
         $user->phone = $this->phone? $this->phone: null; //$this->username;
         $user->legal_info = $this->legal_info; //$this->username;
         $user->legal_address = $this->legal_address; //$this->username;
+
         if($this->password) {
             $user->setPassword($this->password);
         }
         return $user->save() ? $user : null;
+    }
+
+    public function uploadProfilePicture() {
+        // get the uploaded file instance. for multiple file uploads
+        // the following data will return an array (you may need to use
+        // getInstances method)
+        $image = UploadedFile::getInstance($this, 'avatar');
+
+        // if no image was uploaded abort the upload
+        if (empty($image)) {
+            return false;
+        }
+
+        // store the source file name
+        //$this->filename = $image->name;
+        $imageName = (explode(".", $image->name));
+        $ext = end($imageName);
+
+        // generate a unique file name
+        $this->avatar = uniqid().".{$ext}";
+
+        // the uploaded profile picture instance
+        return $image;
     }
 }

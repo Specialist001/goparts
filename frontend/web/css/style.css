@@ -409,7 +409,7 @@ label.toggle .toggle__text, label.toggle + a {
     font-family: 'GothamProBold';
     font-size: 16px;
     display: block;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 .header_shop_text h4 {
@@ -1438,12 +1438,12 @@ footer {
 }
 
 .customer_user {
-    text-align: center;
-    background: url(../img/user.png) 100% no-repeat;
-    height: 225px;
-    width: 100%;
-    position: relative;
-    margin-bottom: 20px;
+    /*text-align: center;*/
+    /*background: url(../img/user.png) 100% no-repeat;*/
+    /*height: 225px;*/
+    /*width: 100%;*/
+    /*position: relative;*/
+    /*margin-bottom: 20px;*/
 }
 
 .customer_user_change {
@@ -1469,6 +1469,39 @@ footer {
 
 .customer_list {
 
+}
+
+
+.dashboard-profile {
+    margin-bottom: 50px;
+}
+
+.dashboard-profile_photo {
+
+}
+.dashboard-profile_photo img {
+    width: 100%;
+    border-radius: 10px;
+}
+.dashboard-profile_photo-text {
+    position: absolute;
+    text-align: center;
+    font-weight: 600;
+    font-size: 15px;
+    border-radius: 5px;
+    width: 75%;
+    margin: 0 8%;
+    margin-top: -20px;
+    display: inline-block;
+    background-color: #fff;
+    box-shadow: 0 3px 20px #0000001c;
+}
+.dashboard-profile_photo-text a {
+    display: block;
+    padding: 10px;
+}
+.dashboard-profile_photo-text a p {
+    margin: 0;
 }
 
 .customer_list ul {

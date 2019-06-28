@@ -196,7 +196,7 @@ class ProductController extends Controller
                             $model->save();
 
                             $seller->product_id = $model->id;
-                            $seller->status = SellerQuery::STATUS_PUBLISHED;
+                            $seller->status = SellerQuery::STATUS_MODERATE;
                             $seller->save();
 
                             Yii::$app

@@ -142,7 +142,6 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                     <div class="position-relative">
                         <select class="form-control car_items" id="car_car" required>
                             <option disabled selected>Select Model</option>
-
                             <?php if (!empty(Yii::$app->request->get('car_id')) || !empty($model->car_id)) { ?>
                                 <?php foreach ($models_array as $car_model) { ?>
                                     <option value="<?= $car_model ?>" <?= $car_model == $model_name ? 'selected' : '' ?>><?= $car_model ?></option>
@@ -244,6 +243,45 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
             <!--                <button class="btn bg-form_style_1 px-3 py-2 text-white" id="btn_add_part" style="cursor: pointer"><i class="fa fa-plus"></i> Add Part</button>-->
             <!--            </div>-->
         </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Fuel Type</label>
+                    <select class="form-control" name="QueryData[fueltype]">
+                        <?php foreach ($fuel_array as $key => $fuel) { ?>
+                            <option value="<?= $key ?>"><?= $fuel ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Engine Type</label>
+                    <select class="form-control" name="QueryData[engine]">
+                        <?php foreach ($engines_array as $key => $engine) { ?>
+                            <option value="<?= $key ?>"><?= $engine ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Transmission</label>
+                    <select class="form-control" name="QueryData[transmission]">
+                        <?php foreach ($transmissions_array as $key => $transmissions) { ?>
+                            <option value="<?= $key ?>"><?= $transmissions ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <?//= $form->field($model, 'drivetype')->textInput(['maxlength' => true]) ?>
+                <div class="form-group">
+                    <label>Drive Type</label>
+                    <input class="form-control" name="QueryData[drivetype]" type="text">
+                </div>
+            </div>
+        </div>
 
 <!--        --><?//= $form->field($model, 'car_id')->hiddenInput(['value' => Yii::$app->request->get('car_id')])->label(false) ?>
 <!--        --><?//= $form->field($model, 'vendor')->hiddenInput(['value' => $vendor_name])->label(false) ?>
@@ -269,7 +307,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
 <!--                        --><?//= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
                         <div class="form-group">
                             <label>Title</label>
-                            <input type="text" class="form-control" name="Query[0][title]">
+                            <input type="text" class="form-control" name="Query[0][title]" required>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -299,45 +337,12 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Fuel Type</label>
-                            <select class="form-control" name="Query[0][fueltype]">
-                                <?php foreach ($fuel_array as $key => $fuel) { ?>
-                                    <option value="<?= $key ?>"><?= $fuel ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Engine Type</label>
-                            <select class="form-control" name="Query[0][engine]">
-                                <?php foreach ($engines_array as $key => $engine) { ?>
-                                    <option value="<?= $key ?>"><?= $engine ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Transmission</label>
-                            <select class="form-control" name="Query[0][transmission]">
-                                <?php foreach ($transmissions_array as $key => $transmissions) { ?>
-                                    <option value="<?= $key ?>"><?= $transmissions ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <?//= $form->field($model, 'drivetype')->textInput(['maxlength' => true]) ?>
-                        <div class="form-group">
-                            <label>Drive Type</label>
-                            <input class="form-control" name="Query[0][drivetype]" type="text">
-                        </div>
+                    <div class="col-md-6">
+                        <textarea rows="5" class="form-control" name="Query[0][description]"></textarea>
                     </div>
                 </div>
-                <div class="row">
+                
+                <div class="row mt-2">
                     <div class="col-md-4">
                         <div class="form-group">
                             <input class="" name="Query[0][image]" type="file">
@@ -406,45 +411,12 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Fuel Type</label>
-                            <select class="form-control query_fueltype">
-                                <?php foreach ($fuel_array as $key => $fuel) { ?>
-                                    <option value="<?= $key ?>"><?= $fuel ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Engine Type</label>
-                            <select class="form-control query_engine">
-                                <?php foreach ($engines_array as $key => $engine) { ?>
-                                    <option value="<?= $key ?>"><?= $engine ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Transmission</label>
-                            <select class="form-control query_transmission">
-                                <?php foreach ($transmissions_array as $key => $transmissions) { ?>
-                                    <option value="<?= $key ?>"><?= $transmissions ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <?//= $form->field($model, 'drivetype')->textInput(['maxlength' => true]) ?>
-                        <div class="form-group">
-                            <label>Drive Type</label>
-                            <input class="form-control query_drivetype" type="text">
-                        </div>
+                    <div class="col-md-6">
+                        <textarea rows="5" class="form-control query_description"></textarea>
                     </div>
                 </div>
-                <div class="row">
+
+                <div class="row mt-2">
                     <div class="col-md-3">
                         <div class="form-group">
                             <input class="query_image" type="file">
@@ -509,8 +481,8 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
             //        ]); ?>
         </div>
 
-        <div class="form-group">
-            <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <div class="form-group text-center pt-2">
+            <?= Html::submitButton('Send', ['class' => 'btn btn-success px-5']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>
@@ -627,12 +599,14 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
             $(\'#cat-form\').submit();
         });
         
+
+        
         $(document).on(\'click\', \'.cat_select\', function () {
             //console.log(\'btn\');
             $(this).next().toggleClass(\'d-none\');
             
-            var parent_form = $(this).parent(\'.cat-parent\');
-//            console.log(parent_form);
+            var parent_form = $(this).parent();
+            //console.log(parent_form);
             var input_btn = $(this);
             
             $(document).on(\'click\', \'.cat-widget-li\', function () {
@@ -650,17 +624,19 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                         type: "get",
                         success: function (t) {
                             $(\'.category-widget-list\').html(t);
+//                            parent_form.children(\'.category-widget-list\').html(t);
                         }
                     });
                 }
                 else {
-//                    console.log(input_btn);
-                    parent_form.children(\'.category_id\').val(id);
+                    var inputHidden = parent_form.find(\'.category_id\');
+                    console.log(inputHidden);
+                    inputHidden.val(id);
     
                     input_btn.val(title);
                     input_btn.next().addClass(\'d-none\');
                 }
-        });
+            });
         });
                 
 //        $(document).on(\'click\', \'.cat-widget-li\', function () {
