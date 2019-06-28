@@ -30,7 +30,7 @@ use yii\helpers\Url;
             <!--                    </div>-->
             <!--                </div>-->
 
-            <div class="widgetform_make px-3 float-md-left d-inline-block border-top border-right border-bottom position-relative">
+            <div class="widgetform_make mb-2 mb-md-0 px-3 float-md-left d-inline-block border-top border-right border-bottom position-relative">
                 <select class="form-control vendor_select" name="vendor">
                     <option disabled selected>Select Car</option>
                     <!--                        --><?//= Dropdown::widget(); ?>
@@ -39,7 +39,7 @@ use yii\helpers\Url;
                     <?php } ?>
                 </select>
             </div>
-            <div class="widgetform_model px-3 float-md-left d-inline-block border-top border-right border-bottom position-relative">
+            <div class="widgetform_model mb-2 mb-md-0 px-3 float-md-left d-inline-block border-top border-right border-bottom position-relative">
                 <select class="form-control car_items" name="car">
                     <option disabled selected>Select Model</option>
 
@@ -51,7 +51,7 @@ use yii\helpers\Url;
 
                 </select>
             </div>
-            <div class="widgetform_generation px-3 float-md-left d-inline-block border-top border-right border-bottom position-relative">
+            <div class="widgetform_generation mb-2 mb-md-0 px-3 float-md-left d-inline-block border-top border-right border-bottom position-relative">
                 <select class="form-control car_modifications" name="modification">
                     <option disabled selected>Select Generation</option>
 
@@ -64,7 +64,7 @@ use yii\helpers\Url;
                     <? } ?>
                 </select>
             </div>
-            <div class="widgetform_year px-3 float-md-left d-inline-block border-top border-right border-bottom position-relative">
+            <div class="widgetform_year mb-3 mb-md-0 px-3 float-md-left d-inline-block border-top border-right border-bottom position-relative">
                 <select class="form-control car_years" name="year_name">
                     <option disabled selected>Year</option>
                 </select>
