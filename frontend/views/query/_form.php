@@ -15,7 +15,7 @@ $model->category_id = $category->id;
 if (!empty($model->car_id)) {
     $car = Cars::findOne(['id' => $model->car_id]);
 
-    $car_name = $car->vendor . ' ' . $car->car . ' ' . $car->modification . ' ' . $car->year;
+    $car_name = $car->vendor . '  ' . $car->car . '  ' . $car->modification . '  ' . $car->year;
     echo $car_name;
     if (!empty(Yii::$app->request->get('vendor'))) {
         $vendor_name = Yii::$app->request->get('vendor');
@@ -47,7 +47,7 @@ if (!empty($model->car_id)) {
 
     $car_id = $car->id;
 
-    $car_name = $vendor_name . ' ' . $model_name . ' ' . $modification_name . ' ' . $year_name;
+    $car_name = $vendor_name . '  ' . $model_name . '  ' . $modification_name . '  ' . $year_name;
 //print_r($car_name);
 }
 
@@ -311,28 +311,33 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="form-group cat-parent">
-                            <label>Category</label>
-                            <input class="form-control category_id" type="hidden" name="Query[0][category_id]" value="">
-                            <input class="form-control cat_select bg-gray" type="button" value="Select category">
-                            <div class="position-absolute select_category d-none">
-                                <?php if (!empty($cats)) { ?>
-                                    <ul class="list-unstyled category-widget-list bg-white">
-                                        <?php foreach ($cats as $cat) { ?>
-                                            <li data-id="<?= $cat->id ?>"
-                                                data-childs="<?= (!empty($cat->categories)) ? $cat->id : '' ?>"
-                                                data-title="<?= $cat->translate->title ?>"
-                                                class="cat-widget-li">
-                                                <?= $cat->translate->title ?></li>
-                                        <?php } ?>
-                                    </ul>
-                                <?php } ?>
-                                <input type="text" name="category" id="category_id" value=""
-                                       style="visibility: hidden;"/>
-                                <?php if (!empty($prod_id = Yii::$app->request->get('id'))) { ?>
-                                    <input type="hidden" name="id" value="<? //= $prod_id ?>"/>
-                                <?php } ?>
-                            </div>
+<!--                        <div class="form-group cat-parent">-->
+<!--                            <label>Category</label>-->
+<!--                            <input class="form-control category_id" type="hidden" name="Query[0][category_id]" value="">-->
+<!--                            <input class="form-control cat_select bg-gray" type="button" value="Select category">-->
+<!--                            <div class="position-absolute select_category d-none">-->
+<!--                                --><?php //if (!empty($cats)) { ?>
+<!--                                    <ul class="list-unstyled category-widget-list bg-white">-->
+<!--                                        --><?php //foreach ($cats as $cat) { ?>
+<!--                                            <li data-id="--><?//= $cat->id ?><!--"-->
+<!--                                                data-childs="--><?//= (!empty($cat->categories)) ? $cat->id : '' ?><!--"-->
+<!--                                                data-title="--><?//= $cat->translate->title ?><!--"-->
+<!--                                                class="cat-widget-li">-->
+<!--                                                --><?//= $cat->translate->title ?><!--</li>-->
+<!--                                        --><?php //} ?>
+<!--                                    </ul>-->
+<!--                                --><?php //} ?>
+<!--                                <input type="text" name="category" id="category_id" value=""-->
+<!--                                       style="visibility: hidden;"/>-->
+<!--                                --><?php //if (!empty($prod_id = Yii::$app->request->get('id'))) { ?>
+<!--                                    <input type="hidden" name="id" value="--><?// //= $prod_id ?><!--"/>-->
+<!--                                --><?php //} ?>
+<!--                            </div>-->
+<!--                        </div>-->
+
+                        <div class="form-group">
+                            <label>Photo</label>
+                            <input class="" name="Query[0][image]" type="file">
                         </div>
                     </div>
                 </div>
@@ -344,9 +349,9 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                 
                 <div class="row mt-2">
                     <div class="col-md-4">
-                        <div class="form-group">
-                            <input class="" name="Query[0][image]" type="file">
-                        </div>
+<!--                        <div class="form-group">-->
+<!--                            <input class="" name="Query[0][image]" type="file">-->
+<!--                        </div>-->
 <!--                        <div class="form-group">-->
 <!--                            --><?php
 //                            echo FileInput::widget([
@@ -387,26 +392,31 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="form-group cat-parent">
-                            <label>Category</label>
-                            <input class="form-control category_id" type="hidden" value="">
-                            <input class="form-control cat_select bg-grey" type="button" value="Select category">
-                            <div class="position-absolute select_category d-none ">
-                                <?php if (!empty($cats)) { ?>
-                                    <ul class="list-unstyled category-widget-list bg-white">
-                                        <?php foreach ($cats as $cat) { ?>
-                                            <li data-id="<?= $cat->id ?>"
-                                                data-childs="<?= (!empty($cat->categories)) ? $cat->id : '' ?>"
-                                                data-title="<?= $cat->translate->title ?>"
-                                                class="cat-widget-li">
-                                                <?= $cat->translate->title ?></li>
-                                        <?php } ?>
-                                    </ul>
-                                <?php } ?>
-                                <?php if (!empty($prod_id = Yii::$app->request->get('id'))) { ?>
-                                    <input type="hidden" name="id" value="<? //= $prod_id ?>"/>
-                                <?php } ?>
-                            </div>
+<!--                        <div class="form-group cat-parent">-->
+<!--                            <label>Category</label>-->
+<!--                            <input class="form-control category_id" type="hidden" value="">-->
+<!--                            <input class="form-control cat_select bg-grey" type="button" value="Select category">-->
+<!--                            <div class="position-absolute select_category d-none ">-->
+<!--                                --><?php //if (!empty($cats)) { ?>
+<!--                                    <ul class="list-unstyled category-widget-list bg-white">-->
+<!--                                        --><?php //foreach ($cats as $cat) { ?>
+<!--                                            <li data-id="--><?//= $cat->id ?><!--"-->
+<!--                                                data-childs="--><?//= (!empty($cat->categories)) ? $cat->id : '' ?><!--"-->
+<!--                                                data-title="--><?//= $cat->translate->title ?><!--"-->
+<!--                                                class="cat-widget-li">-->
+<!--                                                --><?//= $cat->translate->title ?><!--</li>-->
+<!--                                        --><?php //} ?>
+<!--                                    </ul>-->
+<!--                                --><?php //} ?>
+<!--                                --><?php //if (!empty($prod_id = Yii::$app->request->get('id'))) { ?>
+<!--                                    <input type="hidden" name="id" value="--><?// //= $prod_id ?><!--"/>-->
+<!--                                --><?php //} ?>
+<!--                            </div>-->
+<!--                        </div>-->
+
+                        <div class="form-group">
+                            <label>Photo</label>
+                            <input class="query_image" type="file">
                         </div>
                     </div>
                 </div>
@@ -418,9 +428,9 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
 
                 <div class="row mt-2">
                     <div class="col-md-3">
-                        <div class="form-group">
-                            <input class="query_image" type="file">
-                        </div>
+<!--                        <div class="form-group">-->
+<!--                            <input class="query_image" type="file">-->
+<!--                        </div>-->
                     </div>
                 </div>
             </div>
@@ -432,26 +442,25 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
         </div>
         <h3 class="pt-5">Contacts</h3>
         <div class="row">
-
             <div class="col-md-4">
                 <?//= $form->field($model, 'name')->textInput(['value' => Yii::$app->user->identity->username ? Yii::$app->user->identity->username : $model->name, 'maxlength' => true]) ?>
                 <div class="form-group">
                     <label>Name</label>
-                    <input class="form-control" name="QueryData[name]" value="<?= Yii::$app->user->identity->username ? Yii::$app->user->identity->username : $model->name ?>">
+                    <input class="form-control" name="QueryData[name]" value="<?= Yii::$app->user->identity->username ? Yii::$app->user->identity->username : $model->name ?>" required>
                 </div>
             </div>
             <div class="col-md-4">
                 <?//= $form->field($model, 'phone')->textInput(['value' => Yii::$app->user->identity->phone ? Yii::$app->user->identity->phone : $model->phone, 'maxlength' => true]) ?>
                 <div class="form-group">
                     <label>Phone</label>
-                    <input class="form-control" name="QueryData[phone]" value="<?= Yii::$app->user->identity->phone ? Yii::$app->user->identity->phone : $model->phone ?>">
+                    <input class="form-control" name="QueryData[phone]" value="<?= Yii::$app->user->identity->phone ? Yii::$app->user->identity->phone : $model->phone ?>" required>
                 </div>
             </div>
             <div class="col-md-4">
                 <?//= $form->field($model, 'email')->input('email') ?>
                 <div class="form-group">
                     <label>E-mail</label>
-                    <input class="form-control" name="QueryData[email]" type="email">
+                    <input class="form-control" name="QueryData[email]" type="email" required>
                 </div>
             </div>
 
