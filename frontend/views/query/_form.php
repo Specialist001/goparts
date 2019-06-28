@@ -248,6 +248,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                 <div class="form-group">
                     <label>Fuel Type</label>
                     <select class="form-control" name="QueryData[fueltype]">
+                        <option disabled selected>Select Fuel Type</option>
                         <?php foreach ($fuel_array as $key => $fuel) { ?>
                             <option value="<?= $key ?>"><?= $fuel ?></option>
                         <?php } ?>
@@ -256,29 +257,32 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label>Engine Type</label>
-                    <select class="form-control" name="QueryData[engine]">
-                        <?php foreach ($engines_array as $key => $engine) { ?>
-                            <option value="<?= $key ?>"><?= $engine ?></option>
-                        <?php } ?>
-                    </select>
+                    <label>Engine CC</label>
+                    <input placeholder="" class="form-control" name="QueryData[engine]" type="text">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label>Transmission</label>
                     <select class="form-control" name="QueryData[transmission]">
+                        <option disabled selected>Select Transmission</option>
                         <?php foreach ($transmissions_array as $key => $transmissions) { ?>
                             <option value="<?= $key ?>"><?= $transmissions ?></option>
                         <?php } ?>
                     </select>
+
                 </div>
             </div>
             <div class="col-md-3">
                 <? //= $form->field($model, 'drivetype')->textInput(['maxlength' => true]) ?>
                 <div class="form-group">
                     <label>Drive Type</label>
-                    <input class="form-control" name="QueryData[drivetype]" type="text">
+                    <select class="form-control" name="QueryData[drivetype]">
+                        <option disabled selected>Select Drive Type</option>
+                        <?php foreach ($drive_array as $key => $drive) { ?>
+                            <option value="<?= $key ?>"><?= $drive ?></option>
+                        <?php } ?>
+                    </select>
                 </div>
             </div>
         </div>

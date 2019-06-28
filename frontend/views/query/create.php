@@ -29,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'fuel_array' => $fuel_array,
             'transmissions_array' => $transmissions_array,
             'engines_array' => $engines_array,
+            'drive_array' => $drive_array,
         ]) ?>
 
     </div>
