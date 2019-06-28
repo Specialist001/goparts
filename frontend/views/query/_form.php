@@ -310,14 +310,15 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                     <div class="col-md-6 col-12">
                         <!--                        --><? //= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
                         <div class="row">
+<!--                            <div class="col-md-12">-->
+<!--                                <div class="form-group">-->
+<!--                                    <label>Title</label>-->
+                                    <input type="hidden" name="Query[0][title]" value="Part">
+<!--                                </div>-->
+<!--                            </div>-->
                             <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Title</label>
-                                    <input type="text" class="form-control" name="Query[0][title]" required>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <textarea rows="5" class="form-control" name="Query[0][description]"></textarea>
+                                <label>Part name/Description</label>
+                                <textarea rows="5" class="form-control" name="Query[0][description]" required></textarea>
                             </div>
                         </div>
 
@@ -361,9 +362,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
 
                     </div>
                 </div>
-                <div class="row">
 
-                </div>
 
                 <div class="row mt-2">
                     <div class="col-md-4">
@@ -405,13 +404,15 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                     <div class="col-md-6 col-12">
                         <!--                        --><? //= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
                         <div class="row">
+<!--                            <div class="col-md-12">-->
+<!--                                <div class="form-group">-->
+<!--                                    <label>Title</label>-->
+                                    <input type="hidden" class="form-control query_title" value="Part">
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            </div>-->
                             <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Title</label>
-                                    <input type="text" class="form-control query_title">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
+                                <label>Part name/Description</label>
                                 <textarea rows="5" class="form-control query_description"></textarea>
                             </div>
                         </div>
