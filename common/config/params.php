@@ -1,7 +1,7 @@
 <?php
 return [
-    'appName' => 'UAE parts',
-    'appShortName' => 'UAEP',
+    'appName' => 'Go Parts',
+    'appShortName' => 'GOP',
     'adminEmail' => 'darking-uz@yandex.com',
     'supportEmail' => 'support@havi2.com',
     'senderEmail' => 'noreply@example.com',
