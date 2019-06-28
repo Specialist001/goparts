@@ -31,6 +31,7 @@ class ProfileForm extends Model
     public $about;
     public $location;
     public $avatar;
+    public $img;
     public $legal_info;
     public $legal_reg_certificate;
     public $legal_address;
@@ -69,7 +70,7 @@ class ProfileForm extends Model
             [['password'], 'string', 'min' => 6],
             ['passwordconfirm', 'compare', 'compareAttribute'=>'password'],
 
-            [['first_name', 'middle_name', 'last_name', 'site', 'about', 'location', 'phone', 'legal_info', 'legal_reg_certificate', 'legal_address', 'legal_bank_account', 'legal_vat_number',], 'string']
+            [['first_name', 'middle_name', 'last_name', 'site', 'about', 'location', 'phone', 'avatar', 'legal_info', 'legal_reg_certificate', 'legal_address', 'legal_bank_account', 'legal_vat_number',], 'string']
         ];
     }
 
@@ -99,19 +100,19 @@ class ProfileForm extends Model
             return null;
         }
 
-        $avatar = $this->uploadProfilePicture();
+        $image = $this->uploadProfilePicture();
 
 
         $user = User::findOne(Yii::$app->user->id);
         $root = realpath(dirname(__FILE__).'/../../');
 
         $oldFile = $user->avatar;
-        if($avatar !== false) {
-            if($avatar->saveAs($root.'/uploads/users/'.$this->avatar)) {
+        if($image !== false) {
+            if($image->saveAs($root.'/uploads/users/'.$this->avatar)) {
                 $resizer = new SimpleImage();
                 $resizer->load($root.'/uploads/users/'.$this->avatar);
                 $resizer->resize(200, 200);
-                $image_name = uniqid().'.'.$avatar->extension;
+                $image_name = uniqid().'.'.$image->extension;
                 $resizer->save($root.'/uploads/users/'.$image_name);
                 if(is_file($root.'/uploads/users/'.$this->avatar) && file_exists($root.'/uploads/users/'.$this->avatar)) {
                     unlink($root.'/uploads/users/'.$this->avatar);
@@ -126,7 +127,7 @@ class ProfileForm extends Model
         $user->username = $this->username;
         $user->phone = $this->phone ? $this->phone : $user->phone;
         $user->email = $this->email ? $this->email : $user->email;
-        $user->avatar = $this->avatar ? $this->avatar : $user->avatar;
+//        $user->avatar = $this->avatar ? $this->avatar : $user->avatar;
 //        $user->role = $this->role ? $this->role : 0;
 //        $user->type = $this->type ? $this->type : 0;
 //        $user->birth_date = $this->birth_date ? $this->birth_date : null;
@@ -157,22 +158,22 @@ class ProfileForm extends Model
         // get the uploaded file instance. for multiple file uploads
         // the following data will return an array (you may need to use
         // getInstances method)
-        $avatar = $this->avatar;
+        $image = $this->img;
 
         // if no avatar was uploaded abort the upload
-        if (empty($avatar)) {
+        if (empty($image)) {
             return false;
         }
 
         // store the source file name
-        //$this->filename = $avatar->name;
-        $avatarName = (explode(".", $avatar->name));
-        $ext = end($avatarName);
+        //$this->filename = $image->name;
+        $imageName = (explode(".", $image->name));
+        $ext = end($imageName);
 
         // generate a unique file name
         $this->avatar = uniqid().".{$ext}";
 
         // the uploaded profile picture instance
-        return $avatar;
+        return $image;
     }
 }

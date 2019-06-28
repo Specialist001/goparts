@@ -2,6 +2,7 @@
 namespace backend\controllers;
 
 use common\models\Query;
+use common\models\SellerQuery;
 use common\models\StoreCategory;
 use common\models\StoreOrder;
 use common\models\StoreProduct;
@@ -84,6 +85,11 @@ class SiteController extends Controller
         $latest['queries'] = $query->orderBy('id DESC')->limit(10)->all();
         $queries = $query->all();
         $counter['query_count'] = count($queries);
+
+        $request = SellerQuery::find();
+        $latest['requests'] = $request->orderBy('id DESC')->limit(10)->all();
+        $requests = $request->all();
+        $counter['request_count'] = count($requests);
 
         return $this->render('index', [
             'counter' => $counter,

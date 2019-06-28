@@ -137,12 +137,12 @@ class QueryController extends Controller
 
             $parts_array = [];
 
-            if (Yii::$app->request->post()) {
+//            echo '<pre>';
+//            print_r(Yii::$app->request->post());
+//            echo '</pre>';
+//            exit;
 
-//                echo '<pre>';
-//                var_dump($query_part);
-//                echo '</pre>';
-//                exit;
+            if (Yii::$app->request->post()) {
 
 
                 foreach ($query_part as $key => $part) {
@@ -152,12 +152,15 @@ class QueryController extends Controller
                     $model->car = $query_data['car'];
                     $model->modification = $query_data['modification'];
                     $model->year = $query_data['year'];
+                    $model->fueltype = $query_data['fueltype'];
+                    $model->transmission = $query_data['transmission'];
+                    $model->engine = $query_data['engine'];
+                    $model->drivetype = $query_data['drivetype'];
 
                     $model->title = $part['title'];
                     $model->category_id = $part['category_id'];
-                    $model->fueltype = $part['fueltype'];
-                    $model->engine = $part['engine'];
-                    $model->drivetype = $part['drivetype'];
+                    $model->description = $part['description'];
+
 
                     $model->user_id = Yii::$app->user->getId() ? Yii::$app->user->getId() : null;
 
@@ -187,7 +190,8 @@ class QueryController extends Controller
 
                     $model->save();
 
-                    $parts_array[$key] += [$model];
+
+//                    $parts_array[$key] += [$model];
                 }
 
 

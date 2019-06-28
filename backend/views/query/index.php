@@ -34,14 +34,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'email:email',
 //            'car_id',
             'vendor',
-            [
-                'attribute' => 'category_id',
-                'options' => ['style' => 'width:80px'],
-                'label' => 'Category',
-                'value' => function($model) {
-                    return $model->category->translate->title;
-                }
-            ],
+            'title',
+//            [
+//                'attribute' => 'category_id',
+//                'options' => ['style' => 'width:80px'],
+//                'label' => 'Category',
+//                'value' => function($model) {
+//                    return $model->category->translate->title;
+//                }
+//            ],
             //'year',
             //'modification',
             //'fueltype',

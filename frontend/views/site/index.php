@@ -1,15 +1,16 @@
 <?php
-use frontend\widgets\WCarSearch;
+//use frontend\widgets\WCarSearch;
+
 use yii\helpers\Url;
+use frontend\widgets\WQuery;
 
 /* @var $this yii\web\View */
-
 $this->title = Yii::$app->params['appName'];
 
 
 ?>
 
-<?//= WCarSearch::widget()?>
+<?= WQuery::widget()?>
 
 <section class="slider">
     <!-- Set up your HTML -->

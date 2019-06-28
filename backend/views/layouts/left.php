@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Query;
+use common\models\SellerQuery;
 use mdm\admin\components\Helper;
 use yii\helpers\Url;
 
@@ -15,6 +16,34 @@ foreach ($queries as $query) {
 }
 $counter['all_queries'] = $all_queries;
 $counter['new_queries'] = $new_queries;
+
+$requests = SellerQuery::find()->all();
+$new_requests = 0;
+$moderated_requests = 0;
+$published_requests = 0;
+$purchased_requests = 0;
+$all_requests = 0;
+foreach ($requests as $request) {
+    $all_requests++;
+    if ($request->status == 0) {
+        $new_requests++;
+    }
+    elseif ($request->status == 1) {
+        $moderated_requests++;
+    }
+    elseif ($request->status == 2) {
+        $published_requests++;
+    }
+    elseif ($request->status == 3) {
+        $purchased_requests++;
+    }
+}
+$counter['all_requests'] = $all_requests;
+$counter['new_requests'] = $new_requests;
+$counter['moderated_requests'] = $moderated_requests;
+$counter['published_requests'] = $published_requests;
+$counter['purchased_requests'] = $purchased_requests;
+
 
 $orders = \common\models\StoreOrder::find()->all();
 $new_orders = 0;
@@ -88,6 +117,27 @@ $counter['new_orders'] = $new_orders;
                             </small>
                             <small class="label pull-right bg-yellow">
                                 <?= $counter['new_queries'] ?>
+                            </small>
+                        </span>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="<?= Url::to(['/seller-query'])?>"><i class="la la-edit"></i>
+                        <span>Requests</span>
+                        <span class="pull-right-container">
+                            <?php if ($counter['purchased_requests']!=0) { ?>
+                            <small class="label pull-right bg-green">
+                                <?= $counter['purchased_requests'] ?>
+                            </small>
+                            <?php } ?>
+                            <small class="label pull-right bg-primary">
+                                <?= $counter['published_requests'] ?>
+                            </small>
+                            <small class="label pull-right bg-aqua">
+                                <?= $counter['moderated_requests'] ?>
+                            </small>
+                            <small class="label pull-right bg-yellow">
+                                <?= $counter['new_requests'] ?>
                             </small>
                         </span>
                     </a>

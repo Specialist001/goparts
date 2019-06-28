@@ -50,6 +50,69 @@ class QueryController extends \yii\web\Controller
         return $this->goBack();
     }
 
+    public function actionGetCar($vendor = null, $car = null, $modification = null, $year = null)
+    {
+        if ($vendor) {
+            if ($car) {
+                if($modification) {
+                    if ($year) {
+                        $cars = Cars::find()
+                            ->where(['vendor'=>$vendor, 'car'=>$car, 'modification'=>$modification,'year'=>$year])->one();
+                        $car_id = $cars->id;
+
+                        return $this->asJson(['car_id'=>$car_id]);
+                    } else {
+                        $cars = Cars::find()->where(['vendor' => $vendor, 'car' => $car, 'modification' => $modification])->orderBy(['year'=>SORT_ASC])->all();
+                        $cars_array = [];
+
+                        if (count($cars)) {
+                            foreach ($cars as $key => $car) {
+                                $cars_array[$car['year']] = $car['year'];
+                            }
+                        }
+
+                        return $this->asJson(['year'=>$cars_array]);
+                    }
+                } else {
+                    $cars = Cars::find()->where(['vendor' => $vendor, 'car' => $car])->orderBy(['modification'=>SORT_ASC])->all();
+                    $cars_array = [];
+
+                    if (count($cars)) {
+                        foreach ($cars as $key => $car) {
+                            $cars_array[$car['modification']] = $car['modification'];
+                        }
+                    }
+
+                    return $this->asJson(['modification'=>$cars_array]);
+                }
+            } else {
+                $cars = Cars::find()->where(['vendor' => $vendor])->orderBy(['car'=>SORT_ASC])->all();
+                $cars_array = [];
+
+                if (count($cars)) {
+                    foreach ($cars as $key => $car) {
+                        $cars_array[$car['car']] = $car['car'];
+                    }
+                }
+
+                return $this->asJson(['car'=>$cars_array]);
+            }
+
+        } else {
+            $cars = Cars::find()->all();
+
+            $vendor_array = [];
+
+            if (count($cars)) {
+                foreach ($cars as $key => $car) {
+                    $vendor_array[$car['vendor']] = $car['vendor'];
+                }
+            }
+
+            return $this->asJson(['vendor'=>$vendor_array]);
+        }
+    }
+
     public function actionCreate()
     {
         if (Yii::$app->user->identity->role == User::ROLE_BUYER && Yii::$app->user->identity->status == User::STATUS_ACTIVE || Yii::$app->user->isGuest) {
@@ -89,12 +152,15 @@ class QueryController extends \yii\web\Controller
                     $model->car = $query_data['car'];
                     $model->modification = $query_data['modification'];
                     $model->year = $query_data['year'];
+                    $model->transmission = $query_data['transmission'];
+                    $model->fueltype = $query_data['fueltype'];
+                    $model->engine = $query_data['engine'];
+                    $model->drivetype = $query_data['drivetype'];
 
                     $model->title = $part['title'];
+                    $model->description = $part['description'];
                     $model->category_id = $part['category_id'];
-                    $model->fueltype = $part['fueltype'];
-                    $model->engine = $part['engine'];
-                    $model->drivetype = $part['drivetype'];
+
 
                     $model->user_id = Yii::$app->user->getId() ? Yii::$app->user->getId() : null;
 

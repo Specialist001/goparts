@@ -14,6 +14,7 @@ use yii\behaviors\TimestampBehavior;
  * @property int $category_id
  * @property string $vendor
  * @property string $title
+ * @property string $description
  * @property string $car
  * @property string $year
  * @property string $modification

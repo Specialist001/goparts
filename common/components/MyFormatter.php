@@ -109,6 +109,8 @@ class MyFormatter extends Formatter{
     public function asSellerQuery($value)
     {
         if ($value == 1) return $this->sellerQueryFormat[1];
+        if ($value == 2) return $this->sellerQueryFormat[2];
+        if ($value == 3) return $this->sellerQueryFormat[3];
         return $this->sellerQueryFormat[0];
     }
     public function asPaid($value)
@@ -211,9 +213,10 @@ class MyFormatter extends Formatter{
         }
         if ($this->sellerQueryFormat === null) {
             $this->sellerQueryFormat = [
-                '<span class="text-warning">'.' Waited'.'</span>',
-                '<span class="text-info">'.' Published'.'</span>',
-                '<span class="text-success">'.' Purchased'.'</span>',
+                '<span class="text-warning">'.'<i class="la la-clock-o"></i> Waited'.'</span>',
+                '<span class="text-aqua">'.'<i class="la la-eye"></i> Moderate'.'</span>',
+                '<span class="text-info">'.'<i class="la la-bullhorn"></i> Published'.'</span>',
+                '<span class="text-success">'.'<i class="la la-cart-arrow-down"></i> Purchased'.'</span>',
             ];
         }
         if ($this->paidFormat === null) {

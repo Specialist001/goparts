@@ -28,7 +28,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'vendor') ?>
 
-    <?php // echo $form->field($model, 'car') ?>
+    <?= $form->field($model, 'title') ?>
 
     <?php // echo $form->field($model, 'year') ?>
 

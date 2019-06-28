@@ -78,7 +78,7 @@ class ProfileController extends \yii\web\Controller
         $model->phone = Yii::$app->request->post('phone', Yii::$app->user->identity->phone);
 
 //        $model->push = Yii::$app->request->post('push', 0);
-        $model->avatar = UploadedFile::getInstanceByName('avatar');
+        $model->img = UploadedFile::getInstanceByName('avatar');
 
 
         if (!$model->validate()) {

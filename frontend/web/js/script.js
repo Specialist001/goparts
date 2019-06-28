@@ -367,6 +367,7 @@ $(document).ready(function () {
         newPart.find('.query_engine').attr('name', 'Query['+part_counter+'][engine]');
         newPart.find('.query_transmission').attr('name', 'Query['+part_counter+'][transmission]');
         newPart.find('.query_drivetype').attr('name', 'Query['+part_counter+'][drivetype]');
+        newPart.find('.query_description').attr('name', 'Query['+part_counter+'][description]');
         newPart.find('.query_image').attr('name', 'Query['+part_counter+'][image]');
 
         return false;
@@ -380,6 +381,10 @@ $(document).ready(function () {
     //     console.log('btn');
     //      $(this).next().toggleClass('d-none');
     // });
+
+    $("#file").click(function(){
+        $("#image").click();
+    });
 
 });
 
