@@ -27,14 +27,41 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-//            'user_id',
-            'name',
+//            'id',
+            [
+                'attribute' => 'id',
+                'headerOptions' => ['style' => 'width:80px'],
+            ],
+            'user_id',
+//            'name',
+            [
+                'attribute' => 'name',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return '<a href="'.\yii\helpers\Url::to(['query/view', 'id'=>$model->id]).'">'.$model->name.'</a>';
+                }
+            ],
             'phone',
             'email:email',
+//            [
+//
+//            ],
+
 //            'car_id',
-            'vendor',
-            'title',
+//            'vendor',
+            [
+                'attribute' => 'vendor',
+                'value' => function ($model) {
+                    return $model->vendor.' '.$model->car.' '.$model->year;
+                }
+            ],
+//            'description',
+            [
+                'attribute' => 'description',
+                'value' => function ($model) {
+                    return \yii\helpers\StringHelper::truncate($model->description,'100');
+                }
+            ],
 //            [
 //                'attribute' => 'category_id',
 //                'options' => ['style' => 'width:80px'],
@@ -51,6 +78,13 @@ $this->params['breadcrumbs'][] = $this->title;
             //'drivetype',
 
             //'image',
+            [
+                'attribute'=>'image',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return $model->image ? '<img src="'.$model->image.'" class="img-responsive" alt="query_'.$model->id.'" style="width: 80px">' : null;
+                }
+            ],
             [
                 'attribute'=>'status',
                 'label' => 'Status',

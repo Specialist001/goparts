@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Page;
 use common\models\StoreCategory;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
@@ -267,6 +268,19 @@ class SiteController extends Controller
         return $this->render('cat-widget', [
             'cats' => $cats,
             'add' => $add
+        ]);
+    }
+
+    public function actionPage($id)
+    {
+//        Yii::$app->session->set('root_category', false);
+//        Yii::$app->session->set('page', false);
+        $page = Page::findOne(['status' => 1, 'slug' => $id]);
+//        print_r($page);
+        if (empty($page)) return $this->redirect(['site/error']);
+
+        return $this->render('page', [
+            'page' => $page,
         ]);
     }
 }

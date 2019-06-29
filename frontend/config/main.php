@@ -49,11 +49,13 @@ return [
             'rules' => [
                 'login' => 'site/login',
                 'signup' => 'site/signup',
+                'page/<id:.+>' => 'site/page',
                 'user/products' => 'product/index',
                 'user/product/create' => 'product/create',
                 'user/product/update' => 'product/update',
                 'user/requests' => 'seller-query',
                 'user/request/' => 'seller-query/view',
+                'user/orders' => 'order/index',
                 'reset-password' => 'site/request-password-reset',
             ],
         ],
