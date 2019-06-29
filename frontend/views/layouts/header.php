@@ -94,10 +94,10 @@ use rmrevin\yii\fontawesome\FA;
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right text-right mt-2" aria-labelledby="dropdown_login">
                             <li class="px-2">
-                                <a class="text-form-style_2" href="<?= Url::to(['login']) ?>"> Login</a>
+                                <a class="text-form-style_2" href="<?= Url::to(['/login']) ?>"> Login</a>
                             </li>
                             <li class="px-2">
-                                <a class="text-form-style_2" href="<?= Url::to(['signup']) ?>"> Signup</a>
+                                <a class="text-form-style_2" href="<?= Url::to(['/signup']) ?>"> Signup</a>
                             </li>
                         </ul>
                     </div>
