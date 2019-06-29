@@ -28,14 +28,21 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'parent_id',
-            'category_id',
-            'user_id',
-            'change_user_id',
+//            'parent_id',
+//            'category_id',
+//            'user_id',
+//            'change_user_id',
             //'slug',
-            //'status',
+            [
+                'label' => 'Title',
+                'value' => function ($model) {
+                    return $model->translate->title;
+                }
+            ],
+            'slug',
+            'status',
             //'is_protected',
-            //'order',
+            'order',
             //'created_at',
             //'updated_at',
 

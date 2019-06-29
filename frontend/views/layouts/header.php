@@ -9,9 +9,10 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use rmrevin\yii\fontawesome\FA;
 
+
+$top_pages = Page::find()->where(['status'=>1])->orderBy('order')->all();
 //print_r(Yii::$app->user->identity);exit;
 ?>
-
 
 <div class="topheader">
     <nav class="navbar navbar-expand-lg navbar-light topheader_navbar">
@@ -23,18 +24,26 @@ use rmrevin\yii\fontawesome\FA;
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto topheader_navbar_nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Terms and conditions</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Delivery and payment</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contacts</a>
-                    </li>
+                    <?php
+                        if (!empty($top_pages)) {
+                    foreach ($top_pages as $page) {?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= Url::to(['page', 'id'=>$page->slug]) ?>"><?= $page->translate->title?></a>
+                        </li>
+                    <?php } }?>
+
+<!--                    <li class="nav-item active">-->
+<!--                        <a class="nav-link" href="--><?//  ?><!--">About Us</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="#">Terms and conditions</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="#">Delivery and payment</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="#">Contacts</a>-->
+<!--                    </li>-->
                 </ul>
             </div>
             <div class="col">

@@ -92,7 +92,20 @@ $counter['new_orders'] = $new_orders;
 
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">Main Menu</li>
-                <li class="active"><a href="<?= Url::to(['/user'])?>"><i class="la la-user"></i> Users</a></li>
+<!--                <li class="active"><a href="--><?//= Url::to(['/user'])?><!--"><i class="la la-user"></i> Users</a></li>-->
+                <li class="treeview ">
+                    <a href="#">
+                        <i class="la la-user"></i><span> Users</span>
+                        <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="<?= Url::to(['/user']) ?>"><i class="la la-user"></i> All users</a></li>
+                        <li><a href="<?= Url::to(['/user','UserSearch[role]'=>1]) ?>"><i class="la la-shopping-cart"></i> Sellers</a></li>
+                        <li><a href="<?= Url::to(['/user','UserSearch[role]'=>0]) ?>"><i class="la la-cart-arrow-down"></i> Buyers</a></li>
+                    </ul>
+                </li>
                 <li class="treeview ">
                     <a href="#">
                         <i class="fa fa-universal-access"></i><span>RBAC</span>
@@ -188,6 +201,18 @@ $counter['new_orders'] = $new_orders;
                     <ul class="treeview-menu">
                         <li><a href="<?= Url::to(['/blog']) ?>"><i class="fa fa-list"></i> All Blogs</a></li>
                         <li><a href="<?= Url::to(['/blog/create']) ?>"><i class="fa fa-plus"></i> Create Blog</a></li>
+                    </ul>
+                </li>
+                    <li class="treeview ">
+                    <a href="#">
+                        <i class="la la-file-o"></i><span> Pages</span>
+                        <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="<?= Url::to(['/page']) ?>"><i class="fa fa-list"></i> All Pages</a></li>
+                        <li><a href="<?= Url::to(['/page/create']) ?>"><i class="fa fa-plus"></i> Create Page</a></li>
                     </ul>
                 </li>
                 <?php } ?>

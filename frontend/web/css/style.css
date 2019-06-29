@@ -564,7 +564,7 @@ label.toggle .toggle__text, label.toggle + a {
 }
 
 .slider1 {
-    padding: 30px 0 250px;
+    padding: 30px 0 200px;
 }
 
 .slider1_name {
@@ -585,7 +585,7 @@ label.toggle .toggle__text, label.toggle + a {
 .slider1_name p {
     font-size: 20px;
     color: #646464;
-    margin-top: 30px;
+    margin-top: 15px;
 }
 
 .slider1_name p span {
@@ -612,7 +612,7 @@ label.toggle .toggle__text, label.toggle + a {
 }
 
 .slider1_img {
-    width: 700px;
+    width: 540px;
     position: absolute;
     right: 150px;
     top: 20px;
@@ -721,6 +721,17 @@ label.toggle .toggle__text, label.toggle + a {
     font-size: 14px;
     margin-top: 20px;
     padding: 10px 35px;
+}
+
+.working_list > h3 {
+    font-size: 30px;
+    font-family: 'GothamProLight';
+    color: #000;
+}
+
+.working_list > h3 > span {
+    color: #fe0000;
+    font-family: 'GothamProBlack';
 }
 
 .topfooter {

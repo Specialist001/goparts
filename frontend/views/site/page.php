@@ -21,9 +21,9 @@ $this->registerMetaTag([
 <div class="container my-4">
     <div class="row">
         <div class="col-md-12">
-            <div class="page-header">
+            <h3 class="page-header text-center">
                 <strong><?= $this->title ?></strong>
-            </div>
+            </h3>
         </div>
         <div class="col-md-12">
             <div class="news_body">
