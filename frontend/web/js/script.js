@@ -458,5 +458,5 @@ if($(document).width() > 768) {
 }
 if($(document).width() < 768) {
     $('.product-photo .owl-carousel .owl-item a').removeAttr('data-fancybox');
-    console.log(this);
+    // console.log(this);
 }

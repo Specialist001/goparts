@@ -135,3 +135,15 @@ a.desc:after {
     border: 1px solid #dedede;
     cursor: pointer;
 }
+
+ul {
+    padding: 0;
+}
+li {
+    list-style: none;
+}
+ul#images li {
+    display: inline-block;
+    width: 100px;
+    cursor: pointer;
+}

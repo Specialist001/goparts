@@ -25,6 +25,7 @@ foreach ($seller_queries as $seller_query) {
 //print_r($seller_query_array);
 //echo '</pre>';
 //exit;
+//$this->registerCssFile('/admin/css/viewer/viewer.min.css');
 ?>
 <div class="query-view">
     <div class="container">
@@ -176,7 +177,22 @@ foreach ($seller_queries as $seller_query) {
 //                        'name',
 //                        'phone',
 //                        'email:email',
-                        'image',
+                        [
+                            'attribute'=>'image',
+                            'format' => 'raw',
+                            'value' => function ($model) {
+                                return $model->image ?
+                                '
+                                <ul id="images">
+                                    <li>
+                                    <img src="'.$model->image.'" class="img-responsive" alt="query_'.$model->id.'">
+                                    </li>
+                                </ul>
+                                '
+                                    :
+                                    null;
+                            }
+                        ],
 //                        'status',
                         [
                             'attribute'=>'status',
@@ -287,3 +303,25 @@ foreach ($seller_queries as $seller_query) {
     });
 '); ?>
 
+<?php
+//$this->registerJsFile('/admin/js/viewer/viewer.js');
+//$this->registerJsFile('/admin/js/jquery-viewer/jquery-viewer.js');
+
+?>
+
+<?php $this->registerJs('
+    var $image = $(\'#image\');
+
+    $image.viewer({
+        inline: true,
+        viewed: function() {
+            $image.viewer(\'zoomTo\', 1);
+        }
+    });
+    
+    // Get the Viewer.js instance after initialized
+    var viewer = $image.data(\'viewer\');
+
+    // View a list of images
+    $(\'#images\').viewer();
+'); ?>

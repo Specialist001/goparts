@@ -40,13 +40,15 @@ use rmrevin\yii\fontawesome\FA;
             <div class="col">
                 <div class="float-right">
                     <div class="header_city_icon">
-                        <img src="/svg/loaction.svg" class="p-0" alt="" style="margin-top: 2px">
+                        <img src="/svg/loaction.svg" class="p-0" alt="" style="margin-top: 6px">
                     </div>
                     <div class="header_city_text float-left pt-1">
                         <span class="mb-0 pt-1 d-none">Your City</span>
-                        <h4><?php $city = City::findOne(['default' => 1]);
+                        <h4 class="pt-1">
+                            <?php $city = City::findOne(['default' => 1]);
                             echo $city->name;
-                            ?></h4>
+                            ?>
+                        </h4>
                     </div>
                 </div>
             </div>
@@ -90,7 +92,7 @@ use rmrevin\yii\fontawesome\FA;
                     <div class="dropdown">
                         <a id="dropdown_login" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             <img src="/svg/Login.svg" class="topheader_login_img" alt="">
-                            <span class="topheader_login_text">Login</span>
+                            <span class="topheader_login_text d-none d-md-inline-block">Login</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right text-right mt-2" aria-labelledby="dropdown_login">
                             <li class="px-2">
@@ -165,17 +167,17 @@ use rmrevin\yii\fontawesome\FA;
                 </div>
             </div>
         </div>
-        <div class="row m-auto py-2">
-            <div class="col text-center">
-                <div class="header_phone_text">
-                    <?php if (Yii::$app->controller->route != 'query/create') { ?>
-                        <?php if (Yii::$app->user->identity->role == User::ROLE_BUYER || Yii::$app->user->isGuest) { ?>
-                            <a href="<?= Url::to(['query/create']) ?>">Leave a request</a>
-                        <?php } ?>
-                    <?php } ?>
-                </div>
-            </div>
-        </div>
+<!--        <div class="row m-auto py-2">-->
+<!--            <div class="col text-center">-->
+<!--                <div class="header_phone_text">-->
+<!--                    --><?php //if (Yii::$app->controller->route != 'query/create') { ?>
+<!--                        --><?php //if (Yii::$app->user->identity->role == User::ROLE_BUYER || Yii::$app->user->isGuest) { ?>
+<!--                            <a href="--><?//= Url::to(['query/create']) ?><!--">Leave a request</a>-->
+<!--                        --><?php //} ?>
+<!--                    --><?php //} ?>
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 </div>
 

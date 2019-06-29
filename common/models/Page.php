@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "pages".
@@ -43,7 +44,7 @@ class Page extends \yii\db\ActiveRecord
     {
         return [
             [['parent_id', 'category_id', 'user_id', 'change_user_id', 'status', 'is_protected', 'order', 'created_at', 'updated_at'], 'integer'],
-            [['created_at', 'updated_at'], 'required'],
+//            [['created_at', 'updated_at'], 'required'],
             [['slug'], 'string', 'max' => 255],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
             [['change_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['change_user_id' => 'id']],
@@ -70,6 +71,20 @@ class Page extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
+    public static function find() {
+        return parent::find()->with('translate');
     }
 
     /**
@@ -118,5 +133,11 @@ class Page extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public function getTranslate() {
+        return ($this->hasOne(PageTranslation::className(), ['page_id' => 'id'])->where(['locale' => Language::getCurrent()->locale])->all())
+            ? $this->hasOne(PageTranslation::className(), ['page_id' => 'id'])->where(['locale' => Language::getCurrent()->locale])
+            : $this->hasOne(PageTranslation::className(), ['page_id' => 'id'])->where(['locale' => Language::getDefaultLang()->locale]);
     }
 }
