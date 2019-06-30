@@ -76,8 +76,8 @@ class SignupForm extends Model
 //            $role = $auth->getRole('user');
 //            $auth->assign($role, $user->id);
 
-            self::sendEmail($user);
-            self::sendEmailAdmin($user);
+//            self::sendEmail($user);
+//            self::sendEmailAdmin($user);
 
             return $user ;
         }
