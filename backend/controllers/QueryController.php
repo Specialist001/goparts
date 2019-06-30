@@ -65,7 +65,7 @@ class QueryController extends Controller
     {
         $model = $this->findModel($id);
 
-        $sellers = SellerCar::find()->where(['vendor_name'=>$model->vendor])->all();
+        $sellers = SellerCar::find()->where(['vendor_name'=>$model->vendor])->orWhere(['vendor_name'=>'All'])->all();
 
         return $this->render('view', [
             'model' => $model,

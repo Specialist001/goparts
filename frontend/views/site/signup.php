@@ -13,6 +13,7 @@ $this->title = 'Signup';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <h2 class="text-center mt-2">Sign Up</h2>
+<?php $form = ActiveForm::begin(['id' => 'form-signup', 'class'=>'customer-form']); ?>
 <div class="site-signup">
     <div class="register">
         <div class="container">
@@ -44,11 +45,14 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="row">
                 <div class="col-md-12 register_cont">
                     <h3>General <span>Information</span></h3>
-                    <?php $form = ActiveForm::begin(['id' => 'form-signup', 'class'=>'customer-form']); ?>
+
                         <div class="form-row customer_row">
                             <div class="form-group col-md-4 customer_group">
                                 <?= $form->field($model, 'legal_info')->textInput()->input('legal_info', ['placeholder' => "Name of Company"])->label('Name of Company') ?>
                             </div>
+<!--                            <div>-->
+<!--                                --><?//= $form->field($model, 'role')->hiddenInput() ?>
+<!--                            </div>-->
                             <div class="form-group col-md-4 customer_group">
                                 <?= $form->field($model, 'legal_address')->textInput()->input('legal_address', ['placeholder' => "Address"]) ?>
                             </div>
@@ -83,7 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </div>
                             </div>
                         </div>
-                    <?php ActiveForm::end(); ?>
+
                 </div>
             </div>
         </div>
@@ -126,7 +130,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <!--        </div>-->
 <!--    </div>-->
 </div>
-<script>
+<?php ActiveForm::end(); ?>
+    <script>
 
 </script>
 <?php //$this->registerJs('$("#signupform-role").change(function(){

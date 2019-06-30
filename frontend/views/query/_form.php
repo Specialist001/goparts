@@ -15,7 +15,7 @@ $model->category_id = $category->id;
 if (!empty($model->car_id)) {
     $car = Cars::findOne(['id' => $model->car_id]);
 
-    $car_name = $car->vendor . '  ' . $car->car . '  ' . $car->modification . '  ' . $car->year;
+    $car_name = $car->vendor . ' ' . $car->car . ' ' . $car->modification . ' ' . $car->year;
     echo $car_name;
     if (!empty(Yii::$app->request->get('vendor'))) {
         $vendor_name = Yii::$app->request->get('vendor');
@@ -47,7 +47,7 @@ if (!empty($model->car_id)) {
 
     $car_id = $car->id;
 
-    $car_name = $vendor_name . '  ' . $model_name . '  ' . $modification_name . '  ' . $year_name;
+    $car_name = $vendor_name . ' ' . $model_name . ' ' . $modification_name . ' ' . $year_name;
 //print_r($car_name);
 }
 
@@ -232,7 +232,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Car</label>
-                    <input class="form-control" type="text"
+                    <input class="form-control text-form-style_2" type="text"
                            value="<?= $car_name ?>" readonly>
                     <a href="<?= Url::current(['car_id' => '']) ?>"
                        onclick="if(!confirm('Expected form to save. Cancel?'))return false;">Choose another Car</a>
