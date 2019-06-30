@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Create Seller Query', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Clear Sort', ['/seller-query'], ['class' => 'btn btn-warning']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
@@ -36,14 +37,22 @@ $this->params['breadcrumbs'][] = $this->title;
                     return '<a href="'.\yii\helpers\Url::to(['query/view', 'id'=>$model->query_id]).'">'.$model->query_id.'</a>';
                 }
             ],
-            'seller_id',
-            'product_id',
+            [
+                'attribute' => 'seller_id',
+                'label' => 'Seller',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return $model->seller_id
+                        ? '<a href="'.\yii\helpers\Url::to(['user/view', 'id'=>$model->seller->id]).'">'.$model->seller->username.'</a>'
+                        : null;
+                }
+            ],
             [
                 'attribute' => 'product_id',
                 'format' => 'raw',
                 'value' => function ($model) {
                     return $model->product_id
-                        ? '<a href="'.\yii\helpers\Url::to(['store-product/view', 'id'=>$model->product_id]).'">'.$model->product_id.'</a>'
+                        ? '<a href="'.\yii\helpers\Url::to(['store-product/view', 'id'=>$model->product_id]).'">'.$model->product->translate->name.' ID:'.$model->product_id.'</a>'
                         : null;
                 }
             ],
