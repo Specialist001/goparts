@@ -79,7 +79,7 @@ class StoreTypeCar extends \yii\db\ActiveRecord
      */
     public function getStoreProductTypeOfCarValues()
     {
-        return $this->hasMany(StoreProductTypeOfCarValues::className(), ['type_car_id' => 'id']);
+        return $this->hasMany(StoreProductTypeOfCarValue::className(), ['type_car_id' => 'id']);
     }
 
     /**

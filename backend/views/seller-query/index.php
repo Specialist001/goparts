@@ -39,6 +39,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'seller_id',
             'product_id',
             [
+                'attribute' => 'product_id',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return $model->product_id
+                        ? '<a href="'.\yii\helpers\Url::to(['store-product/view', 'id'=>$model->product_id]).'">'.$model->product_id.'</a>'
+                        : null;
+                }
+            ],
+            [
                 'attribute' => 'status',
                 'format' =>'sellerQuery',
                 'filter' => ['0'=>'Waited','1'=>'Moderate','2'=>'Published','3'=>'Purchased']

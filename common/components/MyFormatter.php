@@ -155,9 +155,9 @@ class MyFormatter extends Formatter{
         }
         if ($this->productStatusFormat === null) {
             $this->productStatusFormat = [
-                '<span class="text-warning">'.FA::i('info').' Нет в наличии'.'</span>',
-                '<span class="text-success">'.FA::i('check').' Есть в наличии'.'</span>',
-                '<span class="text-danger">'.FA::i('remove').' Заблокирован'.'</span>'
+                '<span class="text-warning">'.FA::i('info').' Not available'.'</span>',
+                '<span class="text-success">'.FA::i('check').' Available'.'</span>',
+                '<span class="text-danger">'.FA::i('remove').' Blocked'.'</span>'
             ];
         }
         if ($this->activeFormat === null) {

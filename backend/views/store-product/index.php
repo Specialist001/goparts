@@ -30,8 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             [
                 'label' => 'Title',
+                'format' => 'raw',
                 'value' => function ($model) {
-                    return $model->translate->name;
+                    return '<a href="'. \yii\helpers\Url::to(['store-product/view','id'=>$model->id]).'">'. $model->translate->name.'</a>';;
                 }
             ],
 //            'type_id',
@@ -70,7 +71,12 @@ $this->params['breadcrumbs'][] = $this->title;
             //'image',
             //'average_price',
             'purchase_price',
-            'status',
+//            'status',
+            [
+                'attribute' => 'status',
+                'format' => 'productStatus',
+                'filter' => ['0'=>'Not available', '1'=>'Available', '-1'=>'Blocked'],
+            ],
             //'recommended_price',
             'order',
             //'external_id',
@@ -85,7 +91,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             //'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {delete}',
+            ],
         ],
     ]); ?>
 
