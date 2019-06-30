@@ -3,9 +3,9 @@ return [
     'appName' => 'Go Parts',
     'appShortName' => 'GOP',
     'adminEmail' => 'darking-uz@yandex.com',
-    'supportEmail' => 'support@havi2.com',
-    'senderEmail' => 'noreply@example.com',
-    'senderName' => 'Example.com mailer',
+    'supportEmail' => 'support@goparts.ae',
+    'senderEmail' => 'noreply@goparts.ae',
+    'senderName' => 'GO parts',
     'user.passwordResetTokenExpire' => 3600,
     'price' => [
         'decimals' => '0',
