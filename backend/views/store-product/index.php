@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Title',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return '<a href="'. \yii\helpers\Url::to(['store-product/view','id'=>$model->id]).'">'. $model->translate->name.'</a>';;
+                    return '<a href="'. \yii\helpers\Url::to(['store-product/view','id'=>$model->id]).'">'. $model->translate->name.' ID:'.$model->id.'</a>';;
                 }
             ],
 //            'type_id',

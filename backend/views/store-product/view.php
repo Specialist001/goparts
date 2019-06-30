@@ -67,6 +67,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
+//                'attribute' => 'title',
+                'label' => 'Product Description',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return '<strong>'.$model->translate->description.'</strong>';
+                }
+            ],
+            [
                 'attribute' => 'price',
                 'format' => 'raw',
                 'value' => function ($model) {
