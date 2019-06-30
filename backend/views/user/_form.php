@@ -51,7 +51,7 @@ use rmrevin\yii\fontawesome\FA;
             <?= $form->field($model, 'birth_date')->textInput(['type' => 'date']) ?>
         </div>
         <div class="col-md-3">
-            <?= $form->field($model, 'type')->dropDownList(['0' => 'Individual', '1' => 'Legal entity']) ?>
+            <?= $form->field($model, 'type')->dropDownList(['1' => 'Legal entity']) ?>
         </div>
         <div class="col-md-3">
             <?= $form->field($model, 'role')->dropDownList(['0' => 'Buyer', '1' => 'Seller']) ?>
@@ -103,6 +103,7 @@ use rmrevin\yii\fontawesome\FA;
             <label>Vendor 1</label>
             <select class="form-control" name="car_1">
                 <option value="0">No vendor</option>
+                <option value="All" <?= 'All' == $car_1->vendor_name ? 'selected':''?>>All vendors</option>
                 <?php foreach ($cars as $car) { ?>
                     <option value="<?= $car ?>" <?= $car == $car_1->vendor_name ? 'selected':''?> ><?= $car ?></option>
                 <?php } ?>
@@ -112,6 +113,7 @@ use rmrevin\yii\fontawesome\FA;
             <label>Vendor 2</label>
             <select class="form-control" name="car_2">
                 <option value="0">No vendor</option>
+                <option value="All" <?= 'All' == $car_2->vendor_name ? 'selected':''?> >All vendors</option>
                 <?php foreach ($cars as $car) { ?>
                     <option value="<?= $car ?>" <?= $car == $car_2->vendor_name ? 'selected':''?> ><?= $car ?></option>
                 <?php } ?>

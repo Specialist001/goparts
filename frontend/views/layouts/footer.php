@@ -98,10 +98,10 @@ use rmrevin\yii\fontawesome\FA;
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <p>© 2019  Services provided by <span>UAEparts</span></p>
+                <p>© 2019  Services provided by <span class="text-form-style_2">GO parts</span></p>
             </div>
             <div class="col-md-6">
-                <p class="footerbottom_right">Design and Development by QWERTY</p>
+                <p class="footerbottom_right">Design and Development by <a class="text-form-style_2" target="_blank" href="http://qwerty.uz">QWERTY</a> </p>
             </div>
         </div>
     </div>

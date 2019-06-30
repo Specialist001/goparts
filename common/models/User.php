@@ -17,6 +17,7 @@ use yii\web\IdentityInterface;
  * @property string $verification_token
  * @property string $email
  * @property string $phone
+ * @property integer $role
  * @property string $avatar
  * @property string $legal_info
  * @property string $legal_address
@@ -63,6 +64,9 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            ['role', 'default', 'value' => self::ROLE_BUYER],
+            ['role', 'in', 'range' => [self::ROLE_BUYER, self::ROLE_SELLER]],
+
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This login is already taken.', 'on' => 'admin'],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email is already taken.', 'on' => 'admin'],
             [['username', 'email'], 'required', 'on' => 'admin'],
