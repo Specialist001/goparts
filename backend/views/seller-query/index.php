@@ -28,7 +28,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+//            'id',
+            [
+                'attribute' => 'id',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return '<a href="'.\yii\helpers\Url::to(['seller-query/view', 'id'=>$model->id]).'">'.$model->id.'</a>';
+                }
+            ],
 //            'query_id',
             [
                 'attribute' => 'query_id',
