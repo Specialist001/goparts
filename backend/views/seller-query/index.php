@@ -36,14 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return '<a href="'.\yii\helpers\Url::to(['seller-query/view', 'id'=>$model->id]).'">'.$model->id.'</a>';
                 }
             ],
-//            'query_id',
-            [
-                'attribute' => 'query_id',
-                'format' => 'raw',
-                'value' => function ($model) {
-                    return '<a href="'.\yii\helpers\Url::to(['query/view', 'id'=>$model->query_id]).'">'.$model->query_id.'</a>';
-                }
-            ],
+
             [
                 'attribute' => 'seller_id',
                 'label' => 'Seller',
@@ -54,15 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         : null;
                 }
             ],
-            [
-                'attribute' => 'product_id',
-                'format' => 'raw',
-                'value' => function ($model) {
-                    return $model->product_id
-                        ? '<a href="'.\yii\helpers\Url::to(['store-product/view', 'id'=>$model->product_id]).'">'.$model->product->translate->name.' ID:'.$model->product_id.'</a>'
-                        : null;
-                }
-            ],
+            
             [
                 'attribute' => 'status',
                 'format' =>'sellerQuery',
