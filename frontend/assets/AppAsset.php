@@ -18,6 +18,7 @@ class AppAsset extends AssetBundle
         'css/select2.min.css',
         'css/jquery.fancybox.min.css',
         'css/checkbox.css',
+        'css/line-awesome.min.css',
         'css/site.css',
         'css/style.css',
     ];

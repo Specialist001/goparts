@@ -76,6 +76,7 @@ class Query extends \yii\db\ActiveRecord
             'user_id' => 'User ID',
             'car_id' => 'Car ID',
             'title' => 'Title',
+            'description' => 'Description',
             'category_id' => 'Category ID',
             'vendor' => 'Vendor',
             'car' => 'Car',

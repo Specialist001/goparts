@@ -6,6 +6,7 @@ use common\models\User;
 use Yii;
 use common\models\SellerQuery;
 use frontend\models\SellerQuerySearch;
+use yii\data\Pagination;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -41,9 +42,16 @@ class SellerQueryController extends Controller
                 $searchModel = new SellerQuerySearch();
                 $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+                $query = SellerQuery::find()->where([])->orderBy('`created_at` DESC');
+                $countQuery = clone $query;
+                $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 5]);
+                $seller_queries = $query->offset($pages->offset)->limit($pages->limit)->all();
+
                 return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'seller_queries'=>$seller_queries,
+                    'pages' => $pages
                 ]);
             }
         }

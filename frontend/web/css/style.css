@@ -2113,6 +2113,74 @@ li.lcm-title:hover {
     /*overflow-x: hidden;*/
 }
 
+.new_requests .new_request {
+    box-shadow: 0 5px 15px #00000010;
+}
+.new_requests .new_request:hover {
+    box-shadow: 0 5px 15px #00000020;
+}
+.new_requests .new_request ul {
+    min-height: 90px;
+}
+.request_imageboxes .col{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.request_imagebox {
+    border: 1px dashed #c1c1c1;
+    background: url("../img/no-image.jpg");
+    min-height: 70px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.request_imagebox i {
+    color: #c1c1c1;
+    padding: 20px 40px;
+    font-size: 3rem;
+}
+.my_price input {
+    background: #efefef;
+}
+.my_price input.readonly {
+    background: transparent;
+}
+ul.pagination {
+    float: left;
+    padding: 10px 8px;
+    border-radius: 30px;
+    box-shadow: 0 5px 4px #00000005;
+}
+ul.pagination li a,
+ul.pagination li.prev.disabled,
+ul.pagination li.next.disabled
+{
+    margin: 0 3px;
+    padding: 10px 15px;
+    border-radius: 50%;
+    color: #000;
+    border: 1px solid transparent;
+    display: inline-block;
+    min-width: 45px;
+    text-align: center;
+    transition: 0.2s;
+}
+ul.pagination li a:hover {
+    border: 1px solid #fe0000;
+}
+ul.pagination li.prev a,
+ul.pagination li.next a {
+    border: 1px solid #efefef;
+    color: #fe0000!important;
+}
+ul.pagination li.prev a:hover,
+ul.pagination li.next a:hover {
+    border: 1px solid #fe0000;
+}
+ul.pagination li.active a{
+    background: #fe0000!important;
+    color: #ffffff!important;
+}
+
 
 @media (max-width: 1365px) {
     .slider1 {
@@ -2346,6 +2414,9 @@ li.lcm-title:hover {
 @media (max-width: 768px) {
     .register .col-md-6 {
         margin-bottom: 20px;
+    }
+    .new_requests .new_request ul {
+        min-height: auto;
     }
 
     .customer_user {
