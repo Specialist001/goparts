@@ -124,6 +124,15 @@ li {
 .delete_order {
     cursor: pointer;
 }
+.delete_order {
+    color: #dc3545!important;
+}
+.delete_order:hover {
+    color: #fff!important;
+}
+.green_request {
+    border: 1px solid #00904c!important;
+}
 
 .select2-container--default .select2-selection--single {
     padding: .275rem .75rem;

@@ -134,7 +134,7 @@ $this->registerCss('
                                     <input type="hidden" class="car_id" name="SellerQuery[car_id]"
                                            value="<?= $seller_query->query->car_id ?>">
 
-                                    <div class="new_request p-3 border mb-3 d-inline-block w-100">
+                                    <div class="new_request p-3 border mb-3 d-inline-block w-100 <?=$seller_query->product_id ? 'green_request' : null ?>">
                                         <div class="rounded-circle border d-none d-md-inline-block float-left mt-4 text-white <?= $seller_query->product_id ? 'bg-form_style_1' : null ?> "
                                              style="width: 30px; height: 30px; font-size: 1.3rem">
                                             <i class="la la-check pl-1"></i>
@@ -197,7 +197,7 @@ $this->registerCss('
 
                                             </li>
                                         </ul>
-                                        <div class="collapse1" id="collapseExample_<?= $seller_query->id ?>">
+                                        <div class="collapse" id="collapseExample_<?= $seller_query->id ?>">
                                             <div class="p-2 pt-3 border-top mt-5 mt-md-0">
                                                 <div>
                                                     <ul class="d-inline-block pl-0 pr-3">
@@ -248,15 +248,15 @@ $this->registerCss('
                                                             <i class="la la-exclamation-circle"></i>
                                                             <span class="pl-1 pb-2 font-weight-bolder">Description</span>
                                                         </div>
-                                                        <?php if(!$seller_query->product_id) { ?>
+                                                        <?php if(!$seller_query->product->translate->description) { ?>
                                                         <div class="pl-4 font-weight-lighter">
                                                             Write a description
                                                         </div>
                                                         <?php } ?>
                                                     </div>
                                                     <div class="col pr-5">
-                                                    <textarea class="border font-weight-lighter w-100 p-2 mr-3 <?=$seller_query->product_id ? 'bg-light' : null ?>" name="Product[description]"
-                                                              style="resize: none" <?= $seller_query->product_id ? 'readonly' : null?> ><?= $seller_query->product->translate->description ? $seller_query->product->translate->description : null ?></textarea>
+                                                    <textarea class="border font-weight-lighter w-100 p-2 mr-3 <?=$seller_query->product->translate->description ? 'bg-light' : null ?>" name="Product[description]"
+                                                              style="resize: none" <?= $seller_query->product->translate->description ? 'readonly' : null?> ><?= $seller_query->product->translate->description ? $seller_query->product->translate->description : null ?></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="row pt-3">

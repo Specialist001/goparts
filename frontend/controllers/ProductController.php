@@ -462,7 +462,39 @@ class ProductController extends Controller
 
                 $model->save();
 //                $model->sku = Yii::$app->user->getId() . '-' . date('dmy') . '-' . $model->id;
+                $translation_en = StoreProductTranslation::findOne(['product_id' => $model->id, 'locale' => 'en-EN']);
+                $translation_ar = (!empty(StoreProductTranslation::findOne(['product_id' => $model->id, 'locale' => 'ar-AE']))) ? StoreProductTranslation::findOne(['product_id' => $model->id, 'locale' => 'ar-AE']) : new StoreProductTranslation();
+                $translation_ru = (!empty(StoreProductTranslation::findOne(['product_id' => $model->id, 'locale' => 'ru-RU']))) ? StoreProductTranslation::findOne(['product_id' => $model->id, 'locale' => 'ru-RU']) : new StoreProductTranslation();
 
+                $translation_en->product_id = $model->id;
+                $translation_en->name = $product_data['description'] ? mb_substr($product_data['description'],0,10) : '';
+                $translation_en->short = $product_data['description'] ? mb_substr($product_data['description'],0,20) : '';
+                $translation_en->description = $product_data['description'] ? $product_data['description'] : '';
+                $translation_en->meta_title = $product_data['description'] ? mb_substr($product_data['description'],0,10) : '';
+                $translation_en->meta_description = $product_data['description'] ? mb_substr($product_data['description'],0,20) : '';
+                $translation_en->meta_keywords =  $product_data['description'] ? str_replace(' ',',',$product_data['description']) : '';
+                $translation_en->locale = 'en-EN';
+                $translation_en->save();
+
+                $translation_ar->product_id = $model->id;
+                $translation_ar->name = (Yii::$app->request->post('StoreProductTranslation')['name']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['name']['ar'] : $translation_en->name;
+                $translation_ar->short = (Yii::$app->request->post('StoreProductTranslation')['short']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['short']['ar'] : $translation_en->short;
+                $translation_ar->description = (Yii::$app->request->post('StoreProductTranslation')['description']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['description']['ar'] : $translation_en->description;
+                $translation_ar->meta_title = (Yii::$app->request->post('StoreProductTranslation')['meta_title']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_title']['ar'] : $translation_en->meta_title;
+                $translation_ar->meta_description = (Yii::$app->request->post('StoreProductTranslation')['meta_description']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_description']['ar'] : $translation_en->meta_description;
+                $translation_ar->meta_keywords = (Yii::$app->request->post('StoreProductTranslation')['meta_keywords']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_keywords']['ar'] : $translation_en->meta_keywords;
+                $translation_ar->locale = 'ar-AE';
+                $translation_ar->save();
+
+                $translation_ru->product_id = $model->id;
+                $translation_ru->name = (Yii::$app->request->post('StoreProductTranslation')['name']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['name']['ru'] : $translation_en->name;
+                $translation_ru->short = (Yii::$app->request->post('StoreProductTranslation')['short']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['short']['ru'] : $translation_en->short;
+                $translation_ru->description = (Yii::$app->request->post('StoreProductTranslation')['description']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['description']['ru'] : $translation_en->description;
+                $translation_ru->meta_title = (Yii::$app->request->post('StoreProductTranslation')['meta_title']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_title']['ru'] : $translation_en->meta_title;
+                $translation_ru->meta_description = (Yii::$app->request->post('StoreProductTranslation')['meta_description']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_description']['ru'] : $translation_en->meta_description;
+                $translation_ru->meta_keywords = (Yii::$app->request->post('StoreProductTranslation')['meta_keywords']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_keywords']['ru'] : $translation_en->meta_keywords;
+                $translation_ru->locale = 'ru-RU';
+                $translation_ru->save();
 
                 $price = $product_data['price'] ? $product_data['price'] : 1;
                 $purchase_price = $price * (1 + ($model->user->commission->commission ? $model->user->commission->commission : 0) / 100);
