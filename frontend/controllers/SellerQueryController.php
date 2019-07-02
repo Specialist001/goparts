@@ -42,10 +42,11 @@ class SellerQueryController extends Controller
                 $searchModel = new SellerQuerySearch();
                 $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-                $query = SellerQuery::find()->where([])->orderBy('`created_at` DESC');
+                $query = SellerQuery::find()->where(['seller_id'=>Yii::$app->user->identity->getId()])->orderBy('`created_at` DESC');
                 $countQuery = clone $query;
                 $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 5]);
                 $seller_queries = $query->offset($pages->offset)->limit($pages->limit)->all();
+
 
                 return $this->render('index', [
                     'searchModel' => $searchModel,

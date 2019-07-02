@@ -75,12 +75,24 @@ class SellerQuery extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function find() {
+        return parent::find()->with('productPrice','query');
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getProduct()
     {
         return $this->hasOne(StoreProduct::className(), ['id' => 'product_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProductPrice()
+    {
+        return $this->hasOne(StoreProduct::className(), ['id' => 'product_id'])->orderBy('`price` ASC');
     }
 
     /**
