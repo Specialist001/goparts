@@ -302,7 +302,7 @@ $this->registerCss('
                                                             </div>
                                                             <div class="text-form-style_1 my_price">
                                                                 <input class="w-25 border-0 font-weight-bold text-form-style_1 readonly"
-                                                                       name="Product[price]" type="number" value="<?= $seller_query->product->price ? $seller_query->product->price : 0?>" min="0"> AED
+                                                                       name="Product[price]" type="number" value="<?= $seller_query->product->price ? $seller_query->product->price : 0?>" min="0" required> AED
                                                                 <!-- <span class="text-dark ml-2 edit_price" style="cursor:pointer;"><i class="la la-pencil" style="font-size: 1.3rem"></i> </span>-->
                                                             </div>
                                                         </div>
@@ -347,7 +347,7 @@ $this->registerCss('
                                                                    class="<?= !$seller_query->product_id ? 'send_request' : 'update_request'?>  d-inline-block py-2 text-form-style_1 font-weight-bold"
                                                                    style="width: 130px"
                                                                     data-seller_query_id = "<?= $seller_query->id ?>"
-                                                                    data-product_id="<?= $seller_query->product_id ?>"
+
                                                                 >
                                                                     <?= !$seller_query->product_id ? 'Send request' : 'Update request'?>
                                                                 </a>

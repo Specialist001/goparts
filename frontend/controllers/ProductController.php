@@ -265,7 +265,6 @@ class ProductController extends Controller
     public function actionAdd($id=null, $query_id=null, $car_id=null)
     {
 
-
 //        if ($model->load(Yii::$app->request->post()) && $model->save()) {
 //            return $this->redirect(['view', 'id' => $model->id]);
 //        }
@@ -437,7 +436,7 @@ class ProductController extends Controller
         $post = Yii::$app->request->post();
         $product_data = $post['Product'];
         $query_data = $post['SellerQuery'];
-        if ($product_data['description']) {
+
             if ($product_data['price']) {
 
                 $model = StoreProduct::find()->where(['id'=>$product_data['product_id']])->one();
@@ -552,12 +551,7 @@ class ProductController extends Controller
                     'errorData' => 'Price does not exist'
                 ]);
             }
-        } else {
-            return json_encode([
-                'error' => true,
-                'errorData' => 'Description does not exist'
-            ]);
-        }
+
     }
 
     public function actionUpdate($id)
