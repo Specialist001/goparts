@@ -12,6 +12,7 @@ use yii\behaviors\TimestampBehavior;
  * @property int $type_id
  * @property int $producer_id
  * @property int $category_id
+ * @property int $car_id
  * @property int $type_car_id
  * @property int $user_id
  * @property string $sku
@@ -147,7 +148,7 @@ class StoreProduct extends \yii\db\ActiveRecord
     }
 
     public static function find() {
-        return parent::find()->with('translate','car','category');
+        return parent::find()->with('translate','car','category','user');
     }
 
     /**

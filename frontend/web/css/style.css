@@ -119,6 +119,12 @@ li {
     color: #e40000!important;
 }
 
+.send_request,
+.update_request,
+.delete_order {
+    cursor: pointer;
+}
+
 .select2-container--default .select2-selection--single {
     padding: .275rem .75rem;
     height: calc(1.5em + .75rem + 2px);
