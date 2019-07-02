@@ -37,6 +37,7 @@ $(document).ready(function () {
                         // console.log('true-t');
                         var count = Object.keys(t.prices).length;
                         form.find('.product_id').val(t.product_id);
+                        form.find('.new_request').addClass('green_request');
                         form.find('.rounded-circle').addClass('bg-form_style_1');
                         form.find('.send_request').removeClass('send_request').addClass('update_request').text('Update request');
                         form.find('textarea').attr('readonly',true).addClass('bg-light');
