@@ -139,6 +139,21 @@ class Query extends \yii\db\ActiveRecord
     {
         return $this->hasMany(QueryImage::className(), ['query_id' => 'id']);
     }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMainImage()
+    {
+        return $this->hasOne(QueryImage::className(), ['query_id' => 'id'])->where(['main' => 1]);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImages()
+    {
+        return $this->hasMany(QueryImage::className(), ['query_id' => 'id'])->where(['main' => 0]);
+    }
 
     public function getSellerQueries()
     {

@@ -24,7 +24,7 @@ class AppAsset extends AssetBundle
         'js/notify.min.js',
         'js/raphael/raphael.js',
         'js/morris.js',
-        'js/main.js',
+//        'js/main.js',
         'js/viewer/viewer.min.js',
         'js/jquery-viewer/jquery-viewer.min.js',
         'js/main.js',

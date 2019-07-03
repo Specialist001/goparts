@@ -9,11 +9,13 @@ use common\models\Cars;
 use common\models\SellerQuery;
 use common\models\StoreCategory;
 use common\models\StoreProduct;
+use common\models\StoreProductImage;
 use common\models\StoreProductToCar;
 use common\models\StoreProductTranslation;
 use common\models\StoreProductVideo;
 use common\models\StoreTypeCar;
 use common\models\User;
+use rmrevin\yii\fontawesome\FA;
 use Yii;
 use yii\db\Query;
 use yii\filters\AccessControl;
@@ -73,180 +75,218 @@ class ProductController extends Controller
                 if ($seller->query->car_id == Yii::$app->request->get('car_id')) {
 //                    if ($seller->query->category_id == Yii::$app->request->get('category')) {
 
-                        $model = new StoreProduct();
-                        $video = new StoreProductVideo();
+                    $model = new StoreProduct();
+                    $video = new StoreProductVideo();
 
-                        $category = !empty(Yii::$app->request->get('category')) ? Yii::$app->request->get('category') : false;
+                    $category = !empty(Yii::$app->request->get('category')) ? Yii::$app->request->get('category') : false;
 
-                        $vendor_name = !empty(Yii::$app->request->post('vendor')) ? Yii::$app->request->post('vendor') : null;
-                        $car_name = !empty(Yii::$app->request->post('car')) ? Yii::$app->request->post('car') : null;
-                        $modification_name = !empty(Yii::$app->request->post('modification')) ? Yii::$app->request->post('modification') : null;
-                        $year = !empty(Yii::$app->request->post('year')) ? Yii::$app->request->post('year') : null;
+                    $vendor_name = !empty(Yii::$app->request->post('vendor')) ? Yii::$app->request->post('vendor') : null;
+                    $car_name = !empty(Yii::$app->request->post('car')) ? Yii::$app->request->post('car') : null;
+                    $modification_name = !empty(Yii::$app->request->post('modification')) ? Yii::$app->request->post('modification') : null;
+                    $year = !empty(Yii::$app->request->post('year')) ? Yii::$app->request->post('year') : null;
 
-                        $car = Cars::findOne(['id' => Yii::$app->request->get('car_id')]);
-                        $car_id = $car->id;
+                    $car = Cars::findOne(['id' => Yii::$app->request->get('car_id')]);
+                    $car_id = $car->id;
 
 //                        $car_id = !empty(Yii::$app->request->get('car_id')) ? Yii::$app->request->get('car_id') : false;
 
 //                        if(empty($car_id = Cars::findOne(['id'=>$car_id]))) $car_id = false;
 
-                        if (empty($category = StoreCategory::findOne(['id' => $category, 'status' => 1]))) $category = false;
-                        if (!empty($category)) if (!empty($category->activeCategories)) $category = false;
-                        $unset = false;
-                        $temp_parent = $category;
-                        while ($temp_parent) {
-                            if (!$temp_parent->status) {
-                                $unset = true;
-                                break;
+                    if (empty($category = StoreCategory::findOne(['id' => $category, 'status' => 1]))) $category = false;
+                    if (!empty($category)) if (!empty($category->activeCategories)) $category = false;
+                    $unset = false;
+                    $temp_parent = $category;
+                    while ($temp_parent) {
+                        if (!$temp_parent->status) {
+                            $unset = true;
+                            break;
+                        }
+                        if (empty($temp_parent->parent)) break;
+                        $temp_parent = $temp_parent->parent;
+                    }
+
+                    if ($unset) $category = false;
+
+                    $translation_en = new StoreProductTranslation();
+                    $translation_ar = new StoreProductTranslation();
+                    $translation_ru = new StoreProductTranslation();
+
+                    $cats = StoreCategory::find()->where(['parent_id' => null, 'status' => 1])->orderBy('`order`')->all();
+                    $type_cars = StoreTypeCar::find()->where(['parent_id' => null])->all();
+
+                    $cars_array = Cars::getVendors();
+
+                    if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+
+                        $model->user_id = Yii::$app->user->getId();
+
+                        $model->save();
+                        $image = UploadedFile::getInstanceByName('mainImage');
+                        $dir = (__DIR__) . '/../../uploads/store-products/';
+
+                        if ($image) {
+                            $image_model = new StoreProductImage();
+                            $image_model->product_id = $model->id;
+                            $image_model->main = 1;
+                            $path = $image->baseName . '.' . $image->extension;
+                            if ($image->saveAs($dir . $path)) {
+                                $resizer = new SimpleImage();
+                                $resizer->load($dir . $path);
+                                $resizer->resize(Yii::$app->params['imageSizes']['store-products']['image'][0], Yii::$app->params['imageSizes']['store-products']['image'][1]);
+                                $image_name = uniqid() . '.' . $image->extension;
+                                $resizer->save($dir . $image_name);
+                                $image_model->link = '/uploads/store-products/' . $image_name;
+                                if (is_file($dir . $path)) if (file_exists($dir . $path)) unlink($dir . $path);
+                                $image_model->save();
+                            } else {
+                                Yii::$app->session->setFlash('error', FA::i('warning') . ' Ошибка, попробуйте позже.');
+                                return $this->goBack();
                             }
-                            if (empty($temp_parent->parent)) break;
-                            $temp_parent = $temp_parent->parent;
+                        } else {
+                            $image_model = new StoreProductImage();
+                            $image_model->product_id = $model->id;
+                            $image_model->main = 1;
+                            $image_model->link = '/uploads/site/default_product.png';
+                            $image_model->save();
                         }
 
-                        if ($unset) $category = false;
-
-                        $translation_en = new StoreProductTranslation();
-                        $translation_ar = new StoreProductTranslation();
-                        $translation_ru = new StoreProductTranslation();
-
-                        $cats = StoreCategory::find()->where(['parent_id' => null, 'status' => 1])->orderBy('`order`')->all();
-                        $type_cars = StoreTypeCar::find()->where(['parent_id' => null])->all();
-
-                        $cars_array = Cars::getVendors();
-
-                        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-
-                            $model->user_id = Yii::$app->user->getId();
-
-                            $dir = (__DIR__) . '/../../uploads/store-products/';
-                            $model->image = UploadedFile::getInstance($model, 'image');
-
-                            if ($model->image) {
-                                $path = $model->image->baseName . '.' . $model->image->extension;
-                                if ($model->image->saveAs($dir . $path)) {
+                        $images = UploadedFile::getInstancesByName('images');
+                        if (!empty($images)) {
+                            foreach ($images as $image) {
+                                $image_model = new StoreProductImage();
+                                $image_model->product_id = $model->id;
+                                $image_model->main = 0;
+                                $path = $image->baseName . '.' . $image->extension;
+                                if ($image->saveAs($dir . $path)) {
                                     $resizer = new SimpleImage();
                                     $resizer->load($dir . $path);
                                     $resizer->resize(Yii::$app->params['imageSizes']['store-products']['image'][0], Yii::$app->params['imageSizes']['store-products']['image'][1]);
-                                    $image_name = uniqid() . '.' . $model->image->extension;
+                                    $image_name = uniqid() . '.' . $image->extension;
                                     $resizer->save($dir . $image_name);
-                                    $model->image = '/uploads/store-products/' . $image_name;
+                                    $image_model->link = '/uploads/store-products/' . $image_name;
                                     if (is_file($dir . $path)) if (file_exists($dir . $path)) unlink($dir . $path);
+
+                                    $image_model->save();
+                                } else {
+                                    Yii::$app->session->setFlash('error', FA::i('warning') . ' Ошибка, попробуйте позже.');
+                                    return $this->goBack();
                                 }
-                            } else $model->image = '/uploads/site/default_cat.png';
-
-                            $model->save();
-
-                            $model->car_id = $car_id;
-                            $model->sku = Yii::$app->user->getId() . '-' . date('dmy') . '-' . $model->id;
-
-                            $translation_en->product_id = $model->id;
-                            $translation_en->name = (Yii::$app->request->post('StoreProductTranslation')['name']['en'] != '') ? Yii::$app->request->post('StoreProductTranslation')['name']['en'] : '';
-                            $translation_en->short = (Yii::$app->request->post('StoreProductTranslation')['short']['en'] != '') ? Yii::$app->request->post('StoreProductTranslation')['short']['en'] : '';
-                            $translation_en->description = (Yii::$app->request->post('StoreProductTranslation')['description']['en'] != '') ? Yii::$app->request->post('StoreProductTranslation')['description']['en'] : '';
-                            $translation_en->meta_title = (Yii::$app->request->post('StoreProductTranslation')['meta_title']['en'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_title']['en'] : '';
-                            $translation_en->meta_description = (Yii::$app->request->post('StoreProductTranslation')['meta_description']['en'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_description']['en'] : '';
-                            $translation_en->meta_keywords = (Yii::$app->request->post('StoreProductTranslation')['meta_keywords']['en'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_keywords']['en'] : '';
-                            $translation_en->locale = 'en-EN';
-                            $translation_en->save();
-
-                            $translation_ar->product_id = $model->id;
-                            $translation_ar->name = (Yii::$app->request->post('StoreProductTranslation')['name']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['name']['ar'] : $translation_en->name;
-                            $translation_ar->short = (Yii::$app->request->post('StoreProductTranslation')['short']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['short']['ar'] : $translation_en->short;
-                            $translation_ar->description = (Yii::$app->request->post('StoreProductTranslation')['description']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['description']['ar'] : $translation_en->description;
-                            $translation_ar->meta_title = (Yii::$app->request->post('StoreProductTranslation')['meta_title']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_title']['ar'] : $translation_en->meta_title;
-                            $translation_ar->meta_description = (Yii::$app->request->post('StoreProductTranslation')['meta_description']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_description']['ar'] : $translation_en->meta_description;
-                            $translation_ar->meta_keywords = (Yii::$app->request->post('StoreProductTranslation')['meta_keywords']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_keywords']['ar'] : $translation_en->meta_keywords;
-                            $translation_ar->locale = 'ar-AE';
-                            $translation_ar->save();
-
-                            $translation_ru->product_id = $model->id;
-                            $translation_ru->name = (Yii::$app->request->post('StoreProductTranslation')['name']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['name']['ru'] : $translation_en->name;
-                            $translation_ru->short = (Yii::$app->request->post('StoreProductTranslation')['short']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['short']['ru'] : $translation_en->short;
-                            $translation_ru->description = (Yii::$app->request->post('StoreProductTranslation')['description']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['description']['ru'] : $translation_en->description;
-                            $translation_ru->meta_title = (Yii::$app->request->post('StoreProductTranslation')['meta_title']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_title']['ru'] : $translation_en->meta_title;
-                            $translation_ru->meta_description = (Yii::$app->request->post('StoreProductTranslation')['meta_description']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_description']['ru'] : $translation_en->meta_description;
-                            $translation_ru->meta_keywords = (Yii::$app->request->post('StoreProductTranslation')['meta_keywords']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_keywords']['ru'] : $translation_en->meta_keywords;
-                            $translation_ru->locale = 'ru-RU';
-                            $translation_ru->save();
-
-                            $price = $model->price ? $model->price : 1;
-
-                            $purchase_price = $price * (1 + ($model->user->commission->commission ? $model->user->commission->commission : 0) / 100);
-
-                            $model->purchase_price = $purchase_price;
-                            $model->save();
-                            $car_vendor = Yii::$app->request->post('vendor_name');
-                            $car_model = Yii::$app->request->post('car_name');
-                            $car_modification = Yii::$app->request->post('modification_name');
-                            $car_year = Yii::$app->request->post('year_name');
-
-                            $car_name = $car_vendor ? $car_vendor . '-' : null . $car_model ? $car_model . '-' : null . $car_modification ? $car_modification . '-' : null . $car_year ? $car_year . '_' : null;
-
-                            if (empty(Yii::$app->request->post('StoreProduct')['title'])) {
-                                $model->title = Helper::toSlug($translation_en->name) . '_' . $model->id;
-                            } else {
-                                $model->title = Helper::toSlug(Yii::$app->request->post('StoreProduct')['title']) . '_' . $model->id;
                             }
-
-                            if (empty(Yii::$app->request->post('StoreProduct')['slug'])) {
-                                $model->slug = Helper::toSlug($translation_en->name) . '_' . $model->id;
-                            } else {
-                                $model->slug = Helper::toSlug(Yii::$app->request->post('StoreProduct')['slug']) . '_' . $model->id;
-                            }
-
-                            $model->save();
-
-                            $seller->product_id = $model->id;
-                            $seller->status = SellerQuery::STATUS_MODERATE;
-                            $seller->save();
-
-                            Yii::$app
-                                ->mailer
-                                ->compose(
-                                    ['html' => 'makeProduct-html', 'text' => 'makeProduct-text'],
-                                    [
-                                        'type' => 'buyer',
-                                        'product_id' => $model->id,
-                                        'query_name' => $seller->query->title,
-                                        'query_date' => $seller->query->created_at,
-                                        'query_car_name' => $seller->query->vendor .' '.$seller->query->car.' '.$seller->query->modification.' '.$seller->query->year
-                                    ]
-                                )
-                                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-                                ->setTo($seller->query->email)
-                                ->setSubject('Added product by your request #'.$seller->query->id .' | '.Yii::$app->name)
-                                ->send();
-
-                            Yii::$app
-                                ->mailer
-                                ->compose(
-                                    ['html' => 'makeProduct-html', 'text' => 'makeProduct-text'],
-                                    ['type' => 'admin',
-                                        'product_id' => $model->id,
-                                        'query_name' => $seller->query->title,
-                                        'query_date' => $seller->query->created_at,
-                                        'query_car_name' => $seller->query->vendor .' '.$seller->query->car.' '.$seller->query->modification.' '.$seller->query->year
-                                    ]
-                                )
-                                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-                                ->setTo(Yii::$app->params['adminEmail'])
-                                ->setSubject(Yii::$app->name)
-                                ->send();
-
-                            return $this->redirect(['update', 'id' => $model->id, 'category' => $model->category_id, 'car_id' => $car_id]);
                         }
 
-                        return $this->render('create', [
-                            'model' => $model,
-                            'video' => $video,
-                            'cats' => $cats,
-                            'category' => $category,
-                            'translation_en' => $translation_en,
-                            'translation_ar' => $translation_ar,
-                            'translation_ru' => $translation_ru,
-                            'type_cars' => $type_cars,
-                            'car_id' => $car_id,
-                        ]);
+                        $model->save();
+
+                        $model->car_id = $car_id;
+                        $model->sku = Yii::$app->user->getId() . '-' . date('dmy') . '-' . $model->id;
+
+                        $translation_en->product_id = $model->id;
+                        $translation_en->name = (Yii::$app->request->post('StoreProductTranslation')['name']['en'] != '') ? Yii::$app->request->post('StoreProductTranslation')['name']['en'] : '';
+                        $translation_en->short = (Yii::$app->request->post('StoreProductTranslation')['short']['en'] != '') ? Yii::$app->request->post('StoreProductTranslation')['short']['en'] : '';
+                        $translation_en->description = (Yii::$app->request->post('StoreProductTranslation')['description']['en'] != '') ? Yii::$app->request->post('StoreProductTranslation')['description']['en'] : '';
+                        $translation_en->meta_title = (Yii::$app->request->post('StoreProductTranslation')['meta_title']['en'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_title']['en'] : '';
+                        $translation_en->meta_description = (Yii::$app->request->post('StoreProductTranslation')['meta_description']['en'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_description']['en'] : '';
+                        $translation_en->meta_keywords = (Yii::$app->request->post('StoreProductTranslation')['meta_keywords']['en'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_keywords']['en'] : '';
+                        $translation_en->locale = 'en-EN';
+                        $translation_en->save();
+
+                        $translation_ar->product_id = $model->id;
+                        $translation_ar->name = (Yii::$app->request->post('StoreProductTranslation')['name']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['name']['ar'] : $translation_en->name;
+                        $translation_ar->short = (Yii::$app->request->post('StoreProductTranslation')['short']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['short']['ar'] : $translation_en->short;
+                        $translation_ar->description = (Yii::$app->request->post('StoreProductTranslation')['description']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['description']['ar'] : $translation_en->description;
+                        $translation_ar->meta_title = (Yii::$app->request->post('StoreProductTranslation')['meta_title']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_title']['ar'] : $translation_en->meta_title;
+                        $translation_ar->meta_description = (Yii::$app->request->post('StoreProductTranslation')['meta_description']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_description']['ar'] : $translation_en->meta_description;
+                        $translation_ar->meta_keywords = (Yii::$app->request->post('StoreProductTranslation')['meta_keywords']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_keywords']['ar'] : $translation_en->meta_keywords;
+                        $translation_ar->locale = 'ar-AE';
+                        $translation_ar->save();
+
+                        $translation_ru->product_id = $model->id;
+                        $translation_ru->name = (Yii::$app->request->post('StoreProductTranslation')['name']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['name']['ru'] : $translation_en->name;
+                        $translation_ru->short = (Yii::$app->request->post('StoreProductTranslation')['short']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['short']['ru'] : $translation_en->short;
+                        $translation_ru->description = (Yii::$app->request->post('StoreProductTranslation')['description']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['description']['ru'] : $translation_en->description;
+                        $translation_ru->meta_title = (Yii::$app->request->post('StoreProductTranslation')['meta_title']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_title']['ru'] : $translation_en->meta_title;
+                        $translation_ru->meta_description = (Yii::$app->request->post('StoreProductTranslation')['meta_description']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_description']['ru'] : $translation_en->meta_description;
+                        $translation_ru->meta_keywords = (Yii::$app->request->post('StoreProductTranslation')['meta_keywords']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_keywords']['ru'] : $translation_en->meta_keywords;
+                        $translation_ru->locale = 'ru-RU';
+                        $translation_ru->save();
+
+                        $price = $model->price ? $model->price : 1;
+
+                        $purchase_price = $price * (1 + ($model->user->commission->commission ? $model->user->commission->commission : 0) / 100);
+
+                        $model->purchase_price = $purchase_price;
+                        $model->save();
+                        $car_vendor = Yii::$app->request->post('vendor_name');
+                        $car_model = Yii::$app->request->post('car_name');
+                        $car_modification = Yii::$app->request->post('modification_name');
+                        $car_year = Yii::$app->request->post('year_name');
+
+                        $car_name = $car_vendor ? $car_vendor . '-' : null . $car_model ? $car_model . '-' : null . $car_modification ? $car_modification . '-' : null . $car_year ? $car_year . '_' : null;
+
+                        if (empty(Yii::$app->request->post('StoreProduct')['title'])) {
+                            $model->title = Helper::toSlug($translation_en->name) . '_' . $model->id;
+                        } else {
+                            $model->title = Helper::toSlug(Yii::$app->request->post('StoreProduct')['title']) . '_' . $model->id;
+                        }
+
+                        if (empty(Yii::$app->request->post('StoreProduct')['slug'])) {
+                            $model->slug = Helper::toSlug($translation_en->name) . '_' . $model->id;
+                        } else {
+                            $model->slug = Helper::toSlug(Yii::$app->request->post('StoreProduct')['slug']) . '_' . $model->id;
+                        }
+
+                        $model->save();
+
+                        $seller->product_id = $model->id;
+                        $seller->status = SellerQuery::STATUS_MODERATE;
+                        $seller->save();
+
+                        Yii::$app
+                            ->mailer
+                            ->compose(
+                                ['html' => 'makeProduct-html', 'text' => 'makeProduct-text'],
+                                [
+                                    'type' => 'buyer',
+                                    'product_id' => $model->id,
+                                    'query_name' => $seller->query->title,
+                                    'query_date' => $seller->query->created_at,
+                                    'query_car_name' => $seller->query->vendor . ' ' . $seller->query->car . ' ' . $seller->query->modification . ' ' . $seller->query->year
+                                ]
+                            )
+                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                            ->setTo($seller->query->email)
+                            ->setSubject('Added product by your request #' . $seller->query->id . ' | ' . Yii::$app->name)
+                            ->send();
+
+                        Yii::$app
+                            ->mailer
+                            ->compose(
+                                ['html' => 'makeProduct-html', 'text' => 'makeProduct-text'],
+                                ['type' => 'admin',
+                                    'product_id' => $model->id,
+                                    'query_name' => $seller->query->title,
+                                    'query_date' => $seller->query->created_at,
+                                    'query_car_name' => $seller->query->vendor . ' ' . $seller->query->car . ' ' . $seller->query->modification . ' ' . $seller->query->year
+                                ]
+                            )
+                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                            ->setTo(Yii::$app->params['adminEmail'])
+                            ->setSubject(Yii::$app->name)
+                            ->send();
+
+                        return $this->redirect(['update', 'id' => $model->id, 'category' => $model->category_id, 'car_id' => $car_id]);
+                    }
+
+                    return $this->render('create', [
+                        'model' => $model,
+                        'video' => $video,
+                        'cats' => $cats,
+                        'category' => $category,
+                        'translation_en' => $translation_en,
+                        'translation_ar' => $translation_ar,
+                        'translation_ru' => $translation_ru,
+                        'type_cars' => $type_cars,
+                        'car_id' => $car_id,
+                    ]);
 //                    }
 
                 } else {
@@ -262,7 +302,7 @@ class ProductController extends Controller
         return $this->goBack();
     }
 
-    public function actionAdd($id=null, $query_id=null, $car_id=null)
+    public function actionAdd($id = null, $query_id = null, $car_id = null)
     {
 
 //        if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -271,46 +311,288 @@ class ProductController extends Controller
 
 //        $post = Yii::$app->request->post();
         $post = Yii::$app->request->post();
+//        print_r($post);exit;
         $product_data = $post['Product'];
         $query_data = $post['SellerQuery'];
         if ($product_data['description']) {
             if ($product_data['price']) {
 
-            $model = new StoreProduct();
+                $model = new StoreProduct();
 
-            $model->car_id = $query_data['car_id'];
-            $model->user_id = Yii::$app->user->identity->getId();
+                $model->car_id = $query_data['car_id'];
+                $model->user_id = Yii::$app->user->identity->getId();
 
+                $model->save();
+
+//            $model->image = UploadedFile::getInstanceByName('image');
+                $image = UploadedFile::getInstanceByName('mainImage');
+                $dir = (__DIR__) . '/../../uploads/store-products/';
+
+                if ($image) {
+                    $image_model = new StoreProductImage();
+                    $image_model->product_id = $model->id;
+                    $image_model->main = 1;
+                    $path = $image->baseName . '.' . $image->extension;
+                    if ($image->saveAs($dir . $path)) {
+                        $resizer = new SimpleImage();
+                        $resizer->load($dir . $path);
+                        $resizer->resize(Yii::$app->params['imageSizes']['store-products']['image'][0], Yii::$app->params['imageSizes']['store-products']['image'][1]);
+                        $image_name = uniqid() . '.' . $image->extension;
+                        $resizer->save($dir . $image_name);
+                        $image_model->link = '/uploads/store-products/' . $image_name;
+                        if (is_file($dir . $path)) if (file_exists($dir . $path)) unlink($dir . $path);
+                        $image_model->save();
+                    } else {
+                        Yii::$app->session->setFlash('error', FA::i('warning') . ' Ошибка, попробуйте позже.');
+                        return $this->goBack();
+                    }
+                }
+
+                $images = UploadedFile::getInstancesByName('images');
+                if (!empty($images)) {
+                    foreach ($images as $image) {
+                        $image_model = new StoreProductImage();
+                        $image_model->product_id = $model->id;
+                        $image_model->main = 0;
+                        $path = $image->baseName . '.' . $image->extension;
+                        if ($image->saveAs($dir . $path)) {
+                            $resizer = new SimpleImage();
+                            $resizer->load($dir . $path);
+                            $resizer->resize(Yii::$app->params['imageSizes']['store-products']['image'][0], Yii::$app->params['imageSizes']['store-products']['image'][1]);
+                            $image_name = uniqid() . '.' . $image->extension;
+                            $resizer->save($dir . $image_name);
+                            $image_model->link = '/uploads/store-products/' . $image_name;
+                            if (is_file($dir . $path)) if (file_exists($dir . $path)) unlink($dir . $path);
+
+                            $image_model->save();
+                        } else {
+                            Yii::$app->session->setFlash('error', FA::i('warning') . ' Ошибка, попробуйте позже.');
+                            return $this->goBack();
+                        }
+                    }
+
+                }
+
+
+                $model->sku = Yii::$app->user->getId() . '-' . date('dmy') . '-' . $model->id;
+
+                $translation_en = new StoreProductTranslation();
+                $translation_ar = new StoreProductTranslation();
+                $translation_ru = new StoreProductTranslation();
+
+                $translation_en->product_id = $model->id;
+                $translation_en->name = $product_data['description'] ? mb_substr($product_data['description'], 0, 10) : '';
+                $translation_en->short = $product_data['description'] ? mb_substr($product_data['description'], 0, 20) : '';
+                $translation_en->description = $product_data['description'] ? $product_data['description'] : '';
+                $translation_en->meta_title = $product_data['description'] ? mb_substr($product_data['description'], 0, 10) : '';
+                $translation_en->meta_description = $product_data['description'] ? mb_substr($product_data['description'], 0, 20) : '';
+                $translation_en->meta_keywords = $product_data['description'] ? str_replace(' ', ',', $product_data['description']) : '';
+                $translation_en->locale = 'en-EN';
+                $translation_en->save();
+
+                $translation_ar->product_id = $model->id;
+                $translation_ar->name = (Yii::$app->request->post('StoreProductTranslation')['name']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['name']['ar'] : $translation_en->name;
+                $translation_ar->short = (Yii::$app->request->post('StoreProductTranslation')['short']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['short']['ar'] : $translation_en->short;
+                $translation_ar->description = (Yii::$app->request->post('StoreProductTranslation')['description']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['description']['ar'] : $translation_en->description;
+                $translation_ar->meta_title = (Yii::$app->request->post('StoreProductTranslation')['meta_title']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_title']['ar'] : $translation_en->meta_title;
+                $translation_ar->meta_description = (Yii::$app->request->post('StoreProductTranslation')['meta_description']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_description']['ar'] : $translation_en->meta_description;
+                $translation_ar->meta_keywords = (Yii::$app->request->post('StoreProductTranslation')['meta_keywords']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_keywords']['ar'] : $translation_en->meta_keywords;
+                $translation_ar->locale = 'ar-AE';
+                $translation_ar->save();
+
+                $translation_ru->product_id = $model->id;
+                $translation_ru->name = (Yii::$app->request->post('StoreProductTranslation')['name']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['name']['ru'] : $translation_en->name;
+                $translation_ru->short = (Yii::$app->request->post('StoreProductTranslation')['short']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['short']['ru'] : $translation_en->short;
+                $translation_ru->description = (Yii::$app->request->post('StoreProductTranslation')['description']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['description']['ru'] : $translation_en->description;
+                $translation_ru->meta_title = (Yii::$app->request->post('StoreProductTranslation')['meta_title']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_title']['ru'] : $translation_en->meta_title;
+                $translation_ru->meta_description = (Yii::$app->request->post('StoreProductTranslation')['meta_description']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_description']['ru'] : $translation_en->meta_description;
+                $translation_ru->meta_keywords = (Yii::$app->request->post('StoreProductTranslation')['meta_keywords']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_keywords']['ru'] : $translation_en->meta_keywords;
+                $translation_ru->locale = 'ru-RU';
+                $translation_ru->save();
+
+                $price = $product_data['price'] ? $product_data['price'] : 1;
+                $purchase_price = $price * (1 + ($model->user->commission->commission ? $model->user->commission->commission : 0) / 100);
+
+                $model->price = $price;
+                $model->purchase_price = $purchase_price;
+
+                $model->save();
+
+                $model->title = Helper::toSlug(mb_substr($product_data['description'], 0, '15')) . '-';
+                $model->slug = Helper::toSlug($translation_en->name) . '_' . $model->id;
+
+                $seller = SellerQuery::find()->where(['seller_id' => Yii::$app->user->identity->getId(), 'query_id' => $query_data['query_id']])->with('query')->one();
+                $seller->product_id = $model->id;
+                $seller->status = SellerQuery::STATUS_MODERATE;
+                $seller->save();
+
+//                Yii::$app
+//                    ->mailer
+//                    ->compose(
+//                        ['html' => 'makeProduct-html', 'text' => 'makeProduct-text'],
+//                        [
+//                            'type' => 'buyer',
+//                            'product_id' => $model->id,
+//                            'query_name' => $seller->query->title,
+//                            'query_date' => $seller->query->created_at,
+//                            'query_car_name' => $seller->query->vendor .' '.$seller->query->car.' '.$seller->query->modification.' '.$seller->query->year
+//                        ]
+//                    )
+//                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+//                    ->setTo($seller->query->email)
+//                    ->setSubject('Added product by your request #'.$seller->query->id .' | '.Yii::$app->name)
+//                    ->send();
+//
+//                Yii::$app
+//                    ->mailer
+//                    ->compose(
+//                        ['html' => 'makeProduct-html', 'text' => 'makeProduct-text'],
+//                        ['type' => 'admin',
+//                            'product_id' => $model->id,
+//                            'query_name' => $seller->query->title,
+//                            'query_date' => $seller->query->created_at,
+//                            'query_car_name' => $seller->query->vendor .' '.$seller->query->car.' '.$seller->query->modification.' '.$seller->query->year
+//                        ]
+//                    )
+//                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+//                    ->setTo(Yii::$app->params['adminEmail'])
+//                    ->setSubject(Yii::$app->name)
+//                    ->send();
+
+                $get_prices = SellerQuery::find()->where(['query_id' => $query_data['query_id']])->andWhere(['not', ['product_id' => null]])->all();
+                $price_array = [];
+                $prices = [];
+                foreach ($get_prices as $get_price) {
+                    $price_array[] += $get_price->productPrice->price;
+                }
+                sort($price_array);
+                $arrlength = count($price_array);
+                if ($arrlength > 3) $counter = 3;
+                else $counter = $arrlength;
+
+                if ($counter > 0) {
+                    for ($x = 0; $x < $counter; $x++) {
+                        $prices += [$x => $price_array[$x]];
+                    }
+                } else {
+                    $prices = null;
+                }
+                $image_array = [];
+                $all_images = StoreProductImage::find()->where(['product_id'=>$model->id])->all();
+                foreach ($all_images as $all_image) {
+                    $image_array += [$all_image->id => $all_image->link];
+                }
+
+                return json_encode([
+                    'error' => false,
+                    'status' => 'Request sent',
+                    'product_id' => $model->id,
+                    'image_array' => $image_array,
+//                'postData' => $model->translate->description,
+                    'prices' => $prices,
+                    //            'product' => [
+                    //                'page_title' => Yii::t('frontend', 'Product added to cart 1'),
+                    //                'img' => $product->image,
+                    //                'name' => $product->translate->name,
+                    //                //                        'shop' => $product->shop->name,
+                    //                'cat' => $product->category->translate->title,
+                    //                'cart_count' => static::getCount(),
+                    //            ],
+                ]);
+            } else {
+                return json_encode([
+                    'error' => true,
+                    'errorData' => 'Price does not exist'
+                ]);
+            }
+        } else {
+            return json_encode([
+                'error' => true,
+                'errorData' => 'Description does not exist'
+            ]);
+        }
+    }
+
+    public function actionEdit($id = null, $query_id = null, $car_id = null)
+    {
+        $post = Yii::$app->request->post();
+        $product_data = $post['Product'];
+        $query_data = $post['SellerQuery'];
+//        print_r($post);exit;
+
+        if ($product_data['price']) {
+
+            $model = StoreProduct::find()->where(['id' => $product_data['product_id']])->one();
+
+//                $model->car_id = $query_data['car_id'];
+//                $model->user_id = Yii::$app->user->identity->getId();
+
+            $image = UploadedFile::getInstanceByName('mainImage');
             $dir = (__DIR__) . '/../../uploads/store-products/';
-            $model->image = UploadedFile::getInstanceByName('image');
 
-            if ($model->image) {
-                $path = $model->image->baseName . '.' . $model->image->extension;
-                if ($model->image->saveAs($dir . $path)) {
+            if ($image) {
+                $old_image = StoreProductImage::findOne(['main' => 1, 'product_id' => $model->id]);
+                if (!empty($old_image)) $old_image->delete();
+                $image_model = new StoreProductImage();
+                $image_model->product_id = $model->id;
+                $image_model->main = 1;
+                $path = $image->baseName . '.' . $image->extension;
+                if ($image->saveAs($dir . $path)) {
                     $resizer = new SimpleImage();
                     $resizer->load($dir . $path);
                     $resizer->resize(Yii::$app->params['imageSizes']['store-products']['image'][0], Yii::$app->params['imageSizes']['store-products']['image'][1]);
-                    $image_name = uniqid() . '.' . $model->image->extension;
+                    $image_name = uniqid() . '.' . $image->extension;
                     $resizer->save($dir . $image_name);
-                    $model->image = '/uploads/store-products/' . $image_name;
-                    if (is_file($dir . $path)) if (file_exists($dir . $path)) unlink($dir . $path);
+                    $image_model->link = '/uploads/store-products/' . $image_name;
+                    if (file_exists($dir . $path)) unlink($dir . $path);
+
+                    $image_model->save();
+                } else {
+//                    Yii::$app->session->setFlash('error', FA::i('warning') . ' Ошибка, попробуйте позже.');
+//                    return $this->goBack();
+                    return $this->asJson('stat','error');
                 }
-            } else $model->image = '/uploads/site/default_cat.png';
+            }
+
+            $images = UploadedFile::getInstancesByName('images');
+            if(!empty($images)) {
+                foreach ($images as $image) {
+                    $image_model = new StoreProductImage();
+                    $image_model->product_id = $model->id;
+                    $image_model->main = 0;
+                    $path = $image->baseName.'.'.$image->extension;
+                    if($image->saveAs($dir.$path)) {
+                        $resizer = new SimpleImage();
+                        $resizer->load($dir.$path);
+                        $resizer->resize(Yii::$app->params['imageSizes']['store-products']['image'][0], Yii::$app->params['imageSizes']['store-products']['image'][1]);
+                        $image_name = uniqid().'.'.$image->extension;
+                        $resizer->save($dir.$image_name);
+                        $image_model->link = '/uploads/store-products/'.$image_name;
+                        if(file_exists($dir.$path)) unlink($dir.$path);
+
+                        $image_model->save();
+                    }
+                    else {
+                        Yii::$app->session->setFlash('error', FA::i('warning').' Ошибка, попробуйте позже.');
+                        return $this->goBack();
+                    }
+                }
+
+            }
 
             $model->save();
-            $model->sku = Yii::$app->user->getId() . '-' . date('dmy') . '-' . $model->id;
-
-            $translation_en = new StoreProductTranslation();
-            $translation_ar = new StoreProductTranslation();
-            $translation_ru = new StoreProductTranslation();
+//                $model->sku = Yii::$app->user->getId() . '-' . date('dmy') . '-' . $model->id;
+            $translation_en = StoreProductTranslation::findOne(['product_id' => $model->id, 'locale' => 'en-EN']);
+            $translation_ar = (!empty(StoreProductTranslation::findOne(['product_id' => $model->id, 'locale' => 'ar-AE']))) ? StoreProductTranslation::findOne(['product_id' => $model->id, 'locale' => 'ar-AE']) : new StoreProductTranslation();
+            $translation_ru = (!empty(StoreProductTranslation::findOne(['product_id' => $model->id, 'locale' => 'ru-RU']))) ? StoreProductTranslation::findOne(['product_id' => $model->id, 'locale' => 'ru-RU']) : new StoreProductTranslation();
 
             $translation_en->product_id = $model->id;
-            $translation_en->name = $product_data['description'] ? mb_substr($product_data['description'],0,10) : '';
-            $translation_en->short = $product_data['description'] ? mb_substr($product_data['description'],0,20) : '';
+            $translation_en->name = $product_data['description'] ? mb_substr($product_data['description'], 0, 10) : '';
+            $translation_en->short = $product_data['description'] ? mb_substr($product_data['description'], 0, 20) : '';
             $translation_en->description = $product_data['description'] ? $product_data['description'] : '';
-            $translation_en->meta_title = $product_data['description'] ? mb_substr($product_data['description'],0,10) : '';
-            $translation_en->meta_description = $product_data['description'] ? mb_substr($product_data['description'],0,20) : '';
-            $translation_en->meta_keywords =  $product_data['description'] ? str_replace(' ',',',$product_data['description']) : '';
+            $translation_en->meta_title = $product_data['description'] ? mb_substr($product_data['description'], 0, 10) : '';
+            $translation_en->meta_description = $product_data['description'] ? mb_substr($product_data['description'], 0, 20) : '';
+            $translation_en->meta_keywords = $product_data['description'] ? str_replace(' ', ',', $product_data['description']) : '';
             $translation_en->locale = 'en-EN';
             $translation_en->save();
 
@@ -342,8 +624,8 @@ class ProductController extends Controller
 
             $model->save();
 
-            $model->title = Helper::toSlug(mb_substr($product_data['description'],0,'15')).'-' ;
-            $model->slug = Helper::toSlug($translation_en->name) . '_' . $model->id;
+//                $model->title = Helper::toSlug(mb_substr($product_data['description'],0,'15')).'-' ;
+//                $model->slug = Helper::toSlug($translation_en->name) . '_' . $model->id;
 
             $seller = SellerQuery::find()->where(['seller_id' => Yii::$app->user->identity->getId(), 'query_id' => $query_data['query_id']])->with('query')->one();
             $seller->product_id = $model->id;
@@ -405,184 +687,23 @@ class ProductController extends Controller
             return json_encode([
                 'error' => false,
                 'status' => 'Request sent',
-                'product_id' => $model->price,
-//                'postData' => $model->translate->description,
                 'prices' => $prices,
-    //            'product' => [
-    //                'page_title' => Yii::t('frontend', 'Product added to cart 1'),
-    //                'img' => $product->image,
-    //                'name' => $product->translate->name,
-    //                //                        'shop' => $product->shop->name,
-    //                'cat' => $product->category->translate->title,
-    //                'cart_count' => static::getCount(),
-    //            ],
+                'post' => $post,
+                //            'product' => [
+                //                'page_title' => Yii::t('frontend', 'Product added to cart 1'),
+                //                'img' => $product->image,
+                //                'name' => $product->translate->name,
+                //                //                        'shop' => $product->shop->name,
+                //                'cat' => $product->category->translate->title,
+                //                'cart_count' => static::getCount(),
+                //            ],
             ]);
-            } else {
-                return json_encode([
-                    'error' => true,
-                    'errorData' => 'Price does not exist'
-                ]);
-            }
         } else {
             return json_encode([
                 'error' => true,
-                'errorData' => 'Description does not exist'
+                'errorData' => 'Price does not exist'
             ]);
         }
-    }
-
-    public function actionEdit($id=null, $query_id=null, $car_id=null)
-    {
-        $post = Yii::$app->request->post();
-        $product_data = $post['Product'];
-        $query_data = $post['SellerQuery'];
-
-            if ($product_data['price']) {
-
-                $model = StoreProduct::find()->where(['id'=>$product_data['product_id']])->one();
-
-//                $model->car_id = $query_data['car_id'];
-//                $model->user_id = Yii::$app->user->identity->getId();
-
-                $dir = (__DIR__) . '/../../uploads/store-products/';
-                $model->image = UploadedFile::getInstanceByName('image');
-
-                if ($model->image) {
-                    $path = $model->image->baseName . '.' . $model->image->extension;
-                    if ($model->image->saveAs($dir . $path)) {
-                        $resizer = new SimpleImage();
-                        $resizer->load($dir . $path);
-                        $resizer->resize(Yii::$app->params['imageSizes']['store-products']['image'][0], Yii::$app->params['imageSizes']['store-products']['image'][1]);
-                        $image_name = uniqid() . '.' . $model->image->extension;
-                        $resizer->save($dir . $image_name);
-                        $model->image = '/uploads/store-products/' . $image_name;
-                        if (is_file($dir . $path)) if (file_exists($dir . $path)) unlink($dir . $path);
-                    }
-                } else $model->image = '/uploads/site/default_cat.png';
-
-                $model->save();
-//                $model->sku = Yii::$app->user->getId() . '-' . date('dmy') . '-' . $model->id;
-                $translation_en = StoreProductTranslation::findOne(['product_id' => $model->id, 'locale' => 'en-EN']);
-                $translation_ar = (!empty(StoreProductTranslation::findOne(['product_id' => $model->id, 'locale' => 'ar-AE']))) ? StoreProductTranslation::findOne(['product_id' => $model->id, 'locale' => 'ar-AE']) : new StoreProductTranslation();
-                $translation_ru = (!empty(StoreProductTranslation::findOne(['product_id' => $model->id, 'locale' => 'ru-RU']))) ? StoreProductTranslation::findOne(['product_id' => $model->id, 'locale' => 'ru-RU']) : new StoreProductTranslation();
-
-                $translation_en->product_id = $model->id;
-                $translation_en->name = $product_data['description'] ? mb_substr($product_data['description'],0,10) : '';
-                $translation_en->short = $product_data['description'] ? mb_substr($product_data['description'],0,20) : '';
-                $translation_en->description = $product_data['description'] ? $product_data['description'] : '';
-                $translation_en->meta_title = $product_data['description'] ? mb_substr($product_data['description'],0,10) : '';
-                $translation_en->meta_description = $product_data['description'] ? mb_substr($product_data['description'],0,20) : '';
-                $translation_en->meta_keywords =  $product_data['description'] ? str_replace(' ',',',$product_data['description']) : '';
-                $translation_en->locale = 'en-EN';
-                $translation_en->save();
-
-                $translation_ar->product_id = $model->id;
-                $translation_ar->name = (Yii::$app->request->post('StoreProductTranslation')['name']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['name']['ar'] : $translation_en->name;
-                $translation_ar->short = (Yii::$app->request->post('StoreProductTranslation')['short']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['short']['ar'] : $translation_en->short;
-                $translation_ar->description = (Yii::$app->request->post('StoreProductTranslation')['description']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['description']['ar'] : $translation_en->description;
-                $translation_ar->meta_title = (Yii::$app->request->post('StoreProductTranslation')['meta_title']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_title']['ar'] : $translation_en->meta_title;
-                $translation_ar->meta_description = (Yii::$app->request->post('StoreProductTranslation')['meta_description']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_description']['ar'] : $translation_en->meta_description;
-                $translation_ar->meta_keywords = (Yii::$app->request->post('StoreProductTranslation')['meta_keywords']['ar'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_keywords']['ar'] : $translation_en->meta_keywords;
-                $translation_ar->locale = 'ar-AE';
-                $translation_ar->save();
-
-                $translation_ru->product_id = $model->id;
-                $translation_ru->name = (Yii::$app->request->post('StoreProductTranslation')['name']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['name']['ru'] : $translation_en->name;
-                $translation_ru->short = (Yii::$app->request->post('StoreProductTranslation')['short']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['short']['ru'] : $translation_en->short;
-                $translation_ru->description = (Yii::$app->request->post('StoreProductTranslation')['description']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['description']['ru'] : $translation_en->description;
-                $translation_ru->meta_title = (Yii::$app->request->post('StoreProductTranslation')['meta_title']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_title']['ru'] : $translation_en->meta_title;
-                $translation_ru->meta_description = (Yii::$app->request->post('StoreProductTranslation')['meta_description']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_description']['ru'] : $translation_en->meta_description;
-                $translation_ru->meta_keywords = (Yii::$app->request->post('StoreProductTranslation')['meta_keywords']['ru'] != '') ? Yii::$app->request->post('StoreProductTranslation')['meta_keywords']['ru'] : $translation_en->meta_keywords;
-                $translation_ru->locale = 'ru-RU';
-                $translation_ru->save();
-
-                $price = $product_data['price'] ? $product_data['price'] : 1;
-                $purchase_price = $price * (1 + ($model->user->commission->commission ? $model->user->commission->commission : 0) / 100);
-
-                $model->price = $price;
-                $model->purchase_price = $purchase_price;
-
-                $model->save();
-
-//                $model->title = Helper::toSlug(mb_substr($product_data['description'],0,'15')).'-' ;
-//                $model->slug = Helper::toSlug($translation_en->name) . '_' . $model->id;
-
-                $seller = SellerQuery::find()->where(['seller_id' => Yii::$app->user->identity->getId(), 'query_id' => $query_data['query_id']])->with('query')->one();
-                $seller->product_id = $model->id;
-                $seller->status = SellerQuery::STATUS_MODERATE;
-                $seller->save();
-
-//                Yii::$app
-//                    ->mailer
-//                    ->compose(
-//                        ['html' => 'makeProduct-html', 'text' => 'makeProduct-text'],
-//                        [
-//                            'type' => 'buyer',
-//                            'product_id' => $model->id,
-//                            'query_name' => $seller->query->title,
-//                            'query_date' => $seller->query->created_at,
-//                            'query_car_name' => $seller->query->vendor .' '.$seller->query->car.' '.$seller->query->modification.' '.$seller->query->year
-//                        ]
-//                    )
-//                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-//                    ->setTo($seller->query->email)
-//                    ->setSubject('Added product by your request #'.$seller->query->id .' | '.Yii::$app->name)
-//                    ->send();
-//
-//                Yii::$app
-//                    ->mailer
-//                    ->compose(
-//                        ['html' => 'makeProduct-html', 'text' => 'makeProduct-text'],
-//                        ['type' => 'admin',
-//                            'product_id' => $model->id,
-//                            'query_name' => $seller->query->title,
-//                            'query_date' => $seller->query->created_at,
-//                            'query_car_name' => $seller->query->vendor .' '.$seller->query->car.' '.$seller->query->modification.' '.$seller->query->year
-//                        ]
-//                    )
-//                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-//                    ->setTo(Yii::$app->params['adminEmail'])
-//                    ->setSubject(Yii::$app->name)
-//                    ->send();
-
-                $get_prices = SellerQuery::find()->where(['query_id' => $query_data['query_id']])->andWhere(['not', ['product_id' => null]])->all();
-                $price_array = [];
-                $prices = [];
-                foreach ($get_prices as $get_price) {
-                    $price_array[] += $get_price->productPrice->price;
-                }
-                sort($price_array);
-                $arrlength = count($price_array);
-                if ($arrlength > 3) $counter = 3;
-                else $counter = $arrlength;
-
-                if ($counter > 0) {
-                    for ($x = 0; $x < $counter; $x++) {
-                        $prices += [$x => $price_array[$x]];
-                    }
-                } else {
-                    $prices = null;
-                }
-
-                return json_encode([
-                    'error' => false,
-                    'status' => 'Request sent',
-                    'prices' => $prices,
-                    //            'product' => [
-                    //                'page_title' => Yii::t('frontend', 'Product added to cart 1'),
-                    //                'img' => $product->image,
-                    //                'name' => $product->translate->name,
-                    //                //                        'shop' => $product->shop->name,
-                    //                'cat' => $product->category->translate->title,
-                    //                'cart_count' => static::getCount(),
-                    //            ],
-                ]);
-            } else {
-                return json_encode([
-                    'error' => true,
-                    'errorData' => 'Price does not exist'
-                ]);
-            }
 
     }
 
@@ -625,7 +746,10 @@ class ProductController extends Controller
 
                 $cars_array = Cars::getVendors();
 
-                $old_image = $model->image;
+//                echo '<pre>';
+//                print_r(Yii::$app->request->post());
+//                echo '</pre>';
+//                exit;
 
                 if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                     if (Yii::$app->request->post('StoreProduct')['category_id'] != $old_cat) $unset_opt = true;
@@ -633,10 +757,16 @@ class ProductController extends Controller
                         $model->status = 0;
                     }
 
+                    $image = UploadedFile::getInstanceByName('mainImage');
                     $dir = (__DIR__) . '/../../uploads/store-products/';
-                    $image = UploadedFile::getInstance($model, 'image');
 
                     if ($image) {
+                        
+                        $old_image = StoreProductImage::findOne(['main' => 1, 'product_id' => $model->id]);
+                        if (!empty($old_image)) $old_image->delete();
+                        $image_model = new StoreProductImage();
+                        $image_model->product_id = $model->id;
+                        $image_model->main = 1;
                         $path = $image->baseName . '.' . $image->extension;
                         if ($image->saveAs($dir . $path)) {
                             $resizer = new SimpleImage();
@@ -644,10 +774,42 @@ class ProductController extends Controller
                             $resizer->resize(Yii::$app->params['imageSizes']['store-products']['image'][0], Yii::$app->params['imageSizes']['store-products']['image'][1]);
                             $image_name = uniqid() . '.' . $image->extension;
                             $resizer->save($dir . $image_name);
-                            $model->image = '/uploads/store-products/' . $image_name;
+                            $image_model->link = '/uploads/store-products/' . $image_name;
                             if (file_exists($dir . $path)) unlink($dir . $path);
+
+                            $image_model->save();
+                        } else {
+                            Yii::$app->session->setFlash('error', FA::i('warning') . ' Ошибка, попробуйте позже.');
+                            return $this->goBack();
+//                            return $this->asJson('stat','error');
                         }
-                    } else $model->image = $old_image;
+                    }
+
+                    $images = UploadedFile::getInstancesByName('images');
+                    if(!empty($images)) {
+                        foreach ($images as $image) {
+                            $image_model = new StoreProductImage();
+                            $image_model->product_id = $model->id;
+                            $image_model->main = 0;
+                            $path = $image->baseName.'.'.$image->extension;
+                            if($image->saveAs($dir.$path)) {
+                                $resizer = new SimpleImage();
+                                $resizer->load($dir.$path);
+                                $resizer->resize(Yii::$app->params['imageSizes']['store-products']['image'][0], Yii::$app->params['imageSizes']['store-products']['image'][1]);
+                                $image_name = uniqid().'.'.$image->extension;
+                                $resizer->save($dir.$image_name);
+                                $image_model->link = '/uploads/store-products/'.$image_name;
+                                if(file_exists($dir.$path)) unlink($dir.$path);
+
+                                $image_model->save();
+                            }
+                            else {
+                                Yii::$app->session->setFlash('error', FA::i('warning').' Ошибка, попробуйте позже.');
+                                return $this->goBack();
+                            }
+                        }
+
+                    }
 
                     $model->car_id = $car_id;
                     $model->save();
@@ -703,7 +865,8 @@ class ProductController extends Controller
 
                     $model->save();
 
-                    return $this->redirect(['update', 'id' => $model->id]);
+//                    return $this->redirect(['update', 'id' => $model->id]);
+                    return $this->redirect(['/user/requests']);
                 }
 
                 return $this->render('update', [
@@ -830,29 +993,6 @@ class ProductController extends Controller
                 ];
             }
         }
-
-//        echo '<pre>';
-//        print_r($min_max);
-//        echo '<br>';
-//        print_r($cars_array);
-////        print_r($years);
-//        echo '</pre>';
-
-//        $query_years = (new Query())
-//            ->select(['modification, min(year) AS min, max(year) AS max'])
-//            ->from('cars')
-//            ->distinct()
-//            ->where(['vendor'=>$car_vendor])
-//            ->andWhere(['car'=>$car])
-//            ->groupBy(['car'])
-//            //->andWhere(['modification'=>$car_modification])
-//            ->all();
-//        $query_years = Cars::find()
-//            ->select(['modification, min(year) AS min, max(year) AS max'])
-//            ->where(['vendor'=>$car_vendor])
-//            ->andWhere(['car'=>$car])
-//            ->groupBy('year')
-//            ->all();
 
         $data = '<option disabled selected>' . 'Select Generation' . '</option>';
         if (count($min_max)) {

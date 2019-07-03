@@ -352,10 +352,28 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                         <!--                            </div>-->
                         <!--                        </div>-->
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-12">
+                                <label>Photo</label>
+<!--                                <div class="form-group">-->
+<!--                                    --><?php
+//                                    echo FileInput::widget([
+//                                        'name' => 'Query[0][mainImage]',
+//                                        'options' => ['accept' => 'image/*', 'multiple' => false,'class'=>'query_main_image'],
+//                                        'pluginOptions' => [
+//                                            'showCaption' => false,
+//                                            'showRemove' => false,
+//                                            'showUpload' => false,
+//                                            'browseClass' => 'btn btn-primary',
+//                                            'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
+//                                            'browseLabel' => Yii::t('frontend', 'Choose Main Image'),
+//                                        ],
+//                                        'language' => 'en'
+//                                    ]);
+//                                    ?>
+<!--                                </div>-->
+
                                 <div class="form-group">
-                                    <label>Photo</label>
-                                    <input class="" name="Query[0][image]" type="file">
+                                    <input type="file" class="query_main_image" name="Query[0][mainImage]">
                                 </div>
                             </div>
                         </div>
@@ -386,6 +404,31 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                         //                            ]);
                         //                            ?>
                         <!--                        </div>-->
+                    </div>
+                    <div class="col-md-12">
+                        <label>Images</label>
+<!--                        <div class="form-group">-->
+<!--                            -->
+<!--                            --><?php
+//                            echo FileInput::widget([
+//                                'name' => 'Query[0][images][]',
+//                                'options' => ['accept' => 'image/*', 'multiple' => true, 'class'=>'query_images'],
+//                                'pluginOptions' => [
+//                                    'uploadUrl' => '/uploads/',
+//                                    'showCaption' => false,
+//                                    'showRemove' => false,
+//                                    'showUpload' => false,
+//                                    'browseClass' => 'btn btn-primary',
+//                                    'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
+//                                    'browseLabel' => Yii::t('frontend', 'Choose Images'),
+//                                ],
+//                                'language' => 'en'
+//                            ]);
+//                            ?>
+<!--                        </div>-->
+                        <div class="form-group">
+                            <input type="file" class="query_images" name="Query[0][images][]" multiple>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -445,9 +488,26 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                         <!--                        </div>-->
                         <div class="row">
                             <div class="col-md-12">
+                                <label>Photo</label>
+<!--                                <div class="form-group">-->
+<!--                                    --><?php
+//                                    echo FileInput::widget([
+//                                        'name' => '',
+//                                        'options' => ['accept' => 'image/*', 'multiple' => false,'class'=>'query_main_image'],
+//                                        'pluginOptions' => [
+//                                            'showCaption' => false,
+//                                            'showRemove' => false,
+//                                            'showUpload' => false,
+//                                            'browseClass' => 'btn btn-primary',
+//                                            'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
+//                                            'browseLabel' => Yii::t('frontend', 'Choose Main Image'),
+//                                        ],
+//                                        'language' => 'en'
+//                                    ]);
+//                                    ?>
+<!--                                </div>-->
                                 <div class="form-group">
-                                    <label>Photo</label>
-                                    <input class="query_image" type="file">
+                                    <input type="file" class="query_main_image">
                                 </div>
                             </div>
                         </div>
@@ -460,6 +520,30 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                         <!--                        <div class="form-group">-->
                         <!--                            <input class="query_image" type="file">-->
                         <!--                        </div>-->
+                    </div>
+                    <div class="col-md-12">
+                        <label>Images</label>
+<!--                        <div class="form-group">-->
+<!--                            --><?php
+//                            echo FileInput::widget([
+//                                'name' => '',
+//                                'options' => ['accept' => 'image/*', 'multiple' => true,'class'=>'query_images'],
+//                                'pluginOptions' => [
+//                                    'uploadUrl' => '/uploads/',
+//                                    'showCaption' => false,
+//                                    'showRemove' => false,
+//                                    'showUpload' => false,
+//                                    'browseClass' => 'btn btn-primary',
+//                                    'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
+//                                    'browseLabel' => Yii::t('frontend', 'Choose Images'),
+//                                ],
+//                                'language' => 'en'
+//                            ]);
+//                            ?>
+<!--                        </div>-->
+                        <div class="form-group">
+                            <input type="file" class="query_images" multiple>
+                        </div>
                     </div>
                 </div>
             </div>

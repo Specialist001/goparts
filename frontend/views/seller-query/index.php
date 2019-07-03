@@ -1,6 +1,7 @@
 <?php
 
 use common\models\SellerQuery;
+use kartik\file\FileInput;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
@@ -126,7 +127,7 @@ $this->registerCss('
                     <div class="new_requests">
                         <?php if (!empty($seller_queries)) { ?>
                             <?php foreach ($seller_queries as $seller_query) { ?>
-                                <form id="seller-query_<?= $seller_query->id ?>">
+                                <form id="seller-query_<?= $seller_query->id ?>" enctype="multipart/form-data">
                                     <input type="hidden" class="seller_query_id" name="SellerQuery[id]"
                                            value="<?= $seller_query->id ?>">
                                     <input type="hidden" class="query_id" name="SellerQuery[query_id]"
@@ -154,7 +155,7 @@ $this->registerCss('
                                             <li class="list-inline-item d-none d-md-inline-block"
                                                 style="min-width: 100px"><?= $seller_query->query->year ?></li>
                                             <li class="list-inline-item d-none d-md-inline-block" style="width: 10%">
-                                                <img src="<?= $seller_query->query->image ?>" class="img-fluid"
+                                                <img src="<?= $seller_query->query->mainImage->name ?>" class="img-fluid"
                                                      alt="product">
                                             </li>
                                             <div class="d-inline-block d-md-none w-100">
@@ -308,56 +309,67 @@ $this->registerCss('
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <?php if ($seller_query->product_id && $seller_query->product->mainImage->link) { ?>
                                                 <div class="row pt-5">
-                                                    <div class="col-12 col-md-7">
-                                                        <div class="row request_imageboxes">
-                                                            <div class="col">
-                                                                <div class="request_imagebox">
+                                                    <div class="col-12">
+                                                        <ul class="row request_imageboxes">
+                                                            <?php if ($seller_query->product_id && $seller_query->product->mainImage->link) { ?>
+                                                            <li class="request_imagebox float-left p-1">
+                                                                <img src="<?=$seller_query->product->mainImage->link?>" class="img-fluid" style="cursor: -webkit-zoom-in; cursor: zoom-in;">
+                                                            </li>
+                                                            <?php } ?>
+                                                             <?php if ($seller_query->product_id && $seller_query->product->images) { ?>
+                                                                 <?php foreach ($seller_query->product->images as $image) { ?>
+                                                                 <li class="request_imagebox float-left p-1">
+                                                                     <img src="<?= $image->link?>" class="img-fluid" style="cursor: -webkit-zoom-in; cursor: zoom-in;">
+                                                                 </li>
+                                                             <?php }
+                                                                } ?>
+<!--                                                            <div class="col">-->
+<!--                                                                <div class="request_imagebox">-->
+<!--                                                                    <input type="file" name="Product[image][0]" class="d-none" style="visibility: hidden">-->
+<!--                                                                </div>-->
+<!--                                                            </div>-->
+<!--                                                            <div class="col">-->
+<!--                                                                <div class="request_imagebox">-->
+<!--                                                                    <input type="file" name="Product[image][1]" class="d-none" style="visibility: hidden">-->
+<!--                                                                </div>-->
+<!--                                                            </div>-->
+<!--                                                            <div class="col">-->
+<!--                                                                <div class="request_imagebox">-->
+<!--                                                                    <input type="file" name="Product[image][2]" class="d-none" style="visibility: hidden">-->
+<!--                                                                </div>-->
+<!--                                                            </div>-->
+<!--                                                            <div class="col">-->
+<!--                                                                <div class="request_imagebox">-->
+<!--                                                                    <input type="file" name="Product[image][3]" class="d-none" style="visibility: hidden">-->
+<!--                                                                </div>-->
+<!--                                                            </div>-->
 
-                                                                </div>
-                                                            </div>
-                                                            <div class="col">
-                                                                <div class="request_imagebox">
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="col">
-                                                                <div class="request_imagebox">
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="col">
-                                                                <div class="request_imagebox">
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="col">
-                                                                <div class="request_imagebox">
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        </ul>
                                                     </div>
-
-                                                    <div class="col-12 col-md-5 pl-0 pl-md-1 mt-auto">
-                                                        <div class="row">
-                                                            <div class="col-12 col-md-5 text-center">
-
+                                                </div>
+                                                <?php } ?>
+                                                <div class="row pt-5">
+                                                    <div class="col-12 pl-0 pl-md-1 text-md-right">
+<!--                                                        <div class="row">-->
+<!--                                                            <div class="col-12 col-md-5 text-center">-->
+                                                                <a class="add_images py-2 mx-3 text-form-style_2 font-weight-bold <?= !$seller_query->product_id ? 'd-none' : 'd-inline-block'  ?>" href="<?= Url::to(['product/update', 'id' => $seller_query->product_id]) ?>">Add Image</a>
                                                                 <a
-                                                                   class="<?= !$seller_query->product_id ? 'send_request' : 'update_request'?>  d-inline-block py-2 text-form-style_1 font-weight-bold"
+                                                                   class="mx-3 <?= !$seller_query->product_id ? 'send_request' : 'update_request'?>  d-inline-block py-2 text-form-style_1 font-weight-bold"
                                                                    style="width: 130px"
                                                                     data-seller_query_id = "<?= $seller_query->id ?>"
 
                                                                 >
                                                                     <?= !$seller_query->product_id ? 'Send request' : 'Update request'?>
                                                                 </a>
-                                                            </div>
-                                                            <div class="col-12 col-md-7 text-center">
-                                                                <a class="delete_order btn btn-outline-danger"
+<!--                                                            </div>-->
+<!--                                                            <div class="col-12 col-md-7 text-center">-->
+                                                                <a class="delete_order mx-3 btn btn-outline-danger"
                                                                    style="border-radius: 20px">Remove order <i
                                                                             class="la la-times-circle"></i> </a>
-                                                            </div>
-                                                        </div>
+<!--                                                            </div>-->
+<!--                                                        </div>-->
                                                     </div>
                                                 </div>
                                             </div>
@@ -386,14 +398,38 @@ $this->registerCss('
 <?php $this->registerJs('
     jQuery(document).ready( function($) {
     
+//    $(\'.request_imagebox\').click(function () {
+//        $(this).children().click();
+//    });
+    
     $(\'.open_query\').on(\'click\', function () {
         if ($(this).children(\'i\').hasClass(\'la-chevron-circle-down\')) {
             $(this).children(\'i\').removeClass(\'la-chevron-circle-down\').addClass(\'la-chevron-circle-up\');
         } else {
             $(this).children(\'i\').removeClass(\'la-chevron-circle-up\').addClass(\'la-chevron-circle-down\');
         }        
-    });
+    });   
     
+    var $images = $(\'.request_imageboxes\');
+    var options = {
+        url: \'data-original\' };
+    $images.on({ready:  function (e) {
+            console.log(e.type);
+        }
+    }).viewer(options);
+    
+//    $images.viewer({
+//        inline: true,
+//        viewed: function() {
+//            $images.viewer(\'zoomTo\', 1);
+//        }
+//    });
+
+    // Get the Viewer.js instance after initialized
+//    var viewer = $images.data(\'viewer\');
+
+    // View a list of images
+//    $images.viewer();
     
     
 //        $(\'.edit_price\').click(function () {
@@ -442,5 +478,8 @@ $this->registerCss('
 //            e.preventDefault();
 //    });     
 });
+
+
+    
 
 '); ?>

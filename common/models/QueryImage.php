@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property int $query_id
+ * @property int $main
  * @property string $name
  *
  * @property Query $query
@@ -29,7 +30,7 @@ class QueryImage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['query_id'], 'integer'],
+            [['query_id','main'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['query_id'], 'exist', 'skipOnError' => true, 'targetClass' => Query::className(), 'targetAttribute' => ['query_id' => 'id']],
         ];

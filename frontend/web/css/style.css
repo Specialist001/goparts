@@ -30,10 +30,21 @@
 .footer_left_div4_button:focus {
     outline: 0 !important;
 }
+html {
+    font-size: 16px!important;
+}
 
 body {
     font-family: 'GothamPro';
     /*background-color: #fff!important;*/
+}
+.file-drop-zone-title {
+    font-size: 1rem;
+    padding: 10px 0;
+}
+.krajee-default.file-preview-frame .kv-file-content {
+    width: 130px;
+    height: 100px;
 }
 
 button:focus {
@@ -1550,7 +1561,7 @@ footer {
 .customer_list ul li {
     border-bottom: 1px dashed #eee;
     padding: 10px 0;
-    font-size: 13px;
+    font-size: 12px;
     color: #292929;
     text-transform: uppercase;
 }
@@ -1566,7 +1577,7 @@ footer {
 }
 
 .customer_list ul li img {
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 .customer_cont {
@@ -2142,11 +2153,13 @@ li.lcm-title:hover {
     padding-right: 5px;
 }
 .request_imagebox {
+    width: 15%!important;
     border: 1px dashed #c1c1c1;
-    background: url("../img/no-image.jpg");
+    /*background: url("../img/no-image.jpg");*/
     min-height: 70px;
     background-size: cover;
     background-repeat: no-repeat;
+    cursor: pointer;
 }
 .request_imagebox i {
     color: #c1c1c1;

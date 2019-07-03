@@ -24,7 +24,7 @@ if(!empty($model->car_id)) {
     $car = Cars::findOne(['id'=>$model->car_id]);
     //$car = Cars::findOne(['id'=>Yii::$app->request->get('car_id')]);
     $car_name = $car->vendor .' '.$car->car.' '.$car->modification.' '.$car->year;
-    echo $car_name;
+//    echo $car_name;
     if (!empty(Yii::$app->request->get('vendor'))) {
         $vendor_name = Yii::$app->request->get('vendor');
     } else {
@@ -217,24 +217,24 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
 <!--            </form>-->
 <!--        --><?php //} else { ?>
 
-            <?php $form = ActiveForm::begin(); ?>
-            <div class="row">
-                <div class="col-md-5">
-                    <label>Category</label>
-                    <input type="text" readonly="readonly" id="category_id" class="form-control"
-                           value="<?= $category->translate->title ? $category->translate->title : $model->category->translate->title ?>"/>
+            <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data', 'id' => 'prod-form']]); ?>
+<!--            <div class="row">-->
+<!--                <div class="col-md-5">-->
+<!--                    <label>Category</label>-->
+<!--                    <input type="text" readonly="readonly" id="category_id" class="form-control"-->
+<!--                           value="--><?//= $category->translate->title ? $category->translate->title : $model->category->translate->title ?><!--"/>-->
 <!--                    <a href="--><?//= Url::current(['category' => '']) ?><!--"-->
 <!--                       onclick="if(!confirm('Expected form to save. Cancel?'))return false;">Choose another category</a>-->
-                    <?= $form->field($model, 'category_id')->hiddenInput()->label(false) ?>
-                </div>
-                <div class="col-md-4">
-                    <?= $form->field($model, 'serial_number')->textInput(['maxlength' => true]) ?>
-                </div>
+<!--                    --><?//= $form->field($model, 'category_id')->hiddenInput()->label(false) ?>
+<!--                </div>-->
+<!--                <div class="col-md-4">-->
+<!--                    --><?//= $form->field($model, 'serial_number')->textInput(['maxlength' => true]) ?>
+<!--                </div>-->
 
-                <div class="col-md-3">
-                    <?= $form->field($model, 'type_car_id')->dropDownList($type_car_filter)->label('Body type') ?>
-                </div>
-            </div>
+<!--                <div class="col-md-3">-->
+<!--                    --><?//= $form->field($model, 'type_car_id')->dropDownList($type_car_filter)->label('Body type') ?>
+<!--                </div>-->
+<!--            </div>-->
             <input type="hidden" name="vendor" value="<?= Yii::$app->request->get('vendor') ?>" readonly>
             <input type="hidden" name="car" value="<?= Yii::$app->request->get('car') ?>" readonly>
             <input type="hidden" name="modification" value="<?= Yii::$app->request->get('modification') ?>" readonly>
@@ -252,9 +252,9 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                 <div class="col-md-3">
                     <?= $form->field($model, 'sku')->textInput(['maxlength' => true, 'readonly' => true, 'disabled' => true]) ?>
                 </div>
-                <div class="col-md-3">
-                    <?= $form->field($model, 'status')->dropDownList([1 => 'Active','0' => 'Not active']) ?>
-                </div>
+<!--                <div class="col-md-3">-->
+<!--                    --><?//= $form->field($model, 'status')->dropDownList([1 => 'Active','0' => 'Not active']) ?>
+<!--                </div>-->
                 <!---->
                 <!--            <div class="col-md-3">-->
                 <!--                --><? //= $form->field($model, 'order')->textInput(['type' => 'number', 'min' => 0]) ?>
@@ -262,71 +262,70 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
             </div>
             <h3 class="pt-2">Product Description</h3>
             <div class="row">
-                <div class="col-md-4">
-                    <?= $form->field($translation_en, 'name[en]')->textInput(['value' => $translation_en->name]) ?>
-                </div>
-                <div class="col-md-8">
-                    <?= $form->field($translation_en, 'short[en]')->textInput(['value' => $translation_en->short]) ?>
-                </div>
+<!--                <div class="col-md-4">-->
+<!--                    --><?//= $form->field($translation_en, 'name[en]')->textInput(['value' => $translation_en->name]) ?>
+<!--                </div>-->
+<!--                <div class="col-md-8">-->
+<!--                    --><?//= $form->field($translation_en, 'short[en]')->textInput(['value' => $translation_en->short]) ?>
+<!--                </div>-->
                 <div class="col-md-12">
-
-                    <?= $form->field($translation_en, 'description[en]')->widget(TinyMce::className(), [
-                        'options' => ['rows' => 6],
-                        'value' => $translation_en->description,
-                        'language' => 'en',
-                        'clientOptions' => [
-                            'plugins' => [
-                                "advlist autolink lists link charmap preview anchor",
-                                "searchreplace visualblocks code fullscreen",
-                                "insertdatetime media table contextmenu paste"
-                            ],
-                            'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-                        ]
-                    ])->textarea(['value' => $translation_en->description]);
-                    ?>
+                    <?= $form->field($translation_en, 'description[en]')->textarea(['rows' => 4,'value' => $translation_en->description, 'readonly'=>true]) ?>
+<!--                    --><?//= $form->field($translation_en, 'description[en]')->widget(TinyMce::className(), [
+//                        'options' => ['rows' => 6],
+//                        'value' => $translation_en->description,
+//                        'language' => 'en',
+//                        'clientOptions' => [
+//                            'plugins' => [
+//                                "advlist autolink lists link charmap preview anchor",
+//                                "searchreplace visualblocks code fullscreen",
+//                                "insertdatetime media table contextmenu paste"
+//                            ],
+//                            'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+//                        ]
+//                    ])->textarea(['value' => $translation_en->description]);
+//                    ?>
                 </div>
             </div>
             <br>
 
-            <h3 class="text-left">
-                Product Price
-            </h3>
+<!--            <h3 class="text-left">-->
+<!--                Product Price-->
+<!--            </h3>-->
             <div class="row">
-
                 <div class="col-md-3">
-                    <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'price')->textInput(['maxlength' => true])->label('Price (AED)') ?>
                 </div>
 
             </div>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <h3>Product Dimensions</h3>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <?= $form->field($model, 'in_stock')->dropDownList([1 => 'In stock', '0' => 'Not in stock']) ?>
-                        </div>
-                        <div class="col-md-4">
-                            <?= $form->field($model, 'quantity')->textInput(['type' => 'number', 'min' => 0]) ?>
-                        </div>
-                    </div>
-                    <!--                <div class="row">-->
-                    <!--                    <div class="col-md-3">-->
-                    <!--                        --><? //= $form->field($model, 'length')->textInput(['type' => 'number', 'min' => 0, 'maxlength' => true])->input('length', ['placeholder' => "Length, m."]) ?>
-                    <!--                    </div>-->
-                    <!--                    <div class="col-md-3">-->
-                    <!--                        --><? //= $form->field($model, 'width')->textInput(['type' => 'number', 'min' => 0, 'maxlength' => true])->input('width', ['placeholder' => "Width, m."]) ?>
-                    <!--                    </div>-->
-                    <!--                    <div class="col-md-3">-->
-                    <!--                        --><? //= $form->field($model, 'height')->textInput(['type' => 'number', 'min' => 0, 'maxlength' => true])->input('height', ['placeholder' => "Height, m."]) ?>
-                    <!--                    </div>-->
-                    <!--                    <div class="col-md-3">-->
-                    <!--                        --><? //= $form->field($model, 'weight')->textInput(['type' => 'number', 'min' => 0, 'maxlength' => true])->input('weight', ['placeholder' => "Weight, kg"]) ?>
-                    <!--                    </div>-->
-                    <!--                </div>-->
-                </div>
-
-            </div>
+<!--            <div class="row">-->
+<!--                <div class="col-md-6">-->
+<!--                    <h3>Product Dimensions</h3>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-md-4">-->
+<!--                            --><?//= $form->field($model, 'in_stock')->dropDownList([1 => 'In stock', '0' => 'Not in stock']) ?>
+<!--                        </div>-->
+<!--                        <div class="col-md-4">-->
+                            <?= $form->field($model, 'quantity')->hiddenInput(['value'=>1])->label(false) ?>
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                                    <div class="row">-->
+<!--                                        <div class="col-md-3">-->
+<!--                                            --><?// //= $form->field($model, 'length')->textInput(['type' => 'number', 'min' => 0, 'maxlength' => true])->input('length', ['placeholder' => "Length, m."]) ?>
+<!--                                        </div>-->
+<!--                                        <div class="col-md-3">-->
+<!--                                            --><?// //= $form->field($model, 'width')->textInput(['type' => 'number', 'min' => 0, 'maxlength' => true])->input('width', ['placeholder' => "Width, m."]) ?>
+<!--                                        </div>-->
+<!--                                        <div class="col-md-3">-->
+<!--                                            --><?// //= $form->field($model, 'height')->textInput(['type' => 'number', 'min' => 0, 'maxlength' => true])->input('height', ['placeholder' => "Height, m."]) ?>
+<!--                                        </div>-->
+<!--                                        <div class="col-md-3">-->
+<!--                                            --><?// //= $form->field($model, 'weight')->textInput(['type' => 'number', 'min' => 0, 'maxlength' => true])->input('weight', ['placeholder' => "Weight, kg"]) ?>
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                </div>-->
+<!---->
+<!--            </div>-->
 
             <!--        <div class="row">-->
             <!--            <div class="col-md-12">-->
@@ -445,10 +444,73 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
             <!--            </div>-->
             <!---->
             <!--        </div>-->
+            <h4 class="pt-4">
+                Images
+            </h4>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <?php
+                        echo FileInput::widget([
+                            'name' => 'mainImage',
+                            'options' => ['accept' => 'image/*', 'multiple' => false],
+                            'pluginOptions' => [
+                                'showCaption' => false,
+                                'showRemove' => false,
+                                'showUpload' => false,
+                                'browseClass' => 'btn btn-primary',
+                                'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
+                                'browseLabel' => Yii::t('frontend', 'Choose Main Image'),
+                            ],
+                            'language' => 'en'
+                        ]);
+                        ?>
+                    </div>
+                </div>
+                <div class="col-md-3 pb-3">
+                    <div class="main_image">
+                    <?php if ($model->mainImage->link != '') { ?>
+                        <img id="image1" src="<?=$model->mainImage->link?>" class="img-fluid"  alt="main_image">
+                    <?php } ?>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <ul class="row all_images d-none d-md-flex" id="images">
+                        <?php if($model->images){ ?>
+                        <?php foreach($model->images as $image) {?>
+                            <li class="w-25">
+                                <img alt="picture" class="img-fluid" src="<?= $image->link ?>">
+                            </li>
+                        <?php } ?>
+                        <?php } ?>
+                    </ul>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                    <?php
+                    echo FileInput::widget([
+                        'name' => 'images[]',
+                        'options' => ['accept' => 'image/*', 'multiple' => true],
+                        'pluginOptions' => [
+                            'uploadUrl' => '/uploads/',
+                            'showCaption' => false,
+                            'showRemove' => false,
+                            'showUpload' => false,
+                            'browseClass' => 'btn btn-primary',
+                            'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
+                            'browseLabel' => Yii::t('frontend', 'Choose Images'),
+                        ],
+                        'language' => 'en'
+                    ]);
+                    ?>
+                    </div>
+                </div>
+            </div>
 
 
-            <div class="form-group">
-                <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+            <div class="form-group pt-4">
+                <?= Html::submitButton('Save', ['class' => 'btn btn-success px-3']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>
@@ -556,6 +618,22 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
 
 <?php $this->registerJs('
     $(document).ready(function() {
+    
+        var $image = $(\'#image\');
+
+        $image.viewer({
+            inline: true,
+            viewed: function() {
+                $image.viewer(\'zoomTo\', 1);
+            }
+        });
+
+        // Get the Viewer.js instance after initialized
+        var viewer = $image.data(\'viewer\');
+
+        // View a list of images
+        $(\'#images\').viewer();
+        
         $(\'select.form-control\').select2(
             {
                 language: {

@@ -19,6 +19,8 @@ class AppAsset extends AssetBundle
         'css/jquery.fancybox.min.css',
         'css/checkbox.css',
         'css/line-awesome.min.css',
+        'css/line-awesome.min.css',
+        'css/viewer/viewer.min.css',
         'css/site.css',
         'css/style.css',
     ];
@@ -31,6 +33,8 @@ class AppAsset extends AssetBundle
         'js/select2.min.js',
         'js/jquery.fancybox.min.js',
         'js/jquery.scrollbar.js',
+        'js/viewer/viewer.min.js',
+        'js/jquery-viewer/jquery-viewer.min.js',
         'js/script.js',
     ];
     public $depends = [
