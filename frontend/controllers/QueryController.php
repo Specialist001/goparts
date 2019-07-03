@@ -4,9 +4,12 @@ namespace frontend\controllers;
 
 use common\components\SimpleImage;
 use common\models\Cars;
+use common\models\QueryImage;
 use common\models\StoreCategory;
 use common\models\StoreOption;
+use common\models\StoreProductImage;
 use common\models\User;
+use rmrevin\yii\fontawesome\FA;
 use Yii;
 use common\models\Query;
 use frontend\models\QuerySearch;
@@ -150,7 +153,6 @@ class QueryController extends Controller
 
             if (Yii::$app->request->post()) {
 
-
                 foreach ($query_part as $key => $part) {
                     $model = new Query();
                     $model->car_id = $query_data['car_id'];
@@ -167,16 +169,28 @@ class QueryController extends Controller
                     $model->category_id = $part['category_id'];
                     $model->description = $part['description'];
 
-
                     $model->user_id = Yii::$app->user->getId() ? Yii::$app->user->getId() : null;
 
-//                    $model->save();
+                    $model->name = $query_data['name'];
+                    $model->phone = $query_data['phone'];
+                    $model->email = $query_data['email'];
 
+                    $model->save();
+//                    $dir = (__DIR__) . '/../../uploads/queries/';
+//                    $image = UploadedFile::getInstanceByName('Query['.$key.'][image]');
+
+                    $image = UploadedFile::getInstanceByName('Query['.$key.'][mainImage]');
                     $dir = (__DIR__) . '/../../uploads/queries/';
-                    $image = UploadedFile::getInstanceByName('Query['.$key.'][image]');
-//                    print_r($image);exit;
+//                    echo '<pre>';
+//                    print_r($model);
+//                    echo '</pre>';
+//                    exit;
 
                     if ($image) {
+                        $image_model = new QueryImage();
+                        $image_model->query_id = $model->id;
+                        $image_model->main = 1;
+                        $image_model->save();
                         $path = $image->baseName . '.' . $image->extension;
                         if ($image->saveAs($dir . $path)) {
                             $resizer = new SimpleImage();
@@ -184,15 +198,40 @@ class QueryController extends Controller
                             $resizer->resize(Yii::$app->params['imageSizes']['store-products']['image'][0], Yii::$app->params['imageSizes']['store-products']['image'][1]);
                             $image_name = uniqid() . '.' . $image->extension;
                             $resizer->save($dir . $image_name);
-                            $model->image = '/uploads/queries/' . $image_name;
+                            $image_model->name = '/uploads/queries/' . $image_name;
                             if (is_file($dir . $path)) if (file_exists($dir . $path)) unlink($dir . $path);
+                            $image_model->save();
                         }
-                    } else $model->image = null;
+                    } else {
+                        $image_model = new QueryImage();
+                        $image_model->query_id = $model->id;
+                        $image_model->name = '/uploads/site/default_product.png';
+                        $image_model->save();
+                    }
+
+                    $images = UploadedFile::getInstancesByName('Query['.$key.'][images]');
+                    if (!empty($images)) {
+                        foreach ($images as $image) {
+                            $image_model = new QueryImage();
+                            $image_model->query_id = $model->id;
+                            $image_model->main = 0;
+                            $path = $image->baseName . '.' . $image->extension;
+                            if ($image->saveAs($dir . $path)) {
+                                $resizer = new SimpleImage();
+                                $resizer->load($dir . $path);
+                                $resizer->resize(Yii::$app->params['imageSizes']['store-products']['image'][0], Yii::$app->params['imageSizes']['store-products']['image'][1]);
+                                $image_name = uniqid() . '.' . $image->extension;
+                                $resizer->save($dir . $image_name);
+                                $image_model->name = '/uploads/queries/' . $image_name;
+                                if (is_file($dir . $path)) if (file_exists($dir . $path)) unlink($dir . $path);
+
+                                $image_model->save();
+                            }
+                        }
+                    }
 
 
-                    $model->name = $query_data['name'];
-                    $model->phone = $query_data['phone'];
-                    $model->email = $query_data['email'];
+
 
                     $model->save();
 

@@ -82,7 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=>'image',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return $model->image ? '<img src="'.$model->image.'" class="img-responsive" alt="query_'.$model->id.'" style="width: 80px">' : null;
+                    return $model->mainImage->name ? '<img src="'.$model->mainImage->name.'" class="img-responsive" alt="query_'.$model->id.'" style="width: 80px">' : null;
                 }
             ],
             [

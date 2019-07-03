@@ -56,4 +56,5 @@ return [
             'image' => [210, 122],
         ],
     ],
+//    'bsVersion' => '4.x',
 ];

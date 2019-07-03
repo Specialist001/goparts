@@ -194,6 +194,22 @@ class StoreProduct extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getMainImage()
+    {
+        return $this->hasOne(StoreProductImage::className(), ['product_id' => 'id'])->where(['main' => 1]);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImages()
+    {
+        return $this->hasMany(StoreProductImage::className(), ['product_id' => 'id'])->where(['main' => 0]);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getStoreProductImages()
     {
         return $this->hasMany(StoreProductImage::className(), ['product_id' => 'id']);
