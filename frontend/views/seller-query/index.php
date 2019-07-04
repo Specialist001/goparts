@@ -185,7 +185,7 @@ $this->registerCss('
                                                 </table>
                                             </div>
                                             <li class="list-inline-item d-md-none" style="width: 30%">
-                                                <img src="<?= $seller_query->query->image ?>" class="img-fluid"
+                                                <img src="<?= $seller_query->query->mainImage->name ?>" class="img-fluid"
                                                      alt="product">
                                             </li>
                                             <li class="list-inline-item float-right pt-2 pr-2"
