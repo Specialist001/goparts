@@ -202,12 +202,13 @@ class QueryController extends Controller
                             if (is_file($dir . $path)) if (file_exists($dir . $path)) unlink($dir . $path);
                             $image_model->save();
                         }
-                    } else {
-                        $image_model = new QueryImage();
-                        $image_model->query_id = $model->id;
-                        $image_model->name = '/uploads/site/default_product.png';
-                        $image_model->save();
                     }
+//                    else {
+//                        $image_model = new QueryImage();
+//                        $image_model->query_id = $model->id;
+//                        $image_model->name = '/uploads/site/default_product.png';
+//                        $image_model->save();
+//                    }
 
                     $images = UploadedFile::getInstancesByName('Query['.$key.'][images]');
                     if (!empty($images)) {

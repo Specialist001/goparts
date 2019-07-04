@@ -127,7 +127,8 @@ $this->registerCss('
                     <div class="new_requests">
                         <?php if (!empty($seller_queries)) { ?>
                             <?php foreach ($seller_queries as $seller_query) { ?>
-                                <form id="seller-query_<?= $seller_query->id ?>" enctype="multipart/form-data">
+                                <form id="seller-query_<?= $seller_query->id ?>" method="POST" enctype="multipart/form-data">
+<!--                                <form id="seller-query_--><?//= $seller_query->id ?><!--" action="--><?//= $seller_query->product_id ? Url::to(['/user/product/edit','id'=>$seller_query->product_id]) : Url::to(['/user/product/add']) ?><!--" method="POST" enctype="multipart/form-data">-->
                                     <input type="hidden" class="seller_query_id" name="SellerQuery[id]"
                                            value="<?= $seller_query->id ?>">
                                     <input type="hidden" class="query_id" name="SellerQuery[query_id]"
@@ -155,10 +156,20 @@ $this->registerCss('
                                             <li class="list-inline-item d-none d-md-inline-block"
                                                 style="min-width: 100px"><?= $seller_query->query->year ?></li>
                                             <li class="list-inline-item d-none d-md-inline-block" style="width: 10%">
-                                                <?php if($seller_query->query->mainImage) { ?>
-                                                <img src="<?= $seller_query->query->mainImage->name ?>" class="img-fluid"
+                                                <ul class="query_imageboxes pl-0 d-inline-block">
+                                                <li class="query_imagebox">
+                                                    <img src="<?= $seller_query->query->firstImage->name ?>" class="img-fluid"
                                                      alt="product">
-                                                 <?php } ?>
+                                                </li>
+                                                    <?php if($seller_query->query->images) {
+                                                        foreach ($seller_query->query->images as $q_image) {
+                                                        ?>
+                                                            <li class="d-none">
+                                                                <img src="<?= $q_image->name ?>" class="img-fluid"
+                                                                     alt="product">
+                                                            </li>
+                                                    <?php } } ?>
+                                                </ul>
                                             </li>
                                             <div class="d-inline-block d-md-none w-100">
                                                 <table>
@@ -313,8 +324,8 @@ $this->registerCss('
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <?php if ($seller_query->product_id && $seller_query->product->mainImage->link) { ?>
-                                                <div class="row pt-5">
+                                                <div class="row pt-5 img_select">
+                                                <?php if ($seller_query->product_id && $seller_query->product->images) { ?>
                                                     <div class="col-12">
                                                         <ul class="row request_imageboxes">
                                                             <?php if ($seller_query->product_id && $seller_query->product->mainImage->link) { ?>
@@ -352,13 +363,18 @@ $this->registerCss('
 
                                                         </ul>
                                                     </div>
-                                                </div>
                                                 <?php } ?>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12 q_images">
+                                                        <input type="file" class="query_images" name="Query[images][]" multiple>
+                                                    </div>
+                                                </div>
                                                 <div class="row pt-5">
                                                     <div class="col-12 pl-0 pl-md-1 text-md-right">
 <!--                                                        <div class="row">-->
 <!--                                                            <div class="col-12 col-md-5 text-center">-->
-                                                                <a class="add_images py-2 mx-3 text-form-style_2 font-weight-bold <?= !$seller_query->product_id ? 'd-none' : 'd-inline-block'  ?>" href="<?= Url::to(['product/update', 'id' => $seller_query->product_id]) ?>">Add Image</a>
+<!--                                                                <a class="add_images py-2 mx-3 text-form-style_2 font-weight-bold --><?//= !$seller_query->product_id ? 'd-none' : 'd-inline-block'  ?><!--" href="--><?//= Url::to(['product/update', 'id' => $seller_query->product_id]) ?><!--">Add Image</a>-->
                                                                 <a
                                                                    class="mx-3 <?= !$seller_query->product_id ? 'send_request' : 'update_request'?>  d-inline-block py-2 text-form-style_1 font-weight-bold"
                                                                    style="width: 130px"
@@ -367,6 +383,7 @@ $this->registerCss('
                                                                 >
                                                                     <?= !$seller_query->product_id ? 'Send request' : 'Update request'?>
                                                                 </a>
+<!--                                                        <button class="btn btn-success py-2 mx-3 text-form-style_2 font-weight-bold d-inline-block" type="submit">--><?//=$seller_query->product_id ? 'Update' : 'Send request' ?><!--</button>-->
 <!--                                                            </div>-->
 <!--                                                            <div class="col-12 col-md-7 text-center">-->
                                                                 <a class="delete_order mx-3 btn btn-outline-danger"
@@ -418,6 +435,14 @@ $this->registerCss('
     var options = {
         url: \'data-original\' };
     $images.on({ready:  function (e) {
+            console.log(e.type);
+        }
+    }).viewer(options);
+    
+    var $query_images = $(\'.query_imageboxes\');
+    var options = {
+        url: \'data-original\' };
+    $query_images.on({ready:  function (e) {
             console.log(e.type);
         }
     }).viewer(options);

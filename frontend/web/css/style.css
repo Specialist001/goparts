@@ -2161,6 +2161,9 @@ li.lcm-title:hover {
     background-repeat: no-repeat;
     cursor: pointer;
 }
+.query_imagebox {
+    cursor: pointer;
+}
 .request_imagebox i {
     color: #c1c1c1;
     padding: 20px 40px;
