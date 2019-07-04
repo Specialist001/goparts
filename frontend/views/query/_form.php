@@ -353,7 +353,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                         <!--                        </div>-->
                         <div class="row">
                             <div class="col-md-12">
-                                <label>Photo</label>
+                                <label>Images</label>
 <!--                                <div class="form-group">-->
 <!--                                    --><?php
 //                                    echo FileInput::widget([
@@ -372,8 +372,11 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
 //                                    ?>
 <!--                                </div>-->
 
+<!--                                <div class="form-group">-->
+<!--                                    <input type="file" class="query_main_image" name="Query[0][mainImage]">-->
+<!--                                </div>-->
                                 <div class="form-group">
-                                    <input type="file" class="query_main_image" name="Query[0][mainImage]">
+                                    <input type="file" class="query_images" name="Query[0][images][]" multiple>
                                 </div>
                             </div>
                         </div>
@@ -406,7 +409,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                         <!--                        </div>-->
                     </div>
                     <div class="col-md-12">
-                        <label>Images</label>
+<!--                        <label>Images</label>-->
 <!--                        <div class="form-group">-->
 <!--                            -->
 <!--                            --><?php
@@ -426,9 +429,9 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
 //                            ]);
 //                            ?>
 <!--                        </div>-->
-                        <div class="form-group">
-                            <input type="file" class="query_images" name="Query[0][images][]" multiple>
-                        </div>
+<!--                        <div class="form-group">-->
+<!--                            <input type="file" class="query_images" name="Query[0][images][]" multiple>-->
+<!--                        </div>-->
                     </div>
                 </div>
             </div>
@@ -488,7 +491,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                         <!--                        </div>-->
                         <div class="row">
                             <div class="col-md-12">
-                                <label>Photo</label>
+                                <label>Images</label>
 <!--                                <div class="form-group">-->
 <!--                                    --><?php
 //                                    echo FileInput::widget([
@@ -507,8 +510,11 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
 //                                    ?>
 <!--                                </div>-->
                                 <div class="form-group">
-                                    <input type="file" class="query_main_image">
+                                    <input type="file" class="query_images" multiple>
                                 </div>
+<!--                                <div class="form-group">-->
+<!--                                    <input type="file" class="query_main_image">-->
+<!--                                </div>-->
                             </div>
                         </div>
 
@@ -522,7 +528,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                         <!--                        </div>-->
                     </div>
                     <div class="col-md-12">
-                        <label>Images</label>
+<!--                        <label>Images</label>-->
 <!--                        <div class="form-group">-->
 <!--                            --><?php
 //                            echo FileInput::widget([
@@ -541,9 +547,9 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
 //                            ]);
 //                            ?>
 <!--                        </div>-->
-                        <div class="form-group">
-                            <input type="file" class="query_images" multiple>
-                        </div>
+<!--                        <div class="form-group">-->
+<!--                            <input type="file" class="query_images" multiple>-->
+<!--                        </div>-->
                     </div>
                 </div>
             </div>

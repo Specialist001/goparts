@@ -347,10 +347,10 @@ class ProductController extends Controller
                         return $this->goBack();
                     }
                 }
-
-                $images = UploadedFile::getInstancesByName('images');
+                $images_json_array = [];
+                $images = UploadedFile::getInstancesByName('Query[images]');
                 if (!empty($images)) {
-                    foreach ($images as $image) {
+                    foreach ($images as $key => $image) {
                         $image_model = new StoreProductImage();
                         $image_model->product_id = $model->id;
                         $image_model->main = 0;
@@ -365,6 +365,7 @@ class ProductController extends Controller
                             if (is_file($dir . $path)) if (file_exists($dir . $path)) unlink($dir . $path);
 
                             $image_model->save();
+                            $images_json_array += [$key => $image_model->link];
                         } else {
                             Yii::$app->session->setFlash('error', FA::i('warning') . ' Ошибка, попробуйте позже.');
                             return $this->goBack();
@@ -483,6 +484,8 @@ class ProductController extends Controller
                     $image_array += [$all_image->id => $all_image->link];
                 }
 
+
+
                 return json_encode([
                     'error' => false,
                     'status' => 'Request sent',
@@ -490,6 +493,7 @@ class ProductController extends Controller
                     'image_array' => $image_array,
 //                'postData' => $model->translate->description,
                     'prices' => $prices,
+                    'images_json_array' => $images_json_array,
                     //            'product' => [
                     //                'page_title' => Yii::t('frontend', 'Product added to cart 1'),
                     //                'img' => $product->image,
@@ -499,17 +503,22 @@ class ProductController extends Controller
                     //                'cart_count' => static::getCount(),
                     //            ],
                 ]);
+//                return $this->redirect(['/user/requests']);
             } else {
-                return json_encode([
-                    'error' => true,
-                    'errorData' => 'Price does not exist'
-                ]);
+//                return json_encode([
+//                    'error' => true,
+//                    'errorData' => 'Price does not exist'
+//                ]);
+                Yii::$app->session->setFlash('error', FA::i('warning').' Price not found');
+                return $this->redirect(['/user/requests']);
             }
         } else {
-            return json_encode([
-                'error' => true,
-                'errorData' => 'Description does not exist'
-            ]);
+            Yii::$app->session->setFlash('error', FA::i('warning').' Description not found');
+            return $this->redirect(['/user/requests']);
+//            return json_encode([
+//                'error' => true,
+//                'errorData' => 'Description does not exist'
+//            ]);
         }
     }
 
@@ -518,17 +527,24 @@ class ProductController extends Controller
         $post = Yii::$app->request->post();
         $product_data = $post['Product'];
         $query_data = $post['SellerQuery'];
-//        print_r($post);exit;
+
+//        echo '<pre>';
+//        print_r($post);
+//        echo '</pre>';
+//        exit;
 
         if ($product_data['price']) {
 
             $model = StoreProduct::find()->where(['id' => $product_data['product_id']])->one();
+//            $model = StoreProduct::find()->where(['id' => $id])->one();
+//            $model = $this->findModel($id);
 
 //                $model->car_id = $query_data['car_id'];
 //                $model->user_id = Yii::$app->user->identity->getId();
 
             $image = UploadedFile::getInstanceByName('mainImage');
             $dir = (__DIR__) . '/../../uploads/store-products/';
+
 
             if ($image) {
                 $old_image = StoreProductImage::findOne(['main' => 1, 'product_id' => $model->id]);
@@ -547,16 +563,17 @@ class ProductController extends Controller
                     if (file_exists($dir . $path)) unlink($dir . $path);
 
                     $image_model->save();
+
                 } else {
 //                    Yii::$app->session->setFlash('error', FA::i('warning') . ' Ошибка, попробуйте позже.');
 //                    return $this->goBack();
                     return $this->asJson('stat','error');
                 }
             }
-
-            $images = UploadedFile::getInstancesByName('images');
+            $images_json_array = [];
+            $images = UploadedFile::getInstancesByName('Query[images]');
             if(!empty($images)) {
-                foreach ($images as $image) {
+                foreach ($images as $key => $image) {
                     $image_model = new StoreProductImage();
                     $image_model->product_id = $model->id;
                     $image_model->main = 0;
@@ -571,6 +588,7 @@ class ProductController extends Controller
                         if(file_exists($dir.$path)) unlink($dir.$path);
 
                         $image_model->save();
+                        $images_json_array += [$key => $image_model->link];
                     }
                     else {
                         Yii::$app->session->setFlash('error', FA::i('warning').' Ошибка, попробуйте позже.');
@@ -689,6 +707,7 @@ class ProductController extends Controller
                 'status' => 'Request sent',
                 'prices' => $prices,
                 'post' => $post,
+                'images_json_array' => $images_json_array,
                 //            'product' => [
                 //                'page_title' => Yii::t('frontend', 'Product added to cart 1'),
                 //                'img' => $product->image,
@@ -698,13 +717,18 @@ class ProductController extends Controller
                 //                'cart_count' => static::getCount(),
                 //            ],
             ]);
+
+//            return $this->redirect(['/user/requests']);
         } else {
             return json_encode([
                 'error' => true,
                 'errorData' => 'Price does not exist'
             ]);
+//            Yii::$app->session->setFlash('error', FA::i('warning').' Price not');
+//            return $this->goBack();
+//            return $this->redirect(['/user/requests']);
         }
-
+//        return $this->redirect(['/user/requests']);
     }
 
     public function actionUpdate($id)
