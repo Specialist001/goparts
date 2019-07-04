@@ -155,8 +155,10 @@ $this->registerCss('
                                             <li class="list-inline-item d-none d-md-inline-block"
                                                 style="min-width: 100px"><?= $seller_query->query->year ?></li>
                                             <li class="list-inline-item d-none d-md-inline-block" style="width: 10%">
+                                                <?php if($seller_query->query->mainImage) { ?>
                                                 <img src="<?= $seller_query->query->mainImage->name ?>" class="img-fluid"
                                                      alt="product">
+                                                 <?php } ?>
                                             </li>
                                             <div class="d-inline-block d-md-none w-100">
                                                 <table>
@@ -185,8 +187,10 @@ $this->registerCss('
                                                 </table>
                                             </div>
                                             <li class="list-inline-item d-md-none" style="width: 30%">
+                                                <?php if($seller_query->query->mainImage) { ?>
                                                 <img src="<?= $seller_query->query->mainImage->name ?>" class="img-fluid"
                                                      alt="product">
+                                                 <?php } ?>
                                             </li>
                                             <li class="list-inline-item float-right pt-2 pr-2"
                                                 style="font-size: 2.5rem!important;">
