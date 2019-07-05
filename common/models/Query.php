@@ -83,7 +83,7 @@ class Query extends \yii\db\ActiveRecord
             'year' => 'Year',
             'modification' => 'Modification',
             'fueltype' => 'Fueltype',
-            'engine' => 'Engine',
+            'engine' => 'Engine CC',
             'transmission' => 'Transmission',
             'drivetype' => 'Drivetype',
             'name' => 'Name',
