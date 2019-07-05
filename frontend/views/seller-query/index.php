@@ -27,6 +27,10 @@ $this->registerCss('
     {
         -moz-appearance: textfield;
     }
+    ul.pagination li.prev.disabled,
+    ul.pagination li.next.disabled {
+    padding: 0;
+}
 ');
 ?>
     <div class="seller-query-index mh-100">

@@ -2200,19 +2200,34 @@ ul.pagination li.next.disabled
 }
 ul.pagination li a:hover {
     border: 1px solid #fe0000;
+    background: transparent;
 }
 ul.pagination li.prev a,
 ul.pagination li.next a {
     border: 1px solid #efefef;
     color: #fe0000!important;
+    border-radius: 30px;
 }
 ul.pagination li.prev a:hover,
 ul.pagination li.next a:hover {
     border: 1px solid #fe0000;
+    background: transparent;
 }
-ul.pagination li.active a{
+ul.pagination li.active a,
+ul.pagination li.active a:hover {
     background: #fe0000!important;
     color: #ffffff!important;
+    border: 1px solid #fe0000;
+}
+
+
+ul.pagination li.prev.disabled span,
+ul.pagination li.next.disabled span {
+    padding: 10px 15px;
+    border: none;
+}
+ul.pagination > .disabled > span {
+    cursor: not-allowed;
 }
 
 
