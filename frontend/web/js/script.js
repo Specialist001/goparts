@@ -149,7 +149,7 @@ $(document).ready(function () {
                     // console.log('true-t');
                     console.log(t);
 
-                    form_.find('.query_images').remove();
+                    /*form_.find('.query_images').remove();*/
                     form_.find('.q_images').html('<input type="file" class="query_images" name="Query[images][]" multiple>');
                     var count = Object.keys(t.prices).length;
                     var count_images = Object.keys(t.images_json_array).length;

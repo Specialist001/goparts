@@ -367,7 +367,26 @@ $this->registerCss('
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12 q_images">
-                                                        <input type="file" class="query_images" name="Query[images][]" multiple>
+<!--                                                        <input type="file" class="query_images" name="Query[images][]" multiple style="visibility: hidden">-->
+<!--                                                        <div class="select_imagebox border">-->
+<!--                                                            <img src="/uploads/site/add_img.png" class="img-fluid" style="width: 100px;height: 100px">-->
+<!--                                                        </div>-->
+                                                        <?php
+                                                            echo FileInput::widget([
+                                                                'name' => 'Query[images][]',
+                                                                'options' => ['accept' => 'image/*', 'multiple' => true,'class'=>'query_images'],
+                                                                'pluginOptions' => [
+                                                                    'uploadUrl' => '/uploads/',
+                                                                    'showCaption' => false,
+                                                                    'showRemove' => false,
+                                                                    'showUpload' => false,
+                                                                    'browseClass' => 'btn btn-primary',
+                                                                    'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
+                                                                    'browseLabel' => Yii::t('frontend', 'Choose Images'),
+                                                                ],
+                                                                'language' => 'en'
+                                                            ]);
+                                                            ?>
                                                     </div>
                                                 </div>
                                                 <div class="row pt-5">
