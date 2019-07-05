@@ -2169,6 +2169,9 @@ li.lcm-title:hover {
     padding: 20px 40px;
     font-size: 3rem;
 }
+.query_images {
+    font-size: 13px;
+}
 .my_price input {
     background: #efefef;
 }

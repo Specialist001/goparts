@@ -371,9 +371,14 @@ class ProductController extends Controller
                             return $this->goBack();
                         }
                     }
-
+                } else {
+                    $image_model = new StoreProductImage();
+                    $image_model->product_id = $model->id;
+                    $image_model->main = 0;
+                    $image_model->link = '/uploads/site/vectorpaint.png';
+                    $image_model->save();
+                    $images_json_array += [0 => $image_model->link];
                 }
-
 
                 $model->sku = Yii::$app->user->getId() . '-' . date('dmy') . '-' . $model->id;
 

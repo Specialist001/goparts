@@ -206,7 +206,7 @@ class QueryController extends Controller
 //                    else {
 //                        $image_model = new QueryImage();
 //                        $image_model->query_id = $model->id;
-//                        $image_model->name = '/uploads/site/default_product.png';
+//                        $image_model->name = '/uploads/site/vectorpaint.png';
 //                        $image_model->save();
 //                    }
 
@@ -229,10 +229,12 @@ class QueryController extends Controller
                                 $image_model->save();
                             }
                         }
+                    } else {
+                        $image_model = new QueryImage();
+                        $image_model->query_id = $model->id;
+                        $image_model->name = '/uploads/site/vectorpaint.png';
+                        $image_model->save();
                     }
-
-
-
 
                     $model->save();
 
