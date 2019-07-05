@@ -52,8 +52,30 @@ class SellerQueryController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        if(Yii::$app->request->post()) {
+            if ($model->query->email) {
+
+                Yii::$app
+                    ->mailer
+                    ->compose(
+                        ['html' => 'makeProduct-html', 'text' => 'makeProduct-text'],
+                        ['type' => 'admin',
+                            'product_id' => $model->id,
+                            'query_name' => $model->query->description,
+                            'query_date' => date('d/m/Y', $model->query->created_at),
+                            'query_car_name' => $model->query->vendor .' '.$model->query->car.' '.$model->query->modification.' '.$model->query->year
+                        ]
+                    )
+                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                    ->setTo(Yii::$app->params['adminEmail'])
+                    ->setSubject(Yii::$app->name)
+                    ->send();
+            }
+        }
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 

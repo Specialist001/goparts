@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
@@ -99,6 +100,12 @@ $this->params['breadcrumbs'][] = 'Request #'.$this->title;
         ],
     ]) ?>
 
+</div>
+<div class="col-md-12">
+    <form class="" action="<?= Url::current()?>" method="POST">
+        <button type="submit" class="btn btn-success">Send to buyer</button>
+            <?php echo Html :: hiddenInput(\Yii::$app->getRequest()->csrfParam, \Yii::$app->getRequest()->getCsrfToken(), []); ?>
+    </form>
 </div>
 <?php $this->registerJs('
     var $image = $(\'#image\');
