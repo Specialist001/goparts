@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use rmrevin\yii\fontawesome\FA;
 use Yii;
 use common\models\SellerQuery;
 use backend\models\SellerQuerySearch;
@@ -56,7 +57,7 @@ class SellerQueryController extends Controller
         if(Yii::$app->request->post()) {
             if ($model->query->email) {
 
-                Yii::$app
+                if (Yii::$app
                     ->mailer
                     ->compose(
                         ['html' => 'makeProduct-html', 'text' => 'makeProduct-text'],
@@ -70,7 +71,20 @@ class SellerQueryController extends Controller
                     ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
                     ->setTo(Yii::$app->params['adminEmail'])
                     ->setSubject(Yii::$app->name)
-                    ->send();
+                    ->send())
+                {
+
+                    $model->status = SellerQuery::STATUS_PUBLISHED;
+                    $model->save();
+
+                    return $this->render('view', [
+                        'model' => $model,
+                    ]);
+
+                } else {
+                    Yii::$app->session->setFlash('error', FA::i('warning').' Notification not sent to buyer');
+                    return $this->goBack();
+                }
             }
         }
 
