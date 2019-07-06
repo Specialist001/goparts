@@ -148,7 +148,7 @@ $top_pages = Page::find()->where(['status'=>1])->orderBy('order')->all();
                                 <?= Html::beginForm(['/site/logout'], 'post') .
                                 Html::submitButton(
                                     FA::icon('sign-out')->addCssClass('text-danger text-form-style_2') . ' Log Out',
-                                    ['class' => 'btn-link logout-btn logout text-form-style_2']
+                                    ['class' => 'btn-link logout-btn logout text-form-style_2 px-4']
                                 )
                                 . Html::endForm()
                                 ?>
