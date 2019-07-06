@@ -6,6 +6,7 @@ use common\models\StoreOrder;
 use common\models\StoreOrderProduct;
 use common\models\User;
 use common\models\UserCart;
+use common\models\UserCommission;
 use frontend\models\OrderSearch;
 use Yii;
 use yii\web\Controller;
@@ -142,9 +143,16 @@ class OrderController extends Controller
                     $user->email = $data['User']['email'];
                     $user->phone = $data['User']['phone'];
                     $user->status = User::STATUS_INACTIVE;
+
                     $user->setPassword($password);
                     $user->generateAuthKey();
                     if($user->save()) {
+
+                        $user_commission = new UserCommission();
+                        $user_commission->id = $user->id;
+                        $user_commission->commission = 35;
+                        $user_commission->save();
+
                         Yii::$app
                             ->mailer
                             ->compose(
@@ -161,11 +169,10 @@ class OrderController extends Controller
             else {
                 $user = User::findOne(Yii::$app->user->id);
             }
+
             $user->phone = $user->phone ? $user->phone : $data['User']['phone'];
             $user->save();
             if(empty($user)) return $this->redirect(['cart/index']);
-
-
 
             $order = new StoreOrder();
             $order->user_id = Yii::$app->user->identity->getId();
@@ -193,9 +200,6 @@ class OrderController extends Controller
                 $sellerQuery = SellerQuery::find()->where(['product_id'=>$orderProduct->product_id])->one();
                 $sellerQuery->status = SellerQuery::STATUS_PURCHASED;
                 $sellerQuery->save();
-//                echo '<pre>';
-//                print_r($orderProduct);
-//                echo '</pre>';
             }
 
             if(Yii::$app->user->id) {

@@ -65,7 +65,7 @@ class QueryController extends Controller
     {
         $model = $this->findModel($id);
 
-        $sellers = SellerCar::find()->where(['vendor_name'=>$model->vendor])->orWhere(['vendor_name'=>'All'])->all();
+        $sellers = SellerCar::find()->select(['user_id'])->where(['vendor_name'=>$model->vendor])->orWhere(['vendor_name'=>'All'])->distinct('user_id')->groupBy(['user_id'])->all();
 
         return $this->render('view', [
             'model' => $model,
@@ -148,12 +148,16 @@ class QueryController extends Controller
         $query_id = $posts['query_id'];
         $model = $this->findModel($query_id);
 
-        $sellers = $posts['sellers'];
+//        $sellers = $posts['sellers'];
+        $sellers = SellerCar::find()->select(['user_id'])->where(['vendor_name'=>$model->vendor])->orWhere(['vendor_name'=>'All'])->distinct('user_id')->groupBy(['user_id'])->all();
 
-        foreach ($sellers as $seller_id) {
+//        return $this->asJson(['sellers'=>$sellers,'query_id'=>$query_id]);
+//        exit;
+
+        foreach ($sellers as $seller) {
             $seller_query = new SellerQuery();
             $seller_query->query_id = $query_id;
-            $seller_query->seller_id = $seller_id;
+            $seller_query->seller_id = $seller->user_id;
             $seller_query->status = SellerQuery::STATUS_WAITED;
 
             if ($seller_query->save()) {

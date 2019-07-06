@@ -61,15 +61,16 @@ class SellerQueryController extends Controller
                     ->mailer
                     ->compose(
                         ['html' => 'makeProduct-html', 'text' => 'makeProduct-text'],
-                        ['type' => 'admin',
-                            'product_id' => $model->id,
+                        [
+                            'type' => 'buyer',
+                            'product_id' => $model->product_id,
                             'query_name' => $model->query->description,
                             'query_date' => date('d/m/Y', $model->query->created_at),
                             'query_car_name' => $model->query->vendor .' '.$model->query->car.' '.$model->query->modification.' '.$model->query->year
                         ]
                     )
-                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-                    ->setTo(Yii::$app->params['adminEmail'])
+                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
+                    ->setTo($model->query->email)
                     ->setSubject(Yii::$app->name)
                     ->send())
                 {
