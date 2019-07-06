@@ -5,57 +5,27 @@ use common\models\SellerQuery;
 use mdm\admin\components\Helper;
 use yii\helpers\Url;
 
-$queries = Query::find()->all();
-$new_queries = 0;
-$all_queries = 0;
-foreach ($queries as $query) {
-    $all_queries++;
-    if ($query->status == 0) {
-        $new_queries++;
-    }
-}
-$counter['all_queries'] = $all_queries;
-$counter['new_queries'] = $new_queries;
+$queries = Query::find();
+$counter['all_queries'] = $queries->where([])->count();
+$counter['new_queries'] = $queries->where(['status'=>Query::STATUS_MODERATED])->count();
 
-$requests = SellerQuery::find()->all();
-$new_requests = 0;
-$moderated_requests = 0;
-$published_requests = 0;
-$purchased_requests = 0;
-$all_requests = 0;
-foreach ($requests as $request) {
-    $all_requests++;
-    if ($request->status == 0) {
-        $new_requests++;
-    }
-    elseif ($request->status == 1) {
-        $moderated_requests++;
-    }
-    elseif ($request->status == 2) {
-        $published_requests++;
-    }
-    elseif ($request->status == 3) {
-        $purchased_requests++;
-    }
-}
-$counter['all_requests'] = $all_requests;
-$counter['new_requests'] = $new_requests;
-$counter['moderated_requests'] = $moderated_requests;
-$counter['published_requests'] = $published_requests;
-$counter['purchased_requests'] = $purchased_requests;
+$requests = SellerQuery::find();
+$counter['all_requests'] = $requests->count();
+$counter['new_requests'] = $requests->where(['status'=>SellerQuery::STATUS_WAITED])->count();
+$counter['moderated_requests'] = $requests->where(['status'=>SellerQuery::STATUS_MODERATE])->count();
+$counter['published_requests'] = $requests->where(['status'=>SellerQuery::STATUS_PUBLISHED])->count();
+$counter['purchased_requests'] = $requests->where(['status'=>SellerQuery::STATUS_PURCHASED])->count();
 
+$orders = \common\models\StoreOrder::find();
+$counter['all_orders'] = $orders->count();
+$counter['new_orders'] = $orders->where(['status'=>1])->count();
 
-$orders = \common\models\StoreOrder::find()->all();
-$new_orders = 0;
-$all_orders = 0;
-foreach ($orders as $order) {
-    $all_orders++;
-    if ($order->status == 1) {
-        $new_orders++;
-    }
-}
-$counter['all_orders'] = $all_orders;
-$counter['new_orders'] = $new_orders;
+$users = \common\models\User::find();
+$counter['sellers'] = $users->where(['role'=>\common\models\User::ROLE_SELLER])->count();
+$counter['new_sellers'] = $users->where(['role'=>\common\models\User::ROLE_SELLER,'status'=>\common\models\User::STATUS_INACTIVE])->count();
+
+$counter['buyers'] = $users->where(['role'=>\common\models\User::ROLE_BUYER])->count();
+$counter['new_buyers'] = $users->where(['role'=>\common\models\User::ROLE_BUYER,'status'=>\common\models\User::STATUS_INACTIVE])->count();
 
 ?>
 <aside class="main-sidebar">
@@ -97,13 +67,66 @@ $counter['new_orders'] = $new_orders;
                     <a href="#">
                         <i class="la la-user"></i><span> Users</span>
                         <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="<?= Url::to(['/user']) ?>"><i class="la la-user"></i> All users</a></li>
-                        <li><a href="<?= Url::to(['/user','UserSearch[role]'=>1]) ?>"><i class="la la-shopping-cart"></i> Sellers</a></li>
-                        <li><a href="<?= Url::to(['/user','UserSearch[role]'=>0]) ?>"><i class="la la-cart-arrow-down"></i> Buyers</a></li>
+                        <li class="treeview">
+                            <a href="#"><i class="la la-shopping-cart"></i> Sellers
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li>
+                                    <a href="<?= Url::to(['/user','UserSearch[role]'=>1]) ?>"><i class="la la-shopping-cart"></i> All Sellers
+                                        <span class="pull-right-container">
+                                            <small class="label pull-right bg-green">
+                                                <?= $counter['sellers'] ?>
+                                            </small>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::to(['/user','UserSearch[status]'=>9,'UserSearch[role]'=>1]) ?>"><i class="la la-shopping-cart"></i> New Sellers
+                                        <span class="pull-right-container">
+                                            <small class="label pull-right bg-aqua">
+                                                <?= $counter['new_sellers'] ?>
+                                            </small>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+
+                        </li>
+                        <li class="treeview">
+                            <a href="#"><i class="la la-cart-arrow-down"></i> Buyers
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li>
+                                    <a href="<?= Url::to(['/user','UserSearch[role]'=>0]) ?>"><i class="la la-cart-arrow-down"></i> All Buyers
+                                        <span class="pull-right-container">
+                                            <small class="label pull-right bg-green">
+                                                <?= $counter['buyers'] ?>
+                                            </small>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::to(['/user','UserSearch[status]'=>9, 'UserSearch[role]'=>0]) ?>"><i class="la la-cart-arrow-down"></i> New Buyers
+                                        <span class="pull-right-container">
+                                            <small class="label pull-right bg-aqua">
+                                                <?= $counter['new_buyers'] ?>
+                                            </small>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
                 <li class="treeview ">
@@ -121,39 +144,79 @@ $counter['new_orders'] = $new_orders;
                         <li><a href="<?= Url::to(['/rbac/role']) ?>"><i class="fa fa-exchange"></i> Role</a></li>
                     </ul>
                 </li>
-                <li class="">
-                    <a href="<?= Url::to(['/query'])?>"><i class="la la-edit"></i>
-                        <span>Queries</span>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="la la-edit"></i><span> Queries</span>
                         <span class="pull-right-container">
-                            <small class="label pull-right bg-green">
-                                <?= $counter['all_queries'] ?>
-                            </small>
-                            <small class="label pull-right bg-yellow">
-                                <?= $counter['new_queries'] ?>
-                            </small>
+                            <i class="fa fa-angle-left pull-right"></i>
                         </span>
                     </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="<?= Url::to(['/query']) ?>"><i class="la la-edit"></i> All Queries
+                                <span class="pull-right-container">
+                                    <small class="label pull-right bg-aqua">
+                                        <?= $counter['all_queries'] ?>
+                                    </small>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?= Url::to(['/query', 'QuerySearch[status]'=>0,'sort'=>'-id']) ?>"><i class="la la-edit"></i> New Queries
+                                <span class="pull-right-container">
+                                    <small class="label pull-right bg-green">
+                                        <?= $counter['new_queries'] ?>
+                                    </small>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+
+<!--                    <a href="--><?//= Url::to(['/query'])?><!--"><i class="la la-edit"></i>-->
+<!--                        <span>Queries</span>-->
+<!--                        <span class="pull-right-container">-->
+<!--                            <small class="label pull-right bg-green">-->
+<!--                                --><?//= $counter['all_queries'] ?>
+<!--                            </small>-->
+<!--                            <small class="label pull-right bg-yellow">-->
+<!--                                --><?//= $counter['new_queries'] ?>
+<!--                            </small>-->
+<!--                        </span>-->
+<!--                    </a>-->
                 </li>
-                <li class="">
-                    <a href="<?= Url::to(['/seller-query'])?>"><i class="la la-edit"></i>
+                <li class="treeview">
+                    <a href="#"><i class="la la-edit"></i>
                         <span>Requests</span>
                         <span class="pull-right-container">
-                            <?php if ($counter['purchased_requests']!=0) { ?>
-                            <small class="label pull-right bg-green">
-                                <?= $counter['purchased_requests'] ?>
-                            </small>
-                            <?php } ?>
-                            <small class="label pull-right bg-primary">
-                                <?= $counter['published_requests'] ?>
-                            </small>
-                            <small class="label pull-right bg-aqua">
-                                <?= $counter['moderated_requests'] ?>
-                            </small>
-                            <small class="label pull-right bg-yellow">
-                                <?= $counter['new_requests'] ?>
-                            </small>
+                           <i class="fa fa-angle-left pull-right"></i>
                         </span>
                     </a>
+<!--                    <a href="#">-->
+<!--                        <i class="la la-edit"></i><span> Queries</span>-->
+<!--                        <span class="pull-right-container">-->
+<!--                            <i class="fa fa-angle-left pull-right"></i>-->
+<!--                        </span>-->
+<!--                    </a>-->
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="<?= Url::to(['/seller-query'])?>"><i class="la la-edit"></i> All Queries
+                                <span class="pull-right-container">
+                                    <small class="label pull-right bg-aqua">
+                                        <?= $counter['all_queries'] ?>
+                                    </small>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?= Url::to(['/seller-query', 'SellerQuerySearch[status]'=>0,'sort'=>'-id']) ?>"><i class="la la-edit"></i> New Queries
+                                <span class="pull-right-container">
+                                    <small class="label pull-right bg-green">
+                                        <?= $counter['new_requests'] ?>
+                                    </small>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="treeview ">
                     <a href="#">

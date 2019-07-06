@@ -121,7 +121,7 @@ $this->registerCss('
                     <div class="table_header">
                         <ul class="font-weight-bolder list-inline pl-5 d-none d-md-inline-block">
                             <li class="list-inline-item pl-3 pr-5 text-form-style_1">ID</li>
-                            <li class="list-inline-item pl-3" style="width: 100px">Date</li>
+                            <li class="list-inline-item pl-3" style="width: 110px">Date</li>
                             <li class="list-inline-item pl-3" style="min-width: 150px">Make</li>
                             <li class="list-inline-item pl-3" style="min-width: 140px">Model</li>
                             <li class="list-inline-item pl-3" style="min-width: 100px">Year</li>
@@ -145,14 +145,14 @@ $this->registerCss('
                                              style="width: 30px; height: 30px; font-size: 1.3rem">
                                             <i class="la la-check pl-1"></i>
                                         </div>
-                                        <ul class="list-inline pl-0 pl-md-5 mb-0">
+                                        <ul class="list-inline pl-0 pl-md-5 mb-4">
 
                                             <li class="list-inline-item d-none d-md-inline-block font-weight-bolder text-form-style_1"
                                                 style="width: 80px"><?= $seller_query->id ?>
                                             </li>
                                             <!--                                        <li class="list-inline-item pr-4" style="width: 130px">2019-05-09 09:30:57</li>-->
                                             <li class="list-inline-item d-none d-md-inline-block"
-                                                style="width: 100px"><?= date('d-m-Y H:m:i', $seller_query->created_at) ?></li>
+                                                style="width: 110px"><?= date('d-m-Y H:m:i', $seller_query->created_at) ?></li>
                                             <li class="list-inline-item d-none d-md-inline-block"
                                                 style="min-width: 150px"><?= $seller_query->query->vendor ?></li>
                                             <li class="list-inline-item d-none d-md-inline-block"
@@ -161,10 +161,11 @@ $this->registerCss('
                                                 style="min-width: 100px"><?= $seller_query->query->year ?></li>
                                             <li class="list-inline-item d-none d-md-inline-block" style="width: 10%">
                                                 <ul class="query_imageboxes pl-0 d-inline-block">
-                                                <li class="query_imagebox">
-                                                    <img src="<?= $seller_query->query->firstImage->name ?>" class="img-fluid"
-                                                     alt="product">
-                                                </li>
+                                                    <?php if($seller_query->query->images) { ?>
+                                                    <li class="query_imagebox">
+                                                        <img src="<?= $seller_query->query->firstImage->name ?>" class="img-fluid"
+                                                         alt="product">
+                                                    </li>
                                                     <?php if($seller_query->query->images) {
                                                         foreach ($seller_query->query->images as $q_image) {
                                                         ?>
@@ -172,7 +173,7 @@ $this->registerCss('
                                                                 <img src="<?= $q_image->name ?>" class="img-fluid"
                                                                      alt="product">
                                                             </li>
-                                                    <?php } } ?>
+                                                    <?php } } } ?>
                                                 </ul>
                                             </li>
                                             <div class="d-inline-block d-md-none w-100">
@@ -202,10 +203,21 @@ $this->registerCss('
                                                 </table>
                                             </div>
                                             <li class="list-inline-item d-md-none" style="width: 30%">
-                                                <?php if($seller_query->query->mainImage) { ?>
-                                                <img src="<?= $seller_query->query->mainImage->name ?>" class="img-fluid"
-                                                     alt="product">
-                                                 <?php } ?>
+                                                <ul class="query_imageboxes pl-0 d-inline-block">
+                                                    <?php if($seller_query->query->images) { ?>
+                                                        <li class="query_imagebox">
+                                                            <img src="<?= $seller_query->query->firstImage->name ?>" class="img-fluid"
+                                                                 alt="product">
+                                                        </li>
+                                                        <?php if($seller_query->query->images) {
+                                                            foreach ($seller_query->query->images as $q_image) {
+                                                                ?>
+                                                                <li class="d-none">
+                                                                    <img src="<?= $q_image->name ?>" class="img-fluid"
+                                                                         alt="product">
+                                                                </li>
+                                                            <?php } } } ?>
+                                                </ul>
                                             </li>
                                             <li class="list-inline-item float-right pt-2 pr-2"
                                                 style="font-size: 2.5rem!important;">

@@ -46,6 +46,7 @@ $this->registerCss('
     <div class="container">
 <!--        <h1>--><?//= Html::encode($this->title) ?><!--</h1>-->
         <p>
+            <?= Html::a(FA::i('chevron-left').' Back', ['/query'], ['class' => 'btn btn-warning']) ?>
             <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a('Delete', ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
