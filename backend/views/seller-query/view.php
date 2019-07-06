@@ -133,7 +133,7 @@ $this->registerCss('
             </tr>
             <tr>
                 <th>Product Description</th>
-                <td><a href="<?= \yii\helpers\Url::to(['store-product/view', 'id'=>$model->product_id]) ?>"><?= $model->product->translate->name.' ID:'.$model->product_id ?></a></td>
+                <td><a href="<?= \yii\helpers\Url::to(['store-product/view', 'id'=>$model->product_id]) ?>"><?= $model->product->translate->description.' ID:'.$model->product_id ?></a></td>
             </tr>
             <tr>
                 <th>Product Images</th>
