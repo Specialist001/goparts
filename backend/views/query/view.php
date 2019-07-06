@@ -259,7 +259,7 @@ $this->registerCss('
                     <tr>
                         <th>Product Images</th>
                         <td>
-                            <?php if($model->images) {?>
+                            <?php if($model->firstImage) {?>
                             <ul class="query_imageboxes pl-0 d-inline-block">
                                 <li class="query_imagebox">
                                     <img src="<?= $model->firstImage->name ?>" class="img-fluid" alt="product">
