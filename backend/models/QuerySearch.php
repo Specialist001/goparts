@@ -19,7 +19,7 @@ class QuerySearch extends Query
     {
         return [
             [['id', 'user_id', 'car_id', 'category_id', 'status', 'created_at'], 'integer'],
-            [['vendor', 'car', 'year', 'modification', 'fueltype', 'engine', 'transmission','title', 'drivetype', 'name','phone','email', 'image'], 'safe'],
+            [['vendor', 'car', 'year', 'modification', 'fueltype', 'engine', 'transmission', 'title', 'description', 'drivetype', 'name','phone','email', 'image'], 'safe'],
         ];
     }
 
@@ -73,6 +73,7 @@ class QuerySearch extends Query
         $query->andFilterWhere(['like', 'vendor', $this->vendor])
             ->andFilterWhere(['like', 'car', $this->car])
             ->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'year', $this->year])
             ->andFilterWhere(['like', 'modification', $this->modification])
             ->andFilterWhere(['like', 'fueltype', $this->fueltype])

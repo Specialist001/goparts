@@ -25,7 +25,7 @@ $model->category_id = $category->id;
     <?php } ?>
 
 
-    <?php if (!$category) { ?>
+    <?php if ($category) { ?>
 
         <form action="<?= Url::current() ?>" id="cat-form">
             <div class="row">
@@ -96,46 +96,46 @@ $model->category_id = $category->id;
             </div>
         </div>
 
-        <h3>Selection by car</h3>
-        <div class="row">
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label class="">Vendor</label>
-                    <select class="form-control vendor_select" name="vendor_name">
-                        <option disabled selected>Select Vendor</option>
-<!--                        --><?//= Dropdown::widget() ?>
-                        <?php foreach ($cars_array as $car) { ?>
-                            <option value="<?= $car ?>"><?= $car ?></option>
-                        <?php } ?>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-3 car_select">
-                <div class="form-group">
-                    <label>Car</label>
-                    <select class="form-control car_items" name="car_name" disabled>
-                        <option disabled selected>Select Car</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-3 modification_select">
-                <div class="form-group">
-                    <label>Modification</label>
-                    <select class="form-control car_modifications" name="modification_name" disabled>
-                        <option disabled selected>Modification</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-3 year_select">
-                <div class="form-group">
-                    <label>Year</label>
-                    <select class="form-control car_years" name="year_name" disabled>
-                        <option disabled selected>Year</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <h3>Product Translation</h3>
+<!--        <h3>Selection by car</h3>-->
+<!--        <div class="row">-->
+<!--            <div class="col-md-3">-->
+<!--                <div class="form-group">-->
+<!--                    <label class="">Vendor</label>-->
+<!--                    <select class="form-control vendor_select" name="vendor_name">-->
+<!--                        <option disabled selected>Select Vendor</option>-->
+<!--                     --><?////= Dropdown::widget() ?>
+<!--                        --><?php //foreach ($cars_array as $car) { ?>
+<!--                            <option value="--><?//= $car ?><!--">--><?//= $car ?><!--</option>-->
+<!--                        --><?php //} ?>
+<!--                    </select>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-md-3 car_select">-->
+<!--                <div class="form-group">-->
+<!--                    <label>Car</label>-->
+<!--                    <select class="form-control car_items" name="car_name" disabled>-->
+<!--                        <option disabled selected>Select Car</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-md-3 modification_select">-->
+<!--                <div class="form-group">-->
+<!--                    <label>Modification</label>-->
+<!--                    <select class="form-control car_modifications" name="modification_name" disabled>-->
+<!--                        <option disabled selected>Modification</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-md-3 year_select">-->
+<!--                <div class="form-group">-->
+<!--                    <label>Year</label>-->
+<!--                    <select class="form-control car_years" name="year_name" disabled>-->
+<!--                        <option disabled selected>Year</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+        <h3>Product Description</h3>
         <div class="row">
             <div class="col-md-4">
                 <?= $form->field($translation_en, 'name[en]')->textInput(['value' => $translation_en->name]) ?>
@@ -144,21 +144,21 @@ $model->category_id = $category->id;
                 <?= $form->field($translation_en, 'short[en]')->textInput(['value' => $translation_en->short]) ?>
             </div>
             <div class="col-md-12">
-                <!--                            --><? //= $form->field($translation_en, 'description[en]')->textarea(['value' => $translation_en->description, 'style' => 'resize: vertical; height: 128px;']) ?>
-                <?= $form->field($translation_en, 'description[en]')->widget(TinyMce::className(), [
-                    'options' => ['rows' => 6],
-                    'value' => $translation_en->description,
-                    'language' => 'en',
-                    'clientOptions' => [
-                        'plugins' => [
-                            "advlist autolink lists link charmap preview anchor",
-                            "searchreplace visualblocks code fullscreen",
-                            "insertdatetime media table contextmenu paste"
-                        ],
-                        'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-                    ]
-                ])->textarea(['value' => $translation_en->description]);
-                ?>
+            <?= $form->field($translation_en, 'description[en]')->textarea(['value' => $translation_en->description, 'style' => 'resize: vertical; height: 128px;']) ?>
+<!--                --><?//= $form->field($translation_en, 'description[en]')->widget(TinyMce::className(), [
+//                    'options' => ['rows' => 6],
+//                    'value' => $translation_en->description,
+//                    'language' => 'en',
+//                    'clientOptions' => [
+//                        'plugins' => [
+//                            "advlist autolink lists link charmap preview anchor",
+//                            "searchreplace visualblocks code fullscreen",
+//                            "insertdatetime media table contextmenu paste"
+//                        ],
+//                        'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+//                    ]
+//                ])->textarea(['value' => $translation_en->description]);
+//                ?>
             </div>
         </div>
         <br>
@@ -182,18 +182,12 @@ $model->category_id = $category->id;
             Product Price
         </h3>
         <div class="row">
+<!--            <div class="col-md-3">-->
+<!--                --><?//= $form->field($model, 'purchase_price')->textInput(['maxlength' => true]) ?>
+<!--            </div>-->
+
             <div class="col-md-3">
-                <?= $form->field($model, 'purchase_price')->textInput(['maxlength' => true]) ?>
-            </div>
-            <div class="col-md-2">
-                <label for="product_sion">Commission</label>
-                <input class="form-control" type="number"
-                       value="<?= $store_product_commission->commission ? $store_product_commission->commission : '5' ?>"
-                       id="product_commission" min="0"
-                       name="product_commission">
-            </div>
-            <div class="col-md-3">
-                <?= $form->field($model, 'price')->textInput(['maxlength' => true, 'disabled' => true]) ?>
+                <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
             </div>
             <!--        <div class="col-md-3">-->
             <!--            --><? //= $form->field($model, 'discount_price')->textInput(['maxlength' => true]) ?>

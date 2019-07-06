@@ -67,17 +67,17 @@ class SignupForm extends Model
         if($user->save()){
             $user_commission->user_id = $user->id;
             if ($user->role == 1) {
-                $user_commission->commission = 15;
-            } else {
                 $user_commission->commission = 0;
+            } else {
+                $user_commission->commission = 25;
             }
             $user_commission->save();
 //            $auth = Yii::$app->authManager;
 //            $role = $auth->getRole('user');
 //            $auth->assign($role, $user->id);
 
-//            self::sendEmail($user);
-//            self::sendEmailAdmin($user);
+            self::sendEmail($user);
+            self::sendEmailAdmin($user);
 
             return $user ;
         }

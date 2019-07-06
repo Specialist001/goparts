@@ -157,15 +157,8 @@ $this->registerCss('
                     Status
                 </th>
                 <td>
-                    <?php if ($model->status==0) {
-                        echo '<span class="text-warning"><i class="la la-clock-o"></i> Waited</span>';
-                    } elseif ($model->status==1) {
-                        echo '<span class="text-aqua"> <i class="la la-eye"></i> Moderate </span>';
-                    } elseif ($model->status==2) {
-                        echo '<span class="text-info"><i class="la la-bullhorn"></i> Published</span>';
-                    } elseif ($model->status==2) {
-                        echo '<span class="text-success"><i class="la la-cart-arrow-down"></i> Purchased</span>';
-                    }
+                    <?php $formatter = new \common\components\MyFormatter();
+                        echo $formatter->asSellerQuery($model->status);
                     ?>
                 </td>
             </tr>
@@ -184,7 +177,7 @@ $this->registerCss('
             <?php echo Html :: hiddenInput(\Yii::$app->getRequest()->csrfParam, \Yii::$app->getRequest()->getCsrfToken(), []); ?>
     </form>
     <?php } elseif ($model->status == 2) { ?>
-        <strong>Request already sent to buyer e-mail</strong>
+        <h4><strong class="alert text-success">Request already sent to buyer e-mail</strong></h4>
     <?php } ?>
 </div>
 <?php $this->registerJs('

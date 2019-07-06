@@ -1,12 +1,13 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $user common\models\User */
 
 $userLink = Yii::$app->urlManager->createAbsoluteUrl(['user/purchases']);
 $shopLink = Yii::$app->urlManager->createAbsoluteUrl(['user/purchases']);
-$productLink = Yii::$app->urlManager->createAbsoluteUrl(['car/product', 'id'=>$product_id]);
+$productLink = Url::to(['http://goparts.ae/car/product', 'id'=>$product_id]);
 
 ?>
 <?php if($type == 'buyer') { ?>
