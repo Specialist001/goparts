@@ -1,5 +1,6 @@
 <?php
 
+use rmrevin\yii\fontawesome\FA;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
@@ -34,6 +35,7 @@ $this->registerCss('
 <!--    <h1>--><?//= Html::encode($this->title) ?><!--</h1>-->
 
     <p>
+        <?= Html::a(FA::i('chevron-left').' Back', ['/seller-query'], ['class' => 'btn btn-warning']) ?>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',

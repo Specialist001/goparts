@@ -49,16 +49,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'role',
                 'filter' => array("0" => "Buyer", "1" => "Seller"),
             ],
-            [
-                'attribute' => 'type',
-                'format' => 'type',
-                'filter' => array("0" => "Individual", "1" => "Legal entity"),
-            ],
+//            [
+//                'attribute' => 'type',
+//                'format' => 'type',
+//                'filter' => array("0" => "Individual", "1" => "Legal entity"),
+//            ],
             [
                 'attribute' => 'commission',
                 'format' => 'raw',
                 'value' => function($model) {
-                    return $model->commission->commission ? $model->commission->commission : 0;
+                    return $model->commission->commission ? $model->commission->commission : null;
                 }
             ],
             //'role',

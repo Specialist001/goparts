@@ -2146,7 +2146,7 @@ li.lcm-title:hover {
     box-shadow: 0 5px 15px #00000020;
 }
 .new_requests .new_request ul {
-    min-height: 90px;
+    min-width: 80px;
 }
 .request_imageboxes .col{
     padding-left: 5px;
