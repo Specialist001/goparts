@@ -201,17 +201,7 @@ $this->registerCss('
 
 <?php $this->registerJs('
     $(document).ready(function () {
-
-       
-//        var sellers = [];
-//        $(".sellers").each(function () {
-//            if($(this).is(":checked")) {
-//                sellers.push($(this).val());
-//            }
-//        });
-        
-        
-//         var disabled = $(\'.seller-send\').attr("disabled"); 
+ 
 
         $(\'.seller-send\').click(function () {
             var query_id = $(this).data("query_id");
@@ -219,17 +209,15 @@ $this->registerCss('
             
             $.ajax({
                 type: "POST",
-                url: "send-sellers",
+                url: "/admin/query/send-sellers",
                 data: {query_id: query_id, status: status},
                 success: function (data) {
                     console.log(data);
-                    console.log(btn);
-//                        $(".sellers").prop(\'disabled\', true);
                     $(btn).attr(\'disabled\', true).removeClass(\'.seller-send\').removeClass(\'.btn-info\');
                     $(btn).text(\'Approved\');
                     $(btn).addClass(\'btn-success\');
                     $(btn).addClass(\'disabled\');
-//                    $.notify(data[\'status\'], "success");
+                    $.notify(data[\'status\'], "success");
                 },
                 error: function (data) {
                     $.notify("Data not send", "error");
