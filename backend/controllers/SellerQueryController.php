@@ -197,4 +197,99 @@ class SellerQueryController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function actionSendBuyer()
+    {
+        $posts = Yii::$app->request->post();
+        $id = $posts['id'];
+        $query_id = $posts['query_id'];
+
+        $model = $this->findModel($id);
+        $data = [];
+
+        if ($model->query->user_id) {
+            if ($model->query->user->email) {
+                if (Yii::$app
+                    ->mailer
+                    ->compose(
+                        ['html' => 'makeProduct-html', 'text' => 'makeProduct-text'],
+                        [
+                            'type' => 'buyer',
+                            'product_id' => $model->product_id,
+                            'query_name' => $model->query->description,
+                            'query_date' => date('d/m/Y', $model->query->created_at),
+                            'query_car_name' => $model->query->vendor .' '.$model->query->car.' '.$model->query->modification.' '.$model->query->year
+                        ]
+                    )
+                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
+                    ->setTo($model->query->user->email)
+                    ->setSubject(Yii::$app->name)
+                    ->send())
+                {
+                    $model->status = SellerQuery::STATUS_PUBLISHED;
+                    $model->save();
+                    $data['status']['text'] = 'Request send to buyer';
+                    $data['status']['code'] = 1;
+
+                    return $this->asJson($data);
+                } else {
+                    $data['status']['text'] = 'Request not send to buyer';
+                    $data['status']['code'] = -1;
+
+                    return $this->asJson($data);
+                }
+            } else {
+                $model->status = SellerQuery::STATUS_PUBLISHED;
+                $model->save();
+
+                $data['status']['text'] = 'Product published, but Request not send to buyer';
+                $data['status']['code'] = 0;
+
+                return $this->asJson($data);
+            }
+        } else {
+            if ($model->query->email) {
+                if (Yii::$app
+                    ->mailer
+                    ->compose(
+                        ['html' => 'makeProduct-html', 'text' => 'makeProduct-text'],
+                        [
+                            'type' => 'buyer',
+                            'buyer_name' => $model->query->name,
+                            'product_id' => $model->product_id,
+                            'query_name' => $model->query->description,
+                            'query_date' => date('d/m/Y', $model->query->created_at),
+                            'query_car_name' => $model->query->vendor .' '.$model->query->car.' '.$model->query->modification.' '.$model->query->year
+                        ]
+                    )
+                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
+                    ->setTo($model->query->email)
+                    ->setSubject('Product added | '.Yii::$app->params['appName'])
+                    ->send())
+                {
+                    $model->status = SellerQuery::STATUS_PUBLISHED;
+                    $model->save();
+
+                    $data['status']['text'] = 'Request send to buyer';
+                    $data['status']['code'] = 1;
+
+                    return $this->asJson($data);
+                } else {
+                    $data['status']['text'] = 'Request not send to buyer';
+                    $data['status']['code'] = -1;
+
+                    return $this->asJson($data);
+                }
+            } else {
+                $model->status = SellerQuery::STATUS_PUBLISHED;
+                $model->save();
+
+                $data['status']['text'] = 'Product published, but Request not send to buyer';
+                $data['status']['code'] = 0;
+
+                return $this->asJson($data);
+            }
+        }
+
+    }
 }
