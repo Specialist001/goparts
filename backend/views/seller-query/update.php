@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\SellerQuery */
 
-$this->title = 'Update Seller Query: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Seller Queries', 'url' => ['index']];
+$this->title = 'Update Request: ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Requests', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>

@@ -199,7 +199,7 @@ $counter['new_buyers'] = $users->where(['role'=>\common\models\User::ROLE_BUYER,
 <!--                    </a>-->
                     <ul class="treeview-menu">
                         <li>
-                            <a href="<?= Url::to(['/seller-query'])?>"><i class="la la-edit"></i> All Queries
+                            <a href="<?= Url::to(['/seller-query'])?>"><i class="la la-edit"></i> All Requests
                                 <span class="pull-right-container">
                                     <small class="label pull-right bg-aqua">
                                         <?= $counter['all_queries'] ?>
@@ -208,7 +208,7 @@ $counter['new_buyers'] = $users->where(['role'=>\common\models\User::ROLE_BUYER,
                             </a>
                         </li>
                         <li>
-                            <a href="<?= Url::to(['/seller-query', 'SellerQuerySearch[status]'=>0,'sort'=>'-id']) ?>"><i class="la la-edit"></i> New Queries
+                            <a href="<?= Url::to(['/seller-query', 'SellerQuerySearch[status]'=>0,'sort'=>'-id']) ?>"><i class="la la-edit"></i> New Requests
                                 <span class="pull-right-container">
                                     <small class="label pull-right bg-green">
                                         <?= $counter['new_requests'] ?>
