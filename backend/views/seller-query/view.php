@@ -9,7 +9,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\SellerQuery */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Seller Queries', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Requests', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'Request #'.$this->title;
 \yii\web\YiiAsset::register($this);
 

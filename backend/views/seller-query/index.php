@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel backend\models\SellerQuerySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Seller Queries';
+$this->title = 'Requests';
 $this->params['breadcrumbs'][] = $this->title;
 
 $this->registerCss('
