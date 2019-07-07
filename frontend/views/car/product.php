@@ -10,26 +10,35 @@ use yii\helpers\Url; ?>
             <div class="row">
                 <div class="col-xl-12">
                     <ul class="owl-carousel">
-                        <li>
-                            <a href="<?=$product->image ?>" data-fancybox="gallery" class="w-75">
-                                <img src="<?=$product->image ?>" alt="<?=$product->translate->name ?>" class="img-fluid">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<?=$product->image ?>" data-fancybox="gallery" class="w-75">
-                                <img src="<?=$product->image ?>" alt="<?=$product->translate->name ?>" class="img-fluid">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<?=$product->image ?>" data-fancybox="gallery" class="w-75">
-                                <img src="<?=$product->image ?>" alt="<?=$product->translate->name ?>" class="img-fluid">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/img/product-4.png" data-fancybox="gallery">
-                                <img src="/img/product-4.png">
-                            </a>
-                        </li>
+                        <?php if($product->firstImage) { ?>
+                            <?php foreach ($product->storeProductImages as $image){?>
+                                <li>
+                                    <a href="<?= $image->link?>" data-fancybox="gallery" class="w-75">
+                                        <img src="<?=$image->link ?>" alt="<?=$product->translate->name ?>" class="img-fluid">
+                                    </a>
+                                </li>
+                            <?php }?>
+                        <?php }?>
+<!--                        <li>-->
+<!--                            <a href="--><?//=$product->image ?><!--" data-fancybox="gallery" class="w-75">-->
+<!--                                <img src="--><?//=$product->image ?><!--" alt="--><?//=$product->translate->name ?><!--" class="img-fluid">-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <a href="--><?//=$product->image ?><!--" data-fancybox="gallery" class="w-75">-->
+<!--                                <img src="--><?//=$product->image ?><!--" alt="--><?//=$product->translate->name ?><!--" class="img-fluid">-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <a href="--><?//=$product->image ?><!--" data-fancybox="gallery" class="w-75">-->
+<!--                                <img src="--><?//=$product->image ?><!--" alt="--><?//=$product->translate->name ?><!--" class="img-fluid">-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <a href="/img/product-4.png" data-fancybox="gallery">-->
+<!--                                <img src="/img/product-4.png">-->
+<!--                            </a>-->
+<!--                        </li>-->
                     </ul>
                     <div class="heart d-none"></div>
                     <div class="photo-desc">

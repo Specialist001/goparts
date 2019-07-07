@@ -3,7 +3,20 @@
 $this->title = 'Cart';
 
 use frontend\widgets\WBasket;
-use yii\helpers\Url; ?>
+use yii\helpers\Url;
+
+$this->registerCss('
+    .cart_imageboxes {
+        cursor: pointer;
+    }
+    .cart_imageboxes li.d-none {
+        display: none;
+    }
+    .car_imageboxes li img {
+        width: 100%;
+    }
+');
+?>
 <div class="basket">
     <div class="container">
         <form id="basket-form" action="<?= Url::to(['order/make']) ?>" method="post">
@@ -33,8 +46,20 @@ use yii\helpers\Url; ?>
                                 <div class="col-md-5">
                                     <div class="basket_table_div1">
                                         <div class="basket_table_div1_img">
-                                            <img src="<?= $cart_product->product->image ?>"
-                                                 alt="<?= $cart_product->product->translate->name ?>">
+                                            <?php if($cart_product->product->firstImage) { ?>
+                                                <ul class="cart_imageboxes pl-0 d-inline-block">
+                                                    <li class="seller-query_imagebox">
+                                                        <img src="<?= $cart_product->product->firstImage->link ?>" class="img-fluid" alt="product">
+                                                    </li>
+                                                    <?php if ($cart_product->product->images) {
+                                                        foreach ($cart_product->product->images as $image){ ?>
+                                                            <li class="d-none">
+                                                                <img src="<?=$image->link ?>" class="img-fluid" alt="product">
+                                                            </li>
+                                                    <?php }
+                                                    }?>
+                                                </ul>
+                                            <?php }?>
                                         </div>
                                         <div class="basket_table_div1_text">
                                             <span>New !</span>
@@ -252,3 +277,13 @@ use yii\helpers\Url; ?>
         </form>
     </div>
 </div>
+<?php $this->registerJs('
+        var $cart_images = $(\'.cart_imageboxes\');
+        var options = {
+            url: \'data-original\' };
+        $cart_images.on({ready:  function (e) {
+                console.log(e.type);
+            }
+        }).viewer(options);
+    ');
+?>
