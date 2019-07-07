@@ -215,7 +215,7 @@ class SellerQueryController extends Controller
                         ['html' => 'makeProduct-html', 'text' => 'makeProduct-text'],
                         [
                             'type' => 'buyer',
-                            'product_id' => $model->product_id,
+                            'product_id' => $model->product->id,
                             'query_name' => $model->query->description,
                             'query_date' => date('d/m/Y', $model->query->created_at),
                             'query_car_name' => $model->query->vendor .' '.$model->query->car.' '.$model->query->modification.' '.$model->query->year
@@ -223,7 +223,7 @@ class SellerQueryController extends Controller
                     )
                     ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
                     ->setTo($model->query->user->email)
-                    ->setSubject(Yii::$app->name)
+                    ->setSubject('Product Added')
                     ->send())
                 {
                     $model->status = SellerQuery::STATUS_PUBLISHED;
@@ -256,7 +256,7 @@ class SellerQueryController extends Controller
                         [
                             'type' => 'buyer',
                             'buyer_name' => $model->query->name,
-                            'product_id' => $model->product_id,
+                            'product_id' => $model->product->id,
                             'query_name' => $model->query->description,
                             'query_date' => date('d/m/Y', $model->query->created_at),
                             'query_car_name' => $model->query->vendor .' '.$model->query->car.' '.$model->query->modification.' '.$model->query->year
@@ -264,7 +264,7 @@ class SellerQueryController extends Controller
                     )
                     ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
                     ->setTo($model->query->email)
-                    ->setSubject('Product added | '.Yii::$app->params['appName'])
+                    ->setSubject('Product added')
                     ->send())
                 {
                     $model->status = SellerQuery::STATUS_PUBLISHED;
