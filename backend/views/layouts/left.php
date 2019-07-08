@@ -208,10 +208,10 @@ $counter['new_buyers'] = $users->where(['role'=>\common\models\User::ROLE_BUYER,
                             </a>
                         </li>
                         <li>
-                            <a href="<?= Url::to(['/seller-query', 'SellerQuerySearch[status]'=>0,'sort'=>'-id']) ?>"><i class="la la-edit"></i> New Requests
+                            <a href="<?= Url::to(['/seller-query', 'SellerQuerySearch[status]'=>1,'sort'=>'-id']) ?>"><i class="la la-edit"></i> New Requests
                                 <span class="pull-right-container">
                                     <small class="label pull-right bg-green">
-                                        <?= $counter['new_requests'] ?>
+                                        <?= $counter['moderated_requests'] ?>
                                     </small>
                                 </span>
                             </a>
