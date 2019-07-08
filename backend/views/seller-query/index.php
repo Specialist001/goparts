@@ -34,7 +34,7 @@ $this->registerCss('
 <!--    <h1>--><?//= Html::encode($this->title) ?><!--</h1>-->
 
     <p>
-        <?= Html::a('Create Seller Query', ['create'], ['class' => 'btn btn-success']) ?>
+<!--        --><?//= Html::a('Create Seller Query', ['create'], ['class' => 'btn btn-success']) ?>
         <?= Html::a('Clear Sort', ['/seller-query'], ['class' => 'btn btn-warning']) ?>
     </p>
 
@@ -47,47 +47,47 @@ $this->registerCss('
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-//            'id',
-            [
-                'attribute' => 'id',
-                'format' => 'raw',
-                'value' => function ($model) {
-//                    return '<a href="'.\yii\helpers\Url::to(['seller-query/view', 'id'=>$model->id]).'">'.$model->id.'</a>';
-                    return $model->product_id ?
-                        '<div class="dropdown">
-                            <a class="btn dropdown-toggle" type="button" id="dropdownMenu'.$model->id.'" data-toggle="dropdown">
-                                '.$model->id.'
-                                <span class="caret"></span>
-                              </a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu'.$model->id.'">
-                            <li role="presentation"><strong style="padding-left: 5px">Product Description: </strong><a role="menuitem" tabindex="-1">'.$model->product->translate->name.'</a></li>
-                            <li role="presentation"><strong style="padding-left: 5px">Price: </strong><a role="menuitem" tabindex="-1">'.$model->product->price.' AED</a></li>
-                            <li role="presentation"><strong style="padding-left: 5px">Car: </strong><a role="menuitem" tabindex="-1">'.$model->product->car->vendor.' '.$model->product->car->car.' '.$model->product->car->year.'</a></li>
-                            <li role="presentation" class="divider"></li>
-                            <li role="presentation">
-                                <a tabindex="-1" target="_blank" href="'.\yii\helpers\Url::to(['seller-query/view', 'id'=>$model->id]).'">View Details</a>
-                            </li>
-                            <li role="presentation" class="divider"></li>
-                            <li role="presentation">
-                                <a tabindex="-1" target="_blank" href="'.\yii\helpers\Url::to(['store-product/view', 'id'=>$model->product_id]).'">Product Details</a>
-                            </li>
-                            </ul>
-                        </div>' :
-                        '<div class="dropdown">
-                            <a class="btn dropdown-toggle" type="button" id="dropdownMenu'.$model->id.'" data-toggle="dropdown">
-                                '.$model->id.'
-                                <span class="caret"></span>
-                              </a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu'.$model->id.'">
-                                
-                                <li role="presentation">
-                                    <a tabindex="-1" target="_blank" href="'.\yii\helpers\Url::to(['seller-query/view', 'id'=>$model->id]).'">View Details</a>
-                                </li>
-                            </ul>
-                        </div>'
-                        ;
-                }
-            ],
+            'id',
+//            [
+//                'attribute' => 'id',
+//                'format' => 'raw',
+//                'value' => function ($model) {
+////                    return '<a href="'.\yii\helpers\Url::to(['seller-query/view', 'id'=>$model->id]).'">'.$model->id.'</a>';
+//                    return $model->product_id ?
+//                        '<div class="dropdown">
+//                            <a class="btn dropdown-toggle" type="button" id="dropdownMenu'.$model->id.'" data-toggle="dropdown">
+//                                '.$model->id.'
+//                                <span class="caret"></span>
+//                              </a>
+//                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu'.$model->id.'">
+//                            <li role="presentation"><strong style="padding-left: 5px">Product Description: </strong><a role="menuitem" tabindex="-1">'.$model->product->translate->name.'</a></li>
+//                            <li role="presentation"><strong style="padding-left: 5px">Price: </strong><a role="menuitem" tabindex="-1">'.$model->product->price.' AED</a></li>
+//                            <li role="presentation"><strong style="padding-left: 5px">Car: </strong><a role="menuitem" tabindex="-1">'.$model->product->car->vendor.' '.$model->product->car->car.' '.$model->product->car->year.'</a></li>
+//                            <li role="presentation" class="divider"></li>
+//                            <li role="presentation">
+//                                <a tabindex="-1" target="_blank" href="'.\yii\helpers\Url::to(['seller-query/view', 'id'=>$model->id]).'">View Details</a>
+//                            </li>
+//                            <li role="presentation" class="divider"></li>
+//                            <li role="presentation">
+//                                <a tabindex="-1" target="_blank" href="'.\yii\helpers\Url::to(['store-product/view', 'id'=>$model->product_id]).'">Product Details</a>
+//                            </li>
+//                            </ul>
+//                        </div>' :
+//                        '<div class="dropdown">
+//                            <a class="btn dropdown-toggle" type="button" id="dropdownMenu'.$model->id.'" data-toggle="dropdown">
+//                                '.$model->id.'
+//                                <span class="caret"></span>
+//                              </a>
+//                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu'.$model->id.'">
+//
+//                                <li role="presentation">
+//                                    <a tabindex="-1" target="_blank" href="'.\yii\helpers\Url::to(['seller-query/view', 'id'=>$model->id]).'">View Details</a>
+//                                </li>
+//                            </ul>
+//                        </div>'
+//                        ;
+//                }
+//            ],
 
             [
                 'attribute' => 'seller_id',
@@ -133,11 +133,57 @@ $this->registerCss('
                     
                 }
             ],
-            
             [
-                'attribute' => 'status',
-                'format' =>'sellerQuery',
-                'filter' => ['0'=>'Waited','1'=>'Moderate','2'=>'Published','3'=>'Purchased']
+//                'attribute' => 'id',
+                'format' => 'raw',
+                'label' => 'Car',
+                'value' => function ($model) {
+//                    return '<a href="'.\yii\helpers\Url::to(['seller-query/view', 'id'=>$model->id]).'">'.$model->id.'</a>';
+                    return
+                        '<div class="dropdown">
+                            <a class="btn dropdown-toggle" type="button" id="dropdownMenuCar'.$model->id.'" data-toggle="dropdown">
+                                '.$model->query->vendor.'
+                                <span class="caret"></span>
+                              </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuCar'.$model->id.'">
+                                <li role="presentation"><strong style="padding-left: 5px">Model: </strong><a role="menuitem" tabindex="-1">'.$model->query->car.'</a></li>
+                                <li role="presentation"><strong style="padding-left: 5px">Generation: </strong><a role="menuitem" tabindex="-1">'.$model->query->modification.'</a></li>
+                                <li role="presentation"><strong style="padding-left: 5px">Year: </strong><a role="menuitem" tabindex="-1">'.$model->query->year.'</a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation"><strong style="padding-left: 5px">Fueltype: </strong><a role="menuitem">'.$model->query->fueltype.'</a></li>
+                                <li role="presentation"><strong style="padding-left: 5px">Engine CC: </strong><a role="menuitem">'.$model->query->engine.'</a></li>
+                                <li role="presentation"><strong style="padding-left: 5px">Transmission: </strong><a role="menuitem">'.$model->query->transmission.'</a></li>
+                                <li role="presentation"><strong style="padding-left: 5px">Drive type: </strong><a role="menuitem">'.$model->query->drivetype.'</a></li>
+                            </ul>
+                        </div>';
+                }
+            ],
+            [
+                'label' => 'Description',
+                'format' => 'raw',
+                'value' => function($model) {
+                    return $model->product_id ?
+                        '<div class="dropdown">
+                            <a class="btn dropdown-toggle" type="button" id="dropdownMenuDesc'.$model->id.'" data-toggle="dropdown">
+                                '.substr($model->product->translate->name,0,10).'
+                                <span class="caret"></span>
+                              </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuDesc'.$model->id.'">
+                                <li role="presentation"><strong style="padding-left: 5px">Description: </strong><a role="menuitem" tabindex="-1">'.$model->product->translate->name.'</a></li>
+                            </ul>
+                        </div>' :
+                        null;
+                }
+            ],
+            [
+                'attribute' => 'price',
+                'label' => 'Price',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return $model->product_id ?
+                        '<strong>'.$model->product->price.' AED</strong>':
+                        null;
+                }
             ],
             [
                 'attribute'=>'image',
@@ -159,6 +205,11 @@ $this->registerCss('
 //                    return $model->firstImage->name ? '<img src="'.$model->firstImage->name.'" class="img-responsive" alt="query_'.$model->id.'" style="width: 80px">' : null;
                     return $model->product->images ? $img_string : null;
                 }
+            ],
+            [
+                'attribute' => 'status',
+                'format' =>'sellerQuery',
+                'filter' => ['0'=>'Waited','1'=>'Moderate','2'=>'Published','3'=>'Purchased']
             ],
             //'created_at',
             [
@@ -182,6 +233,15 @@ $this->registerCss('
                     }
 
                     return $btn;
+                }
+            ],
+            [
+                'label' => 'Update',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return $model->product_id ?
+                        '<a target="_blank" href="'.\yii\helpers\Url::to(['store-product/update','id'=>$model->product_id]).'" class="btn btn-default bg-olive">Update</a>' :
+                        null;
                 }
             ],
             //'updated_at',

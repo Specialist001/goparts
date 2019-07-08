@@ -12,6 +12,7 @@ use common\models\SellerQuery;
  */
 class SellerQuerySearch extends SellerQuery
 {
+
     /**
      * {@inheritdoc}
      */
@@ -19,6 +20,7 @@ class SellerQuerySearch extends SellerQuery
     {
         return [
             [['id', 'query_id', 'seller_id', 'product_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['description'], 'safe'],
         ];
     }
 
