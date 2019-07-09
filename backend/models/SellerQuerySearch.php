@@ -42,7 +42,7 @@ class SellerQuerySearch extends SellerQuery
      */
     public function search($params)
     {
-        $query = SellerQuery::find();
+        $query = SellerQuery::find()->orderBy('`id` DESC');
 
         // add conditions that should always apply here
 

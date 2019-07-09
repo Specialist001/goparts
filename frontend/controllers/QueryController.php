@@ -145,9 +145,11 @@ class QueryController extends Controller
             $query_data = Yii::$app->request->post()['QueryData'];
 
             $parts_array = [];
-
+            
+//            $images = UploadedFile::getInstancesByName('Query[0][images]');
 //            echo '<pre>';
 //            print_r(Yii::$app->request->post());
+//            print_r($images);
 //            echo '</pre>';
 //            exit;
 
