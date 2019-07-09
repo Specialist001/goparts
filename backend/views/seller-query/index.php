@@ -47,47 +47,24 @@ $this->registerCss('
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-//            [
-//                'attribute' => 'id',
-//                'format' => 'raw',
-//                'value' => function ($model) {
-////                    return '<a href="'.\yii\helpers\Url::to(['seller-query/view', 'id'=>$model->id]).'">'.$model->id.'</a>';
-//                    return $model->product_id ?
-//                        '<div class="dropdown">
-//                            <a class="btn dropdown-toggle" type="button" id="dropdownMenu'.$model->id.'" data-toggle="dropdown">
-//                                '.$model->id.'
-//                                <span class="caret"></span>
-//                              </a>
-//                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu'.$model->id.'">
-//                            <li role="presentation"><strong style="padding-left: 5px">Product Description: </strong><a role="menuitem" tabindex="-1">'.$model->product->translate->name.'</a></li>
-//                            <li role="presentation"><strong style="padding-left: 5px">Price: </strong><a role="menuitem" tabindex="-1">'.$model->product->price.' AED</a></li>
-//                            <li role="presentation"><strong style="padding-left: 5px">Car: </strong><a role="menuitem" tabindex="-1">'.$model->product->car->vendor.' '.$model->product->car->car.' '.$model->product->car->year.'</a></li>
-//                            <li role="presentation" class="divider"></li>
-//                            <li role="presentation">
-//                                <a tabindex="-1" target="_blank" href="'.\yii\helpers\Url::to(['seller-query/view', 'id'=>$model->id]).'">View Details</a>
-//                            </li>
-//                            <li role="presentation" class="divider"></li>
-//                            <li role="presentation">
-//                                <a tabindex="-1" target="_blank" href="'.\yii\helpers\Url::to(['store-product/view', 'id'=>$model->product_id]).'">Product Details</a>
-//                            </li>
-//                            </ul>
-//                        </div>' :
-//                        '<div class="dropdown">
-//                            <a class="btn dropdown-toggle" type="button" id="dropdownMenu'.$model->id.'" data-toggle="dropdown">
-//                                '.$model->id.'
-//                                <span class="caret"></span>
-//                              </a>
-//                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu'.$model->id.'">
-//
-//                                <li role="presentation">
-//                                    <a tabindex="-1" target="_blank" href="'.\yii\helpers\Url::to(['seller-query/view', 'id'=>$model->id]).'">View Details</a>
-//                                </li>
-//                            </ul>
-//                        </div>'
-//                        ;
-//                }
-//            ],
+//            'id',
+            [
+                'attribute' => 'id',
+                'format' => 'raw',
+                'value' => function ($model) {
+//                    return '<a href="'.\yii\helpers\Url::to(['seller-query/view', 'id'=>$model->id]).'">'.$model->id.'</a>';
+                    return
+                        '<div class="dropdown">
+                            <a class="btn dropdown-toggle" type="button" id="dropdownMenuId'.$model->id.'" data-toggle="dropdown">
+                                '.$model->id.'
+                                <span class="caret"></span>
+                              </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuId'.$model->id.'">
+                            <li role="presentation"><strong style="padding-left: 5px">Query ID: </strong><a href="'.\yii\helpers\Url::to(['query/view', 'id'=>$model->query_id]).'" role="menuitem" tabindex="-1">'.$model->query_id.'</a></li>
+                            </ul>
+                        </div>';
+                }
+            ],
 
             [
                 'attribute' => 'seller_id',

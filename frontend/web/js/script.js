@@ -531,7 +531,9 @@ $(document).ready(function () {
         newPart.find('.query_drivetype').attr('name', 'Query['+part_counter+'][drivetype]');
         newPart.find('.query_description').attr('name', 'Query['+part_counter+'][description]');
         // newPart.find('.query_main_image').attr('name', 'Query['+part_counter+'][mainImage]');
-        newPart.find('.query_images').attr('name', 'Query['+part_counter+'][images][]');
+        // newPart.find('.query_images').attr('name', 'Query['+part_counter+'][images][]');
+        newPart.find('.image').attr('name', 'Query['+part_counter+'][images][]');
+
 
         return false;
     });
@@ -548,6 +550,53 @@ $(document).ready(function () {
     $("#file").click(function(){
         $("#image").click();
     });
+
+
+    function readURL(input, preview) {
+        // console.log('123');
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                preview.attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+
+    }
+
+    $("form").on('click','.image_preview', function() {
+        var preview = $(this);
+
+        var input_btn = $(this).parent('.image_block').children('.image');
+        input_btn.click();
+
+        input_btn.change(function (){
+            console.log('change');
+
+            readURL(this, preview);
+            preview.parent('form').submit();
+        });
+    });
+
+    function delUrl(input, preview) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                preview.attr('src', '/uploads/site/add_img.png');
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+        input.value = null;
+    }
+
+    $("form").on('click','.deleter', function() {
+        var preview = $(this).parent('.image_block').find('.image_preview');
+        var file = $(this).parent('.image_block').find('.image')[0];
+        // console.log(file);
+        delUrl(file, preview);
+    });
+
+
 
 });
 

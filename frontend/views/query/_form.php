@@ -10,6 +10,33 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
+$this->registerCss('
+    .image_block {
+        width: 15%;
+        
+        border: 1px solid #bbbbbb;
+        border-radius: 7px;
+        
+        min-height: 130px;
+        max-height: 130px;
+    }
+    .image_block:not(:last-child) {
+        margin-right: 0.5rem;
+    }
+    .image_block img {
+        width: 100%;
+        max-height: 100px;
+        padding: 10px 5px;
+        cursor: pointer;
+    }
+    .image_block input {
+        display: none;
+    }
+    .image_block .deleter{
+        cursor: pointer;
+    }
+');
+
 $model->category_id = $category->id;
 
 if (!empty($model->car_id)) {
@@ -323,7 +350,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                         </div>
 
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <!--                        <div class="form-group cat-parent">-->
                         <!--                            <label>Category</label>-->
                         <!--                            <input class="form-control category_id" type="hidden" name="Query[0][category_id]" value="">-->
@@ -357,8 +384,8 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
 <!--                                <div class="form-group">-->
 <!--                                    --><?php
 //                                    echo FileInput::widget([
-//                                        'name' => 'Query[0][mainImage]',
-//                                        'options' => ['accept' => 'image/*', 'multiple' => false,'class'=>'query_main_image'],
+//                                        'name' => 'Query[0][images]',
+//                                        'options' => ['accept' => 'image/*', 'multiple' => true,'class'=>'query_main_image'],
 //                                        'pluginOptions' => [
 //                                            'showCaption' => false,
 //                                            'showRemove' => false,
@@ -375,9 +402,36 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
 <!--                                <div class="form-group">-->
 <!--                                    <input type="file" class="query_main_image" name="Query[0][mainImage]">-->
 <!--                                </div>-->
-                                <div class="form-group">
-                                    <input type="file" class="query_images" name="Query[0][images][]" multiple>
-                                </div>
+<!--                                <div class="form-group">-->
+<!--                                    <input type="file" class="query_images" name="Query[0][images][]" multiple>-->
+<!--                                </div>-->
+                                <ul class="images_block list-inline">
+                                    <li class="image_block float-left">
+                                        <input class="image" type="file" name="Query[0][images][]" accept="image/*,image/jpeg" multiple>
+                                        <img class="image_preview" src="/uploads/site/add_img.png">
+                                        <div class="deleter position-absolute rounded-bottom text-center bg-danger text-white" style="bottom: 0; width: 80px">Clear</div>
+                                    </li>
+                                    <li class="image_block float-left">
+                                        <input class="image" type="file" name="Query[0][images][]" accept="image/*,image/jpeg" multiple>
+                                        <img class="image_preview" src="/uploads/site/add_img.png">
+                                        <div class="deleter position-absolute rounded-bottom text-center bg-danger text-white" style="bottom: 0; width: 80px">Clear</div>
+                                    </li>
+                                    <li class="image_block float-left">
+                                        <input class="image" type="file" name="Query[0][images][]" accept="image/*,image/jpeg" multiple>
+                                        <img class="image_preview" src="/uploads/site/add_img.png">
+                                        <div class="deleter position-absolute rounded-bottom text-center bg-danger text-white" style="bottom: 0; width: 80px">Clear</div>
+                                    </li>
+                                    <li class="image_block float-left">
+                                        <input class="image" type="file" name="Query[0][images][]" accept="image/*,image/jpeg" multiple>
+                                        <img class="image_preview" src="/uploads/site/add_img.png">
+                                        <div class="deleter position-absolute rounded-bottom text-center bg-danger text-white" style="bottom: 0; width: 80px">Clear</div>
+                                    </li>
+                                    <li class="image_block float-left">
+                                        <input class="image" type="file" name="Query[0][images][]" accept="image/*,image/jpeg" multiple>
+                                        <img class="image_preview" src="/uploads/site/add_img.png">
+                                        <div class="deleter position-absolute rounded-bottom text-center bg-danger text-white" style="bottom: 0; width: 80px">Clear</div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
 
@@ -409,9 +463,9 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                         <!--                        </div>-->
                     </div>
                     <div class="col-md-12">
-<!--                        <label>Images</label>-->
+                        <label>Images</label>
 <!--                        <div class="form-group">-->
-<!--                            -->
+<!---->
 <!--                            --><?php
 //                            echo FileInput::widget([
 //                                'name' => 'Query[0][images][]',
@@ -432,12 +486,13 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
 <!--                        <div class="form-group">-->
 <!--                            <input type="file" class="query_images" name="Query[0][images][]" multiple>-->
 <!--                        </div>-->
+
                     </div>
                 </div>
             </div>
 
             <!-- Additional Part -->
-            <div class="query_part py-3 d-none">
+                <div class="query_part py-5 d-none">
                 <div class="row">
                     <div class="col">
                         <h4 class="pb-2 text-form-style_2">New Part</h4>
@@ -463,7 +518,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <!--                        <div class="form-group cat-parent">-->
                         <!--                            <label>Category</label>-->
                         <!--                            <input class="form-control category_id" type="hidden" value="">-->
@@ -492,6 +547,33 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                         <div class="row">
                             <div class="col-md-12">
                                 <label>Images</label>
+                                <ul class="images_block list-inline">
+                                    <li class="image_block float-left">
+                                        <input class="image" type="file">
+                                        <img class="image_preview" src="/uploads/site/add_img.png">
+                                        <div class="deleter position-absolute rounded-bottom text-center bg-danger text-white" style="bottom: 0; width: 80px">Clear</div>
+                                    </li>
+                                    <li class="image_block float-left">
+                                        <input class="image" type="file">
+                                        <img class="image_preview" src="/uploads/site/add_img.png">
+                                        <div class="deleter position-absolute rounded-bottom text-center bg-danger text-white" style="bottom: 0; width: 80px">Clear</div>
+                                    </li>
+                                    <li class="image_block float-left">
+                                        <input class="image" type="file">
+                                        <img class="image_preview" src="/uploads/site/add_img.png">
+                                        <div class="deleter position-absolute rounded-bottom text-center bg-danger text-white" style="bottom: 0; width: 80px">Clear</div>
+                                    </li>
+                                    <li class="image_block float-left">
+                                        <input class="image" type="file">
+                                        <img class="image_preview" src="/uploads/site/add_img.png">
+                                        <div class="deleter position-absolute rounded-bottom text-center bg-danger text-white" style="bottom: 0; width: 80px">Clear</div>
+                                    </li>
+                                    <li class="image_block float-left">
+                                        <input class="image" type="file">
+                                        <img class="image_preview" src="/uploads/site/add_img.png">
+                                        <div class="deleter position-absolute rounded-bottom text-center bg-danger text-white" style="bottom: 0; width: 80px">Clear</div>
+                                    </li>
+                                </ul>
 <!--                                <div class="form-group">-->
 <!--                                    --><?php
 //                                    echo FileInput::widget([
@@ -509,9 +591,9 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
 //                                    ]);
 //                                    ?>
 <!--                                </div>-->
-                                <div class="form-group">
-                                    <input type="file" class="query_images" multiple>
-                                </div>
+<!--                                <div class="form-group">-->
+<!--                                    <input type="file" class="query_images" multiple>-->
+<!--                                </div>-->
 <!--                                <div class="form-group">-->
 <!--                                    <input type="file" class="query_main_image">-->
 <!--                                </div>-->
