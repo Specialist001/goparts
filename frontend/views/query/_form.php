@@ -463,7 +463,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                         <!--                        </div>-->
                     </div>
                     <div class="col-md-12">
-                        <label>Images</label>
+<!--                        <label>Images</label>-->
 <!--                        <div class="form-group">-->
 <!---->
 <!--                            --><?php
