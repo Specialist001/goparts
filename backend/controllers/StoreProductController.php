@@ -420,9 +420,9 @@ class StoreProductController extends Controller
             $translation_ru->locale = 'ru-RU';
             $translation_ru->save();
 
-            $store_product_commission->product_id = $model->id;
-            $store_product_commission->commission = Yii::$app->request->post('product_commission');
-            $store_product_commission->save();
+            //$store_product_commission->product_id = $model->id;
+            //$store_product_commission->commission = Yii::$app->request->post('product_commission');
+            //$store_product_commission->save();
 
             $price = $model->price;
             $purchase_price = $price * (1 + ($model->user->commission->commission ? : 0) / 100);

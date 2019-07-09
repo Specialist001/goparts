@@ -165,11 +165,11 @@ $this->registerCss('
                     return $model->product_id ?
                         '<div class="dropdown">
                             <a class="btn dropdown-toggle" type="button" id="dropdownMenuDesc'.$model->id.'" data-toggle="dropdown">
-                                '.substr($model->product->translate->name,0,10).'
+                                '.substr($model->product->translate->description,0,10).'
                                 <span class="caret"></span>
                               </a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuDesc'.$model->id.'">
-                                <li role="presentation"><strong style="padding-left: 5px">Description: </strong><a role="menuitem" tabindex="-1">'.$model->product->translate->name.'</a></li>
+                                <li role="presentation"><strong style="padding-left: 5px">Description: </strong><a role="menuitem" tabindex="-1">'.$model->product->translate->description.'</a></li>
                             </ul>
                         </div>' :
                         null;
