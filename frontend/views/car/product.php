@@ -55,9 +55,9 @@ use yii\helpers\Url; ?>
                                 <h4><?= $product->purchase_price ?> <span>AED</span></h4>
                             </div>
                             <div class="count float-right w-25">
-                                <input class="form-control" type="number"
+                                <input class="form-control" type="hidden"
                                        required="required" name="count"
-                                       min="1" value="4">
+                                       min="1" value="1">
                             </div>
                         </div>
                         <br>
@@ -67,7 +67,7 @@ use yii\helpers\Url; ?>
                         <div class="buybuttons">
                             <button class="buybuttons1 add_cart">Add to cart <img src="/svg/White_bakset.svg" alt="">
                             </button>
-                            <a href="<?= Url::to(['/cart']) ?>" class="buybuttons2">Buy now</a>
+<!--                            <a href="--><?//= Url::to(['/cart']) ?><!--" class="buybuttons2">Buy now</a>-->
                         </div>
                         <div class="star d-none">
                             <i class="fas fa-star"></i>
@@ -114,71 +114,72 @@ use yii\helpers\Url; ?>
 </section>
 
 
-<section class="related">
-    <div class="container">
-        <h3>Also we recommend for this car</h3>
-        <div class="owl-carousel owl-theme row row-eq-height owl-related">
-            <div class="related">
-                <div class="card" style="width: 100%;">
-                    <img src="/img/product.png" class="card-img-top" alt="...">
-                    <div class="card-body card_hover">
-                        <h4>Chevrolet>Impala>X>2018</h4>
-                        <h5>SKU: <span>51-190326-24299</span></h5>
-                        <h5>Type of car: <span>Sedan</span></h5>
-                    </div>
-                    <div class="card-body">
-                        <a href="#" class="cat">Nissan</a>
-                        <h5 class="card-title">Rear Door Right Side, Nissan Murano 2009</h5>
-                        <div class="card_price">
-                            <h4>2552 <span>AED</span></h4>
-                        </div>
-                        <div class="card_cart">
-                            <a href="#"><img src="/img/cart.png" alt=""></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="related">
-                <div class="card" style="width: 100%;">
-                    <img src="/img/product.png" class="card-img-top" alt="...">
-                    <div class="card-body card_hover">
-                        <h4>Chevrolet>Impala>X>2018</h4>
-                        <h5>SKU: <span>51-190326-24299</span></h5>
-                        <h5>Type of car: <span>Sedan</span></h5>
-                    </div>
-                    <div class="card-body">
-                        <a href="#" class="cat">Nissan</a>
-                        <h5 class="card-title"></h5>
-                        <div class="card_price">
-                            <h4>2552 <span>AED</span></h4>
-                        </div>
-                        <div class="card_cart">
-                            <a href="#"><img src="/img/cart.png" alt=""></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="related">
-                <div class="card" style="width: 100%;">
-                    <img src="/img/product.png" class="card-img-top" alt="...">
-                    <div class="card-body card_hover">
-                        <h4>Chevrolet>Impala>X>2018</h4>
-                        <h5>SKU: <span>51-190326-24299</span></h5>
-                        <h5>Type of car: <span>Sedan</span></h5>
-                    </div>
-                    <div class="card-body">
-                        <a href="#" class="cat">Nissan</a>
-                        <h5 class="card-title">Rear Door Right Side, Nissan Murano 2009</h5>
-                        <div class="card_price">
-                            <h4>2552 <span>AED</span></h4>
-                        </div>
-                        <div class="card_cart">
-                            <a href="#"><img src="/img/cart.png" alt=""></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+<!--<section class="related" style="display: none">-->
+<!--    <div class="container">-->
+<!--        <h3>Also we recommend for this car</h3>-->
+<!--        <div class="owl-carousel owl-theme row row-eq-height owl-related">-->
+<!--            <div class="related">-->
+<!--                <div class="card" style="width: 100%;">-->
+<!--                    <img src="/img/product.png" class="card-img-top" alt="...">-->
+<!--                    <div class="card-body card_hover">-->
+<!--                        <h4>Chevrolet>Impala>X>2018</h4>-->
+<!--                        <h5>SKU: <span>51-190326-24299</span></h5>-->
+<!--                        <h5>Type of car: <span>Sedan</span></h5>-->
+<!--                    </div>-->
+<!--                    <div class="card-body">-->
+<!--                        <a href="#" class="cat">Nissan</a>-->
+<!--                        <h5 class="card-title">Rear Door Right Side, Nissan Murano 2009</h5>-->
+<!--                        <div class="card_price">-->
+<!--                            <h4>2552 <span>AED</span></h4>-->
+<!--                        </div>-->
+<!--                        <div class="card_cart">-->
+<!--                            <a href="#"><img src="/img/cart.png" alt=""></a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="related">-->
+<!--                <div class="card" style="width: 100%;">-->
+<!--                    <img src="/img/product.png" class="card-img-top" alt="...">-->
+<!--                    <div class="card-body card_hover">-->
+<!--                        <h4>Chevrolet>Impala>X>2018</h4>-->
+<!--                        <h5>SKU: <span>51-190326-24299</span></h5>-->
+<!--                        <h5>Type of car: <span>Sedan</span></h5>-->
+<!--                    </div>-->
+<!--                    <div class="card-body">-->
+<!--                        <a href="#" class="cat">Nissan</a>-->
+<!--                        <h5 class="card-title"></h5>-->
+<!--                        <div class="card_price">-->
+<!--                            <h4>2552 <span>AED</span></h4>-->
+<!--                        </div>-->
+<!--                        <div class="card_cart">-->
+<!--                            <a href="#"><img src="/img/cart.png" alt=""></a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="related">-->
+<!--                <div class="card" style="width: 100%;">-->
+<!--                    <img src="/img/product.png" class="card-img-top" alt="...">-->
+<!--                    <div class="card-body card_hover">-->
+<!--                        <h4>Chevrolet>Impala>X>2018</h4>-->
+<!--                        <h5>SKU: <span>51-190326-24299</span></h5>-->
+<!--                        <h5>Type of car: <span>Sedan</span></h5>-->
+<!--                    </div>-->
+<!--                    <div class="card-body">-->
+<!--                        <a href="#" class="cat">Nissan</a>-->
+<!--                        <h5 class="card-title">Rear Door Right Side, Nissan Murano 2009</h5>-->
+<!--                        <div class="card_price">-->
+<!--                            <h4>2552 <span>AED</span></h4>-->
+<!--                        </div>-->
+<!--                        <div class="card_cart">-->
+<!--                            <a href="#"><img src="/img/cart.png" alt=""></a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
+<div class="w-100 my-5"></div>
 

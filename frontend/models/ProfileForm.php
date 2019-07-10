@@ -31,7 +31,7 @@ class ProfileForm extends Model
             ['username', 'trim'],
             ['username', 'required'],
             ['username', 'string', 'min' => 2, 'max' => 255],
-            ['phone', 'string', 'min' => 13, 'max' => 13],
+//            ['phone', 'string', 'min' => 13, 'max' => 13],
             ['phone', 'match', 'pattern' => '/^\+\d{12}$/i'],
 
             ['email', 'trim'],

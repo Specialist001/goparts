@@ -60,6 +60,7 @@ class SignupForm extends Model
         $user->username = $this->username;
         $user->email = $this->email;
         $user->role = $this->role;
+        $user->avatar = '/uploads/site/no_avatar.png';
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();

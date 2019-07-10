@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use common\models\Page;
 use common\models\StoreCategory;
+use common\models\User;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -92,6 +93,9 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            if (Yii::$app->user->identity->role == 1) {
+                return $this->redirect(['user/index']);
+            }
             return $this->goBack();
         } else {
             $model->password = '';

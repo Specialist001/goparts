@@ -739,7 +739,7 @@ label.toggle .toggle__text, label.toggle + a {
     color: #00904c;
 }
 
-.working_right button {
+.working_right a.reg_btn {
     background: #fe0000;
     border-radius: 50px;
     border: 0;
@@ -2230,6 +2230,30 @@ ul.pagination > .disabled > span {
     cursor: not-allowed;
 }
 
+.image_block {
+    width: 15%;
+    border: 1px solid #bbbbbb;
+    border-radius: 7px;
+    min-height: 130px;
+    max-height: 130px;
+}
+.image_block:not(:last-child) {
+    margin-right: 0.5rem;
+}
+.image_block img {
+    width: 100%;
+    max-height: 105px;
+    min-height: 105px;
+    padding: 10px 5px;
+    cursor: pointer;
+}
+.image_block input {
+    display: none;
+}
+.image_block .deleter{
+    cursor: pointer;
+}
+
 
 @media (max-width: 1365px) {
     .slider1 {
@@ -2585,5 +2609,16 @@ ul.pagination > .disabled > span {
 
     .footerbottom_right {
         text-align: center;
+    }
+    .image_block {
+        width: 30%;
+        border: 1px solid #bbbbbb;
+        border-radius: 7px;
+        min-height: 130px;
+        max-height: 130px;
+        margin-bottom: 10px;
+    }
+    .request_imagebox {
+        width: 30%!important;
     }
 }
