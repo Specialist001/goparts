@@ -627,7 +627,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                 <div class="form-group">
                     <label>Name</label>
                     <input class="form-control" name="QueryData[name]"
-                           value="<?= Yii::$app->getUser()->identity->username ? Yii::$app->getuser()->identity->username : $model->username ?>"
+                           value="<?= Yii::$app->user->identity->username ? Yii::$app->user->identity->username : $model->name ?>"
                            required>
                 </div>
             </div>
