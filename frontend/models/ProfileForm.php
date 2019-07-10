@@ -32,7 +32,7 @@ class ProfileForm extends Model
             ['username', 'required'],
             ['username', 'string', 'min' => 2, 'max' => 255],
 //            ['phone', 'string', 'min' => 13, 'max' => 13],
-            ['phone', 'match', 'pattern' => '/^\+\d{12}$/i'],
+//            ['phone', 'match', 'pattern' => '/^\+\d{12}$/i'],
 
             ['email', 'trim'],
             ['email', 'required'],
@@ -105,7 +105,7 @@ class ProfileForm extends Model
         
         $user->username = $this->username; //$this->username;
         $user->email = $this->email;
-        $user->phone = $this->phone? $this->phone: null; //$this->username;
+        $user->phone = $this->phone ? $this->phone : null; //$this->username;
         $user->legal_info = $this->legal_info; //$this->username;
         $user->legal_address = $this->legal_address; //$this->username;
 
