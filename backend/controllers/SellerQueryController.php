@@ -235,8 +235,8 @@ class SellerQueryController extends Controller
                     return $this->asJson($data);
                 } else {
                     $data['status']['text'] = 'Request not send to buyer';
-                    $data['status']['code'] = -1;
-
+                    $data['status']['code'] = -1;               
+                    
                     return $this->asJson($data);
                 }
             } else {
@@ -245,7 +245,7 @@ class SellerQueryController extends Controller
 
                 $data['status']['text'] = 'Product published, but Request not send to buyer';
                 $data['status']['code'] = 0;
-
+                
                 return $this->asJson($data);
             }
         } else {
@@ -279,6 +279,7 @@ class SellerQueryController extends Controller
                 } else {
                     $data['status']['text'] = 'Request not send to buyer';
                     $data['status']['code'] = -1;
+                    
 
                     return $this->asJson($data);
                 }
@@ -288,7 +289,7 @@ class SellerQueryController extends Controller
 
                 $data['status']['text'] = 'Product published, but Request not send to buyer';
                 $data['status']['code'] = 0;
-
+                
                 return $this->asJson($data);
             }
         }
