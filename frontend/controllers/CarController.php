@@ -111,6 +111,7 @@ class CarController extends Controller
             $email = base64_decode($token);
             if ($this->getUser($email)!= false) {
                 Yii::$app->user->login($this->getUser($email),  3600 * 24 * 30);
+                Yii::$app->user->switchIdentity($this->getUser($email));
             }
         }
 
@@ -129,7 +130,7 @@ class CarController extends Controller
     }
 
     /**
-     * Finds user by [[email]]
+     * Finds user by [[$email]]
      *
      * @return User|null
      */
