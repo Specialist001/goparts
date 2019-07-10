@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'query_id')->textInput(['readonly'=> true]) ?>
         </div>
         <div class="col-md-3">
-            <?= $form->field($model, 'seller_id')->textInput(['value'=>$model->seller->username ,'readonly'=> true])->label('Seller') ?>
+            <?= $form->field($model, 'seller_id')->textInput(['value'=>$model->seller->id ,'readonly'=> true])->label('Seller') ?>
         </div>
         <div class="col-md-3">
             <?= $form->field($model, 'product_id')->textInput(['readonly'=> true]) ?>
