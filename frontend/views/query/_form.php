@@ -11,30 +11,7 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 $this->registerCss('
-    .image_block {
-        width: 15%;
-        
-        border: 1px solid #bbbbbb;
-        border-radius: 7px;
-        
-        min-height: 130px;
-        max-height: 130px;
-    }
-    .image_block:not(:last-child) {
-        margin-right: 0.5rem;
-    }
-    .image_block img {
-        width: 100%;
-        max-height: 100px;
-        padding: 10px 5px;
-        cursor: pointer;
-    }
-    .image_block input {
-        display: none;
-    }
-    .image_block .deleter{
-        cursor: pointer;
-    }
+    
 ');
 
 $model->category_id = $category->id;
@@ -410,27 +387,27 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                                     <li class="image_block float-left">
                                         <input class="image" type="file" name="Query[0][images][]" accept="image/*,image/jpeg" multiple>
                                         <img class="image_preview" src="/uploads/site/add_img.png">
-                                        <div class="deleter position-absolute rounded-bottom text-center bg-danger text-white" style="bottom: 0; width: 80px">Clear</div>
+                                        <div class="deleter rounded-bottom text-center bg-danger text-white" style="bottom: 0">Clear</div>
                                     </li>
                                     <li class="image_block float-left">
                                         <input class="image" type="file" name="Query[0][images][]" accept="image/*,image/jpeg" multiple>
                                         <img class="image_preview" src="/uploads/site/add_img.png">
-                                        <div class="deleter position-absolute rounded-bottom text-center bg-danger text-white" style="bottom: 0; width: 80px">Clear</div>
+                                        <div class="deleter rounded-bottom text-center bg-danger text-white" style="bottom: 0;">Clear</div>
                                     </li>
                                     <li class="image_block float-left">
                                         <input class="image" type="file" name="Query[0][images][]" accept="image/*,image/jpeg" multiple>
                                         <img class="image_preview" src="/uploads/site/add_img.png">
-                                        <div class="deleter position-absolute rounded-bottom text-center bg-danger text-white" style="bottom: 0; width: 80px">Clear</div>
+                                        <div class="deleter rounded-bottom text-center bg-danger text-white" style="bottom: 0;">Clear</div>
                                     </li>
                                     <li class="image_block float-left">
                                         <input class="image" type="file" name="Query[0][images][]" accept="image/*,image/jpeg" multiple>
                                         <img class="image_preview" src="/uploads/site/add_img.png">
-                                        <div class="deleter position-absolute rounded-bottom text-center bg-danger text-white" style="bottom: 0; width: 80px">Clear</div>
+                                        <div class="deleter rounded-bottom text-center bg-danger text-white" style="bottom: 0;">Clear</div>
                                     </li>
                                     <li class="image_block float-left">
                                         <input class="image" type="file" name="Query[0][images][]" accept="image/*,image/jpeg" multiple>
                                         <img class="image_preview" src="/uploads/site/add_img.png">
-                                        <div class="deleter position-absolute rounded-bottom text-center bg-danger text-white" style="bottom: 0; width: 80px">Clear</div>
+                                        <div class="deleter rounded-bottom text-center bg-danger text-white" style="bottom: 0;">Clear</div>
                                     </li>
                                 </ul>
                             </div>
@@ -552,27 +529,27 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                                     <li class="image_block float-left">
                                         <input class="image" type="file">
                                         <img class="image_preview" src="/uploads/site/add_img.png">
-                                        <div class="deleter position-absolute rounded-bottom text-center bg-danger text-white" style="bottom: 0; width: 80px">Clear</div>
+                                        <div class="deleter rounded-bottom text-center bg-danger text-white" style="bottom: 0;">Clear</div>
                                     </li>
                                     <li class="image_block float-left">
                                         <input class="image" type="file">
                                         <img class="image_preview" src="/uploads/site/add_img.png">
-                                        <div class="deleter position-absolute rounded-bottom text-center bg-danger text-white" style="bottom: 0; width: 80px">Clear</div>
+                                        <div class="deleter rounded-bottom text-center bg-danger text-white" style="bottom: 0;">Clear</div>
                                     </li>
                                     <li class="image_block float-left">
                                         <input class="image" type="file">
                                         <img class="image_preview" src="/uploads/site/add_img.png">
-                                        <div class="deleter position-absolute rounded-bottom text-center bg-danger text-white" style="bottom: 0; width: 80px">Clear</div>
+                                        <div class="deleter rounded-bottom text-center bg-danger text-white" style="bottom: 0;">Clear</div>
                                     </li>
                                     <li class="image_block float-left">
                                         <input class="image" type="file">
                                         <img class="image_preview" src="/uploads/site/add_img.png">
-                                        <div class="deleter position-absolute rounded-bottom text-center bg-danger text-white" style="bottom: 0; width: 80px">Clear</div>
+                                        <div class="deleter rounded-bottom text-center bg-danger text-white" style="bottom: 0;">Clear</div>
                                     </li>
                                     <li class="image_block float-left">
                                         <input class="image" type="file">
                                         <img class="image_preview" src="/uploads/site/add_img.png">
-                                        <div class="deleter position-absolute rounded-bottom text-center bg-danger text-white" style="bottom: 0; width: 80px">Clear</div>
+                                        <div class="deleter rounded-bottom text-center bg-danger text-white" style="bottom: 0;">Clear</div>
                                     </li>
                                 </ul>
 <!--                                <div class="form-group">-->
@@ -642,6 +619,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                 </button>
             </div>
         </div>
+        <?php if(Yii::$app->user->isGuest) { ?>
         <h3 class="pt-5">Contacts</h3>
         <div class="row">
             <div class="col-md-4">
@@ -649,7 +627,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                 <div class="form-group">
                     <label>Name</label>
                     <input class="form-control" name="QueryData[name]"
-                           value="<?= Yii::$app->user->identity->username ? Yii::$app->user->identity->username : $model->name ?>"
+                           value="<?= Yii::$app->getUser()->identity->username ? Yii::$app->getuser()->identity->username : $model->username ?>"
                            required>
                 </div>
             </div>
@@ -666,7 +644,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                 <? //= $form->field($model, 'email')->input('email') ?>
                 <div class="form-group">
                     <label>E-mail</label>
-                    <input class="form-control" name="QueryData[email]" type="email" required>
+                    <input class="form-control" name="QueryData[email]" type="email" value="<?= Yii::$app->user->identity->email ? Yii::$app->user->identity->email : $model->email ?>" required>
                 </div>
             </div>
 
@@ -695,8 +673,9 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
             //            'language' => 'en'
             //        ]); ?>
         </div>
+        <?php } ?>
 
-        <div class="form-group text-center pt-2">
+        <div class="form-group text-center pt-5">
             <?= Html::submitButton('Send', ['class' => 'btn btn-success px-5']) ?>
         </div>
 

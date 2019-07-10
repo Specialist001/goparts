@@ -63,6 +63,7 @@ $top_pages = Page::find()->where(['status'=>1])->orderBy('order')->all();
             </div>
             <div class="col text-center">
                 <div class="float-left">
+                    <a href="<?= Url::to(['/cart']) ?>" class="d-inline-block">
                     <div class="header_shop_icon">
                         <img src="/svg/shopping-cart.svg" class="img-fluid" alt="" style="width: 22px">
                     </div>
@@ -72,6 +73,7 @@ $top_pages = Page::find()->where(['status'=>1])->orderBy('order')->all();
                             <div id="cart-count" class="d-inline-block"><?= WBasket::widget(['key' => 'main']) ?> </div> AED
                         </span>
                     </div>
+                    </a>
                 </div>
             </div>
             <!--            <div class="topheader_shop">-->

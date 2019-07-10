@@ -8,7 +8,11 @@ use yii\helpers\Url;
 
 $userLink = Yii::$app->urlManager->createAbsoluteUrl(['user/purchases']);
 //$productLink = Yii::$app->urlManager->createAbsoluteUrl(['car/product', 'id'=>$product_id]);
-$productLink = 'http://goparts.ae/car/product?id='.$product_id;
+if ($token) {
+    $productLink = 'http://goparts.ae/car/product?id=' . $product_id . '&token=' . $token;
+} else {
+    $productLink = 'http://goparts.ae/car/product?id=' . $product_id;
+}
 ?>
 <?php if($type == 'buyer') { ?>
         Product addedd

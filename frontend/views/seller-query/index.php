@@ -343,10 +343,10 @@ $this->registerCss('
                                                 <div class="row pt-5 img_select">
                                                 <?php if ($seller_query->product_id && $seller_query->product->images) { ?>
                                                     <div class="col-12">
-                                                        <ul class="row request_imageboxes">
-                                                            <?php if ($seller_query->product_id && $seller_query->product->mainImage->link) { ?>
+                                                        <ul class="row request_imageboxes pl-2">
+                                                            <?php if ($seller_query->product_id && $seller_query->product->firstImage->link) { ?>
                                                             <li class="request_imagebox float-left p-1">
-                                                                <img src="<?=$seller_query->product->mainImage->link?>" class="img-fluid" style="cursor: -webkit-zoom-in; cursor: zoom-in;">
+                                                                <img src="<?=$seller_query->product->firstImage->link?>" class="img-fluid" style="cursor: -webkit-zoom-in; cursor: zoom-in;">
                                                             </li>
                                                             <?php } ?>
                                                              <?php if ($seller_query->product_id && $seller_query->product->images) { ?>

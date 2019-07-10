@@ -73,18 +73,41 @@ class CartController extends \yii\web\Controller
 
     public function actionIndex()
     {
-//        if (Yii::$app->user->identity->role != User::ROLE_SELLER) {
-            $cart_products = UserCart::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->all();
+
+        $total_count = [];
+        $userCart = [];
+        if (Yii::$app->user->id) {
+            $userCart = UserCart::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->all();
+        } elseif (!empty(Yii::$app->session->get('cart'))) {
+            $products = Yii::$app->session->get('cart');
+            $cart_count = Yii::$app->session->get('cart_count', []);
+            foreach ($products as $it =>  $product) {
+                $userCart_temp = new UserCart();
+                $userCart_temp->product_id = $product['product_id'];
+                $userCart_temp->count = isset($cart_count[$it]['count'])? $cart_count[$it]['count']: 1;
+                $userCart[] = $userCart_temp;
+            }
+        }
+        if (!empty($userCart)) {
+            for ($i = 0; $i < count($userCart); $i++) {
+                $temp_prod = StoreProduct::findOne(['status' => 1, 'id' => $userCart[$i]->product_id]);
+                if (empty($temp_prod)) continue;
+
+            }
+        }
+        if (!empty($userCart)) {
             $total_count = WBasket::widget(['key'=>'main']);
             $deliveries = StoreDelivery::find()->all();
 
             return $this->render('index',[
-                'cart_products' => $cart_products,
+                'cart_products' => $userCart,
                 'total_count' => $total_count,
                 'deliveries' => $deliveries,
             ]);
-//        }
-//        return $this->goBack();
+        } elseif(empty($userCart)) {
+            return $this->redirect(['site/error']);
+        }
+
     }
 
     public function actionAdd()
@@ -131,7 +154,8 @@ class CartController extends \yii\web\Controller
                 }
             } else {
                 $cart = !empty(Yii::$app->session->get('cart')) ? Yii::$app->session->get('cart') : [];
-                if (isset($cart)) if (in_array(['product_id' => $prod_id], $cart))
+                if (isset($cart)) { if (in_array(['product_id' => $prod_id], $cart)) {
+
                     return json_encode([
                         'error' => false,
                         'product' => [
@@ -143,12 +167,14 @@ class CartController extends \yii\web\Controller
                             'cart_count' => static::getCount(),
                         ],
                     ]);
-
+                    }
+                }
                     $index = count($cart);
                     $cart[$index]['product_id'] = $prod_id;
                     $cart_count[$index]['count'] = (Yii::$app->request->post('count') > 0)? Yii::$app->request->post('count'): 1;
                     Yii::$app->session->set('cart', $cart);
                     Yii::$app->session->set('cart_count', $cart_count);
+                    $total_count = WBasket::widget(['key'=>'main']);
 
                     return json_encode([
                         'error' => false,
@@ -159,6 +185,7 @@ class CartController extends \yii\web\Controller
     //                        'shop' => $product->shop->name,
                             'cat' => $product->category->translate->title,
                             'cart_count' => static::getCount(),
+                            'total_count' => $total_count,
                         ],
                     ]);
             }

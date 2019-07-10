@@ -9,6 +9,7 @@ use common\models\StoreCategory;
 use common\models\StoreOption;
 use common\models\StoreProductImage;
 use common\models\User;
+use common\models\UserCommission;
 use rmrevin\yii\fontawesome\FA;
 use Yii;
 use common\models\Query;
@@ -154,6 +155,9 @@ class QueryController extends Controller
 //            exit;
 
             if (Yii::$app->request->post()) {
+                $username = Yii::$app->user->getId() ? Yii::$app->user->identity->username : $query_data['name'];
+                $email = Yii::$app->user->getId() ? Yii::$app->user->identity->email : $query_data['email'];
+                $phone = Yii::$app->user->getId() ? Yii::$app->user->identity->phone : $query_data['phone'];
 
                 foreach ($query_part as $key => $part) {
                     $model = new Query();
@@ -173,9 +177,9 @@ class QueryController extends Controller
 
                     $model->user_id = Yii::$app->user->getId() ? Yii::$app->user->getId() : null;
 
-                    $model->name = $query_data['name'];
-                    $model->phone = $query_data['phone'];
-                    $model->email = $query_data['email'];
+                    $model->name = $username;
+                    $model->phone = $phone;
+                    $model->email = $email;
 
                     $model->save();
 //                    $dir = (__DIR__) . '/../../uploads/queries/';
@@ -244,7 +248,35 @@ class QueryController extends Controller
 //                    $parts_array[$key] += [$model];
                 }
 
+                if(!Yii::$app->user->id) {
+                    $password = mt_rand(10000000, 99999999);
+                    $user = new User();
+                    $user->username = $query_data['name']; //$this->username;
+                    $user->email = $query_data['email'];
+                    $user->phone = $query_data['phone'];
+                    $user->status = User::STATUS_INACTIVE;
 
+                    $user->setPassword($password);
+                    $user->generateAuthKey();
+                    if($user->save()) {
+
+                        $user_commission = new UserCommission();
+                        $user_commission->id = $user->id;
+                        $user_commission->commission = 35;
+                        $user_commission->save();
+
+                        Yii::$app
+                            ->mailer
+                            ->compose(
+                                ['html' => 'signUp-html', 'text' => 'signUp-text'],
+                                ['user' => $user, 'password' => $password]
+                            )
+                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                            ->setTo($user->email)
+                            ->setSubject('Registration on ' . Yii::$app->name)
+                            ->send();
+                    }
+                }
 
                 return $this->redirect(['/query']);
             }

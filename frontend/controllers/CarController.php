@@ -5,11 +5,41 @@ use common\models\Cars;
 use common\models\StoreCategory;
 use common\models\StoreProduct;
 use common\models\StoreTypeCar;
+use common\models\User;
+use Yii;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 class CarController extends Controller
 {
+    public $_user;
+
+    /**
+     * {@inheritdoc}
+     */
+//    public function behaviors()
+//    {
+//        return [
+//            'access' => [
+//                'class' => AccessControl::className(),
+//                'rules' => [
+//                    [
+//                        'actions' => ['search', 'error'],
+//                        'allow' => true,
+//                    ],
+//                    [
+//                        'actions' => ['product'],
+//                        'allow' => true,
+//                        'roles' => ['?'],
+//                    ],
+//                ],
+//            ],
+//
+//        ];
+//    }
+
     public function actionSearch($vendor=null, $car=null, $modification=null, $category_id = null, $type_car_id = null)
     {
         if ($vendor != null) {
@@ -75,8 +105,15 @@ class CarController extends Controller
         }
     }
 
-    public function actionProduct($id)
+    public function actionProduct($id, $token=null)
     {
+        if($token) {
+            $email = base64_decode($token);
+            if ($this->getUser($email)!= false) {
+                Yii::$app->user->login($this->getUser($email),  3600 * 24 * 30);
+            }
+        }
+
         return $this->render('product', [
             'product' => $this->findModel($id),
         ]);
@@ -89,5 +126,16 @@ class CarController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /**
+     * Finds user by [[email]]
+     *
+     * @return User|null
+     */
+    protected function getUser($email)
+    {
+         return User::findByEmail($email) ? User::findByEmail($email) : false;
+
     }
 }

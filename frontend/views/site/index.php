@@ -77,7 +77,7 @@ $this->title = Yii::$app->params['appName'];
                     <div class="col-md-6 working_right pt-3 pt-md-0">
                         <p>In addition, <span>download our APP</span> and make your business better </p>
                         <p><a href="#"><img src="img/google.png"></a><a href="#"><img src="img/store.png"></a></p>
-                        <button href="<?php Url::to(['signup'])?>">Registration</button>
+                        <a class="reg_btn" href="<?= Url::to(['signup'])?>">Register</a>
                     </div>
                 </div>
             </div>

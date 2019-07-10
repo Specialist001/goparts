@@ -207,7 +207,7 @@ $(document).ready(function () {
                     t = JSON.parse(t);
                     // console.log(t);
                     if (t.error !== true) {
-                        console.log('true-t');
+                        console.log('t');
                         //$('.header-cart-icon').html(t.product.cart_count);
                         $('#cart_popup').html(
                             '<p class="alert alert-info">' + t.product.page_title + '</p>' +

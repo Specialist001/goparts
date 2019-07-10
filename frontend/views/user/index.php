@@ -25,7 +25,7 @@ $this->title = 'My Profile';
                 <div class="dashboard-profile">
                     <div class="dashboard-profile_photo">
 
-                        <img src="<?= Yii::$app->getUser()->identity->avatar ? Yii::$app->getUser()->identity->avatar : '/uploads/site/default_cat.png' ?>">
+                        <img src="<?= Yii::$app->getUser()->identity->avatar ? Yii::$app->getUser()->identity->avatar : '/uploads/site/no_avatar.png' ?>">
                     </div>
                     <div class="dashboard-profile_photo-text">
                         <a class="" id="file" style="cursor: pointer">
@@ -80,12 +80,12 @@ $this->title = 'My Profile';
                     <!--                            <button>Delete <i class="fa fa-times-circle"></i></button>-->
                     <!--                        </div>-->
                     <div class="col-md-12 customer_bottomright float-md-right">
-                        <div class="custom-control custom-checkbox customer_receive">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Receive email notifications</label>
-                        </div>
+<!--                        <div class="custom-control custom-checkbox customer_receive">-->
+<!--                            <input type="checkbox" class="custom-control-input" id="customCheck1">-->
+<!--                            <label class="custom-control-label" for="customCheck1">Receive email notifications</label>-->
+<!--                        </div>-->
                         <div class="form-button customer_bottombut">
-                            <button class="customer_bottombut_1">I want to Sell Product</button>
+<!--                            <button class="customer_bottombut_1">I want to Sell Product</button>-->
                             <button type="submit" class="customer_bottombut_2">Save Profile</button>
                         </div>
                     </div>

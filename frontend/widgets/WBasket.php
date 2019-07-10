@@ -26,8 +26,15 @@ class WBasket extends Widget
                 }
                 return  number_format($total_price, Yii::$app->params['price']['decimals'], Yii::$app->params['price']['dec_pointer'], Yii::$app->params['price']['thousands_sep']);
             } else {
-                $cart = !empty(Yii::$app->session->get('basket')) ? Yii::$app->session->get('cart') : [];
-                return '0';
+                $userCart = !empty(Yii::$app->session->get('cart')) ? Yii::$app->session->get('cart') : [];
+                $total_price = 0;
+                if ($userCart) {
+                    foreach ($userCart as $basket) {
+                        $total_price += $basket->product->purchase_price * $basket->count;
+                    }
+                }
+
+                return  number_format($total_price, Yii::$app->params['price']['decimals'], Yii::$app->params['price']['dec_pointer'], Yii::$app->params['price']['thousands_sep']);
             }
         }
 

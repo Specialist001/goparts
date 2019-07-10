@@ -56,7 +56,7 @@ return [
                 'user/requests' => 'seller-query',
                 'user/request/' => 'seller-query/view',
                 'user/orders' => 'order/index',
-                'reset-password' => 'site/request-password-reset',
+//                'reset-password' => 'site/request-password-reset',
             ],
         ],
 

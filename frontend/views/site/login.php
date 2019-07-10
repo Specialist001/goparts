@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="col-lg-4 m-auto">
                 <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+                <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
 
                 <?= $form->field($model, 'password')->passwordInput() ?>
 
@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </span>
                     </label>
                     <a class="text-form-style_2 float-right font-weight-bold pt-1"
-                       href="<?= Url::to(['reset-password']); ?>">Forgot your password?</a>
+                       href="<?= Url::to(['site/request-password-reset']); ?>">Forgot your password?</a>
                 </div>
 
                 <!--                <div style="color:#999;margin:1em 0">-->
