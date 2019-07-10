@@ -258,6 +258,7 @@ class SellerQueryController extends Controller
                             'type' => 'buyer',
                             'buyer_name' => $model->query->name,
                             'product_id' => $model->product->id,
+                            'token' => base64_encode($model->query->email),
                             'query_name' => $model->query->description,
                             'query_date' => date('d/m/Y', $model->query->created_at),
                             'query_car_name' => $model->query->vendor .' '.$model->query->car.' '.$model->query->modification.' '.$model->query->year
