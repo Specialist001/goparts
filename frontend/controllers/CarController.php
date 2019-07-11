@@ -116,7 +116,7 @@ class CarController extends Controller
                 $session = Yii::$app->session;
 		$session->open();
                 Yii::$app->user->enableSession = true;
-
+                $session->setTimeout(3600 * 24 * 30);
             }
         }
 
