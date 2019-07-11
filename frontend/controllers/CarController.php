@@ -110,8 +110,12 @@ class CarController extends Controller
         if($token) {
             $email = base64_decode($token);
             if ($this->getUser($email)!= false) {
-                Yii::$app->user->login($this->getUser($email),  3600 * 24 * 30);
-                Yii::$app->user->switchIdentity($this->getUser($email));
+                //Yii::$app->user->login($this->getUser($email),  3600 * 24 * 30);
+                
+                Yii::$app->user->switchIdentity($this->getUser($email), 3600 * 24 * 30);
+                $session = Yii::$app->session;
+		        $session->open();
+                Yii::$app->user->enableSession = true;
             }
         }
 
