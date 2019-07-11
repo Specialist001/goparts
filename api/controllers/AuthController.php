@@ -36,12 +36,12 @@ class AuthController extends \yii\web\Controller
     }
 
     public function actionLogin() {
-        $username = Yii::$app->request->post('username', null);
+        $email = Yii::$app->request->post('email', null);
         $password = Yii::$app->request->post('password', null);
         $siteToken = Yii::$app->request->post('siteToken', null);
 
-        if (!$username) {
-            return $this->redirect(['site/error', 'message' => 'username is required', 'code' => 422]);
+        if (!$email) {
+            return $this->redirect(['site/error', 'message' => 'email is required', 'code' => 422]);
         }
         if (!$password) {
             return $this->redirect(['site/error', 'message' => 'password is required', 'code' => 422]);
@@ -52,7 +52,7 @@ class AuthController extends \yii\web\Controller
 //            $username = $smsService->clearPhone($username);
 //        }
 
-        $user = User::findByUsername($username);
+        $user = User::findByEmail($email);
 
         if (!$user) {
             return $this->redirect(['site/error', 'message' => Yii::t('frontend', 'User not found.'), 'code' => 401]);
@@ -84,7 +84,7 @@ class AuthController extends \yii\web\Controller
             'legal_info'=>$user->legal_info
         ];
 
-        return $this->asJson(['type' => 'Basic', 'token' => base64_encode($username.':'.$password),
+        return $this->asJson(['type' => 'Basic', 'token' => base64_encode($email.':'.$password),
             'user' => $user_data
             ]);
 //        return $this->asJson([]);
@@ -107,9 +107,9 @@ class AuthController extends \yii\web\Controller
         if (!$username) {
             return $this->redirect(['site/error', 'message' => 'username is required', 'code' => 422]);
         }
-//        if (!$this->isEmail($username)) {
-//            return $this->redirect(['site/error', 'message' => 'username is invalid', 'code' => 422]);
-//        }
+        if (!$this->isEmail($email)) {
+            return $this->redirect(['site/error', 'message' => 'email is invalid', 'code' => 422]);
+        }
 //        if ($this->isPhone($username)) {
 //            $username = $smsService->clearPhone($username);
 //        }
@@ -140,7 +140,7 @@ class AuthController extends \yii\web\Controller
 //            $model->sendEmail($password);
             return $this->asJson([
                 'type' => 'Basic',
-                'token' => base64_encode($user->username.':'.$password),
+                'token' => base64_encode($user->email.':'.$password),
             ]);
         }
 
@@ -151,23 +151,23 @@ class AuthController extends \yii\web\Controller
         $model = new PasswordResetRequestForm();
 
 //        $smsService = new SmsService();
-        $username = Yii::$app->request->post('username', null);
-        if (!$username) {
-            return $this->redirect(['site/error', 'message' => 'username is required', 'code' => 422]);
+        $email = Yii::$app->request->post('email', null);
+        if (!$email) {
+            return $this->redirect(['site/error', 'message' => 'email is required', 'code' => 422]);
         }
-        if (!$this->isEmail($username) && !$this->isPhone($username)) {
-            return $this->redirect(['site/error', 'message' => 'username is invalid', 'code' => 422]);
+        if (!$this->isEmail($email)) {
+            return $this->redirect(['site/error', 'message' => 'email is invalid', 'code' => 422]);
         }
 //        if ($this->isPhone($username)) {
 //            $username = $smsService->clearPhone($username);
 //        }
 
-        $user = User::findByUsername($username);
+        $user = User::findByEmail($email);
         if (!$user) {
             return $this->redirect(['site/error', 'message' => Yii::t('frontend', 'There is no user with this email address.'), 'code' => 401]);
         }
 
-        $model->username = $username;
+        $model->email = $email;
 
         if ($model->sendEmail()) {
             if($model->isEmail()) {
@@ -181,8 +181,8 @@ class AuthController extends \yii\web\Controller
         return $this->redirect(['site/error', 'message' => 'Invalid data send', 'code' => 422]);
     }
 
-    public function isEmail($username) {
-        return filter_var($username, FILTER_VALIDATE_EMAIL);
+    public function isEmail($email) {
+        return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
 //    public function isPhone($username) {

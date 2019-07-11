@@ -77,6 +77,63 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        \Yii::$app->view->registerMetaTag([
+            'name' => 'title',
+            'content' => Yii::$app->params['appName'],
+        ]);
+
+        \Yii::$app->view->registerMetaTag([
+            'name' => 'description',
+            'content' => 'The Largest Online Store for Used Spare Parts in U.A.E'
+        ]);
+
+//        Schema.org разметка for Google+
+        \Yii::$app->view->registerMetaTag([
+            'itemprop' => 'name',
+            'content' => Yii::$app->params['appName'],
+        ]);
+
+        \Yii::$app->view->registerMetaTag([
+            'itemprop' => 'description',
+            'content' => 'The Largest Online Store for Used Spare Parts in U.A.E',
+        ]);
+
+        \Yii::$app->view->registerMetaTag([
+            'itemprop' => 'image',
+            'content' => Yii::$app->urlManager->createAbsoluteUrl(['svg/goparts_logo_1.svg']),
+        ]);
+
+
+        \Yii::$app->view->registerMetaTag([
+            'property' => 'og:title',
+            'content' => Yii::$app->params['appName'],
+        ]);
+
+        \Yii::$app->view->registerMetaTag([
+            'property' => 'og:type',
+            'content' => 'The Largest Online Store for Used Spare Parts in U.A.E',
+        ]);
+
+        \Yii::$app->view->registerMetaTag([
+            'property' => 'og:description',
+            'content' => 'The Largest Online Store for Used Spare Parts in U.A.E',
+        ]);
+
+        \Yii::$app->view->registerMetaTag([
+            'property' => 'og:site_name',
+            'content' => Yii::$app->params['appName'],
+        ]);
+
+        \Yii::$app->view->registerMetaTag([
+            'property' => 'og:url',
+            'content' => Yii::$app->urlManager->createAbsoluteUrl([]),
+        ]);
+
+        \Yii::$app->view->registerMetaTag([
+            'property' => 'og:image',
+            'content' => Yii::$app->urlManager->createAbsoluteUrl(['svg/goparts_logo_1.svg']),
+        ]);
+
         return $this->render('index');
     }
 
