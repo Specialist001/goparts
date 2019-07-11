@@ -115,6 +115,8 @@ class CarController extends Controller
                 Yii::$app->user->switchIdentity($this->getUser($email), 3600 * 24 * 30);
                 $session = Yii::$app->session;
 		$session->open();
+                Yii::$app->user->enableSession = true;
+
             }
         }
 

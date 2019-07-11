@@ -392,9 +392,9 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStoreUserComissions()
+    public function getUserCommissions()
     {
-        return $this->hasMany(StoreUserComission::className(), ['user_id' => 'id']);
+        return $this->hasMany(UserCommission::className(), ['user_id' => 'id']);
     }
     /**
      * @return \yii\db\ActiveQuery
