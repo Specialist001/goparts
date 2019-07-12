@@ -54,6 +54,7 @@ return [
                 'user/product/create' => 'product/create',
                 'user/product/update' => 'product/update',
                 'user/requests' => 'seller-query',
+                'user/queries' => 'query/index',
                 'user/request/' => 'seller-query/view',
                 'user/orders' => 'order/index',
 //                'reset-password' => 'site/request-password-reset',

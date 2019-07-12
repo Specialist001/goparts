@@ -6,6 +6,7 @@ use common\models\StoreCategory;
 use common\models\StoreProduct;
 use common\models\StoreTypeCar;
 use common\models\User;
+use common\models\UserCommission;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -120,8 +121,13 @@ class CarController extends Controller
             }
         }
 
+        $user_commission = (!empty(UserCommission::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->one())) ? UserCommission::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->one() : 35;
+        $commission = $user_commission->commission;
+        $commission = (1 + ($commission ? $commission : 0) / 100);
+
         return $this->render('product', [
             'product' => $this->findModel($id),
+            'commission' => $commission,
         ]);
     }
 

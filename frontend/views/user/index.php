@@ -22,21 +22,21 @@ $this->title = 'My Profile';
 <!--                        </div>-->
 <!--                    </label>-->
 <!--                </div>-->
-                <div class="dashboard-profile">
-                    <div class="dashboard-profile_photo">
-
-                        <img src="<?= Yii::$app->getUser()->identity->avatar ? Yii::$app->getUser()->identity->avatar : '/uploads/site/no_avatar.png' ?>">
-                    </div>
-                    <div class="dashboard-profile_photo-text">
-                        <a class="" id="file" style="cursor: pointer">
-                            <p>
-                                <img src="/svg/chang_photo.svg" alt="" class="mr-2">
-                                <?= Yii::$app->getUser()->identity->avatar ? ' Change Photo' : ' Add Photo' ?>
-                            </p>
-                        </a>
-                    </div>
-                    <input type="file" class="lk-setting__file-img hidden" name="ProfileForm[avatar]" id="image" style="visibility: hidden">
-                </div>
+<!--                <div class="dashboard-profile">-->
+<!--                    <div class="dashboard-profile_photo">-->
+<!---->
+<!--                        <img src="--><?//= Yii::$app->getUser()->identity->avatar ? Yii::$app->getUser()->identity->avatar : '/uploads/site/no_avatar.png' ?><!--">-->
+<!--                    </div>-->
+<!--                    <div class="dashboard-profile_photo-text">-->
+<!--                        <a class="" id="file" style="cursor: pointer">-->
+<!--                            <p>-->
+<!--                                <img src="/svg/chang_photo.svg" alt="" class="mr-2">-->
+<!--                                --><?//= Yii::$app->getUser()->identity->avatar ? ' Change Photo' : ' Add Photo' ?>
+<!--                            </p>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <input type="file" class="lk-setting__file-img hidden" name="ProfileForm[avatar]" id="image" style="visibility: hidden">-->
+<!--                </div>-->
                 <?= $this->render('//user/_usermenu.php') ?>
             </div>
             <div class="col-md-9 customer_cont">

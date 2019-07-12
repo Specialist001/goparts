@@ -103,7 +103,7 @@ $this->registerCss('
                         </p>
                         <div class="w-100 d-inline-block">
                             <div class="price float-left">
-                                <h4><?= $product->purchase_price ?> <span>AED</span></h4>
+                                <h4><?= $product->price * $commission ?> <span>AED</span></h4>
                             </div>
                             <div class="count float-right w-25">
                                 <input class="form-control" type="hidden"
@@ -113,6 +113,7 @@ $this->registerCss('
                         </div>
                         <br>
                         <input type="hidden" name="product_id" value="<?= $product->id ?>">
+                        <input type="hidden" name="user_id" value="<?= Yii::$app->user->identity->getId() ?>">
                         <input type="hidden" name="_csrf-frontend"
                                value="<?= Yii::$app->request->getCsrfToken() ?>"/>
                         <div class="buybuttons">
