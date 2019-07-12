@@ -54,10 +54,10 @@ class QueryController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new QuerySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         if (!Yii::$app->user->isGuest && Yii::$app->user->identity->role == User::ROLE_BUYER) {
+
+            $searchModel = new QuerySearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
             return $this->render('index', [
                 'searchModel' => $searchModel,
