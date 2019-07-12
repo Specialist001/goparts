@@ -152,26 +152,41 @@ $this->registerCss('
                         </div>
                         <div class="sidebar_bottom">
                             <div class="sidebar_bottom1">
-                                <h5>Pick up location</h5>
-                                <i class="fa fa-angle-down"></i>
-                            </div>
-                            <div class="sidebar_bottom2">
-                                <h5 class="catalog_top_link" data-toggle="collapse" href="#collapseDelivery"
+                                <h5 class="catalog_top_link" data-toggle="collapse" href="#collapseCity"
                                     role="button"
-                                    aria-expanded="false" aria-controls="collapseDelivery">
+                                    aria-expanded="false" aria-controls="collapseCity">
                                     Delivery <i class="fa fa-angle-down float-right"></i>
                                 </h5>
-                                <div class="collapse" id="collapseDelivery">
-                                    <?php foreach ($deliveries as $delivery) { ?>
+                                <div class="collapse" id="collapseCity">
+                                    <?php foreach ($cities as $city) { ?>
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" class="custom-control-input" name="Delivery"
-                                                   id="customCheck<?= $delivery->id ?>" value="<?= $delivery->id ?>">
+                                            <input type="radio" class="custom-control-input" name="Location"
+                                                   id="customCheck<?= $city->id ?>" value="<?= $city->id ?>">
                                             <label class="custom-control-label"
-                                                   for="customCheck<?= $delivery->id ?>"><?= $delivery->name ?></label>
+                                                   for="customCheck<?= $city->id ?>"><?= $city->name ?></label>
                                         </div>
                                     <?php } ?>
                                 </div>
                             </div>
+<!--                            <div class="sidebar_bottom2">-->
+<!--                                <h5 class="catalog_top_link" data-toggle="collapse" href="#collapseDelivery"-->
+<!--                                    role="button"-->
+<!--                                    aria-expanded="false" aria-controls="collapseDelivery">-->
+<!--                                    Delivery <i class="fa fa-angle-down float-right"></i>-->
+<!--                                </h5>-->
+<!--                                <div class="collapse" id="collapseDelivery">-->
+<!--                                    --><?php //foreach ($deliveries as $delivery) { ?>
+<!--                                        <div class="custom-control custom-radio">-->
+<!--                                            <input type="radio" class="custom-control-input" name="Delivery"-->
+<!--                                                   id="customCheck--><?//= $delivery->id ?><!--" value="--><?//= $delivery->id ?><!--">-->
+<!--                                            <label class="custom-control-label"-->
+<!--                                                   for="customCheck--><?//= $delivery->id ?><!--">--><?//= $delivery->name ?><!--</label>-->
+<!--                                        </div>-->
+<!--                                    --><?php //} ?>
+<!--                                </div>-->
+<!--                            </div>-->
+                            <input type="hidden" class="custom-control-input" name="Delivery"
+                                   value="1">
                             <div class="sidebar_bottom3">
                                 <h5>Total (Vat Included)</h5>
                                 <h6 id="cart_amount_vat"><?= WBasket::widget(['key' => 'main']) ?> </h6><span>AED</span>
@@ -259,10 +274,10 @@ $this->registerCss('
                                             </div>
                                             <input type="tel" class="form-control" name="User[phone]" value="<?= Yii::$app->user->identity->getId() ? Yii::$app->user->identity->phone : '' ?>" placeholder="Phone" aria-label="Phone">
                                         </div>
-                                        <div class="form-group">
-                                            <label>Comments</label>
-                                            <textarea rows="3" class="form-control" name="User[comment]"></textarea>
-                                        </div>
+<!--                                        <div class="form-group">-->
+<!--                                            <label>Comments</label>-->
+<!--                                            <textarea rows="3" class="form-control" name="User[comment]"></textarea>-->
+<!--                                        </div>-->
                                     </div>
                                 </div>
                             </div>

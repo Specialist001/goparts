@@ -38,7 +38,7 @@ use yii\widgets\LinkPager; ?>
                                         </div>
                                         <div class="col-sm-4">
                                             Cost: <span class="text-form-style_2"><?=$order->total_price ?></span> AED <br>
-                                            Delivery: <span class="text-form-style_2"><?=$order->delivery->name ?></span>
+<!--                                            Delivery: <span class="text-form-style_2">--><?//=$order->delivery->name ?><!--</span>-->
                                         </div>
                                         <div class="col-sm-3">
                                                 <?php if($order->status == 1) {?>
