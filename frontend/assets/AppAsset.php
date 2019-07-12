@@ -35,6 +35,8 @@ class AppAsset extends AssetBundle
         'js/jquery.scrollbar.js',
         'js/viewer/viewer.min.js',
         'js/jquery-viewer/jquery-viewer.min.js',
+        'js/lodash.js',
+        'js/slick.js',
         'js/script.js',
     ];
     public $depends = [

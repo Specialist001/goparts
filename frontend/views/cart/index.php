@@ -140,9 +140,9 @@ $this->registerCss('
                 <?php if (!empty($cart_products)) { ?>
                 <div class="col-md-4">
                     <div class="sidebar">
-                        <div class="sidebar_top">
-                            <h4>Payment</h4>
-                            <a class="recount">Recount</a>
+                        <div class="sidebar_top w-100 d-inline-block">
+                            <h4 class="float-md-left float-">Payment</h4>
+                            <a class="recount float-md-right d-inline-block">Recount</a>
                         </div>
                         <div class="sidebar_center">
                             <h5>Amount</h5>
