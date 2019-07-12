@@ -226,6 +226,41 @@ $(document).ready(function () {
         });
     });
 
+    $('.buy_now').on('click', function () {
+        var form = $('form#cart_form');
+        var data = form.serialize();
+
+        form.submit(function(e){
+            e.preventDefault();
+            console.log('true-form');
+            $.ajax({
+                url: "/cart/buy-now",
+                data: data,
+                type: "post",
+                success: function (t) {
+                    //console.log(t);
+                    t = JSON.parse(t);
+                    // console.log(t);
+                    if (t.error !== true) {
+                        console.log('t');
+                        //$('.header-cart-icon').html(t.product.cart_count);
+                        // $('#cart_popup').html(
+                        //     '<p class="alert alert-info">' + t.product.page_title + '</p>' +
+                        //     '<div class="row" id="product_' + t.product.id + '">' +
+                        //     '<div class="col-md-3"><img src="' + t.product.img + '" alt="' + t.product.name + '" class="img-fluid center-block"></div>' +
+                        //     '<div class="col-md-8"><h4>' + t.product.name + '</h4><p class="muted">' + t.product.cat + '</p></div>' +
+                        //     '</div>'
+                        // );
+                        // $("#cart-count").html(t.total_count);
+                        // $("#cartModal").modal('show');
+                        //window.location.reload();
+                    }
+                }
+            });
+            return false;
+        });
+    });
+
     $("input.product_count").change(function () {
         if ($(this).val() <= 0) {
             alert('Minimum count is 1');
@@ -599,7 +634,82 @@ $(document).ready(function () {
 
 
 });
+const $left = $(".left");
+const $gl = $(".gallery");
+const $gl2 = $(".gallery2");
+const $photosCounterFirstSpan = $(".photos-counter span:nth-child(1)");
 
+$gl.slick({
+    rows: 0,
+    slidesToShow: 2,
+    arrows: false,
+    draggable: false,
+    useTransform: false,
+    mobileFirst: true,
+    responsive: [
+        {
+            breakpoint: 768,
+            settings: {
+                slidesToShow: 3
+            }
+        },
+        {
+            breakpoint: 1023,
+            settings: {
+                slidesToShow: 1,
+                vertical: true
+            }
+        }
+    ]
+});
+
+$gl2.slick({
+    rows: 0,
+    useTransform: false,
+    prevArrow: ".arrow-left",
+    nextArrow: ".arrow-right",
+    fade: true,
+    asNavFor: $gl
+});
+
+$(window).on("load", () => {
+    handleCarouselsHeight();
+    setTimeout(() => {
+        $(".loading").fadeOut();
+        $("body").addClass("over-visible");
+    }, 300);
+});
+
+function handleCarouselsHeight() {
+    if (window.matchMedia("(min-width: 1024px)").matches) {
+        const gl2H = $(".gallery2").height();
+        $left.css("height", gl2H);
+    } else {
+        $left.css("height", "auto");
+    }
+}
+
+$(window).on(
+    "resize",
+    _.debounce(() => {
+        handleCarouselsHeight();
+    }, 200)
+);
+
+/*you have to bind init event before slick's initialization (see demo) */
+$gl2.on("init", (event, slick) => {
+    $photosCounterFirstSpan.text(`${slick.currentSlide + 1}/`);
+    $(".photos-counter span:nth-child(2)").text(slick.slideCount);
+});
+
+$gl2.on("afterChange", (event, slick, currentSlide) => {
+    $photosCounterFirstSpan.text(`${slick.currentSlide + 1}/`);
+});
+
+$(".gallery .item").on("click", function() {
+    const index = $(this).attr("data-slick-index");
+    $gl2.slick("slickGoTo", index);
+});
 
 $('.owl-related').owlCarousel({
     loop:true,
@@ -623,8 +733,8 @@ $('.product-photo .owl-carousel').owlCarousel({
     items:1,
     dots: true,
     loop:true,
-    animateOut: 'slideOutUp',
-    animateIn: 'slideInUp',
+    //animateOut: 'slideOutUp',
+    //animateIn: 'slideInUp',
     responsive:{
         0:{
             mouseDrag: true,
@@ -637,10 +747,11 @@ $('.product-photo .owl-carousel').owlCarousel({
     }
 });
 
-if($(document).width() > 768) {
+function dots(){
     let dotcount = 1;
 
     let owlDot = $('.product-photo .owl-carousel .owl-dot');
+
 
     owlDot.each(function() {
         $(this).addClass( 'dotnumber' + dotcount);
@@ -655,20 +766,99 @@ if($(document).width() > 768) {
         slidecount=slidecount+1;
     });
 
+
+
     owlDot.each(function() {
+
         grab = $(this).data('info');
+
         slidegrab = $('.slidenumber'+ grab +' img').attr('src');
+
         $(this).css("background-image", "url("+slidegrab+")");
+
     });
 
     amount = owlDot.length;
     gotowidth = 100/amount;
 
-    owlDot.css("width", 80);
+    owlDot.css("width", '25%');
     newwidth = owlDot.width();
     owlDot.css("height", 80);
 }
-if($(document).width() < 768) {
-    $('.product-photo .owl-carousel .owl-item a').removeAttr('data-fancybox');
-    // console.log(this);
+
+dots();
+
+if ($.fancybox) {
+    $.fancybox.defaults.thumbs.autoStart = true;
+    $.fancybox.defaults.thumbs.axis = 'x';
+    $.fancybox.defaults.buttons = ['close'];
+    $.fancybox.defaults.infobar = false;
+    $.fancybox.defaults.animationEffect = 'fade';
+    $.fancybox.defaults.hash = false;
+    $.fancybox.defaults.toolbar = true;
+
+    $.fancybox.defaults.backFocus = false;
+    $.fancybox.defaults.loop = true;
+
+    $.fancybox.defaults.btnTpl.close =
+        `
+            <button data-fancybox-close class="fancybox-button fancybox-button--close" title="{{CLOSE}}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 224.512 224.512">
+                    <polygon points="224.507,6.997 217.521,0 112.256,105.258 6.998,0 0.005,6.997 105.263,112.254 0.005,217.512 6.998,224.512 112.256,119.24 217.521,224.512 224.507,217.512 119.249,112.254"/>
+                </svg>
+            </button>
+        `;
+    $.fancybox.defaults.btnTpl.arrowLeft =
+        `
+            <button data-fancybox-prev class="fancybox-button fancybox-button--arrow_left" title="{{PREV}}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 15" style="transform:rotate(180deg)">
+                    <path d="M19.5,7.00060457 L1.831,7.00060457 L8.829,0.876604566 C9.037,0.694604566 9.058,0.378604566 8.876,0.171604566 C8.694,-0.0373954342 8.379,-0.0583954342 8.171,0.124604566 L0.171,7.12460457 C0.166,7.12760457 0.165,7.13360457 0.16,7.13760457 C0.152,7.14560457 0.144,7.15360457 0.136,7.16160457 C0.133,7.16560457 0.127,7.16760457 0.124,7.17160457 C0.109,7.18860457 0.104,7.20960457 0.092,7.22760457 C0.076,7.25060457 0.058,7.27060457 0.047,7.29460457 C0.042,7.30560457 0.039,7.31560457 0.035,7.32560457 C0.025,7.35260457 0.022,7.37860457 0.017,7.40660457 C0.012,7.43260457 0.004,7.45760457 0.003,7.48460457 C0.003,7.49060457 0,7.49460457 0,7.50060457 C0,7.50660457 0.003,7.51060457 0.003,7.51660457 C0.004,7.54360457 0.012,7.56860457 0.017,7.59460457 C0.022,7.62260457 0.025,7.64860457 0.035,7.67560457 C0.039,7.68560457 0.042,7.69560457 0.047,7.70660457 C0.058,7.73060457 0.076,7.75060457 0.092,7.77360457 C0.104,7.79160457 0.109,7.81260457 0.124,7.82960457 C0.127,7.83360457 0.132,7.83460457 0.136,7.83860457 C0.144,7.84760457 0.152,7.85560457 0.16,7.86360457 C0.165,7.86760457 0.166,7.87360457 0.171,7.87660457 L8.171,14.8766046 C8.266,14.9596046 8.383,15.0006046 8.5,15.0006046 C8.639,15.0006046 8.777,14.9426046 8.876,14.8296046 C9.058,14.6226046 9.037,14.3066046 8.829,14.1246046 L1.831,8.00060457 L19.5,8.00060457 C19.776,8.00060457 20,7.77660457 20,7.50060457 C20,7.22460457 19.776,7.00060457 19.5,7.00060457" transform="matrix(-1 0 0 1 20 0)"></path>
+                </svg>
+            </button>
+        `;
+    $.fancybox.defaults.btnTpl.arrowRight =
+        ` 
+            <button data-fancybox-next class="fancybox-button fancybox-button--arrow_right" title="{{NEXT}}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 15" style="transform:rotate(0deg)">
+                    <path d="M19.5,7.00060457 L1.831,7.00060457 L8.829,0.876604566 C9.037,0.694604566 9.058,0.378604566 8.876,0.171604566 C8.694,-0.0373954342 8.379,-0.0583954342 8.171,0.124604566 L0.171,7.12460457 C0.166,7.12760457 0.165,7.13360457 0.16,7.13760457 C0.152,7.14560457 0.144,7.15360457 0.136,7.16160457 C0.133,7.16560457 0.127,7.16760457 0.124,7.17160457 C0.109,7.18860457 0.104,7.20960457 0.092,7.22760457 C0.076,7.25060457 0.058,7.27060457 0.047,7.29460457 C0.042,7.30560457 0.039,7.31560457 0.035,7.32560457 C0.025,7.35260457 0.022,7.37860457 0.017,7.40660457 C0.012,7.43260457 0.004,7.45760457 0.003,7.48460457 C0.003,7.49060457 0,7.49460457 0,7.50060457 C0,7.50660457 0.003,7.51060457 0.003,7.51660457 C0.004,7.54360457 0.012,7.56860457 0.017,7.59460457 C0.022,7.62260457 0.025,7.64860457 0.035,7.67560457 C0.039,7.68560457 0.042,7.69560457 0.047,7.70660457 C0.058,7.73060457 0.076,7.75060457 0.092,7.77360457 C0.104,7.79160457 0.109,7.81260457 0.124,7.82960457 C0.127,7.83360457 0.132,7.83460457 0.136,7.83860457 C0.144,7.84760457 0.152,7.85560457 0.16,7.86360457 C0.165,7.86760457 0.166,7.87360457 0.171,7.87660457 L8.171,14.8766046 C8.266,14.9596046 8.383,15.0006046 8.5,15.0006046 C8.639,15.0006046 8.777,14.9426046 8.876,14.8296046 C9.058,14.6226046 9.037,14.3066046 8.829,14.1246046 L1.831,8.00060457 L19.5,8.00060457 C19.776,8.00060457 20,7.77660457 20,7.50060457 C20,7.22460457 19.776,7.00060457 19.5,7.00060457" transform="matrix(-1 0 0 1 20 0)"></path>
+                </svg>
+            </button>
+        `;
+
 }
+
+// if($(document).width() > 768) {
+//     let dotcount = 1;
+//
+//     let owlDot = $('.product-photo .owl-carousel .owl-dot');
+//
+//     owlDot.each(function() {
+//         $(this).addClass( 'dotnumber' + dotcount);
+//         $(this).attr('data-info', dotcount);
+//         dotcount=dotcount+1;
+//     });
+//
+//     let slidecount = 1;
+//
+//     $('.product-photo .owl-carousel .owl-item').not('.cloned').each(function() {
+//         $(this).addClass( 'slidenumber' + slidecount);
+//         slidecount=slidecount+1;
+//     });
+//
+//     owlDot.each(function() {
+//         grab = $(this).data('info');
+//         slidegrab = $('.slidenumber'+ grab +' img').attr('src');
+//         $(this).css("background-image", "url("+slidegrab+")");
+//     });
+//
+//     amount = owlDot.length;
+//     gotowidth = 100/amount;
+//
+//     owlDot.css("width", 80);
+//     newwidth = owlDot.width();
+//     owlDot.css("height", 80);
+// }
+// if($(document).width() < 768) {
+//     $('.product-photo .owl-carousel .owl-item a').removeAttr('data-fancybox');
+//     // console.log(this);
+// }
