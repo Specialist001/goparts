@@ -41,7 +41,7 @@ class QuerySearch extends Query
      */
     public function search($params)
     {
-        $query = Query::find();
+        $query = Query::find()->where(['user_id'=>Yii::$app->user->identity->getId()]);
 
         // add conditions that should always apply here
 

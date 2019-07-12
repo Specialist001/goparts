@@ -226,6 +226,41 @@ $(document).ready(function () {
         });
     });
 
+    $('.buy_now').on('click', function () {
+        var form = $('form#cart_form');
+        var data = form.serialize();
+
+        form.submit(function(e){
+            e.preventDefault();
+            console.log('true-form');
+            $.ajax({
+                url: "/cart/buy-now",
+                data: data,
+                type: "post",
+                success: function (t) {
+                    //console.log(t);
+                    t = JSON.parse(t);
+                    // console.log(t);
+                    if (t.error !== true) {
+                        console.log('t');
+                        //$('.header-cart-icon').html(t.product.cart_count);
+                        // $('#cart_popup').html(
+                        //     '<p class="alert alert-info">' + t.product.page_title + '</p>' +
+                        //     '<div class="row" id="product_' + t.product.id + '">' +
+                        //     '<div class="col-md-3"><img src="' + t.product.img + '" alt="' + t.product.name + '" class="img-fluid center-block"></div>' +
+                        //     '<div class="col-md-8"><h4>' + t.product.name + '</h4><p class="muted">' + t.product.cat + '</p></div>' +
+                        //     '</div>'
+                        // );
+                        // $("#cart-count").html(t.total_count);
+                        // $("#cartModal").modal('show');
+                        //window.location.reload();
+                    }
+                }
+            });
+            return false;
+        });
+    });
+
     $("input.product_count").change(function () {
         if ($(this).val() <= 0) {
             alert('Minimum count is 1');

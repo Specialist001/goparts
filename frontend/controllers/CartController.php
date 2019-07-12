@@ -105,7 +105,11 @@ class CartController extends \yii\web\Controller
                 'deliveries' => $deliveries,
             ]);
         } elseif(empty($userCart)) {
-            return $this->redirect(['site/error']);
+            return $this->render('index',[
+                'cart_products' => $userCart,
+                'total_count' => $total_count,
+                'deliveries' => $deliveries,
+            ]);
         }
 
     }
@@ -188,6 +192,95 @@ class CartController extends \yii\web\Controller
                             'total_count' => $total_count,
                         ],
                     ]);
+            }
+        }
+        return json_encode(['error' => true]);
+    }
+
+    public function actionBuyNow()
+    {
+        if (!empty($prod_id = Yii::$app->request->post('product_id'))) {
+            $product = StoreProduct::findOne($prod_id);
+            if (empty($product)) return $this->asJson(['error' => true]);
+            if (Yii::$app->user->id) {
+                if (empty(UserCart::findOne(['product_id' => $prod_id, 'user_id' => Yii::$app->user->id]))) {
+                    $userCart = new UserCart();
+                    $userCart->product_id = $prod_id;
+                    $userCart->count = (Yii::$app->request->post('count') > 0)? Yii::$app->request->post('count'): 1;
+                    $userCart->user_id = Yii::$app->user->id;
+                    $userCart->status = self::STATUS_WAIT;
+                    if($userCart->save()) $error = 'false';
+                    else $error = 'Not Saved';
+                    $total_count = WBasket::widget(['key'=>'main']);
+
+                    return $this->redirect(['/cart']);
+//                    return json_encode([
+//                        'error' => $error,
+//                        'product' => [
+//                            'page_title' => Yii::t('frontend', 'Product added to cart'),
+//                            'img' => $product->image,
+//                            'name' => $product->translate->name,
+//                            //                        'shop' => $product->shop->name,
+//                            'cat' => $product->category->translate->title,
+//                            'cart_count' => static::getCount(),
+//                        ],
+//                        'total_count' => $total_count,
+//                    ]);
+
+                } else {
+//                    return json_encode([
+//                        'error' => false,
+//                        'product' => [
+//                            'page_title' => Yii::t('frontend', 'Product issets in cart'),
+//                            'img' => $product->image,
+//                            'name' => $product->translate->name,
+//                            //                        'shop' => $product->shop->name,
+//                            'cat' => $product->category->translate->title,
+//                            'cart_count' => static::getCount(),
+//                        ],
+//                    ]);
+
+                    return $this->redirect(['/cart']);
+                }
+            } else {
+                $cart = !empty(Yii::$app->session->get('cart')) ? Yii::$app->session->get('cart') : [];
+                if (isset($cart)) { if (in_array(['product_id' => $prod_id], $cart)) {
+                    return $this->redirect(['/cart']);
+
+//                    return json_encode([
+//                        'error' => false,
+//                        'product' => [
+//                            'page_title' => Yii::t('frontend', 'Product issets in cart'),
+//                            'img' => $product->image,
+//                            'name' => $product->translate->name,
+////                                'shop' => $product->shop->name,
+//                            'cat' => $product->category->translate->title,
+//                            'cart_count' => static::getCount(),
+//                        ],
+//                    ]);
+                }
+                }
+                $index = count($cart);
+                $cart[$index]['product_id'] = $prod_id;
+                $cart_count[$index]['count'] = (Yii::$app->request->post('count') > 0)? Yii::$app->request->post('count'): 1;
+                Yii::$app->session->set('cart', $cart);
+                Yii::$app->session->set('cart_count', $cart_count);
+                $total_count = WBasket::widget(['key'=>'main']);
+
+//                return json_encode([
+//                    'error' => false,
+//                    'product' => [
+//                        'page_title' => Yii::t('frontend', 'Product added to cart 1'),
+//                        'img' => $product->image,
+//                        'name' => $product->translate->name,
+//                        //                        'shop' => $product->shop->name,
+//                        'cat' => $product->category->translate->title,
+//                        'cart_count' => static::getCount(),
+//                        'total_count' => $total_count,
+//                    ],
+//                ]);
+
+                return $this->redirect(['/cart']);
             }
         }
         return json_encode(['error' => true]);

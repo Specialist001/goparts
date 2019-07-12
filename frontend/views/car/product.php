@@ -119,8 +119,7 @@ $this->registerCss('
                             <button class="buybuttons1 add_cart">Add to cart <img src="/svg/White_bakset.svg"
                                                                                   alt="">
                             </button>
-                            <!--                            <a href="-->
-                            <? //= Url::to(['/cart']) ?><!--" class="buybuttons2">Buy now</a>-->
+                            <button class="buybuttons2 buy_now">Buy now</button>
                         </div>
                         <div class="star d-none">
                             <i class="fas fa-star"></i>
