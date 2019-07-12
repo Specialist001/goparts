@@ -57,7 +57,7 @@ class QueryController extends Controller
         $searchModel = new QuerySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        if (Yii::$app->user->identity->role == User::ROLE_BUYER || !Yii::$app->user->isGuest) {
+        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->role == User::ROLE_BUYER) {
 
             return $this->render('index', [
                 'searchModel' => $searchModel,
