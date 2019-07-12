@@ -207,13 +207,13 @@ $(document).ready(function () {
                     t = JSON.parse(t);
                     // console.log(t);
                     if (t.error !== true) {
-                        console.log('t');
+                        console.log(t);
                         //$('.header-cart-icon').html(t.product.cart_count);
                         $('#cart_popup').html(
                             '<p class="alert alert-info">' + t.product.page_title + '</p>' +
                             '<div class="row" id="product_' + t.product.id + '">' +
-                            '<div class="col-md-3"><img src="' + t.product.img + '" alt="' + t.product.name + '" class="img-fluid center-block"></div>' +
-                            '<div class="col-md-8"><h4>' + t.product.name + '</h4><p class="muted">' + t.product.cat + '</p></div>' +
+
+                            '<div class="col-md-8"><h4>' + t.product.name + '</h4></div>' +
                             '</div>'
                         );
                         $("#cart-count").html(t.total_count);

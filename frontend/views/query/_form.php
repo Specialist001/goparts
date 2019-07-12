@@ -387,27 +387,27 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                                     <li class="image_block float-left">
                                         <input class="image" type="file" name="Query[0][images][]" accept="image/*,image/jpeg" multiple>
                                         <img class="image_preview" src="/uploads/site/add_img.png">
-                                        <div class="deleter rounded-bottom text-center bg-danger text-white" style="bottom: 0">Clear</div>
+                                        <div class="deleter rounded-bottom text-center bg-danger text-white py-1" style="bottom: 0">Clear</div>
                                     </li>
                                     <li class="image_block float-left">
                                         <input class="image" type="file" name="Query[0][images][]" accept="image/*,image/jpeg" multiple>
                                         <img class="image_preview" src="/uploads/site/add_img.png">
-                                        <div class="deleter rounded-bottom text-center bg-danger text-white" style="bottom: 0;">Clear</div>
+                                        <div class="deleter rounded-bottom text-center bg-danger text-white py-1" style="bottom: 0;">Clear</div>
                                     </li>
                                     <li class="image_block float-left">
                                         <input class="image" type="file" name="Query[0][images][]" accept="image/*,image/jpeg" multiple>
                                         <img class="image_preview" src="/uploads/site/add_img.png">
-                                        <div class="deleter rounded-bottom text-center bg-danger text-white" style="bottom: 0;">Clear</div>
+                                        <div class="deleter rounded-bottom text-center bg-danger text-white py-1" style="bottom: 0;">Clear</div>
                                     </li>
                                     <li class="image_block float-left">
                                         <input class="image" type="file" name="Query[0][images][]" accept="image/*,image/jpeg" multiple>
                                         <img class="image_preview" src="/uploads/site/add_img.png">
-                                        <div class="deleter rounded-bottom text-center bg-danger text-white" style="bottom: 0;">Clear</div>
+                                        <div class="deleter rounded-bottom text-center bg-danger text-white py-1" style="bottom: 0;">Clear</div>
                                     </li>
                                     <li class="image_block float-left">
                                         <input class="image" type="file" name="Query[0][images][]" accept="image/*,image/jpeg" multiple>
                                         <img class="image_preview" src="/uploads/site/add_img.png">
-                                        <div class="deleter rounded-bottom text-center bg-danger text-white" style="bottom: 0;">Clear</div>
+                                        <div class="deleter rounded-bottom text-center bg-danger text-white py-1" style="bottom: 0;">Clear</div>
                                     </li>
                                 </ul>
                             </div>
@@ -527,29 +527,29 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                                 <label>Images</label>
                                 <ul class="images_block list-inline">
                                     <li class="image_block float-left">
-                                        <input class="image" type="file">
+                                        <input class="image" type="file" accept="image/*,image/jpeg" multiple>
                                         <img class="image_preview" src="/uploads/site/add_img.png">
-                                        <div class="deleter rounded-bottom text-center bg-danger text-white" style="bottom: 0;">Clear</div>
+                                        <div class="deleter rounded-bottom text-center bg-danger text-white py-1" style="bottom: 0;">Clear</div>
                                     </li>
                                     <li class="image_block float-left">
-                                        <input class="image" type="file">
+                                        <input class="image" type="file" accept="image/*,image/jpeg" multiple>
                                         <img class="image_preview" src="/uploads/site/add_img.png">
-                                        <div class="deleter rounded-bottom text-center bg-danger text-white" style="bottom: 0;">Clear</div>
+                                        <div class="deleter rounded-bottom text-center bg-danger text-white py-1" style="bottom: 0;">Clear</div>
                                     </li>
                                     <li class="image_block float-left">
-                                        <input class="image" type="file">
+                                        <input class="image" type="file" accept="image/*,image/jpeg" multiple>
                                         <img class="image_preview" src="/uploads/site/add_img.png">
-                                        <div class="deleter rounded-bottom text-center bg-danger text-white" style="bottom: 0;">Clear</div>
+                                        <div class="deleter rounded-bottom text-center bg-danger text-white py-1" style="bottom: 0;">Clear</div>
                                     </li>
                                     <li class="image_block float-left">
-                                        <input class="image" type="file">
+                                        <input class="image" type="file" accept="image/*,image/jpeg" multiple>
                                         <img class="image_preview" src="/uploads/site/add_img.png">
-                                        <div class="deleter rounded-bottom text-center bg-danger text-white" style="bottom: 0;">Clear</div>
+                                        <div class="deleter rounded-bottom text-center bg-danger text-white py-1" style="bottom: 0;">Clear</div>
                                     </li>
                                     <li class="image_block float-left">
-                                        <input class="image" type="file">
+                                        <input class="image" type="file" accept="image/*,image/jpeg" multiple>
                                         <img class="image_preview" src="/uploads/site/add_img.png">
-                                        <div class="deleter rounded-bottom text-center bg-danger text-white" style="bottom: 0;">Clear</div>
+                                        <div class="deleter rounded-bottom text-center bg-danger text-white py-1" style="bottom: 0;">Clear</div>
                                     </li>
                                 </ul>
 <!--                                <div class="form-group">-->

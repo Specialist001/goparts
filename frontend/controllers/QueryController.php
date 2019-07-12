@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\components\SimpleImage;
 use common\models\Cars;
 use common\models\QueryImage;
+use common\models\SellerQuery;
 use common\models\StoreCategory;
 use common\models\StoreOption;
 use common\models\StoreProductImage;
@@ -14,6 +15,7 @@ use rmrevin\yii\fontawesome\FA;
 use Yii;
 use common\models\Query;
 use frontend\models\QuerySearch;
+use yii\data\Pagination;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -59,9 +61,21 @@ class QueryController extends Controller
             $searchModel = new QuerySearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+
+            $query = Query::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->orderBy('`created_at` DESC');
+            $countQuery = clone $query;
+            $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 5]);
+            $buyer_queries = $query->offset($pages->offset)->limit($pages->limit)->all();
+            $user_commission = (!empty(UserCommission::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->one())) ? UserCommission::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->one() : 1;
+            $commission = $user_commission->commission;
+            $commission = (1 + ($commission ? : 0) / 100);
+
             return $this->render('index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
+                'buyer_queries'=>$buyer_queries,
+                'commission' => $commission,
+                'pages' => $pages
             ]);
         }
 
@@ -159,6 +173,36 @@ class QueryController extends Controller
                 $email = Yii::$app->user->getId() ? Yii::$app->user->identity->email : $query_data['email'];
                 $phone = Yii::$app->user->getId() ? Yii::$app->user->identity->phone : $query_data['phone'];
 
+                if(!Yii::$app->user->id) {
+                    $password = mt_rand(10000000, 99999999);
+                    $user = new User();
+                    $user->username = $query_data['name']; //$this->username;
+                    $user->email = $query_data['email'];
+                    $user->phone = $query_data['phone'];
+                    $user->status = User::STATUS_INACTIVE;
+
+                    $user->setPassword($password);
+                    $user->generateAuthKey();
+                    if($user->save()) {
+
+                        $user_commission = new UserCommission();
+                        $user_commission->id = $user->id;
+                        $user_commission->commission = 35;
+                        $user_commission->save();
+
+                        Yii::$app
+                            ->mailer
+                            ->compose(
+                                ['html' => 'signUp-html', 'text' => 'signUp-text'],
+                                ['user' => $user, 'password' => $password]
+                            )
+                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
+                            ->setTo($user->email)
+                            ->setSubject('Registration on ' . Yii::$app->params['appName'])
+                            ->send();
+                    }
+                }
+
                 foreach ($query_part as $key => $part) {
                     $model = new Query();
                     $model->car_id = $query_data['car_id'];
@@ -175,7 +219,7 @@ class QueryController extends Controller
                     $model->category_id = $part['category_id'];
                     $model->description = $part['description'];
 
-                    $model->user_id = Yii::$app->user->getId() ? Yii::$app->user->getId() : null;
+                    $model->user_id = Yii::$app->user->getId() ? Yii::$app->user->getId() : $user->id;
 
                     $model->name = $username;
                     $model->phone = $phone;
@@ -243,40 +287,9 @@ class QueryController extends Controller
                     }
 
                     $model->save();
-
-
-//                    $parts_array[$key] += [$model];
                 }
 
-                if(!Yii::$app->user->id) {
-                    $password = mt_rand(10000000, 99999999);
-                    $user = new User();
-                    $user->username = $query_data['name']; //$this->username;
-                    $user->email = $query_data['email'];
-                    $user->phone = $query_data['phone'];
-                    $user->status = User::STATUS_INACTIVE;
 
-                    $user->setPassword($password);
-                    $user->generateAuthKey();
-                    if($user->save()) {
-
-                        $user_commission = new UserCommission();
-                        $user_commission->id = $user->id;
-                        $user_commission->commission = 35;
-                        $user_commission->save();
-
-                        Yii::$app
-                            ->mailer
-                            ->compose(
-                                ['html' => 'signUp-html', 'text' => 'signUp-text'],
-                                ['user' => $user, 'password' => $password]
-                            )
-                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-                            ->setTo($user->email)
-                            ->setSubject('Registration on ' . Yii::$app->name)
-                            ->send();
-                    }
-                }
 
                 if (!Yii::$app->user->id) {
                     Yii::$app->session->setFlash('success', 'Your query has been sent. Response will be sent to your email');

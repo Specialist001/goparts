@@ -128,11 +128,23 @@ $top_pages = Page::find()->where(['status'=>1])->orderBy('order')->all();
                                    href="<?= Url::to(['user/index']) ?>"><?= FA::i('user')->addCssClass('text-secondary text-form-style_2') ?>
                                     My Profile</a>
                             </li>
+                            <?php if (Yii::$app->user->identity->role == 0) { ?>
+                            <li>
+                                <a class="text-form-style_2"
+                                   href="<?= Url::to(['user/queries']) ?>"><?= FA::i('shopping-cart')->addCssClass('text-secondary text-form-style_2') ?>
+                                    Queries</a>
+                            </li>
                             <li>
                                 <a class="text-form-style_2"
                                    href="<?= Url::to(['user/orders']) ?>"><?= FA::i('shopping-cart')->addCssClass('text-secondary text-form-style_2') ?>
-                                    My Orders</a>
+                                    Order history</a>
                             </li>
+                            <li>
+                                <a class="text-form-style_2"
+                                   href="<?= Url::to(['/cart']) ?>"><?= FA::i('shopping-cart')->addCssClass('text-secondary text-form-style_2') ?>
+                                    Cart</a>
+                            </li>
+                            <?php } ?>
                             <?php if (Yii::$app->user->identity->role == 1) { ?>
                                 <li>
                                     <a class="text-form-style_2"

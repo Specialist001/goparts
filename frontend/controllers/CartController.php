@@ -6,6 +6,7 @@ use common\models\StoreDelivery;
 use common\models\StoreProduct;
 use common\models\User;
 use common\models\UserCart;
+use common\models\UserCommission;
 use frontend\widgets\WBasket;
 use Yii;
 use yii\filters\AccessControl;
@@ -27,33 +28,39 @@ class CartController extends \yii\web\Controller
     /**
      * {@inheritdoc}
      */
-//    public function behaviors()
-//    {
-//        return [
-//            'access' => [
-//                'class' => AccessControl::className(),
-//                'only' => ['logout', 'signup', 'add'],
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+//                'only' => ['index', 'signup', 'add'],
 //                'rules' => [
 //                    [
-//                        'actions' => ['signup', 'add'],
+//                        'actions' => ['index', 'add'],
 //                        'allow' => true,
 //                        'roles' => ['?'],
 //                    ],
 //                    [
-//                        'actions' => ['logout', 'add'],
+//                        'actions' => ['index', 'add'],
 //                        'allow' => true,
 //                        'roles' => ['@'],
 //                    ],
 //                ],
-//            ],
-//            'verbs' => [
-//                'class' => VerbFilter::className(),
-//                'actions' => [
-//                    'logout' => ['post'],
-//                ],
-//            ],
-//        ];
-//    }
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'logout' => ['post'],
+                ],
+            ],
+        ];
+    }
 
     /**
      * {@inheritdoc}
@@ -73,9 +80,13 @@ class CartController extends \yii\web\Controller
 
     public function actionIndex()
     {
-
         $total_count = [];
         $userCart = [];
+        $deliveries = StoreDelivery::find()->all();
+        $user_commission = (!empty(UserCommission::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->one())) ? UserCommission::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->one() : 35;
+        $commission = $user_commission->commission;
+        $commission = (1 + ($commission ? : 0) / 100);
+
         if (Yii::$app->user->id) {
             $userCart = UserCart::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->all();
         } elseif (!empty(Yii::$app->session->get('cart'))) {
@@ -92,23 +103,23 @@ class CartController extends \yii\web\Controller
             for ($i = 0; $i < count($userCart); $i++) {
                 $temp_prod = StoreProduct::findOne(['status' => 1, 'id' => $userCart[$i]->product_id]);
                 if (empty($temp_prod)) continue;
-
             }
         }
         if (!empty($userCart)) {
             $total_count = WBasket::widget(['key'=>'main']);
-            $deliveries = StoreDelivery::find()->all();
 
             return $this->render('index',[
                 'cart_products' => $userCart,
                 'total_count' => $total_count,
                 'deliveries' => $deliveries,
+                'commission' => $commission,
             ]);
         } elseif(empty($userCart)) {
             return $this->render('index',[
                 'cart_products' => $userCart,
                 'total_count' => $total_count,
                 'deliveries' => $deliveries,
+                'commission' => 35,
             ]);
         }
 
@@ -134,6 +145,7 @@ class CartController extends \yii\web\Controller
                         'error' => $error,
                         'product' => [
                             'page_title' => Yii::t('frontend', 'Product added to cart'),
+                            'id' => $product->id,
                             'img' => $product->image,
                             'name' => $product->translate->name,
     //                        'shop' => $product->shop->name,
@@ -149,6 +161,7 @@ class CartController extends \yii\web\Controller
                         'product' => [
                             'page_title' => Yii::t('frontend', 'Product issets in cart'),
                             'img' => $product->image,
+                            'id' => $product->id,
                             'name' => $product->translate->name,
     //                        'shop' => $product->shop->name,
                             'cat' => $product->category->translate->title,
@@ -165,6 +178,7 @@ class CartController extends \yii\web\Controller
                         'product' => [
                             'page_title' => Yii::t('frontend', 'Product issets in cart'),
                             'img' => $product->image,
+                            'id' => $product->id,
                             'name' => $product->translate->name,
 //                                'shop' => $product->shop->name,
                             'cat' => $product->category->translate->title,

@@ -147,6 +147,8 @@ class QueryController extends Controller
         $data = [];
         $query_id = $posts['query_id'];
         $model = $this->findModel($query_id);
+        $buyer = Query::find()->where(['id'=>$query_id])->one();
+        $buyer_id = $buyer ? $buyer->user_id : null;
 
 //        $sellers = $posts['sellers'];
         $sellers = SellerCar::find()->select(['user_id'])->where(['vendor_name'=>$model->vendor])->orWhere(['vendor_name'=>'All'])->distinct('user_id')->groupBy(['user_id'])->all();
@@ -158,6 +160,7 @@ class QueryController extends Controller
             $seller_query = new SellerQuery();
             $seller_query->query_id = $query_id;
             $seller_query->seller_id = $seller->user_id;
+            $seller_query->buyer_id = $buyer_id;
             $seller_query->status = SellerQuery::STATUS_WAITED;
 
             if ($seller_query->save()) {

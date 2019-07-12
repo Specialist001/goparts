@@ -168,4 +168,9 @@ class Query extends \yii\db\ActiveRecord
     {
         return $this->hasMany(SellerQuery::className(), ['query_id' => 'id']);
     }
+
+    public function getSellerProducts()
+    {
+        return $this->hasMany(SellerQuery::className(), ['query_id' => 'id'])->where(['IS NOT', 'product_id', null]);
+    }
 }

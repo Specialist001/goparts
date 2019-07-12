@@ -153,7 +153,7 @@ class SiteController extends Controller
             if (Yii::$app->user->identity->role == 1) {
                 return $this->redirect(['user/index']);
             }
-            return $this->goBack();
+            return $this->goHome();
         } else {
             $model->password = '';
 

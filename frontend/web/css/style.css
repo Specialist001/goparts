@@ -2255,10 +2255,11 @@ ul.pagination > .disabled > span {
 }
 .image_block img {
     width: 100%;
-    max-height: 105px;
-    min-height: 105px;
-    padding: 10px 5px;
+    max-height: 80px;
+    min-height: 80px;
+    padding: 10px 10px;
     cursor: pointer;
+    margin-bottom: 17px;
 }
 .image_block input {
     display: none;

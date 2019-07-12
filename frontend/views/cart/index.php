@@ -29,14 +29,14 @@ $this->registerCss('
                             </div>
                             <div class="col-md-7">
                                 <div class="row">
-                                    <div class="col-md-4">
+<!--                                    <div class="col-md-4">-->
+<!--                                        <p>Quantity</p>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-4">-->
+<!--                                        <p>Amount</p>-->
+<!--                                    </div>-->
+                                    <div class="col-md-10 text-right">
                                         <p>Price</p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <p>Quantity</p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <p>Amount</p>
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@ $this->registerCss('
                                 </div>
                                 <div class="col-md-7 basket_table_block">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-4" style="visibility: hidden;">
                                             <input type="hidden" name="CartProduct[<?= $cart_product->id ?>][product_id]"
                                             value="<?= $cart_product->product->id ?>">
                                             <input type="hidden" name="CartProduct[<?= $cart_product->id ?>][name]"
@@ -81,21 +81,21 @@ $this->registerCss('
                                             <input type="hidden" name="CartProduct[<?= $cart_product->id ?>][sku]"
                                             value="<?= $cart_product->product->sku ?>">
                                             <input type="hidden" name="CartProduct[<?= $cart_product->id ?>][price]"
-                                                   value="<?= $cart_product->product->purchase_price ?>"
-                                            <span><?= number_format($cart_product->product->purchase_price, Yii::$app->params['price']['decimals'], Yii::$app->params['price']['dec_pointer'], Yii::$app->params['price']['thousands_sep']); ?> AED</span>
+                                                   value="<?= $cart_product->product->price * $commission ?>"
+                                            <span><?= number_format($cart_product->product->price * $commission, Yii::$app->params['price']['decimals'], Yii::$app->params['price']['dec_pointer'], Yii::$app->params['price']['thousands_sep']); ?> AED</span>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4" style="visibility: hidden;">
                                             <input type="number" class="product_count" min="1"  id="product_count_<?= $cart_product->id ?>"
                                                    name="CartProduct[<?= $cart_product->id ?>][count]"
                                                    value="<?= $cart_product->count ?>">
                                         </div>
                                         <div class="col-md-4">
-                                        <span id="total-count_<?= $cart_product->id ?>">
-                                        <?php $t = $cart_product->product->purchase_price * $cart_product->count;
-                                        echo number_format($t, Yii::$app->params['price']['decimals'], Yii::$app->params['price']['dec_pointer'], Yii::$app->params['price']['thousands_sep']);
-                                        ?>
+                                            <span id="total-count_<?= $cart_product->id ?>">
+                                            <?php $t = $cart_product->product->price * $commission * $cart_product->count;
+                                            echo number_format($t, Yii::$app->params['price']['decimals'], Yii::$app->params['price']['dec_pointer'], Yii::$app->params['price']['thousands_sep']);
+                                            ?>
 
-                                        </span>
+                                            </span>
                                             <span>AED</span>
                                         </div>
                                     </div>
@@ -142,7 +142,7 @@ $this->registerCss('
                     <div class="sidebar">
                         <div class="sidebar_top w-100 d-inline-block">
                             <h4 class="float-md-left float-">Payment</h4>
-                            <a class="recount float-md-right d-inline-block">Recount</a>
+<!--                            <a class="recount float-md-right d-inline-block">Recount</a>-->
                         </div>
                         <div class="sidebar_center">
                             <h5>Amount</h5>
