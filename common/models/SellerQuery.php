@@ -53,12 +53,12 @@ class SellerQuery extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['query_id', 'seller_id', 'buyer_id', 'product_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['query_id', 'seller_id', 'product_id', 'status', 'created_at', 'updated_at'], 'integer'],
 //            [['created_at', 'updated_at'], 'required'],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => StoreProduct::className(), 'targetAttribute' => ['product_id' => 'id']],
             [['query_id'], 'exist', 'skipOnError' => true, 'targetClass' => Query::className(), 'targetAttribute' => ['query_id' => 'id']],
             [['seller_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['seller_id' => 'id']],
-            [['buyer_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['buyer_id' => 'id']],
+//            [['buyer_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['buyer_id' => 'id']],
         ];
     }
 
@@ -115,11 +115,11 @@ class SellerQuery extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'seller_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getBuyer()
-    {
-        return $this->hasOne(User::className(), ['id' => 'buyer_id']);
-    }
+//    /**
+//     * @return \yii\db\ActiveQuery
+//     */
+//    public function getBuyer()
+//    {
+//        return $this->hasOne(User::className(), ['id' => 'buyer_id']);
+//    }
 }
