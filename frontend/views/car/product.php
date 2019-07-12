@@ -119,7 +119,7 @@ $this->registerCss('
                             <button class="buybuttons1 add_cart">Add to cart <img src="/svg/White_bakset.svg"
                                                                                   alt="">
                             </button>
-                            <button class="buybuttons2 buy_now">Buy now</button>
+                            <button class="buybuttons2 buy_now mt-4 mt-md-0">Buy now</button>
                         </div>
                         <div class="star d-none">
                             <i class="fas fa-star"></i>
