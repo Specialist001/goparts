@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\City;
 use common\models\StoreDelivery;
 use common\models\StoreProduct;
 use common\models\User;
@@ -83,6 +84,7 @@ class CartController extends \yii\web\Controller
         $total_count = [];
         $userCart = [];
         $deliveries = StoreDelivery::find()->all();
+        $cities = City::find()->all();
         $user_commission = (!empty(UserCommission::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->one())) ? UserCommission::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->one() : 35;
         $commission = $user_commission->commission;
         $commission = (1 + ($commission ? : 0) / 100);
@@ -112,12 +114,14 @@ class CartController extends \yii\web\Controller
                 'cart_products' => $userCart,
                 'total_count' => $total_count,
                 'deliveries' => $deliveries,
+                'cities' => $cities,
                 'commission' => $commission,
             ]);
         } elseif(empty($userCart)) {
             return $this->render('index',[
                 'cart_products' => $userCart,
                 'total_count' => $total_count,
+                'cities' => $cities,
                 'deliveries' => $deliveries,
                 'commission' => 35,
             ]);

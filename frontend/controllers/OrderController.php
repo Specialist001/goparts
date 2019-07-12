@@ -131,6 +131,7 @@ class OrderController extends Controller
         $products = $data['CartProduct'];
         $user = $data['User'];
         $delivery = $data['Delivery'];
+        $city = $data['Location'];
         $totalCount = $data['TotalCount'];
 
         if(!empty($data['User'])) {
@@ -183,7 +184,8 @@ class OrderController extends Controller
             $order->name = $data['User']['username'];
             $order->email = $data['User']['email'];
             $order->phone = $data['User']['phone'];
-            $order->comment = $data['User']['comment'];
+            $order->comment = $data['User']['comment'] ? $data['User']['comment'] : null;
+            $order->city = $data['Location'] ? $data['Location'] : null;
             $order->ip = Yii::$app->getRequest()->getUserIP();
             $order->save();
 
