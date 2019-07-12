@@ -57,7 +57,7 @@ class QueryController extends Controller
         $searchModel = new QuerySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        if (Yii::$app->user->identity->role == User::ROLE_BUYER || Yii::$app->user->isGuest) {
+        if (Yii::$app->user->identity->role == User::ROLE_BUYER || !Yii::$app->user->isGuest) {
 
             return $this->render('index', [
                 'searchModel' => $searchModel,
@@ -65,7 +65,7 @@ class QueryController extends Controller
             ]);
         }
 
-        return $this->goBack();
+        return $this->goHome();
     }
 
     /**
@@ -276,6 +276,11 @@ class QueryController extends Controller
                             ->setSubject('Registration on ' . Yii::$app->name)
                             ->send();
                     }
+                }
+
+                if (!Yii::$app->user->id) {
+                    Yii::$app->session->setFlash('success', 'Your query has been sent. Response will be sent to your email');
+                    return $this->goHome();
                 }
 
                 return $this->redirect(['/query']);
