@@ -25,7 +25,6 @@ $this->registerCss('
     }
 ');
 ?>
-?>
 <div class="query-index">
     <div class="container">
         <div class="row">
