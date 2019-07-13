@@ -237,7 +237,7 @@ $counter['new_buyers'] = $users->where(['role'=>\common\models\User::ROLE_BUYER,
                             </span></a>
                         </li>
                         <li>
-                            <a href="<?= Url::to(['/store-order', 'StoreOrderSearch[status]'=>0,'sort'=>'-id']) ?>"><i class="la la-edit"></i> New Orders
+                            <a href="<?= Url::to(['/store-order', 'StoreOrderSearch[status]'=>1,'sort'=>'-id']) ?>"><i class="la la-edit"></i> New Orders
                                 <span class="pull-right-container">
                                     <small class="label pull-right bg-green">
                                         <?= $counter['new_orders'] ?>
