@@ -229,7 +229,7 @@ $counter['new_buyers'] = $users->where(['role'=>\common\models\User::ROLE_BUYER,
                     </a>
                     <ul class="treeview-menu">
                         <li>
-                            <a href="<?= Url::to(['/store-order']) ?>"><i class="fa fa-list"></i> All Orders
+                            <a href="<?= Url::to(['/store-order','sort'=>'-id']) ?>"><i class="fa fa-list"></i> All Orders
                                 <span class="pull-right-container">
                                 <small class="label pull-right bg-aqua">
                                     <?= $counter['all_orders'] ?>
@@ -245,9 +245,9 @@ $counter['new_buyers'] = $users->where(['role'=>\common\models\User::ROLE_BUYER,
                                 </span>
                             </a>
                         </li>
-                        <?php if ($auth->checkAccess(Yii::$app->user->getId(), 'adminAccess')) { ?>
-                        <li><a href="<?= Url::to(['/store-order/create']) ?>"><i class="fa fa-plus"></i> Create Order</a></li>
-                        <?php } ?>
+<!--                        --><?php //if ($auth->checkAccess(Yii::$app->user->getId(), 'adminAccess')) { ?>
+<!--                        <li><a href="--><?//= Url::to(['/store-order/create']) ?><!--"><i class="fa fa-plus"></i> Create Order</a></li>-->
+<!--                        --><?php //} ?>
                     </ul>
                 </li>
                 <?php if ($auth->checkAccess(Yii::$app->user->getId(), 'managerAccess')) { ?>
