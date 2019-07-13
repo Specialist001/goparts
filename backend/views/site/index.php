@@ -11,7 +11,7 @@ use yii\helpers\Url; ?>
         <div class="col-lg-3 col-xs-6">
             <!-- small box -->
             <div class="info-box">
-                <a href="<?= Url::to(['/query']) ?>" class="small-box-footer">
+                <a href="<?= Url::to(['/query', 'QuerySearch[status]'=>0,'sort'=>'-id']) ?>" class="small-box-footer">
                 <span class="info-box-icon bg-purple">
                     <i class="la la-edit"></i>
                 </span>
@@ -34,6 +34,22 @@ use yii\helpers\Url; ?>
             </div>
         </div>
         <div class="col-lg-3 col-xs-6">
+            <div class="info-box">
+                <a href="<?= Url::to(['/seller-query', 'SellerQuerySearch[status]'=>1,'sort'=>'-id']) ?>" class="small-box-footer">
+                <span class="info-box-icon bg-green">
+                    <i class="la la-list-ul"></i>
+                    <!--                    --><?//= FA::i('facebook') ?>
+                </span>
+                </a>
+                <div class="info-box-content">
+                    <span class="info-box-text">New Requests</span>
+                    <span class="info-box-number">
+                        <?= $counter['request_count'] ?> <small></small>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
             <!-- small box -->
             <!--            <div class="small-box bg-aqua">-->
             <!--                <div class="inner">-->
@@ -48,7 +64,7 @@ use yii\helpers\Url; ?>
             <!--            </div>-->
 
             <div class="info-box">
-                <a href="<?= Url::to(['/store-order']) ?>" class="small-box-footer">
+                <a href="<?= Url::to(['/store-order', 'StoreOrderSearch[status]'=>1,'sort'=>'-id']) ?>" class="small-box-footer">
                 <span class="info-box-icon bg-aqua">
                     <i class="la la-list-ul"></i>
 <!--                    --><?//= FA::i('facebook') ?>
@@ -60,7 +76,6 @@ use yii\helpers\Url; ?>
                         <?= $counter['order_count'] ?> <small></small>
                     </span>
                 </div>
-
             </div>
         </div>
         <div class="col-lg-3 col-xs-6">
