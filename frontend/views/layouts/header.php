@@ -153,9 +153,14 @@ $top_pages = Page::find()->where(['status'=>1])->orderBy('order')->all();
                                 </li>
                                 <li>
                                     <a class="text-form-style_2"
-                                       href="<?= Url::to(['user/products']) ?>"><?= FA::i('comment')->addCssClass('text-secondary text-form-style_2') ?>
-                                        My Products</a>
+                                       href="<?= Url::to(['user/purchased']) ?>"><?= FA::i('comment')->addCssClass('text-secondary text-form-style_2') ?>
+                                        Purchased</a>
                                 </li>
+<!--                                <li>-->
+<!--                                    <a class="text-form-style_2"-->
+<!--                                       href="--><?//= Url::to(['user/products']) ?><!--">--><?//= FA::i('comment')->addCssClass('text-secondary text-form-style_2') ?>
+<!--                                        My Products</a>-->
+<!--                                </li>-->
                             <?php } ?>
                             <hr>
                             <li>

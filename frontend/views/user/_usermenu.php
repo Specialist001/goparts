@@ -54,7 +54,8 @@ if (!empty($queries)) {
             <?php } ?>
             <?php if (Yii::$app->user->identity->role == \common\models\User::ROLE_SELLER) { ?>
             <a href="<?= Url::to(['user/requests']) ?>"><li><img src="/svg/My_orders.svg" alt=""> Requests (<?= $request ?>)</li></a>
-            <a href="<?= Url::to(['user/products']) ?>"><li><img src="/svg/My_orders.svg" alt=""> My products (<?= $product ?>)</li></a>
+<!--            <a href="--><?//= Url::to(['user/products']) ?><!--"><li><img src="/svg/My_orders.svg" alt=""> My products (--><?//= $product ?><!--)</li></a>-->
+            <a href="<?= Url::to(['user/purchased']) ?>"><li><img src="/svg/My_orders.svg" alt=""> Purchased</li></a>
             <?php } ?>
 <!--            <a href="#"><li><img src="svg/Exit.svg" alt=""> Exit</li></a>-->
         </ul>

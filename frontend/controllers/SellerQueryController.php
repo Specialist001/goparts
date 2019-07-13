@@ -60,6 +60,31 @@ class SellerQueryController extends Controller
         return $this->goHome();
     }
 
+    public function actionPurchased()
+    {
+        if (!Yii::$app->user->isGuest) {
+            if (Yii::$app->user->identity->role == User::ROLE_SELLER) {
+                $searchModel = new SellerQuerySearch();
+                $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+                $query = SellerQuery::find()->where(['seller_id'=>Yii::$app->user->identity->getId(), 'status'=>3])->andWhere(['IS NOT', 'product_id', null])->orderBy('`created_at` DESC')->with('product');
+                $countQuery = clone $query;
+                $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 5]);
+                $purchased_products = $query->offset($pages->offset)->limit($pages->limit)->all();
+
+
+                return $this->render('purchased', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'purchased_products' => $purchased_products,
+                    'pages' => $pages
+                ]);
+            }
+        }
+
+        return $this->goHome();
+    }
+
     /**
      * Displays a single SellerQuery model.
      * @param integer $id
