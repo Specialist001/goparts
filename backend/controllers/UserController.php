@@ -5,6 +5,7 @@ namespace backend\controllers;
 use common\models\Cars;
 use common\models\SellerCar;
 use common\models\UserCommission;
+use common\models\UserNotification;
 use Yii;
 use common\models\User;
 use backend\models\UserSearch;
@@ -119,6 +120,30 @@ class UserController extends Controller
             if($model->password != '') {
                 $model->setPassword($model->password);
                 $model->generateAuthKey();
+            }
+
+            if($model->status == 10) {
+                if (empty(UserNotification::find()->where(['user_id'=>$model->id, 'title'=>'registration']))) {
+                    $user_notification = new UserNotification();
+                    $user_notification->user_id = $model->id;
+                    $user_notification->title = 'registration';
+                    $user_notification->description = 'Your profile is activated';
+                    $user_notification->priority = 1;
+                    $user_notification->status = 0;
+                    if ($user_notification->save()) {
+
+                        Yii::$app
+                            ->mailer
+                            ->compose(
+                                ['html' => 'activeProfile-html', 'text' => 'activeProfile-text'],
+                                ['user' => $model]
+                            )
+                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
+                            ->setTo($model->email)
+                            ->setSubject('Account activated on ' . Yii::$app->params['appName'])
+                            ->send();
+                    }
+                }
             }
 
             $model->save();

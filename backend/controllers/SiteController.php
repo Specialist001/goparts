@@ -84,12 +84,12 @@ class SiteController extends Controller
         $query = Query::find();
         $latest['queries'] = $query->orderBy('id DESC')->limit(10)->all();
         $queries = $query->all();
-        $counter['query_count'] = count($queries);
+        $counter['query_count'] = $query->where(['status'=>Query::STATUS_MODERATED])->count();
 
         $request = SellerQuery::find();
         $latest['requests'] = $request->orderBy('id DESC')->limit(10)->all();
         $requests = $request->all();
-        $counter['request_count'] = count($requests);
+        $counter['request_count'] = $request->where(['status'=>SellerQuery::STATUS_WAITED])->count();;
 
         return $this->render('index', [
             'counter' => $counter,

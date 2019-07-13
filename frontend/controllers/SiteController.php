@@ -153,7 +153,7 @@ class SiteController extends Controller
             if (Yii::$app->user->identity->role == 1) {
                 return $this->redirect(['user/index']);
             }
-            return $this->goHome();
+            return $this->goBack();
         } else {
             $model->password = '';
 
@@ -218,7 +218,7 @@ class SiteController extends Controller
         $model = new SignupForm();
 //        print_r(Yii::$app->request->post());exit;
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
+            Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email. Your profile will be activated within 24 hours');
             return $this->goHome();
         }
 

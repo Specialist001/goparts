@@ -50,6 +50,7 @@ return [
                 'login' => 'site/login',
                 'signup' => 'site/signup',
                 'page/<id:.+>' => 'site/page',
+                'user/purchased' => 'seller-query/purchased',
                 'user/products' => 'product/index',
                 'user/product/create' => 'product/create',
                 'user/product/update' => 'product/update',

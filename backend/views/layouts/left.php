@@ -220,22 +220,31 @@ $counter['new_buyers'] = $users->where(['role'=>\common\models\User::ROLE_BUYER,
                 </li>
                 <li class="treeview ">
                     <a href="#">
-                        <i class="la la-list-ul"></i><span> Orders</span>
+                        <i class="la la-list-ul"></i>
+                        <span>Orders</span>
                         <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
 
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="<?= Url::to(['/store-order']) ?>"><i class="fa fa-list"></i> All Orders
+                        <li>
+                            <a href="<?= Url::to(['/store-order']) ?>"><i class="fa fa-list"></i> All Orders
                                 <span class="pull-right-container">
-                                <small class="label pull-right bg-green">
+                                <small class="label pull-right bg-aqua">
                                     <?= $counter['all_orders'] ?>
                                 </small>
-                                <small class="label pull-right bg-yellow">
-                                    <?= $counter['new_orders'] ?>
-                                </small>
-                            </span></a></li>
+                            </span></a>
+                        </li>
+                        <li>
+                            <a href="<?= Url::to(['/store-order', 'StoreOrderSearch[status]'=>0,'sort'=>'-id']) ?>"><i class="la la-edit"></i> New Orders
+                                <span class="pull-right-container">
+                                    <small class="label pull-right bg-green">
+                                        <?= $counter['new_orders'] ?>
+                                    </small>
+                                </span>
+                            </a>
+                        </li>
                         <?php if ($auth->checkAccess(Yii::$app->user->getId(), 'adminAccess')) { ?>
                         <li><a href="<?= Url::to(['/store-order/create']) ?>"><i class="fa fa-plus"></i> Create Order</a></li>
                         <?php } ?>

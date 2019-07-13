@@ -201,7 +201,25 @@ class OrderController extends Controller
 
                 $sellerQuery = SellerQuery::find()->where(['product_id'=>$orderProduct->product_id])->one();
                 $sellerQuery->status = SellerQuery::STATUS_PURCHASED;
-                $sellerQuery->save();
+                if($sellerQuery->save()) {
+
+                    Yii::$app
+                        ->mailer
+                        ->compose(
+                            ['html' => 'buyProduct-html', 'text' => 'buyProduct-text'],
+                            [
+                                'type' => 'seller',
+                                'seller_name' => $sellerQuery->seller->username,
+                                'product_name' => $sellerQuery->query->vendor.' '.$sellerQuery->query->car.' '.$sellerQuery->query->modification.' '.$sellerQuery->query->year.' ('.$sellerQuery->product->translate->description.') ',
+                                'product_price' => $sellerQuery->product->price,
+                                'sale_date' => date('m/d/Y', $sellerQuery->updated_at),
+                            ]
+                        )
+                        ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                        ->setTo($sellerQuery->seller->email)
+                        ->setSubject('Your product sold on ' . Yii::$app->name)
+                        ->send();
+                }
             }
 
             if(Yii::$app->user->id) {

@@ -2084,6 +2084,7 @@ footer {
     padding: 15px 55px;
     border-radius: 25px;
     font-size: 14px;
+    -webkit-appearance: inherit;
 }
 
 .all_menu {

@@ -111,7 +111,7 @@ $this->registerCss('
 
                         <div class="row basket_table_bottom">
                             <a href="#" class="basket_table_bottom_left">
-                                <button><i class="fa fa-arrow-left"></i> Back to shop</button>
+                                <button><i class="fa fa-arrow-left"></i> Back to main page</button>
                             </a>
                             <div class="basket_table_bottom_right">
                                 <a class="cart_clear_button"
@@ -133,7 +133,7 @@ $this->registerCss('
                             Your cart is currently empty
                         </div>
                         <a href="<?= Url::to(['/'])?>" class="basket_table_bottom_left">
-                            <i class="fa fa-arrow-left"></i> Back to shop
+                            <i class="fa fa-arrow-left"></i> Back to main page
                         </a>
                     <?php } ?>
                 </div>
@@ -150,18 +150,39 @@ $this->registerCss('
                             <input type="hidden" id="cart_amount_uf" name="TotalCount" value="<?= str_replace(" ","", WBasket::widget(['key' => 'main'])) ?>">
                             <hr>
                         </div>
-                        <div class="sidebar_bottom">
+                        <div class="">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i> </span>
+                                </div>
+                                <input type="text" class="form-control" name="User[username]" value="<?= Yii::$app->user->identity->getId() ? Yii::$app->user->identity->username : '' ?>" placeholder="Name" aria-label="Name" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-envelope-o" style="width:12px"></i> </span>
+                                </div>
+                                <input type="email" class="form-control" name="User[email]" value="<?= Yii::$app->user->identity->getId() ? Yii::$app->user->identity->email : '' ?>" placeholder="Email" aria-label="Email">
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-phone"></i> </span>
+                                </div>
+                                <input type="tel" class="form-control" name="User[phone]" value="<?= Yii::$app->user->identity->getId() ? Yii::$app->user->identity->phone : '' ?>" placeholder="Phone" aria-label="Phone">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="sidebar_bottom pb-3">
                             <div class="sidebar_bottom1">
                                 <h5 class="catalog_top_link" data-toggle="collapse" href="#collapseCity"
                                     role="button"
                                     aria-expanded="false" aria-controls="collapseCity">
-                                    Delivery <i class="fa fa-angle-down float-right"></i>
+                                    Pick Up Locations  <i class="fa fa-angle-down float-right"></i>
                                 </h5>
-                                <div class="collapse" id="collapseCity">
+                                <div class="collapse show" id="collapseCity">
                                     <?php foreach ($cities as $city) { ?>
                                         <div class="custom-control custom-radio">
                                             <input type="radio" class="custom-control-input" name="Location"
-                                                   id="customCheck<?= $city->id ?>" value="<?= $city->id ?>">
+                                                   id="customCheck<?= $city->id ?>" value="<?= $city->name ?>">
                                             <label class="custom-control-label"
                                                    for="customCheck<?= $city->id ?>"><?= $city->name ?></label>
                                         </div>
@@ -191,8 +212,9 @@ $this->registerCss('
                                 <h5>Total (Vat Included)</h5>
                                 <h6 id="cart_amount_vat"><?= WBasket::widget(['key' => 'main']) ?> </h6><span>AED</span>
                             </div>
-                            <div class="sidebar_bottom4">
-                                <a type="" href="#modalCheckout" data-toggle="modal" data-target="#modalCheckout">Checkout</a>
+                            <div class="sidebar_bottom4 text-center">
+                                <a type="submit">Checkout</a>
+
                             </div>
                         </div>
                     </div>
@@ -200,15 +222,15 @@ $this->registerCss('
                 <?php } ?>
             </div>
 
-            <div class="modal fade" id="modalCheckout" tabindex="-1" role="dialog" aria-labelledby="contShopLabel">
-                <div class="modal-dialog modal-sm" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="m-auto w-100 text-center text-center">Checkout</h4>
-                            <button type="button" class="close float-md-right" data-dismiss="modal">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
+<!--            <div class="modal fade" id="modalCheckout" tabindex="-1" role="dialog" aria-labelledby="contShopLabel">-->
+<!--                <div class="modal-dialog modal-sm" role="document">-->
+<!--                    <div class="modal-content">-->
+<!--                        <div class="modal-header">-->
+<!--                            <h4 class="m-auto w-100 text-center text-center">Checkout</h4>-->
+<!--                            <button type="button" class="close float-md-right" data-dismiss="modal">&times;</button>-->
+<!--                        </div>-->
+<!--                        <div class="modal-body">-->
+<!--                            <div class="row">-->
 <!--                                <div class="col-md-9">-->
 <!--                                    <div class="w-100">-->
 <!--                                        <table class="table table-bordered">-->
@@ -253,42 +275,42 @@ $this->registerCss('
 <!--                                        </table>-->
 <!--                                    </div>-->
 <!--                                </div>-->
-                                <div class="col-md-12">
-                                    <div class="user_data" style="font-size: 12px!important;">
+<!--                                <div class="col-md-12">-->
+<!--                                    <div class="user_data" style="font-size: 12px!important;">-->
 
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i> </span>
-                                            </div>
-                                            <input type="text" class="form-control" name="User[username]" value="<?= Yii::$app->user->identity->getId() ? Yii::$app->user->identity->username : '' ?>" placeholder="Name" aria-label="Name" aria-describedby="basic-addon1">
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon1"><i class="fa fa-envelope-o" style="width:12px"></i> </span>
-                                            </div>
-                                            <input type="email" class="form-control" name="User[email]" value="<?= Yii::$app->user->identity->getId() ? Yii::$app->user->identity->email : '' ?>" placeholder="Email" aria-label="Email">
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon1"><i class="fa fa-phone"></i> </span>
-                                            </div>
-                                            <input type="tel" class="form-control" name="User[phone]" value="<?= Yii::$app->user->identity->getId() ? Yii::$app->user->identity->phone : '' ?>" placeholder="Phone" aria-label="Phone">
-                                        </div>
+<!--                                        <div class="input-group mb-3">-->
+<!--                                            <div class="input-group-prepend">-->
+<!--                                                <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i> </span>-->
+<!--                                            </div>-->
+<!--                                            <input type="text" class="form-control" name="User[username]" value="--><?//= Yii::$app->user->identity->getId() ? Yii::$app->user->identity->username : '' ?><!--" placeholder="Name" aria-label="Name" aria-describedby="basic-addon1">-->
+<!--                                        </div>-->
+<!--                                        <div class="input-group mb-3">-->
+<!--                                            <div class="input-group-prepend">-->
+<!--                                                <span class="input-group-text" id="basic-addon1"><i class="fa fa-envelope-o" style="width:12px"></i> </span>-->
+<!--                                            </div>-->
+<!--                                            <input type="email" class="form-control" name="User[email]" value="--><?//= Yii::$app->user->identity->getId() ? Yii::$app->user->identity->email : '' ?><!--" placeholder="Email" aria-label="Email">-->
+<!--                                        </div>-->
+<!--                                        <div class="input-group mb-3">-->
+<!--                                            <div class="input-group-prepend">-->
+<!--                                                <span class="input-group-text" id="basic-addon1"><i class="fa fa-phone"></i> </span>-->
+<!--                                            </div>-->
+<!--                                            <input type="tel" class="form-control" name="User[phone]" value="--><?//= Yii::$app->user->identity->getId() ? Yii::$app->user->identity->phone : '' ?><!--" placeholder="Phone" aria-label="Phone">-->
+<!--                                        </div>-->
 <!--                                        <div class="form-group">-->
 <!--                                            <label>Comments</label>-->
 <!--                                            <textarea rows="3" class="form-control" name="User[comment]"></textarea>-->
 <!--                                        </div>-->
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-success" type="submit">Send</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!---->
+<!--                        </div>-->
+<!--                        <div class="modal-footer">-->
+<!--                            <button class="btn btn-success" type="submit">Send</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
         </form>
     </div>
 </div>
