@@ -138,7 +138,11 @@ class SiteController extends Controller
 
             return $this->redirect('user');
         }
-        return $this->render('index');
+//        $popUp = false;
+
+        return $this->render('index',[
+//            'popUp' => $popUp,
+        ]);
 
     }
 
