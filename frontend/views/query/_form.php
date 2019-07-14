@@ -676,7 +676,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
         <?php } ?>
 
         <div class="form-group text-center pt-5">
-            <?= Html::submitButton('Send', ['class' => 'btn btn-success px-5']) ?>
+            <?= Html::submitButton('Leave order', ['class' => 'btn btn-success px-5']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>

@@ -641,15 +641,15 @@ label.toggle .toggle__text, label.toggle + a {
 }
 
 .slider1_img {
-    width: 540px;
+    width: 600px;
     position: absolute;
-    right: 150px;
-    top: 20px;
+    right: 6rem;
+    top: 18rem;
     z-index: 3;
 }
 
 .slider1_img img {
-
+    width: 100%;
 }
 
 .slider1_bg {
@@ -883,7 +883,7 @@ footer {
 }
 
 .footer_rightblock {
-    margin-top: 30px;
+
 }
 
 .rightblock_div1 {
@@ -928,8 +928,8 @@ footer {
 
 .rightblock_div3 ul li {
     display: inline-block;
-    padding-top: 20px;
-    padding-left: 10px;
+    /*padding-top: 20px;*/
+    padding-right: 10px;
 }
 
 .rightblock_div3 ul li a {

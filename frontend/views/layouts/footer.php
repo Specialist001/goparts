@@ -33,22 +33,21 @@ use rmrevin\yii\fontawesome\FA;
         <div class="row">
             <div class="col-md-5">
                 <div class="row">
-                    <div class="col-6 footer_left_div1">
-                        <h3>Services</h3>
+<!--                    <div class="col-6 footer_left_div1">-->
+<!--                        <h3>Services</h3>-->
+<!--                        <ul>-->
+<!--                            <li><a href="#">Sell</a></li>-->
+<!--                            <li><a href="#">Buy</a></li>-->
+<!--                            <li><a href="#">Search</a></li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+                    <div class="col-12 col-md-6 footer_left_div2">
+<!--                        <h3>Company</h3>-->
                         <ul>
-                            <li><a href="#">Sell</a></li>
-                            <li><a href="#">Buy</a></li>
-                            <li><a href="#">Search</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-6 footer_left_div2">
-                        <h3>Company</h3>
-                        <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Knowledgae base</a></li>
-                            <li><a href="#">Story</a></li>
-                            <li><a href="#">Terms</a></li>
-                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="<?= Url::to(['page/about_us']) ?>">About Us</a></li>
+                            <li><a href="<?= Url::to(['page/terms_and_conditions']) ?>">Terms and conditions</a></li>
+
+                            <li><a href="<?= Url::to(['contact']) ?>">Contact Us</a></li>
                         </ul>
                     </div>
                 </div>
@@ -59,29 +58,15 @@ use rmrevin\yii\fontawesome\FA;
                         <h3>Download our APP</h3>
                         <img src="/img/google.png" alt="">
                         <img src="/img/store.png" alt="">
-                        <p>You can pay by bank cards</p>
-                        <img src="/img/visa.png" alt="">
-                        <img src="/img/mastercard.png" alt="">
+                        <p class="mb-1">You can buy with cash</p>
+                        <img src="/img/wallet_i.png" alt="" style="width: 30px">
+<!--                        <img src="/img/mastercard.png" alt="">-->
                     </div>
-                    <div class="col-md-6 footer_left_div4">
-                        <h3>Contact with Us</h3>
-                        <input type="email" name="email" placeholder="Enter email" class="footer_left_div4_input">
-                        <input type="button" name="button" value="Send" class="footer_left_div4_button">
+                    <div class="col-md-6 footer_left_div4 mt-4 mt-md-0">
+                        <h3 class="mb-1 mb-md-4">Socials</h3>
                         <div class="footer_rightblock">
-<!--                            <div class="rightblock_div1">-->
-<!--                                <img src="/img/wallet.png" alt="">-->
-<!--                                <a href="#">Payment</a>-->
-<!--                            </div>-->
-<!--                            <div class="rightblock_div2">-->
-<!--                                <img src="/img/develry.png" alt="">-->
-<!--                                <a href="#">Delivery</a>-->
-<!--                            </div>-->
                             <div class="rightblock_div3">
                                 <ul>
-                                    <li><a href="#"><?= FA::i('vk') ?></a></li>
-                                    <li><a href="#"><?= FA::i('odnoklassniki') ?></a></li>
-                                    <li><a href="#"><?= FA::i('youtube-play') ?></a></li>
-                                    <li><a href="#"><?= FA::i('twitter') ?></a></li>
                                     <li><a href="#"><?= FA::i('facebook') ?></a></li>
                                     <li><a href="#"><?= FA::i('instagram') ?></a></li>
                                 </ul>

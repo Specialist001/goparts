@@ -14,34 +14,47 @@ $this->title = Yii::$app->params['appName'];
 
 <section class="slider">
     <!-- Set up your HTML -->
-    <div class="owl-carousel owl-theme">
-        <div class="slider1">
-            <div class="container">
-                <div class="slider1_name">
-                    <h1>The Largest Online Store <br><span>for Used Spare Parts in U.A.E.</span></h1>
-                    <p>Daily users. Get more offers and opportunities<br> by registering to our webpage.</p>
-                    <a class="mt-2 text-center d-block d-md-inline-block" href="<?= Url::to(['signup'])?>">Register</a>
-                </div>
+    <div class="slider1">
+        <div class="container">
+            <div class="slider1_name">
+                <h1>The Largest Online Store <br><span>for Used Spare Parts in U.A.E.</span></h1>
+                <p>Daily users. Get more offers and opportunities<br> by registering to our webpage.</p>
+                <a class="mt-2 text-center d-block d-md-inline-block" href="<?= Url::to(['signup'])?>">Register</a>
             </div>
-            <div class="slider1_img">
-                <img src="img/car.png" alt="">
-            </div>
-            <div class="slider1_bg d-none"></div>
         </div>
-        <div class="slider1">
-            <div class="container">
-                <div class="slider1_name">
-                    <h1>The Largest Online Store <br><span>for Used Spare Parts in U.A.E.</span></h1>
-                    <p>Daily users. Get more offers and opportunities<br> by registering to our webpage.</p>
-                    <a class="mt-2 text-center d-block d-md-inline-block" href="<?= Url::to(['signup'])?>">Register</a>
-                </div>
-            </div>
-            <div class="slider1_img">
-                <img src="img/car.png" alt="">
-            </div>
-            <div class="slider1_bg d-none"></div>
+        <div class="slider1_img">
+            <img src="img/car.png" alt="">
         </div>
+        <div class="slider1_bg d-none"></div>
     </div>
+<!--    <div class="owl-carousel owl-theme">-->
+<!--        <div class="slider1">-->
+<!--            <div class="container">-->
+<!--                <div class="slider1_name">-->
+<!--                    <h1>The Largest Online Store <br><span>for Used Spare Parts in U.A.E.</span></h1>-->
+<!--                    <p>Daily users. Get more offers and opportunities<br> by registering to our webpage.</p>-->
+<!--                    <a class="mt-2 text-center d-block d-md-inline-block" href="--><?//= Url::to(['signup'])?><!--">Register</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="slider1_img">-->
+<!--                <img src="img/car.png" alt="">-->
+<!--            </div>-->
+<!--            <div class="slider1_bg d-none"></div>-->
+<!--        </div>-->
+<!--        <div class="slider1">-->
+<!--            <div class="container">-->
+<!--                <div class="slider1_name">-->
+<!--                    <h1>The Largest Online Store <br><span>for Used Spare Parts in U.A.E.</span></h1>-->
+<!--                    <p>Daily users. Get more offers and opportunities<br> by registering to our webpage.</p>-->
+<!--                    <a class="mt-2 text-center d-block d-md-inline-block" href="--><?//= Url::to(['signup'])?><!--">Register</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="slider1_img">-->
+<!--                <img src="img/car.png" alt="">-->
+<!--            </div>-->
+<!--            <div class="slider1_bg d-none"></div>-->
+<!--        </div>-->
+<!--    </div>-->
 </section>
 
 <section class="working">
