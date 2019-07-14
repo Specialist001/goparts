@@ -7,7 +7,7 @@ use frontend\widgets\WQuery;
 /* @var $this yii\web\View */
 $this->title = Yii::$app->params['appName'];
 $popUp = false;
-if (Yii::$app->request->get('new_query') == true){
+if (Yii::$app->request->get('new_query') == 'send'){
     $popUp = true;
 }
 
@@ -104,14 +104,16 @@ if (Yii::$app->request->get('new_query') == true){
 <div class="modal fade" id="queryModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title ml-auto">Thank you!</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Modal body text goes here.</p>
+                <p class="mb-0">Dear ser. Thank you for leaving us order.</p>
+                <p class="mb-0"> You will get best prices from more than 1000s used spare part stores within 24 hours.</p>
+                <p> You will be notified to your email you have provided us.</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary">Save changes</button>
@@ -120,11 +122,9 @@ if (Yii::$app->request->get('new_query') == true){
         </div>
     </div>
 </div>
-<!--<script>-->
-<!--    $()-->
-<!--</script>-->
+
 <?php
-//    if($popUp == true) {
-//        $this->registerJs('');
-//    }
-//?>
+    if($popUp == true) {
+        $this->registerJs('$(\'#queryModal\').modal(\'show\');');
+    }
+?>
