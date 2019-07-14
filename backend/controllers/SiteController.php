@@ -89,7 +89,7 @@ class SiteController extends Controller
         $request = SellerQuery::find();
         $latest['requests'] = $request->orderBy('id DESC')->limit(10)->all();
         $requests = $request->all();
-        $counter['request_count'] = $request->where(['status'=>SellerQuery::STATUS_WAITED])->count();;
+        $counter['request_count'] = $request->where(['status'=>SellerQuery::STATUS_MODERATE])->count();;
 
         return $this->render('index', [
             'counter' => $counter,

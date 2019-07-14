@@ -6,7 +6,10 @@ use frontend\widgets\WQuery;
 
 /* @var $this yii\web\View */
 $this->title = Yii::$app->params['appName'];
-
+$popUp = false;
+if (Yii::$app->request->get('new_query') == true){
+    $popUp = true;
+}
 
 ?>
 
@@ -14,34 +17,47 @@ $this->title = Yii::$app->params['appName'];
 
 <section class="slider">
     <!-- Set up your HTML -->
-    <div class="owl-carousel owl-theme">
-        <div class="slider1">
-            <div class="container">
-                <div class="slider1_name">
-                    <h1>The Largest Online Store <br><span>for Used Spare Parts in U.A.E.</span></h1>
-                    <p>Daily users. Get more offers and opportunities<br> by registering to our webpage.</p>
-                    <a class="mt-2 text-center d-block d-md-inline-block" href="<?= Url::to(['signup'])?>">Register</a>
-                </div>
+    <div class="slider1">
+        <div class="container">
+            <div class="slider1_name">
+                <h1>The Largest Online Store <br><span>for Used Spare Parts in U.A.E.</span></h1>
+                <p>Daily users. Get more offers and opportunities<br> by registering to our webpage.</p>
+                <a class="mt-2 text-center d-block d-md-inline-block" href="<?= Url::to(['signup'])?>">Register</a>
             </div>
-            <div class="slider1_img">
-                <img src="img/car.png" alt="">
-            </div>
-            <div class="slider1_bg d-none"></div>
         </div>
-        <div class="slider1">
-            <div class="container">
-                <div class="slider1_name">
-                    <h1>The Largest Online Store <br><span>for Used Spare Parts in U.A.E.</span></h1>
-                    <p>Daily users. Get more offers and opportunities<br> by registering to our webpage.</p>
-                    <a class="mt-2 text-center d-block d-md-inline-block" href="<?= Url::to(['signup'])?>">Register</a>
-                </div>
-            </div>
-            <div class="slider1_img">
-                <img src="img/car.png" alt="">
-            </div>
-            <div class="slider1_bg d-none"></div>
+        <div class="slider1_img">
+            <img src="img/car.png" alt="">
         </div>
+        <div class="slider1_bg d-none"></div>
     </div>
+<!--    <div class="owl-carousel owl-theme">-->
+<!--        <div class="slider1">-->
+<!--            <div class="container">-->
+<!--                <div class="slider1_name">-->
+<!--                    <h1>The Largest Online Store <br><span>for Used Spare Parts in U.A.E.</span></h1>-->
+<!--                    <p>Daily users. Get more offers and opportunities<br> by registering to our webpage.</p>-->
+<!--                    <a class="mt-2 text-center d-block d-md-inline-block" href="--><?//= Url::to(['signup'])?><!--">Register</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="slider1_img">-->
+<!--                <img src="img/car.png" alt="">-->
+<!--            </div>-->
+<!--            <div class="slider1_bg d-none"></div>-->
+<!--        </div>-->
+<!--        <div class="slider1">-->
+<!--            <div class="container">-->
+<!--                <div class="slider1_name">-->
+<!--                    <h1>The Largest Online Store <br><span>for Used Spare Parts in U.A.E.</span></h1>-->
+<!--                    <p>Daily users. Get more offers and opportunities<br> by registering to our webpage.</p>-->
+<!--                    <a class="mt-2 text-center d-block d-md-inline-block" href="--><?//= Url::to(['signup'])?><!--">Register</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="slider1_img">-->
+<!--                <img src="img/car.png" alt="">-->
+<!--            </div>-->
+<!--            <div class="slider1_bg d-none"></div>-->
+<!--        </div>-->
+<!--    </div>-->
 </section>
 
 <section class="working">
@@ -84,3 +100,31 @@ $this->title = Yii::$app->params['appName'];
         </div>
     </div>
 </section>
+
+<div class="modal fade" id="queryModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<script>-->
+<!--    $()-->
+<!--</script>-->
+<?php
+//    if($popUp == true) {
+//        $this->registerJs('');
+//    }
+//?>

@@ -290,10 +290,12 @@ class QueryController extends Controller
                 }
 
 
-
                 if (!Yii::$app->user->id) {
                     Yii::$app->session->setFlash('success', 'Your query has been sent. Response will be sent to your email');
-                    return $this->goHome();
+//                    Yii::$app->session->setFlash('success', 'Your query has been sent. Response will be sent to your email');
+//                    Yii::$app->session->set('send',true);
+                    return $this->redirect(['/',
+                        'new_query' => true]);
                 }
 
                 return $this->redirect(['/query']);

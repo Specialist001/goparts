@@ -17,6 +17,14 @@ use yii\helpers\Url;
 
 //$title = 'Search';
 
+$this->registerCss('
+    .form-control {
+        height: inherit;
+        padding: .19rem .75rem;
+        border: none;
+    }
+');
+
 ?>
 
 <section class="widgetform">
@@ -84,27 +92,27 @@ use yii\helpers\Url;
 
     </form>
 </section>
-<?php $this->registerJs('
-    $(document).ready(function() {
-        $(\'select.form-control\').select2(
-            {
-                language: {
-                  noResults: function () {
-                    return "Nothing not found";
-                  }
-                }
-            }
-        );
-    });
-    $(document).on(\'ready pjax:success\', function() {
-        $(\'select.form-control\').select2(
-            {
-                language: {
-                  noResults: function () {
-                    return "Nothing not found";
-                  }
-                }
-            }
-        );
-    });
-');?>
+<?php //$this->registerJs('
+//    $(document).ready(function() {
+//        $(\'select.form-control\').select2(
+//            {
+//                language: {
+//                  noResults: function () {
+//                    return "Nothing not found";
+//                  }
+//                }
+//            }
+//        );
+//    });
+//    $(document).on(\'ready pjax:success\', function() {
+//        $(\'select.form-control\').select2(
+//            {
+//                language: {
+//                  noResults: function () {
+//                    return "Nothing not found";
+//                  }
+//                }
+//            }
+//        );
+//    });
+//');?>

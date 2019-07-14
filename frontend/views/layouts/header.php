@@ -31,6 +31,9 @@ $top_pages = Page::find()->where(['status'=>1])->orderBy('order')->all();
                             <a class="nav-link" href="<?= Url::to(['page', 'id'=>$page->slug]) ?>"><?= $page->translate->title?></a>
                         </li>
                     <?php } }?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= Url::to(['contact']) ?>">Contact Us</a>
+                        </li>
 
 <!--                    <li class="nav-item active">-->
 <!--                        <a class="nav-link" href="--><?//  ?><!--">About Us</a>-->
@@ -273,76 +276,5 @@ $top_pages = Page::find()->where(['status'=>1])->orderBy('order')->all();
     </div>
 </header>
 
-<div class="modal fade login" id="loginModal">
-    <div class="modal-dialog login animated">
-        <div class="modal-content p-3">
-            <div class="modal-header border-bottom-0 pb-0 pt-1">
-                <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
-                    <img class="img-fluid" src="/svg/close.svg" style="width: 1rem">
-                </button>
-            </div>
-            <div class="modal-body px-5">
-                <div class="form">
-                    <form id="login-form" accept-charset="UTF-8" action="<?= Url::to(['login']) ?>"
-                          class="loginBox auth" method="POST">
-                        <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>"
-                               value="<?= Yii::$app->request->getCsrfToken(); ?>"/>
-                        <h4 class="text-center mb-3">Log In</h4>
-                        <div class="input-group text-muted rounded border mb-3">
-                                <span class="input-group-prepend mr-1">
-                                    <div class="input-group-text bg-transparent border-0">
-                                        <img src="/svg/Mail_.svg">
-                                    </div>
-                                </span>
-                            <input class="py-2 border-0 d-block w-75" id="LoginForm[username]"
-                                   name="email" placeholder="Username" type="text" required>
-                        </div>
-                        <div class="input-group text-muted rounded border mb-3">
-                                <span class="input-group-prepend mx-1">
-                                    <div class="input-group-text bg-transparent border-0">
-                                        <img src="/svg/lock.svg">
-                                    </div>
-                                </span>
-                            <input class="py-2 border-0 d-block w-75" id="LoginForm[password]"
-                                   name="password" placeholder="Password" type="password" required>
-                        </div>
-                        <div class="d-inline-block w-100">
-                            <label class="toggle float-left">
-                                <input type="hidden" name="LoginForm[rememberMe]" value="0">
-                                <input class="toggle__input" name="LoginForm[rememberMe]" type="checkbox" value="1"
-                                       checked>
-                                <span class="toggle__label">
-                                        <span class="toggle__text">Remember password</span>
-                                    </span>
-                            </label>
-                            <a class="text-form-style_2 float-right font-weight-bold pt-1"
-                               href="<?= Url::to(['reset-password']); ?>">Forgot your password?</a>
-                        </div>
-                        <div class="text-center mt-3 mb-4">
-                            <input class="btn bg-form_style_1 text-white px-5 btn-login"
-                                   type="submit" value="Login">
-                        </div>
-                        <div class="w-75 text-center pt-3 m-auto text-font-pn_regular"
-                             style="border-top: 2px dashed #efefef;">
-                            <span class="text-center">Still no account?</span>
-                            <p class="d-block message">
-                                <a class="text-form-style_2 reg_btn" href="<?= Url::to(['signup']) ?>">
-                                    Register Here
-                                </a>
-                            </p>
-                        </div>
-                        <div class="text-center pt-2 m-auto">
-                                <span class="text-muted" style="font-size: 0.9rem">
-                                    By entering the My Profile section, you accept the
-                                    <a class="text-form-style_2" href=""> Terms of Use.</a>
-                                </span>
-                        </div>
-                    </form>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>
 <!-- End Auth Form -->
 

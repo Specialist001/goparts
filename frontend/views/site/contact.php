@@ -2,25 +2,27 @@
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \frontend\models\ContactForm */
 
+/* @var $model ContactForm */
+
+use frontend\models\ContactForm;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\captcha\Captcha;
 
-$this->title = 'Contact';
+$this->title = 'Contact Us';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-contact">
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        If you have business inquiries or other questions, please fill out the following form to contact us. Thank you.
-    </p>
-
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
+<div class="site-contact pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 m-auto">
+                <h2><?= Html::encode($this->title) ?></h2>
+                <p>
+                    If you have business inquiries or other questions, please fill out the following form to contact us. Thank
+                    you.
+                </p>
+                <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
 
                 <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
 
@@ -38,8 +40,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
                 </div>
 
-            <?php ActiveForm::end(); ?>
+                <?php ActiveForm::end(); ?>
+            </div>
         </div>
-    </div>
 
+    </div>
 </div>
