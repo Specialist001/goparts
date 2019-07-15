@@ -62,18 +62,18 @@ class QueryController extends Controller
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 
-            $query = Query::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->orderBy('`created_at` DESC');
+            $query = Query::find()->where(['user_id' => Yii::$app->user->identity->getId()])->orderBy('`created_at` DESC');
             $countQuery = clone $query;
             $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 5]);
             $buyer_queries = $query->offset($pages->offset)->limit($pages->limit)->all();
-            $user_commission = (!empty(UserCommission::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->one())) ? UserCommission::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->one() : 1;
+            $user_commission = (!empty(UserCommission::find()->where(['user_id' => Yii::$app->user->identity->getId()])->one())) ? UserCommission::find()->where(['user_id' => Yii::$app->user->identity->getId()])->one() : 1;
             $commission = $user_commission->commission;
-            $commission = (1 + ($commission ? : 0) / 100);
+            $commission = (1 + ($commission ?: 0) / 100);
 
             return $this->render('index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
-                'buyer_queries'=>$buyer_queries,
+                'buyer_queries' => $buyer_queries,
                 'commission' => $commission,
                 'pages' => $pages
             ]);
@@ -100,6 +100,22 @@ class QueryController extends Controller
     }
 
     /**
+     * Finds the Query model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Query the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Query::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /**
      * Creates a new Query model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -108,41 +124,41 @@ class QueryController extends Controller
     {
         if (Yii::$app->user->identity->role == User::ROLE_BUYER && Yii::$app->user->identity->status == User::STATUS_ACTIVE || Yii::$app->user->isGuest) {
             $model = new Query();
-            $category = !empty(Yii::$app->request->get('category'))? Yii::$app->request->get('category'): false;
+            $category = !empty(Yii::$app->request->get('category')) ? Yii::$app->request->get('category') : false;
 
             $car_id = !empty(Yii::$app->request->get('car_id')) ? Yii::$app->request->get('car_id') : false;
 
-            $car = Cars::findOne(['id'=>$car_id]);
+            $car = Cars::findOne(['id' => $car_id]);
             $car_id = $car->id;
 
-            $fuel_types = StoreOption::find()->where(['slug'=>'fuel-type'])->one();
+            $fuel_types = StoreOption::find()->where(['slug' => 'fuel-type'])->one();
             $fuel_array = [];
             foreach ($fuel_types->storeOptionValues as $fuel_type) {
                 $fuel_array += [$fuel_type->value => $fuel_type->value];
             }
 
-            $engines_types = StoreOption::find()->where(['slug'=>'engines-type'])->one();
+            $engines_types = StoreOption::find()->where(['slug' => 'engines-type'])->one();
             $engines_array = [];
             foreach ($engines_types->storeOptionValues as $engines_type) {
                 $engines_array += [$engines_type->value => $engines_type->value];
             }
 
-            $transmissions = StoreOption::find()->where(['slug'=>'transmission'])->one();
+            $transmissions = StoreOption::find()->where(['slug' => 'transmission'])->one();
             $transmissions_array = [];
             foreach ($transmissions->storeOptionValues as $transmission) {
                 $transmissions_array += [$transmission->value => $transmission->value];
             }
 
-            $drive_types = StoreOption::find()->where(['slug'=>'drive-type'])->one();
+            $drive_types = StoreOption::find()->where(['slug' => 'drive-type'])->one();
             $drive_array = [];
             foreach ($drive_types->storeOptionValues as $drive) {
                 $drive_array += [$drive->value => $drive->value];
             }
 
-            $cats = StoreCategory::find()->where(['parent_id' => null, 'status'=>1])->orderBy('`order`')->all();
+            $cats = StoreCategory::find()->where(['parent_id' => null, 'status' => 1])->orderBy('`order`')->all();
 
-            if(empty($category = StoreCategory::findOne(['id' => $category, 'status' => 1]))) $category = false;
-            if(!empty($category)) if(!empty($category->activeCategories))  $category = false;
+            if (empty($category = StoreCategory::findOne(['id' => $category, 'status' => 1]))) $category = false;
+            if (!empty($category)) if (!empty($category->activeCategories)) $category = false;
             $unset = false;
             $temp_parent = $category;
             while ($temp_parent) {
@@ -160,7 +176,7 @@ class QueryController extends Controller
             $query_data = Yii::$app->request->post()['QueryData'];
 
             $parts_array = [];
-            
+
 //            $images = UploadedFile::getInstancesByName('Query[0][images]');
 //            echo '<pre>';
 //            print_r(Yii::$app->request->post());
@@ -173,33 +189,47 @@ class QueryController extends Controller
                 $email = Yii::$app->user->getId() ? Yii::$app->user->identity->email : $query_data['email'];
                 $phone = Yii::$app->user->getId() ? Yii::$app->user->identity->phone : $query_data['phone'];
 
-                if(!Yii::$app->user->id) {
-                    $password = mt_rand(10000000, 99999999);
-                    $user = new User();
-                    $user->username = $query_data['name']; //$this->username;
-                    $user->email = $query_data['email'];
-                    $user->phone = $query_data['phone'];
-                    $user->status = User::STATUS_ACTIVE;
-                    $user->reg_type = 'Auto';
-                    $user->setPassword($password);
-                    $user->generateAuthKey();
-                    if($user->save()) {
-
-                        $user_commission = new UserCommission();
-                        $user_commission->id = $user->id;
-                        $user_commission->commission = 35;
-                        $user_commission->save();
-
+                if (!Yii::$app->user->id) {
+                    $user = User::findByEmail($email);
+                    if ($user) {
                         Yii::$app
                             ->mailer
                             ->compose(
                                 ['html' => 'signUpAuto-html', 'text' => 'signUpAuto-text'],
-                                ['user' => $user, 'password' => $password]
+                                ['type'=>'all', 'user' => $user, 'password' => $password]
                             )
                             ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
                             ->setTo($user->email)
-                            ->setSubject('Registration on ' . Yii::$app->params['appName'])
+                            ->setSubject('Thank You for your request! | ' . Yii::$app->params['appName'])
                             ->send();
+                    } else {
+                        $password = mt_rand(10000000, 99999999);
+                        $user = new User();
+                        $user->username = $query_data['name']; //$this->username;
+                        $user->email = $query_data['email'];
+                        $user->phone = $query_data['phone'];
+                        $user->status = User::STATUS_ACTIVE;
+                        $user->reg_type = 'Auto';
+                        $user->setPassword($password);
+                        $user->generateAuthKey();
+                        if ($user->save()) {
+
+                            $user_commission = new UserCommission();
+                            $user_commission->id = $user->id;
+                            $user_commission->commission = 35;
+                            $user_commission->save();
+
+                            Yii::$app
+                                ->mailer
+                                ->compose(
+                                    ['html' => 'signUpAuto-html', 'text' => 'signUpAuto-text'],
+                                    ['type'=>'first','user' => $user, 'password' => $password]
+                                )
+                                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
+                                ->setTo($user->email)
+                                ->setSubject('Registration on ' . Yii::$app->params['appName'])
+                                ->send();
+                        }
                     }
                 }
 
@@ -229,7 +259,7 @@ class QueryController extends Controller
 //                    $dir = (__DIR__) . '/../../uploads/queries/';
 //                    $image = UploadedFile::getInstanceByName('Query['.$key.'][image]');
 
-                    $image = UploadedFile::getInstanceByName('Query['.$key.'][mainImage]');
+                    $image = UploadedFile::getInstanceByName('Query[' . $key . '][mainImage]');
                     $dir = (__DIR__) . '/../../uploads/queries/';
 //                    echo '<pre>';
 //                    print_r($model);
@@ -260,7 +290,7 @@ class QueryController extends Controller
 //                        $image_model->save();
 //                    }
 
-                    $images = UploadedFile::getInstancesByName('Query['.$key.'][images]');
+                    $images = UploadedFile::getInstancesByName('Query[' . $key . '][images]');
                     if (!empty($images)) {
                         foreach ($images as $image) {
                             $image_model = new QueryImage();
@@ -349,21 +379,5 @@ class QueryController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Query model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Query the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Query::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

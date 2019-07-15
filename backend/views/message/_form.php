@@ -25,15 +25,57 @@ use yii\widgets\ActiveForm;
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="perf_en">
                         <p></p>
-                        <?= $form->field($model, 'translation[en]')->textarea(['style' => 'resize: none;', 'rows' => 6, 'value' => $model->translation]) ?>
+<!--                        --><?//= $form->field($model, 'translation[en]')->textarea(['style' => 'resize: none;', 'rows' => 6, 'value' => $model->translation]) ?>
+                        <?= $form->field($model, 'translation[en]')->widget(TinyMce::className(), [
+                            'options' => ['rows' => 6],
+                            'value' => $model->translation,
+                            'language' => 'en',
+                            'clientOptions' => [
+                                'plugins' => [
+                                    "advlist autolink lists link charmap preview anchor",
+                                    "searchreplace visualblocks code fullscreen",
+                                    "insertdatetime media table contextmenu paste"
+                                ],
+                                'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+                            ]
+                        ])->textarea(['value' => $model->translation]);
+                        ?>
                     </div>
                     <div role="tabpanel" class="tab-pane " id="perf_ar">
                         <p></p>
-                        <?= $form->field($model_ar, 'translation[ar]')->textarea(['style' => 'resize: none;', 'rows' => 6, 'value' => $model_ar->translation]) ?>
+<!--                        --><?//= $form->field($model_ar, 'translation[ar]')->textarea(['style' => 'resize: none;', 'rows' => 6, 'value' => $model_ar->translation]) ?>
+                        <?= $form->field($model_ar, 'translation[ar]')->widget(TinyMce::className(), [
+                            'options' => ['rows' => 6],
+                            'value' => $model_ar->translation,
+                            'language' => 'en',
+                            'clientOptions' => [
+                                'plugins' => [
+                                    "advlist autolink lists link charmap preview anchor",
+                                    "searchreplace visualblocks code fullscreen",
+                                    "insertdatetime media table contextmenu paste"
+                                ],
+                                'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+                            ]
+                        ])->textarea(['value' => $model_ar->translation]);
+                        ?>
                     </div>
                     <div role="tabpanel" class="tab-pane " id="perf_ru">
                         <p></p>
-                        <?= $form->field($model_ru, 'translation[ru]')->textarea(['style' => 'resize: none;', 'rows' => 6, 'value' => $model_ru->translation]) ?>
+<!--                        --><?//= $form->field($model_ru, 'translation[ru]')->textarea(['style' => 'resize: none;', 'rows' => 6, 'value' => $model_ru->translation]) ?>
+                        <?= $form->field($model_ru, 'translation[ru]')->widget(TinyMce::className(), [
+                            'options' => ['rows' => 6],
+                            $model_ru->translation,
+                            'language' => 'en',
+                            'clientOptions' => [
+                                'plugins' => [
+                                    "advlist autolink lists link charmap preview anchor",
+                                    "searchreplace visualblocks code fullscreen",
+                                    "insertdatetime media table contextmenu paste"
+                                ],
+                                'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+                            ]
+                        ])->textarea(['value' => $model_ru->translation]);
+                        ?>
                     </div>
                 </div>
             </div>

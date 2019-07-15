@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'label'=>'Action',
                                 'format' => 'raw',
                                 'value' => function($model) {
-                                    return Html::a(FA::i('arrow-right')->size('2x'),'message/update?id='.$model->id,['class' => 'text-secondary']);
+                                    return Html::a(FA::i('arrow-right')->size('2x'),'update?id='.$model->id,['class' => 'text-secondary']);
                                 }
                             ],
 //                            [
