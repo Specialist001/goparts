@@ -179,8 +179,8 @@ class QueryController extends Controller
                     $user->username = $query_data['name']; //$this->username;
                     $user->email = $query_data['email'];
                     $user->phone = $query_data['phone'];
-                    $user->status = User::STATUS_INACTIVE;
-
+                    $user->status = User::STATUS_ACTIVE;
+                    $user->reg_type = 'Auto';
                     $user->setPassword($password);
                     $user->generateAuthKey();
                     if($user->save()) {
@@ -193,7 +193,7 @@ class QueryController extends Controller
                         Yii::$app
                             ->mailer
                             ->compose(
-                                ['html' => 'signUp-html', 'text' => 'signUp-text'],
+                                ['html' => 'signUpAuto-html', 'text' => 'signUpAuto-text'],
                                 ['user' => $user, 'password' => $password]
                             )
                             ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
@@ -291,7 +291,7 @@ class QueryController extends Controller
 
 
                 if (!Yii::$app->user->id) {
-                    Yii::$app->session->setFlash('success', 'Your query has been sent. Response will be sent to your email');
+//                    Yii::$app->session->setFlash('success', 'Your query has been sent. Response will be sent to your email');
 //                    Yii::$app->session->setFlash('success', 'Your query has been sent. Response will be sent to your email');
 //                    Yii::$app->session->set('send',true);
                     return $this->redirect(['/',

@@ -120,15 +120,20 @@ class CarController extends Controller
                 $session->setTimeout(3600 * 24 * 30);
             }
         }
-
-        $user_commission = (!empty(UserCommission::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->one())) ? UserCommission::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->one() : 35;
-        $commission = $user_commission->commission;
+        if (!Yii::$app->user->isGuest){
+            $user_commission = (!empty(UserCommission::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->one())) ? UserCommission::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->one() : 35;
+            $commission = $user_commission->commission;
+        }
+        else {$commission = 35;}
         $commission = (1 + ($commission ? $commission : 0) / 100);
+        if (!Yii::$app->user->isGuest) {
 
-        return $this->render('product', [
-            'product' => $this->findModel($id),
-            'commission' => $commission,
-        ]);
+            return $this->render('product', [
+                'product' => $this->findModel($id),
+                'commission' => $commission,
+            ]);
+        }
+        return $this->goHome();
     }
 
     protected function findModel($id)

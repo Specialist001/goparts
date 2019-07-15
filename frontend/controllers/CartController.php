@@ -3,6 +3,8 @@
 namespace frontend\controllers;
 
 use common\models\City;
+use common\models\Query;
+use common\models\SellerQuery;
 use common\models\StoreDelivery;
 use common\models\StoreProduct;
 use common\models\User;
@@ -133,6 +135,11 @@ class CartController extends \yii\web\Controller
     {
         if (!empty($prod_id = Yii::$app->request->post('product_id'))) {
             $product = StoreProduct::findOne($prod_id);
+            $query = SellerQuery::find()->where(['product_id'=> $prod_id])->one();
+            if($query) {
+                $user_id = $query->query->user_id;
+            }
+
             if (empty($product)) return $this->asJson(['error' => true]);
             if (Yii::$app->user->id) {
                 if (empty(UserCart::findOne(['product_id' => $prod_id, 'user_id' => Yii::$app->user->id]))) {
@@ -382,7 +389,7 @@ class CartController extends \yii\web\Controller
     {
         if (Yii::$app->user->identity->getId()) {
             if($cart = UserCart::findAll(['user_id'=>Yii::$app->user->identity->getId()])) {
-                if ($cart->deleteAll) $error = 'false';
+                if (UserCart::deleteAll(['user_id'=>Yii::$app->user->identity->getId()])) $error = 'false';
                 else $error = 'Dont delete';
             } else {
                 $error = 'Product not found in Cart';

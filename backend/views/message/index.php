@@ -31,16 +31,23 @@ $this->params['breadcrumbs'][] = $this->title;
                                 }
                             ],
                             [
-                                'class' => 'yii\grid\ActionColumn',
-                                'template' => ' {update}',
-                                'buttons' => [
-                                    'update' => function ($url, $data)  {
-                                        return Html::a(
-                                            FA::i('arrow-right')->size('2x'),
-                                            $url, ['class' => 'text-secondary']);
-                                    }
-                                ]
+                                'label'=>'Action',
+                                'format' => 'raw',
+                                'value' => function($model) {
+                                    return Html::a(FA::i('arrow-right')->size('2x'),'message/update?id='.$model->id,['class' => 'text-secondary']);
+                                }
                             ],
+//                            [
+//                                'class' => 'yii\grid\ActionColumn',
+//                                'template' => ' {update}',
+//                                'buttons' => [
+//                                    'update' => function ($url, $data)  {
+//                                        return Html::a(
+//                                            FA::i('arrow-right')->size('2x'),
+//                                            $url, ['class' => 'text-secondary']);
+//                                    }
+//                                ]
+//                            ],
                         ],
                     ]); ?>
                 </div>

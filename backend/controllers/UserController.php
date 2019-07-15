@@ -173,6 +173,16 @@ class UserController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionCommission()
+    {
+        $model = User::find();
+        if (Yii::$app->request->post()) {
+            $auto_reg = Yii::$app->request->post('auto');
+            $auto_users = $model->where(['reg_type' => 'auto']);
+//            $commissions = UserCommission::find()->
+        }
+    }
+
     /**
      * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

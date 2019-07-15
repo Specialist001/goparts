@@ -64,7 +64,9 @@ class MyFormatter extends Formatter{
         if($value == 1) return $this->orderstatusFormat[0];
         if($value == 2) return $this->orderstatusFormat[1];
         if($value == 3) return $this->orderstatusFormat[2];
-        return $this->orderstatusFormat[3];
+        if($value == 4) return $this->orderstatusFormat[3];
+        if($value == 5) return $this->orderstatusFormat[4];
+        return $this->orderstatusFormat[5];
     }
 
     public function asPaytype($value)
@@ -149,8 +151,10 @@ class MyFormatter extends Formatter{
             $this->orderstatusFormat = [
                 '<span class="text-info">'.FA::i('info').' New'.'</span>',
                 '<span class="text-success">'.FA::i('check').' Accepted'.'</span>',
-                '<span class="text-primary">'.FA::i('check').' Completed'.'</span>',
-                '<span class="text-danger">'.FA::i('remove').' Cancelled'.'</span>'
+                '<span class="text-primary">'.FA::i('check').' Delivered'.'</span>',
+                '<span class="text-purple">'.FA::i('check').' Picked Up'.'</span>',
+                '<span class="text-warning">'.FA::i('remove').' Not Picked Up'.'</span>',
+                '<span class="text-danger">'.FA::i('remove').' Returned'.'</span>'
             ];
         }
         if ($this->productStatusFormat === null) {

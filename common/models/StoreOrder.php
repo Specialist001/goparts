@@ -48,6 +48,13 @@ use yii\behaviors\TimestampBehavior;
  */
 class StoreOrder extends \yii\db\ActiveRecord
 {
+    const STATUS_NEW = 1;
+    const STATUS_ACCEPTED = 2;
+    const STATUS_DELIVERED = 3;
+    const STATUS_PICKED_UP = 4;
+    const STATUS_NOT_PICKED_UP = 5;
+    const STATUS_RETURNED = 6;
+
     /**
      * {@inheritdoc}
      */
