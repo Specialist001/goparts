@@ -113,7 +113,7 @@ $this->registerCss('
                         </div>
                         <br>
                         <input type="hidden" name="product_id" value="<?= $product->id ?>">
-                        <input type="hidden" name="user_id" value="<?= Yii::$app->user->identity->getId() ?>">
+                        <input type="hidden" name="user_id" value="<?= !Yii::$app->user->isGuest ? Yii::$app->user->identity->getId() : null ?>">
                         <input type="hidden" name="_csrf-frontend"
                                value="<?= Yii::$app->request->getCsrfToken() ?>"/>
                         <div class="buybuttons">

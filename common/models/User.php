@@ -22,6 +22,7 @@ use yii\web\IdentityInterface;
  * @property string $legal_info
  * @property string $legal_address
  * @property string $auth_key
+ * @property string $reg_type
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
@@ -78,6 +79,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['birth_date'], 'string'],
             [['username', 'password_hash', 'password_reset_token', 'email', 'first_name', 'middle_name', 'last_name', 'site', 'about', 'location', 'legal_info', 'legal_reg_certificate', 'legal_address', 'legal_bank_account', 'legal_vat_number', 'verification_token'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
+            [['reg_type'], 'string', 'max' => 50],
             [['avatar'], 'string', 'max' => 255],
 //            [['phone'], 'string', 'max' => 100],
             [['username'], 'unique'],
@@ -103,6 +105,7 @@ class User extends ActiveRecord implements IdentityInterface
             'birth_date' => 'Birth Date',
             'site' => 'Site',
             'about' => 'About',
+            'reg_type' => 'Register Type',
             'location' => 'Location',
             'access_level' => 'Access Level',
             'visit_time' => 'Visit Time',

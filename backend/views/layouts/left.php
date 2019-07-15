@@ -406,7 +406,7 @@ $counter['new_buyers'] = $users->where(['role'=>\common\models\User::ROLE_BUYER,
                         <li><a href="<?= Url::to(['/store-commission/create']) ?>"><i class="fa fa-plus"></i> Create Commission</a></li>
                     </ul>
                 </li>
-                <li><a href="<?= Url::to(['/messages']) ?>"><i class="fa fa-list"></i> Messages</a></li>
+                <li><a href="<?= Url::to(['/message']) ?>"><i class="fa fa-list"></i> Messages</a></li>
 
             </ul>
 

@@ -90,7 +90,7 @@ use rmrevin\yii\fontawesome\FA;
     </div>
     <div class="row">
         <div class="col-md-3">
-            <?= $form->field($model, 'about')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'reg_type')->dropDownList([null=>'', 'auto'=>'Auto', 'manual'=>'Manual']) ?>
         </div>
         <div class="col-md-3">
             <div class="form-group">
@@ -120,6 +120,9 @@ use rmrevin\yii\fontawesome\FA;
             </select>
         </div>
         <?php } ?>
+        <div class="col-md-3">
+            <?= $form->field($model, 'about')->textInput(['maxlength' => true]) ?>
+        </div>
         <div class="col-md-3">
             <?= $form->field($model, 'avatar')->textInput(['maxlength' => true]) ?>
         </div>

@@ -20,8 +20,8 @@ if (Yii::$app->request->get('new_query') == 'send'){
     <div class="slider1">
         <div class="container">
             <div class="slider1_name">
-                <h1>The Largest Online Store <br><span>for Used Spare Parts in U.A.E.</span></h1>
-                <p>Daily users. Get more offers and opportunities<br> by registering to our webpage.</p>
+                <h1><?= Yii::t('frontend', 'Slogan') ?> <br><span><?= Yii::t('frontend', 'Slogan Short') ?></span></h1>
+                <p><?= Yii::t('frontend', 'Slogan Text') ?></p>
                 <a class="mt-2 text-center d-block d-md-inline-block" href="<?= Url::to(['signup'])?>">Register</a>
             </div>
         </div>
@@ -67,25 +67,22 @@ if (Yii::$app->request->get('new_query') == 'send'){
                 <img src="img/girl.png" alt="" class="working_girl">
             </div>
             <div class="col-md-8 working_top">
-                <h3 class="pb-3 pb-md-0">Start working with us and <br><span>build your profitable business</span></h3>
-                <p><span><strong>UAEPARTS</strong> is the largest online store in UAE,</span> that offers its customers the widest range of spare auto parts and accessories. With us you will have an option to purchase a product online and pay using our secure online payment system or you can pay upon receiving the product. We also offer an express delivery to any address throughout UAE, so the product is delivered to you as soon as possible.</p>
+                <h3 class="pb-3 pb-md-0"><?= Yii::t('frontend', 'Slogan_2') ?> <br><span><?= Yii::t('frontend', 'Slogan_2 short') ?></span></h3>
+                <p><?= Yii::t('frontend', 'Slogan_2 text') ?></p>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="working_list">
                             <h3 class="py-3 py-md-0"><span>Our</span> Advantages</h3>
                             <div class="working_list_item">
-                                <p>Widest range of auto spare parts</p>
-                                <p>Detailed information about the product</p>
+                                <?= Yii::t('frontend', 'Slogan_2 child_1') ?>
                                 <img src="img/ok.png" alt="">
                             </div>
                             <div class="working_list_item">
-                                <p>Leave us an order and get prices from more</p>
-                                <p>than 1000s of shops.</p>
+                                <?= Yii::t('frontend', 'Slogan_2 child_2') ?>
                                 <img src="img/ok.png" alt="">
                             </div>
                             <div class="working_list_item">
-                                <p>Convenient multiple payment options</p>
-                                <p>Express delivery</p>
+                                <?= Yii::t('frontend', 'Slogan_2 child_3') ?>
                                 <img src="img/ok.png" alt="">
                             </div>
                         </div>
@@ -116,7 +113,7 @@ if (Yii::$app->request->get('new_query') == 'send'){
                 <p> You will be notified to your email you have provided us.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
+<!--                <button type="button" class="btn btn-primary">Save changes</button>-->
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>

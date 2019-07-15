@@ -173,6 +173,7 @@ $this->registerCss('
                         <hr>
                         <div class="sidebar_bottom pb-3">
                             <div class="sidebar_bottom1">
+                                <?php if(Yii::$app->user->isGuest || Yii::$app->user->identity->reg_type == 'auto' || Yii::$app->user->identity->reg_type == '') { ?>
                                 <h5 class="catalog_top_link" data-toggle="collapse" href="#collapseCity"
                                     role="button"
                                     aria-expanded="false" aria-controls="collapseCity">
@@ -188,6 +189,13 @@ $this->registerCss('
                                         </div>
                                     <?php } ?>
                                 </div>
+                                <? } ?>
+                                <?php if(Yii::$app->user->identity->reg_type == 'manual') {?>
+                                    <div class="form-group">
+                                        <label>Location</label>
+                                        <input class="form-control" type="text" placeholder="Input your location" name="Location">
+                                    </div>
+                                <?php } ?>
                             </div>
 <!--                            <div class="sidebar_bottom2">-->
 <!--                                <h5 class="catalog_top_link" data-toggle="collapse" href="#collapseDelivery"-->
@@ -213,7 +221,7 @@ $this->registerCss('
                                 <h6 id="cart_amount_vat"><?= WBasket::widget(['key' => 'main']) ?> </h6><span>AED</span>
                             </div>
                             <div class="sidebar_bottom4 text-center">
-                                <a type="submit">Checkout</a>
+                                <button class="btn" type="submit">Checkout</button>
 
                             </div>
                         </div>

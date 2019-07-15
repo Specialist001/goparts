@@ -60,15 +60,54 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Products',
                 'format' => 'raw',
-                'value' => function($model) {
-                    return count($model->storeOrderProducts);
+                'value' => function ($model) {
+                    $printer = "<div class=\"dropdown\">";
+                    $printer .= "<a class=\"btn dropdown-toggle\" type=\"button\" id=\"dropdownMenuPr'.$model->id.'\" data-toggle=\"dropdown\">
+                        ".count($model->storeOrderProducts)."
+                        <span class=\"caret\"></span>
+                      </a>";
+                    $printer .= "<ul class=\"dropdown-menu\" role=\"menu\" aria-labelledby=\"dropdownMenuPr'.$model->id.'\">";
+                    $printer .= "<li role=\"presentation\">";
+                    $printer .= "<table class=\"table table-bordered\">";
+                    $printer .= "<thead><tr>
+                                    <th>Desc</th>
+                                    <th>Car</th>
+                                    <th>Price</th>
+                                </tr></thead>";
+                    $printer .= "<tbody>";
+                    foreach ($model->storeOrderProducts as $orderProduct) {
+                        $printer.= "<tr>";
+                        $printer.= "<td>".substr($orderProduct->product_name,0,10) ."</td>";
+                        $printer.= "<td>".$orderProduct->product->car->vendor." ".$orderProduct->product->car->car."</td>";
+                        $printer.= "<td>".$orderProduct->price * 1 ." AED</td>";
+                        $printer.= "</tr>";
+                    }
+                    $printer .= "</tbody>";
+                    $printer .= "</table>";
+                    $printer .= "</li>";
+                    $printer .= "<li role=\"presentation\" class=\"divider text-center\"></li>";
+                    $printer .= "</li>
+
+                        <a tabindex=\"-1\" target=\"_blank\" href=".\yii\helpers\Url::to(['store-order/view', 'id'=>$model->id]).">View Details</a>
+                        </li>";
+                    $printer .= "</ul>";
+                    $printer .= "</div>";
+                    return $printer;
+
                 }
             ],
+//            [
+//                'label' => 'Products',
+//                'format' => 'raw',
+//                'value' => function($model) {
+//                    return count($model->storeOrderProducts);
+//                }
+//            ],
             'total_price',
             [
                 'attribute' => 'status',
                 'format' => 'orderStatus',
-                'filter' => ['1'=>'New','2'=>'Accepted','3'=>'Completed','4'=>'Cancelled'],
+                'filter' => ['1'=>'New','2'=>'Accepted','3'=>'Delivered','4'=>'Picked Up','5'=>'Not Picked Up','6'=>'Returned'],
             ],
 //            'paid',
             [
