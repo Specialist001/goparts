@@ -116,7 +116,7 @@ $this->registerCss('
                             <div class="basket_table_bottom_right">
                                 <a class="cart_clear_button"
                                    onclick="return confirm('Are you sure delete all products from cart?')">
-                                    Clear Selected <i class="fa fa-times-circle"></i>
+                                    Clear All <i class="fa fa-times-circle"></i>
                                 </a>
                             </div>
                         </div>
