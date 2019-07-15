@@ -53,9 +53,11 @@ $this->registerCss('
         <p> You will be notified to your email you have provided us.</p>
     </div>
     <hr>
+    <?php if($type=='first') { ?>
     <div class="body">
         For LogIn access:<br>
         Your Login: <?= Html::encode($user->email) ?><br>
         Your Password: <?= $password ?>
     </div>
+    <?php }?>
 </div>

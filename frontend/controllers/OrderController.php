@@ -14,13 +14,6 @@ use yii\web\NotFoundHttpException;
 
 class OrderController extends Controller
 {
-    const STATUS_NEW = 1;
-    const STATUS_ACCEPTED = 2;
-    const STATUS_COMPLETED = 3;
-    const STATUS_CANCELLED = 4;
-
-    const PAID = 1;
-    const NOT_PAID = 0;
 
     /**
      * {@inheritdoc}
@@ -178,8 +171,8 @@ class OrderController extends Controller
             $order = new StoreOrder();
             $order->user_id = Yii::$app->user->identity->getId();
             $order->delivery_id = !empty($delivery) ? $delivery : null;
-            $order->status = self::STATUS_NEW;
-            $order->paid = self::NOT_PAID;
+            $order->status = StoreOrder::STATUS_NEW;
+            $order->paid = StoreOrder::NOT_PAID;
             $order->total_price = $totalCount;
             $order->name = $data['User']['username'];
             $order->email = $data['User']['email'];
@@ -187,65 +180,67 @@ class OrderController extends Controller
             $order->comment = $data['User']['comment'] ? $data['User']['comment'] : null;
             $order->city = $data['Location'] ? $data['Location'] : null;
             $order->ip = Yii::$app->getRequest()->getUserIP();
-            $order->save();
+//            $order->save();
+            if($order->save()) {
+                Yii::$app
+                    ->mailer
+                    ->compose(
+                        ['html' => 'makeOrder-html', 'text' => 'makeOrder-text'],
+                        ['type' => 'buyer']
+                    )
+                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                    ->setTo($data['User']['email'])
+                    ->setSubject(Yii::$app->name)
+                    ->send();
+                Yii::$app
+                    ->mailer
+                    ->compose(
+                        ['html' => 'makeOrder-html', 'text' => 'makeOrder-text'],
+                        ['type' => 'seller']
+                    )
+                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                    ->setTo(Yii::$app->params['adminEmail'])
+                    ->setSubject(Yii::$app->name)
+                    ->send();
 
-            foreach ($products as $product) {
-                $orderProduct = new StoreOrderProduct();
-                $orderProduct->order_id = $order->id;
-                $orderProduct->product_id = $product['product_id'];
-                $orderProduct->product_name = $product['name'];
-                $orderProduct->price = $product['price'];
-                $orderProduct->quantity = $product['count'];
-                $orderProduct->sku = $product['sku'];
-                $orderProduct->save();
+                foreach ($products as $product) {
+                    $orderProduct = new StoreOrderProduct();
+                    $orderProduct->order_id = $order->id;
+                    $orderProduct->product_id = $product['product_id'];
+                    $orderProduct->product_name = $product['name'];
+                    $orderProduct->price = $product['price'];
+                    $orderProduct->quantity = $product['count'];
+                    $orderProduct->sku = $product['sku'];
+                    $orderProduct->save();
 
-                $sellerQuery = SellerQuery::find()->where(['product_id'=>$orderProduct->product_id])->one();
-                $sellerQuery->status = SellerQuery::STATUS_PURCHASED;
-                if($sellerQuery->save()) {
+                    $sellerQuery = SellerQuery::find()->where(['product_id'=>$orderProduct->product_id])->one();
+                    $sellerQuery->status = SellerQuery::STATUS_PURCHASED;
+                    if($sellerQuery->save()) {
 
-                    Yii::$app
-                        ->mailer
-                        ->compose(
-                            ['html' => 'buyProduct-html', 'text' => 'buyProduct-text'],
-                            [
-                                'type' => 'seller',
-                                'seller_name' => $sellerQuery->seller->username,
-                                'product_name' => $sellerQuery->query->vendor.' '.$sellerQuery->query->car.' '.$sellerQuery->query->modification.' '.$sellerQuery->query->year.' ('.$sellerQuery->product->translate->description.') ',
-                                'product_price' => $sellerQuery->product->price,
-                                'sale_date' => date('m/d/Y', $sellerQuery->updated_at),
-                            ]
-                        )
-                        ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-                        ->setTo($sellerQuery->seller->email)
-                        ->setSubject('Your product sold on ' . Yii::$app->name)
-                        ->send();
+                        Yii::$app
+                            ->mailer
+                            ->compose(
+                                ['html' => 'buyProduct-html', 'text' => 'buyProduct-text'],
+                                [
+                                    'type' => 'seller',
+                                    'seller_name' => $sellerQuery->seller->username,
+                                    'product_name' => $sellerQuery->query->vendor.' '.$sellerQuery->query->car.' '.$sellerQuery->query->modification.' '.$sellerQuery->query->year.' ('.$sellerQuery->product->translate->description.') ',
+                                    'product_price' => $sellerQuery->product->price,
+                                    'sale_date' => date('m/d/Y', $sellerQuery->updated_at),
+                                ]
+                            )
+                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                            ->setTo($sellerQuery->seller->email)
+                            ->setSubject('Your product sold on ' . Yii::$app->name)
+                            ->send();
+                    }
                 }
+                if(Yii::$app->user->id) {
+                    UserCart::deleteAll(['user_id' => Yii::$app->user->id]);
+                }
+            } else {
+                return json_encode(['error'=>'not saved']);
             }
-
-            if(Yii::$app->user->id) {
-                UserCart::deleteAll(['user_id' => Yii::$app->user->id]);
-            }
-
-            Yii::$app
-                ->mailer
-                ->compose(
-                    ['html' => 'makeOrder-html', 'text' => 'makeOrder-text'],
-                    ['type' => 'buyer']
-                )
-                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-                ->setTo($data['User']['email'])
-                ->setSubject(Yii::$app->name)
-                ->send();
-            Yii::$app
-                ->mailer
-                ->compose(
-                    ['html' => 'makeOrder-html', 'text' => 'makeOrder-text'],
-                    ['type' => 'seller']
-                )
-                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-                ->setTo(Yii::$app->params['adminEmail'])
-                ->setSubject(Yii::$app->name)
-                ->send();
 
             return $this->redirect(['user/purchases']);
 

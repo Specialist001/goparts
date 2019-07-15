@@ -145,7 +145,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                 <div class="col-md-3">
                     <div class="position-relative pb-2">
                         <select class="form-control car_items" id="car_car" required>
-                            <option disabled selected>Select Model</option>
+<!--                            <option disabled selected>Select Model</option>-->
                             <?php if (!empty(Yii::$app->request->get('car_id')) || !empty($model->car_id)) { ?>
                                 <?php foreach ($models_array as $car_model) { ?>
                                     <option value="<?= $car_model ?>" <?= $car_model == $model_name ? 'selected' : '' ?>><?= $car_model ?></option>
@@ -180,7 +180,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                 </div>
                 <div class="col-md-2">
                     <div class="position-relative py-3 py-md-0 text-center text-md-left">
-                        <a class="btn btn-success text-white save_car px-4">Save</a>
+                        <a class="btn btn-success text-white save_car px-4">Search</a>
                     </div>
                 </div>
             </div>

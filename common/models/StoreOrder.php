@@ -55,6 +55,9 @@ class StoreOrder extends \yii\db\ActiveRecord
     const STATUS_NOT_PICKED_UP = 5;
     const STATUS_RETURNED = 6;
 
+    const NOT_PAID = 0;
+    const PAID = 1;
+
     /**
      * {@inheritdoc}
      */
