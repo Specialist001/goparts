@@ -304,13 +304,12 @@ $this->registerCss('
                                                 <div class="row mt-3">
                                                     <div class="col-md-12">
                                                         <?php
-
                                                         foreach ($buyer_query->sellerProducts as $sellerQuery) { ?>
-                                                            <div class="w-100 border rounded p-3">
-                                                                <div class="d-inline-block px-2 mr-3"><strong><?= $sellerQuery->product_id ?></strong></div>
-                                                                <div class="d-inline-block px-2 mr-3"><?= $sellerQuery->product->translate->name ?></div>
-                                                                <div class="d-inline-block px-2 mr-3"><strong><?= $sellerQuery->product->price * $commission ?> AED</strong></div>
-                                                                <div class="d-inline-block px-2 mr-3">
+                                                            <div class="w-100 border rounded p-3 mb-2 <?= $sellerQuery->status==3 ? 'green_request' : null ?>">
+                                                                <div class="d-block d-md-inline-block px-2 mr-3"><strong><?= $sellerQuery->product_id ?></strong></div>
+                                                                <div class="d-block d-md-inline-block px-2 mr-3"><?= $sellerQuery->product->translate->name ?></div>
+                                                                <div class="d-block d-md-inline-block px-2 mr-3"><strong><?= $sellerQuery->product->price * $commission ?> AED</strong></div>
+                                                                <div class="d-block d-md-inline-block px-2 mr-3">
                                                                     <?php if ($sellerQuery->product->images) { ?>
                                                                     <ul class="product_imageboxes pl-0 d-inline-block">
                                                                         <li class="product_imagebox">
@@ -324,7 +323,14 @@ $this->registerCss('
                                                                     </ul>
                                                                     <?php } ?>
                                                                 </div>
+                                                                <?php if($sellerQuery->status != 3) { ?>
                                                                 <div class="d-inline-block px-2 mr-3"><a target="_blank" href="<?= \yii\helpers\Url::to(['car/product', 'id'=>$sellerQuery->product_id]) ?>">View</a></div>
+                                                                <?php }?>
+                                                                <?php if($sellerQuery->status == 3) { ?>
+                                                                <div class="d-inline-block px-2 mr-3">
+                                                                    <h5 class="text-form-style_1">Purchased</h5>
+                                                                </div>
+                                                                <?php } ?>
                                                             </div>
                                                             <input type="hidden" class="product_id" name="Product[product_id]" value="<?= $sellerQuery->product_id ? $sellerQuery->product_id : null?>">
                                                         <?php }  ?>

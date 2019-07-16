@@ -4,6 +4,7 @@ namespace frontend\controllers;
 use common\models\SellerQuery;
 use common\models\StoreOrder;
 use common\models\StoreOrderProduct;
+use common\models\StoreProduct;
 use common\models\User;
 use common\models\UserCart;
 use common\models\UserCommission;
@@ -153,9 +154,9 @@ class OrderController extends Controller
                                 ['html' => 'signUp-html', 'text' => 'signUp-text'],
                                 ['user' => $user, 'password' => $password]
                             )
-                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
                             ->setTo($user->email)
-                            ->setSubject('Registration on ' . Yii::$app->name)
+                            ->setSubject('Registration on ' . Yii::$app->params['appName'])
                             ->send();
                     }
                 }
@@ -178,7 +179,7 @@ class OrderController extends Controller
             $order->email = $data['User']['email'];
             $order->phone = $data['User']['phone'];
             $order->comment = $data['User']['comment'] ? $data['User']['comment'] : null;
-            $order->city = $data['Location'] ? $data['Location'] : null;
+            $order->city = $data['Location'] ? $data['Location'] : '';
             $order->ip = Yii::$app->getRequest()->getUserIP();
 //            $order->save();
             if($order->save()) {
@@ -188,7 +189,7 @@ class OrderController extends Controller
                         ['html' => 'makeOrder-html', 'text' => 'makeOrder-text'],
                         ['type' => 'buyer']
                     )
-                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
                     ->setTo($data['User']['email'])
                     ->setSubject(Yii::$app->name)
                     ->send();
@@ -198,7 +199,7 @@ class OrderController extends Controller
                         ['html' => 'makeOrder-html', 'text' => 'makeOrder-text'],
                         ['type' => 'seller']
                     )
-                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
                     ->setTo(Yii::$app->params['adminEmail'])
                     ->setSubject(Yii::$app->name)
                     ->send();
@@ -229,17 +230,22 @@ class OrderController extends Controller
                                     'sale_date' => date('m/d/Y', $sellerQuery->updated_at),
                                 ]
                             )
-                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
                             ->setTo($sellerQuery->seller->email)
                             ->setSubject('Your product sold on ' . Yii::$app->name)
                             ->send();
+
+                        $store_product = StoreProduct::find()->where(['id'=>$product['product_id']])->one();
+                        $store_product->status = 0;
+                        $store_product->save();
+
                     }
                 }
                 if(Yii::$app->user->id) {
                     UserCart::deleteAll(['user_id' => Yii::$app->user->id]);
                 }
             } else {
-                return json_encode(['error'=>'not saved']);
+                return $this->redirect(['cart/index']);
             }
 
             return $this->redirect(['user/purchases']);

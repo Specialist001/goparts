@@ -215,6 +215,7 @@ class SellerQueryController extends Controller
                         ['html' => 'makeProduct-html', 'text' => 'makeProduct-text'],
                         [
                             'type' => 'buyer',
+                            'buyer_name' => $model->query->user->username,
                             'product_id' => $model->product->id,
                             'query_name' => $model->query->description,
                             'token' => base64_encode($model->query->user->email),
