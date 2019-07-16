@@ -86,7 +86,7 @@ class CartController extends \yii\web\Controller
         $total_count = [];
         $userCart = [];
         $deliveries = StoreDelivery::find()->all();
-        $cities = City::find()->all();
+        $cities = City::find()->where(['status'=>1])->all();
         $user_commission = (!empty(UserCommission::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->one())) ? UserCommission::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->one() : 35;
         $commission = $user_commission->commission;
         $commission = (1 + ($commission ? : 0) / 100);
