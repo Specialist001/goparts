@@ -172,7 +172,7 @@ class OrderController extends Controller
 
             $order = new StoreOrder();
             $order->user_id = $user->id;
-            $order->delivery_id = 1;
+            $order->delivery_id = null;
             $order->status = StoreOrder::STATUS_NEW;
             $order->paid = StoreOrder::NOT_PAID;
             $order->total_price = $totalCount;
