@@ -179,7 +179,7 @@ class OrderController extends Controller
             $order->email = $data['User']['email'];
             $order->phone = $data['User']['phone'];
             $order->comment = $data['User']['comment'] ? $data['User']['comment'] : null;
-            $order->city = $city ? $city : '';
+            $order->city = $city ? $city : null;
             $order->ip = Yii::$app->getRequest()->getUserIP();
             if($order->save()) {
                 Yii::$app
