@@ -172,7 +172,7 @@ class OrderController extends Controller
 
             $order = new StoreOrder();
             $order->user_id = $user->id;
-            $order->delivery_id = 1;
+            $order->delivery_id = null;
             $order->status = StoreOrder::STATUS_NEW;
             $order->paid = StoreOrder::NOT_PAID;
             $order->total_price = $totalCount;
@@ -181,10 +181,7 @@ class OrderController extends Controller
             $order->phone = $data['User']['phone'] ? $data['User']['phone'] : $user->phone;
 //            $order->comment = $data['User']['comment'] ? $data['User']['comment'] : null;
             $order->city = $data['Location'];
-//            echo '<pre>';
-//            print_r($order);
-//            echo '<pre>';
-//            exit;
+
             if($order->save()) {
 
                 Yii::$app
@@ -249,8 +246,8 @@ class OrderController extends Controller
                     UserCart::deleteAll(['user_id' => Yii::$app->user->id]);
                 }
             } else {
-                print_r($order->getFirstErrors());
-//                return $this->redirect(['cart/index']);
+//                print_r($order->getFirstErrors());
+                return $this->redirect(['cart/index']);
             }
 
             return $this->redirect(['user/purchases']);

@@ -39,17 +39,18 @@ use yii\widgets\LinkPager; ?>
                                         <div class="col-sm-4">
                                             Cost: <span class="text-form-style_2"><?=$order->total_price ?></span> AED <br>
 <!--                                            Delivery: <span class="text-form-style_2">--><?//=$order->delivery->name ?><!--</span>-->
+                                            Location: <span class="text-form-style_2"><?=$order->city ?></span>
                                         </div>
                                         <div class="col-sm-3">
-                                                <?php if($order->status == 1) {?>
-                                                    <span class="text-info"> Check availability</span>
-                                                <?php } else if($order->status == 2) { ?>
-                                                <span class="alert alert-primary"> Waiting for payment
-                                                <?php } else if($order->status == 3) {?>
-                                                    Order completed
-                                                <?php } else { ?>
-                                                    Order cancelled
-                                                <?php } ?>
+<!--                                                --><?php //if($order->status == 1) {?>
+<!--                                                    <span class="text-info"> Check availability</span>-->
+<!--                                                --><?php //} else if($order->status == 2) { ?>
+<!--                                                <span class="alert alert-primary"> Waiting for payment-->
+<!--                                                --><?php //} else if($order->status == 3) {?>
+<!--                                                    Order completed-->
+<!--                                                --><?php //} else { ?>
+<!--                                                    Order cancelled-->
+<!--                                                --><?php //} ?>
                                         </div>
                                     </div>
                                     <div class="row pt-2">

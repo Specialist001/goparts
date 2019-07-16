@@ -66,7 +66,7 @@ use yii\widgets\LinkPager; ?>
                                 <div class="col-sm-12 pt-4">
                                     <table class="table-bordered">
                                         <thead>
-                                            <th class="px-2">Order ID</th>
+                                            <th class="px-2">Invoice number</th>
                                             <th class="px-2">Name</th>
                                             <th class="px-2">Car</th>
                                             <th class="px-2">Price</th>

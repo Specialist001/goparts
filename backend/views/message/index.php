@@ -3,6 +3,7 @@
 use rmrevin\yii\fontawesome\FA;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\StoreMessageSearch */
@@ -34,7 +35,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'label'=>'Action',
                                 'format' => 'raw',
                                 'value' => function($model) {
-                                    return Html::a(FA::i('arrow-right')->size('2x'),'update?id='.$model->id,['class' => 'text-secondary']);
+//                                    return Html::a(FA::i('arrow-right')->size('2x'),'update?id='.$model->id,['class' => 'text-secondary']);
+//                                    return '<a href="'.Url::to(['/message']).'"><i class="fa fa-list"></i> Messages</a>';
+                                        return Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']);
                                 }
                             ],
 //                            [
