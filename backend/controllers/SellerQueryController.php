@@ -229,11 +229,13 @@ class SellerQueryController extends Controller
                     ->send())
                 {
                     $model->status = SellerQuery::STATUS_PUBLISHED;
-                    //$model->save();
-                    $data['status']['text'] = 'Request send to buyer';
-                    $data['status']['code'] = 1;
 
-                    return $this->asJson($data);
+                    if ($model->save()) {
+                        $data['status']['text'] = 'Request send to buyer';
+                        $data['status']['code'] = 1;
+                        return $this->asJson($data);
+                    }
+
                 } else {
                     $data['status']['text'] = 'Request not send to buyer';
                     $data['status']['code'] = -1;               
@@ -242,12 +244,12 @@ class SellerQueryController extends Controller
                 }
             } else {
                 $model->status = SellerQuery::STATUS_PUBLISHED;
-                //$model->save();
+                if ($model->save()) {
+                    $data['status']['text'] = 'Product published, but Request not send to buyer';
+                    $data['status']['code'] = 0;
 
-                $data['status']['text'] = 'Product published, but Request not send to buyer';
-                $data['status']['code'] = 0;
-                
-                return $this->asJson($data);
+                    return $this->asJson($data);
+                }
             }
         } else {
             if ($model->query->email) {
@@ -271,12 +273,13 @@ class SellerQueryController extends Controller
                     ->send())
                 {
                     $model->status = SellerQuery::STATUS_PUBLISHED;
-                    $model->save();
+                    if ($model->save()) {
+                        $data['status']['text'] = 'Request send to buyer';
+                        $data['status']['code'] = 1;
 
-                    $data['status']['text'] = 'Request send to buyer';
-                    $data['status']['code'] = 1;
+                        return $this->asJson($data);
+                    }
 
-                    return $this->asJson($data);
                 } else {
                     $data['status']['text'] = 'Request not send to buyer';
                     $data['status']['code'] = -1;
@@ -286,12 +289,13 @@ class SellerQueryController extends Controller
                 }
             } else {
                 $model->status = SellerQuery::STATUS_PUBLISHED;
-                $model->save();
+                if ($model->save()) {
+                    $data['status']['text'] = 'Product published, but Request not send to buyer';
+                    $data['status']['code'] = 0;
 
-                $data['status']['text'] = 'Product published, but Request not send to buyer';
-                $data['status']['code'] = 0;
-                
-                return $this->asJson($data);
+                    return $this->asJson($data);
+                }
+
             }
         }
 
