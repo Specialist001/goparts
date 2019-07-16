@@ -78,7 +78,7 @@ class StoreOrder extends \yii\db\ActiveRecord
 //            [['created_at', 'updated_at'], 'required'],
             [['name', 'street', 'phone', 'email', 'url', 'country', 'city', 'house', 'apartment'], 'string', 'max' => 255],
             [['ip', 'zipcode'], 'string', 'max' => 30],
-            [['delivery_id'], 'exist', 'skipOnError' => true, 'targetClass' => StoreDelivery::className(), 'targetAttribute' => ['delivery_id' => 'id']],
+//            [['delivery_id'], 'exist', 'skipOnError' => true, 'targetClass' => StoreDelivery::className(), 'targetAttribute' => ['delivery_id' => 'id']],
             [['manager_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['manager_id' => 'id']],
             [['payment_method_id'], 'exist', 'skipOnError' => true, 'targetClass' => StorePayment::className(), 'targetAttribute' => ['payment_method_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],

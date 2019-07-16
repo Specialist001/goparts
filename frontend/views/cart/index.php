@@ -214,8 +214,8 @@ $this->registerCss('
 <!--                                    --><?php //} ?>
 <!--                                </div>-->
 <!--                            </div>-->
-                            <input type="hidden" class="custom-control-input" name="Delivery"
-                                   value="1">
+<!--                            <input type="hidden" class="custom-control-input" name="Delivery"-->
+<!--                                   value="1">-->
                             <div class="sidebar_bottom3">
                                 <h5>Total (Vat Included)</h5>
                                 <h6 id="cart_amount_vat"><?= WBasket::widget(['key' => 'main']) ?> </h6><span>AED</span>
