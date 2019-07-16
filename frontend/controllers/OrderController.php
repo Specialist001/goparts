@@ -165,23 +165,28 @@ class OrderController extends Controller
                 $user = User::findOne(Yii::$app->user->id);
             }
 
+
             $user->phone = $user->phone ? $user->phone : $data['User']['phone'];
-            $user->save();
+
             if(empty($user)) return $this->redirect(['cart/index']);
 
             $order = new StoreOrder();
             $order->user_id = $user->id;
-            $order->delivery_id = !empty($delivery) ? $delivery : null;
+            $order->delivery_id = 1;
             $order->status = StoreOrder::STATUS_NEW;
             $order->paid = StoreOrder::NOT_PAID;
             $order->total_price = $totalCount;
-            $order->name = $data['User']['username'];
-            $order->email = $data['User']['email'];
-            $order->phone = $data['User']['phone'];
-            $order->comment = $data['User']['comment'] ? $data['User']['comment'] : null;
-            $order->city = $city ? $city : null;
-            $order->ip = Yii::$app->getRequest()->getUserIP();
+            $order->name = $data['User']['username'] ? $data['User']['username'] : $user->username;
+            $order->email = $data['User']['email'] ? $data['User']['email'] : $user->email;
+            $order->phone = $data['User']['phone'] ? $data['User']['phone'] : $user->phone;
+//            $order->comment = $data['User']['comment'] ? $data['User']['comment'] : null;
+            $order->city = $data['Location'];
+//            echo '<pre>';
+//            print_r($order);
+//            echo '<pre>';
+//            exit;
             if($order->save()) {
+
                 Yii::$app
                     ->mailer
                     ->compose(
@@ -190,7 +195,7 @@ class OrderController extends Controller
                     )
                     ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
                     ->setTo($data['User']['email'])
-                    ->setSubject(Yii::$app->name)
+                    ->setSubject(Yii::$app->params['appName'])
                     ->send();
                 Yii::$app
                     ->mailer
@@ -200,7 +205,7 @@ class OrderController extends Controller
                     )
                     ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
                     ->setTo(Yii::$app->params['adminEmail'])
-                    ->setSubject(Yii::$app->name)
+                    ->setSubject(Yii::$app->params['appName'])
                     ->send();
 
                 foreach ($products as $product) {
@@ -244,18 +249,14 @@ class OrderController extends Controller
                     UserCart::deleteAll(['user_id' => Yii::$app->user->id]);
                 }
             } else {
+                print_r($order->getFirstErrors());
 //                return $this->redirect(['cart/index']);
-
             }
 
             return $this->redirect(['user/purchases']);
 
         }
         return $this->redirect(['cart/index']);
-//        echo '<pre>';
-//        print_r($products);
-//        echo '</pre>';
-//        return $this->asJson($array);
     }
 
     private function checkUser($user) {
