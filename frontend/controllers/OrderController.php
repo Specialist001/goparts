@@ -170,7 +170,7 @@ class OrderController extends Controller
             if(empty($user)) return $this->redirect(['cart/index']);
 
             $order = new StoreOrder();
-            $order->user_id = Yii::$app->user->identity->getId();
+            $order->user_id = $user->id;
             $order->delivery_id = !empty($delivery) ? $delivery : null;
             $order->status = StoreOrder::STATUS_NEW;
             $order->paid = StoreOrder::NOT_PAID;
@@ -179,9 +179,8 @@ class OrderController extends Controller
             $order->email = $data['User']['email'];
             $order->phone = $data['User']['phone'];
             $order->comment = $data['User']['comment'] ? $data['User']['comment'] : null;
-            $order->city = $data['Location'] ? $data['Location'] : '';
+            $order->city = $city ? $city : '';
             $order->ip = Yii::$app->getRequest()->getUserIP();
-//            $order->save();
             if($order->save()) {
                 Yii::$app
                     ->mailer
@@ -245,7 +244,8 @@ class OrderController extends Controller
                     UserCart::deleteAll(['user_id' => Yii::$app->user->id]);
                 }
             } else {
-                return $this->redirect(['cart/index']);
+//                return $this->redirect(['cart/index']);
+
             }
 
             return $this->redirect(['user/purchases']);
