@@ -209,13 +209,13 @@ class QueryController extends Controller
                         $user->email = $query_data['email'];
                         $user->phone = $query_data['phone'];
                         $user->status = User::STATUS_ACTIVE;
-                        $user->reg_type = 'Auto';
+                        $user->reg_type = 'auto';
                         $user->setPassword($password);
                         $user->generateAuthKey();
                         if ($user->save()) {
 
                             $user_commission = new UserCommission();
-                            $user_commission->id = $user->id;
+                            $user_commission->user_id = $user->id;
                             $user_commission->commission = 35;
                             $user_commission->save();
 

@@ -235,6 +235,10 @@ $this->registerCss('
                                 </div>
                                 <!--                                </form>-->
                             <?php } ?>
+                        <?php } else { ?>
+                            <div class="alert alert-warning">
+                            There are no purchased products
+                            </div>
                         <?php } ?>
                     </div>
                 </div>

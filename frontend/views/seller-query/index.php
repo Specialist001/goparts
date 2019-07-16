@@ -436,6 +436,8 @@ $this->registerCss('
                                            value="<?=Yii::$app->request->getCsrfToken()?>" />
                                 </form>
                             <?php } ?>
+                        <?php } else {?>
+                            <div class="alert alert-warning">No requests found</div>
                         <?php } ?>
                     </div>
                 </div>

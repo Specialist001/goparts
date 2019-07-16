@@ -249,7 +249,7 @@ $this->registerCss('
                     $(btn).text(\'Sent\');
                     $(btn).addClass(\'btn-info\');
                     $(btn).addClass(\'disabled\');
-                    $.notify(data[\'status\'], "success");
+                    $.notify(data[\'status\'][\'text\'], "success");
                 },
                 error: function (data) {
                     $.notify("Data not send", "error");
