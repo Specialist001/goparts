@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\User;
 use Yii;
 use common\models\StoreCommission;
 use backend\models\StoreCommissionSearch;
@@ -86,7 +87,10 @@ class StoreCommissionController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+
+            $users = User::find()->where(['reg_type'=>$model->name,'status'=>10])->all();
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
