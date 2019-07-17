@@ -661,22 +661,7 @@ $(document).ready(function () {
         getStocks(city_id);
     });
 
-    $(function() {
-        $("#basket-form").validate(
-        {
-            rules:
-            {
-                City:
-                {
-                    required: true
-                },
-                Stock:
-                {
-                    required: true
-                }
-            }
-        });
-    });
+
 
 
 

@@ -62,7 +62,19 @@ class StoreOrderController extends Controller
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+
+
         ]);
+    }
+
+    public function actionSellerInvoice($id)
+    {
+
+    }
+
+    public function actionBuyerInvoice($id)
+    {
+
     }
 
     /**

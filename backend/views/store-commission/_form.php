@@ -13,7 +13,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
         <div class="col-md-3">
-            <?= $form->field($model, 'name')->textInput(['maxlength' => true,'readonly'=>'true']) ?>
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-3">
             <?= $form->field($model, 'commission')->textInput(['type'=>'number']) ?>
@@ -21,6 +21,7 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="form-group">
+        <?= Html::a('Back', ['index',], ['class' => 'btn btn-warning']) ?>
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
 

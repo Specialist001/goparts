@@ -98,11 +98,11 @@ $this->registerCss('
                         <p>SKU: <span><?= $product->sku ?></span></p>
                         <p>Date of addition: <span><?= date('d/m/Y', $product->created_at) ?></span></p>
                         <hr>
-                        <p>Type of car
-                            <span><?= $product->car->vendor . '>' . $product->car->car . '>' . $product->car->modification . '>' . $product->car->year . ' - ' . $product->typeCar->translate->name ?></span>
-                        </p>
+<!--                        <p>Type of car-->
+<!--                            <span>--><?//= $product->car->vendor . '>' . $product->car->car . '>' . $product->car->modification . '>' . $product->car->year . ' - ' . $product->typeCar->translate->name ?><!--</span>-->
+<!--                        </p>-->
                         <div class="w-100 d-inline-block">
-                            <div class="price float-left">
+                            <div class="price float-left w-100">
                                 <h4><?= $product->price * $commission ?> <span>AED</span></h4>
                             </div>
                             <div class="count float-right w-25">
@@ -157,17 +157,17 @@ $this->registerCss('
         </div>
     </div>
 </div>
-<section class="product_description">
-    <div class="container">
-        <div class="product_description_name">
-            <h3>Description</h3>
-        </div>
-        <div class="product_description_des">
-            <?= $product->translate->description ?>
-        </div>
-        <hr>
-    </div>
-</section>
+<!--<section class="product_description">-->
+<!--    <div class="container">-->
+<!--        <div class="product_description_name">-->
+<!--            <h3>Description</h3>-->
+<!--        </div>-->
+<!--        <div class="product_description_des">-->
+<!--            --><?//= $product->translate->description ?>
+<!--        </div>-->
+<!--        <hr>-->
+<!--    </div>-->
+<!--</section>-->
 
 
 <!--<section class="related" style="display: none">-->

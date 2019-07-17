@@ -349,4 +349,21 @@ $this->registerCss('
         }).viewer(options);
     ');
 ?>
-
+<?php $this->registerJs('
+    $(function() {
+        $("#basket-form").validate(
+        {
+            rules:
+            {
+                City:
+                {
+                    required: true
+                },
+                Stock:
+                {
+                    required: true
+                }
+            }
+        });
+    });
+',yii\web\View::POS_READY);
