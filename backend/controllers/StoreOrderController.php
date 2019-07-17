@@ -2,12 +2,14 @@
 
 namespace backend\controllers;
 
+use common\models\StoreOrderProduct;
 use Yii;
 use common\models\StoreOrder;
 use backend\models\StoreOrderSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use kartik\mpdf\Pdf;
 
 /**
  * StoreOrderController implements the CRUD actions for StoreOrder model.
@@ -69,12 +71,79 @@ class StoreOrderController extends Controller
 
     public function actionSellerInvoice($id)
     {
+        $order_product = StoreOrderProduct::find()->where(['id'=>$id])->with('order','product')->one();
+//        $order = StoreOrder::find()->where(['product_id'=>$order_product->id])->one();
 
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8,
+            'marginLeft' => 15,
+            'marginTop' => 15,
+            'marginRight' => 10,
+            'marginBottom' => 15,
+            'destination' => Pdf::DEST_BROWSER,
+            'content' => $this->renderPartial('_invoice.php', [
+//                'order' => $order,
+                'order_product' => $order_product,
+            ]),
+            'cssFile' => '@frontend/web/css/pdf_style.css',
+            'options' => [
+                'title' => 'PDF Document Title',
+                'subject' => 'PDF Document Subject'
+            ],
+            'filename' => 'Invoice - ' . $order_product->id.' GoParts' . '.pdf',
+            'methods' => [
+                'SetTitle' => 'Invoice - ' . $order_product->id . ' at (' . date('d-m-Y', $order_product->order->created_at) . ')',
+                'SetSubject' => 'Invoice GoParts',
+                /*'SetHeader' => ['Р”РѕРіРѕРІРѕСЂ||РѕС‚: ' . $data['deal_date']],*/
+                'SetFooter' => ['|{PAGENO}|'],
+                'SetAuthor' => 'GoParts',
+                'SetCreator' => 'GoParts',
+                'SetKeywords' => $order_product->product_name,
+            ],
+        ]);
+
+        return $pdf->render();
     }
 
     public function actionBuyerInvoice($id)
     {
+        $order_product = StoreOrderProduct::find()->where(['id'=>$id])->with('order','product')->one();
+//        $order = StoreOrder::find()->where(['product_id'=>$order_product->id])->one();
 
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8,
+            'marginLeft' => 15,
+            'marginTop' => 15,
+            'marginRight' => 10,
+            'marginBottom' => 15,
+            'destination' => Pdf::DEST_BROWSER,
+            'content' => $this->renderPartial('_invoice.php', [
+//                'order' => $order,
+                'order_product' => $order_product,
+            ]),
+            'cssFile' => '@frontend/web/css/pdf_style.css',
+            'options' => [
+                'title' => 'PDF Document Title',
+                'subject' => 'PDF Document Subject'
+            ],
+            'filename' => 'Invoice - ' . $order_product->id.' GoParts' . '.pdf',
+            'methods' => [
+                'SetTitle' => 'Invoice - ' . $order_product->id . ' at (' . date('d-m-Y', $order_product->order->created_at) . ')',
+                'SetSubject' => 'Invoice GoParts',
+                /*'SetHeader' => ['Р”РѕРіРѕРІРѕСЂ||РѕС‚: ' . $data['deal_date']],*/
+                'SetFooter' => ['|{PAGENO}|'],
+                'SetAuthor' => 'GoParts',
+                'SetCreator' => 'GoParts',
+                'SetKeywords' => $order_product->product_name,
+            ],
+        ]);
+
+        return $pdf->render();
+    }
+
+    public function actionPdf()
+    {
+        return $this->render('_invoice');
     }
 
     /**
