@@ -64,7 +64,7 @@ use yii\widgets\ActiveForm;
 <!--                        --><?//= $form->field($model_ru, 'translation[ru]')->textarea(['style' => 'resize: none;', 'rows' => 6, 'value' => $model_ru->translation]) ?>
                         <?= $form->field($model_ru, 'translation[ru]')->widget(TinyMce::className(), [
                             'options' => ['rows' => 6],
-                            $model_ru->translation,
+                            'value' => $model_ru->translation,
                             'language' => 'en',
                             'clientOptions' => [
                                 'plugins' => [
