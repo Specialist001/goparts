@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\City;
 use common\models\Query;
 use common\models\SellerQuery;
+use common\models\Stock;
 use common\models\StoreDelivery;
 use common\models\StoreProduct;
 use common\models\User;
@@ -406,6 +407,28 @@ class CartController extends \yii\web\Controller
             Yii::$app->session->set('cart', array_values($cart));
             return json_encode(['error' => false]);
         }
+    }
+
+    public function actionGetStocks($id)
+    {
+        $stocks = Stock::find()->where(['city_id' => $id])->all();
+
+        $stock_array = [];
+
+//        if (count($stocks)) {
+//            foreach ($stocks as $key => $stock) {
+//                $stock_array[$stock['city_id']] = $stock['name'];
+//            }
+//        }
+
+//        $data = '<option disabled selected>' . 'Select Location' . '</option>';
+        if (count($stocks)) {
+            foreach ($stocks as $key => $stock) {
+                $data = '<option value="' . $stock->name . '">' . $stock->name . '</option>';
+            }
+        }
+
+        return $this->asJson($data);
     }
 
 }

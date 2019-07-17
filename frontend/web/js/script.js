@@ -631,6 +631,48 @@ $(document).ready(function () {
         delUrl(file, preview);
     });
 
+    function getStocks(city_id) {
+        console.log('function');
+        $.ajax({
+            type: "GET",
+            url: '/cart/get-stocks',
+            dataType: "json",
+            data: {
+                id: city_id
+            },
+            success: function (response) {
+                // var result = $.parseJSON(response);
+                if (!response.error) {
+                    $('.stocks').html(response);
+
+                } else {
+                    console.log('Ошибка обработки данных');
+                }
+            },
+            error: function () {
+                console.log('Ошибка обработки данных 2');
+            },
+        });
+    }
+
+    $('.cities').change(function () {
+        var city_id = $(this).val();
+        var car = $(this).val();
+
+        // getModification(city_id);
+        getStocks(city_id);
+
+        // $('.car_modifications').prop('disabled', false);
+        // $('.car_years').prop('disabled', true);
+    });
+
+    // $('.sidebar_bottom4').on('click','button', function () {
+    //     if ($('.cities option:selected').val() == "" || $('.cities option:selected').length == 0 ) {
+    //         alert("Please select City");
+    //     }
+    //     return false;
+    // })
+
 
 
 });

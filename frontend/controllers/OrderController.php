@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\City;
 use common\models\SellerQuery;
 use common\models\StoreOrder;
 use common\models\StoreOrderProduct;
@@ -121,11 +122,11 @@ class OrderController extends Controller
     public function actionMake()
     {
         $data = Yii::$app->request->post();
-
         $products = $data['CartProduct'];
+        $city = City::find()->where(['id' => $data['City']])->one();
         $user = $data['User'];
         $delivery = $data['Delivery'];
-        $city = $data['Location'];
+//        $city = $data['Location'];
         $totalCount = $data['TotalCount'];
 
         if(!empty($data['User'])) {
@@ -165,7 +166,6 @@ class OrderController extends Controller
                 $user = User::findOne(Yii::$app->user->id);
             }
 
-
             $user->phone = $user->phone ? $user->phone : $data['User']['phone'];
 
             if(empty($user)) return $this->redirect(['cart/index']);
@@ -180,10 +180,9 @@ class OrderController extends Controller
             $order->email = $data['User']['email'] ? $data['User']['email'] : $user->email;
             $order->phone = $data['User']['phone'] ? $data['User']['phone'] : $user->phone;
 //            $order->comment = $data['User']['comment'] ? $data['User']['comment'] : null;
-            $order->city = $data['Location'];
+            $order->city = $data['Location'] ? $data['Location'] : $city->name.' ('. $data['Stock'].')';
 
             if($order->save()) {
-
                 Yii::$app
                     ->mailer
                     ->compose(
@@ -239,7 +238,6 @@ class OrderController extends Controller
                         $store_product = StoreProduct::find()->where(['id'=>$product['product_id']])->one();
                         $store_product->status = 0;
                         $store_product->save();
-
                     }
                 }
                 if(Yii::$app->user->id) {
@@ -249,9 +247,7 @@ class OrderController extends Controller
 //                print_r($order->getFirstErrors());
                 return $this->redirect(['cart/index']);
             }
-
             return $this->redirect(['user/purchases']);
-
         }
         return $this->redirect(['cart/index']);
     }
