@@ -35,9 +35,9 @@ $this->params['breadcrumbs'][] = $this->title;
             //'password_hash',
             //'password_reset_token',
             'email:email',
-            'first_name',
+//            'first_name',
 //            'middle_name',
-            'last_name',
+//            'last_name',
 //            [
 ////                'class' => 'bootstrap.widgets.TbEditableColumn',
 //                'attribute' => 'gender',
@@ -60,6 +60,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($model) {
                     return $model->commission->commission ? $model->commission->commission : null;
                 }
+            ],
+            [
+                'attribute' => 'reg_type',
+                'filter' => ['auto'=>'Auto','manual'=>'Manual']
             ],
             //'role',
             //'type',

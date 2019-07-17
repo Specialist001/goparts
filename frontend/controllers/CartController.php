@@ -421,10 +421,10 @@ class CartController extends \yii\web\Controller
 //            }
 //        }
 
-//        $data = '<option disabled selected>' . 'Select Location' . '</option>';
+        $data = '<option value="" disabled selected>' . 'Select Location' . '</option>';
         if (count($stocks)) {
             foreach ($stocks as $key => $stock) {
-                $data = '<option value="' . $stock->name . '">' . $stock->name . '</option>';
+                $data .= '<option value="' . $stock->name . '">' . $stock->name . '</option>';
             }
         }
 

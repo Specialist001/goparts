@@ -193,7 +193,7 @@ $this->registerCss('
                                     <div class="form-group">
                                         <label>City</label>
                                         <select class="d-block d-md-inline-block ml-md-3 form-control cities" name="City" >
-                                            <option value="" selected disabled>Select</option>
+                                            <option value="" selected disabled>Select City</option>
                                             <?php foreach ($cities as $city) {?>
                                                 <option value="<?=$city->id?>"><?=$city->name?></option>
                                             <?php } ?>
@@ -202,7 +202,7 @@ $this->registerCss('
                                     <div class="form-group">
                                         <label>Location</label>
                                         <select class="d-block d-md-inline-block ml-md-3 form-control stocks" name="Stock" >
-                                            <option value="" selected disabled>Select</option>
+                                            <option value="" selected disabled>Select Location</option>
                                         </select>
                                     </div>
                                 <? } ?>
@@ -349,3 +349,4 @@ $this->registerCss('
         }).viewer(options);
     ');
 ?>
+

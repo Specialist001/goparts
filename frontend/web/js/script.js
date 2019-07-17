@@ -657,21 +657,26 @@ $(document).ready(function () {
 
     $('.cities').change(function () {
         var city_id = $(this).val();
-        var car = $(this).val();
 
-        // getModification(city_id);
         getStocks(city_id);
-
-        // $('.car_modifications').prop('disabled', false);
-        // $('.car_years').prop('disabled', true);
     });
 
-    // $('.sidebar_bottom4').on('click','button', function () {
-    //     if ($('.cities option:selected').val() == "" || $('.cities option:selected').length == 0 ) {
-    //         alert("Please select City");
-    //     }
-    //     return false;
-    // })
+    $(function() {
+        $("#basket-form").validate(
+        {
+            rules:
+            {
+                City:
+                {
+                    required: true
+                },
+                Stock:
+                {
+                    required: true
+                }
+            }
+        });
+    });
 
 
 

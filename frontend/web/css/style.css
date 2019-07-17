@@ -2378,6 +2378,11 @@ ul.pagination > .disabled > span {
 .stocks {
     width: 63%!important;
 }
+label.error
+{
+    color:red;
+    font-family:verdana, Helvetica;
+}
 
 
 @media (max-width: 1365px) {
