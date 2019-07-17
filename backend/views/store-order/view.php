@@ -2,6 +2,7 @@
 
 use rmrevin\yii\fontawesome\FA;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
@@ -110,7 +111,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <br>
         <h3>Order Products</h3>
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-9">
             <?php if($model->storeOrderProducts) { ?>
                 <table class="table table-striped">
                     <thead>
@@ -146,6 +147,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </td>
                                 <td><?= $orderProduct->price ?></td>
                                 <td><?= $orderProduct->product->user->username ?></td>
+                                <td><a class="btn btn-success" href="<?= Url::to(['store-order/buyer-invoice', 'id' => $orderProduct->id]) ?>" target="_blank">Buyer Invoice</a></td>
+                                <td><a class="btn btn-info" href="<?= Url::to(['store-order/seller-invoice', 'id' => $orderProduct->id]) ?>" target="_blank">Seller Invoice</a></td>
                             </tr>
                         <?php } ?>
                     </tbody>
