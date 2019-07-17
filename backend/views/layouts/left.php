@@ -25,7 +25,9 @@ $counter['sellers'] = $users->where(['role'=>\common\models\User::ROLE_SELLER])-
 $counter['new_sellers'] = $users->where(['role'=>\common\models\User::ROLE_SELLER,'status'=>\common\models\User::STATUS_INACTIVE])->count();
 
 $counter['buyers'] = $users->where(['role'=>\common\models\User::ROLE_BUYER])->count();
-$counter['new_buyers'] = $users->where(['role'=>\common\models\User::ROLE_BUYER,'status'=>\common\models\User::STATUS_INACTIVE])->count();
+$counter['new_buyers'] = $users->where(['role'=>\common\models\User::ROLE_BUYER,'status'=>\common\models\User::STATUS_INACTIVE,'reg_type'=>'manual'])->count();
+$counter['registered_buyers'] = $users->where(['role'=>\common\models\User::ROLE_BUYER,'status'=>\common\models\User::STATUS_ACTIVE,'reg_type'=>'manual'])->count();
+$counter['public_buyers'] = $users->where(['role'=>\common\models\User::ROLE_BUYER,'status'=>\common\models\User::STATUS_ACTIVE,'reg_type'=>'auto'])->count();
 
 ?>
 <aside class="main-sidebar">
@@ -117,7 +119,25 @@ $counter['new_buyers'] = $users->where(['role'=>\common\models\User::ROLE_BUYER,
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="<?= Url::to(['/user','UserSearch[status]'=>9, 'UserSearch[role]'=>0]) ?>"><i class="la la-cart-arrow-down"></i> New Buyers
+                                    <a href="<?= Url::to(['/user', 'UserSearch[status]'=>10, 'UserSearch[reg_type]'=>'manual', 'UserSearch[role]'=>0]) ?>"><i class="la la-cart-arrow-down"></i> Registered Buyers
+                                        <span class="pull-right-container">
+                                            <small class="label pull-right bg-aqua">
+                                                <?= $counter['registered_buyers'] ?>
+                                            </small>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::to(['/user','UserSearch[status]'=>10, 'UserSearch[reg_type]'=>'auto', 'UserSearch[role]'=>0]) ?>"><i class="la la-cart-arrow-down"></i> Public Buyers
+                                        <span class="pull-right-container">
+                                            <small class="label pull-right bg-aqua">
+                                                <?= $counter['public_buyers'] ?>
+                                            </small>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::to(['/user','UserSearch[status]'=>9, 'UserSearch[reg_type]'=>'manual', 'UserSearch[role]'=>0]) ?>"><i class="la la-cart-arrow-down"></i> Registration Queries
                                         <span class="pull-right-container">
                                             <small class="label pull-right bg-aqua">
                                                 <?= $counter['new_buyers'] ?>

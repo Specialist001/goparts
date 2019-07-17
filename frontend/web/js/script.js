@@ -631,6 +631,53 @@ $(document).ready(function () {
         delUrl(file, preview);
     });
 
+    function getStocks(city_id) {
+        console.log('function');
+        $.ajax({
+            type: "GET",
+            url: '/cart/get-stocks',
+            dataType: "json",
+            data: {
+                id: city_id
+            },
+            success: function (response) {
+                // var result = $.parseJSON(response);
+                if (!response.error) {
+                    $('.stocks').html(response);
+
+                } else {
+                    console.log('Ошибка обработки данных');
+                }
+            },
+            error: function () {
+                console.log('Ошибка обработки данных 2');
+            },
+        });
+    }
+
+    $('.cities').change(function () {
+        var city_id = $(this).val();
+
+        getStocks(city_id);
+    });
+
+    $(function() {
+        $("#basket-form").validate(
+        {
+            rules:
+            {
+                City:
+                {
+                    required: true
+                },
+                Stock:
+                {
+                    required: true
+                }
+            }
+        });
+    });
+
 
 
 });

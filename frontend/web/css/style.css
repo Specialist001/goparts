@@ -2372,6 +2372,18 @@ ul.pagination > .disabled > span {
     padding:12px;
 }
 
+.cities {
+    width: 75%!important;
+}
+.stocks {
+    width: 63%!important;
+}
+label.error
+{
+    color:red;
+    font-family:verdana, Helvetica;
+}
+
 
 @media (max-width: 1365px) {
     .slider1 {
@@ -2783,6 +2795,9 @@ ul.pagination > .disabled > span {
     .fancybox-show-thumbs .fancybox-inner {
         left: 0;
         bottom:100px;
+    }
+    .cities, .stocks {
+        width: 100%!important;
     }
 }
 

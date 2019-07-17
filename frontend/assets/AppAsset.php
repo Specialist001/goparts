@@ -33,6 +33,7 @@ class AppAsset extends AssetBundle
         'js/select2.min.js',
         'js/jquery.fancybox.min.js',
         'js/jquery.scrollbar.js',
+        'js/jquery.validate.js',
         'js/viewer/viewer.min.js',
         'js/jquery-viewer/jquery-viewer.min.js',
         'js/lodash.js',

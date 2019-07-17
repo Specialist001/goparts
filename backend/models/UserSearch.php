@@ -21,7 +21,7 @@ class UserSearch extends User
     {
         return [
             [['id', 'gender', 'role', 'type', 'access_level', 'visit_time', 'email_confirm', 'status', 'created_at', 'updated_at', 'deleted_at'], 'integer'],
-            [['username', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'first_name', 'middle_name', 'last_name', 'birth_date', 'site', 'about', 'location', 'avatar', 'phone', 'legal_info', 'legal_reg_certificate', 'legal_address', 'legal_bank_account', 'legal_vat_number', 'verification_token'], 'safe'],
+            [['username', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'first_name', 'middle_name', 'last_name', 'birth_date', 'site', 'about', 'location', 'avatar', 'phone', 'reg_type', 'legal_info', 'legal_reg_certificate', 'legal_address', 'legal_bank_account', 'legal_vat_number', 'verification_token'], 'safe'],
         ];
     }
 
@@ -99,6 +99,7 @@ class UserSearch extends User
             ->andFilterWhere(['like', 'legal_address', $this->legal_address])
             ->andFilterWhere(['like', 'legal_bank_account', $this->legal_bank_account])
             ->andFilterWhere(['like', 'legal_vat_number', $this->legal_vat_number])
+            ->andFilterWhere(['like', 'reg_type', $this->reg_type])
             ->andFilterWhere(['like', 'verification_token', $this->verification_token]);
 
         return $dataProvider;

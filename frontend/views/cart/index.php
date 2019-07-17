@@ -174,27 +174,44 @@ $this->registerCss('
                         <div class="sidebar_bottom pb-3">
                             <div class="sidebar_bottom1">
                                 <?php if(Yii::$app->user->isGuest || Yii::$app->user->identity->reg_type == 'auto' || Yii::$app->user->identity->reg_type == '') { ?>
-                                <h5 class="catalog_top_link" data-toggle="collapse" href="#collapseCity"
-                                    role="button"
-                                    aria-expanded="false" aria-controls="collapseCity">
-                                    Pick Up Locations  <i class="fa fa-angle-down float-right"></i>
-                                </h5>
-                                <div class="collapse show" id="collapseCity">
-                                    <?php foreach ($cities as $city) { ?>
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" class="custom-control-input" name="Location"
-                                                   id="customCheck<?= $city->id ?>" value="<?= $city->name ?>">
-                                            <label class="custom-control-label"
-                                                   for="customCheck<?= $city->id ?>"><?= $city->name ?></label>
-                                        </div>
-                                    <?php } ?>
-                                </div>
-                                <? } ?>
-                                <?php if(Yii::$app->user->identity->reg_type == 'manual') {?>
+<!--                                <h5 class="catalog_top_link" data-toggle="collapse" href="#collapseCity"-->
+<!--                                    role="button"-->
+<!--                                    aria-expanded="false" aria-controls="collapseCity">-->
+<!--                                    Pick Up Locations  <i class="fa fa-angle-down float-right"></i>-->
+<!--                                </h5>-->
+<!--                                <div class="collapse show" id="collapseCity">-->
+<!--                                    --><?php //foreach ($cities as $city) { ?>
+<!--                                        <div class="custom-control custom-radio">-->
+<!--                                            <input type="radio" class="custom-control-input" name="Location"-->
+<!--                                                   id="customCheck--><?//= $city->id ?><!--" value="--><?//= $city->name ?><!--">-->
+<!--                                            <label class="custom-control-label"-->
+<!--                                                   for="customCheck--><?//= $city->id ?><!--">--><?//= $city->name ?><!--</label>-->
+<!--                                        </div>-->
+<!--                                    --><?php //} ?>
+<!--                                </div>-->
+                                    <h5>Pick Up Locations</h5>
+                                    <div class="form-group">
+                                        <label>City</label>
+                                        <select class="d-block d-md-inline-block ml-md-3 form-control cities" name="City" >
+                                            <option value="" selected disabled>Select City</option>
+                                            <?php foreach ($cities as $city) {?>
+                                                <option value="<?=$city->id?>"><?=$city->name?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
                                     <div class="form-group">
                                         <label>Location</label>
-                                        <input class="form-control" type="text" placeholder="Input your location" name="Location">
+                                        <select class="d-block d-md-inline-block ml-md-3 form-control stocks" name="Stock" >
+                                            <option value="" selected disabled>Select Location</option>
+                                        </select>
                                     </div>
+                                <? } ?>
+                                <?php if(Yii::$app->user->identity->reg_type == 'manual') {?>
+<!--                                    <div class="form-group">-->
+<!--                                        <label>Location</label>-->
+<!--                                        <input class="form-control" type="text" placeholder="Input your location" name="Location">-->
+<!--                                    </div>-->
+                                    <input type="hidden" name="Location" value="<?= Yii::$app->user->identity->legal_info ?>">
                                 <?php } ?>
                             </div>
 <!--                            <div class="sidebar_bottom2">-->
@@ -332,3 +349,4 @@ $this->registerCss('
         }).viewer(options);
     ');
 ?>
+
