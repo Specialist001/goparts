@@ -347,6 +347,7 @@ class ProductController extends Controller
                         return $this->goBack();
                     }
                 }
+
                 $images_json_array = [];
                 $images = UploadedFile::getInstancesByName('Query[images]');
                 if (!empty($images)) {
@@ -379,6 +380,7 @@ class ProductController extends Controller
                     $image_model->save();
                     $images_json_array += [0 => $image_model->link];
                 }
+
 
                 $model->sku = Yii::$app->user->getId() . '-' . date('dmy') . '-' . $model->id;
 
@@ -432,39 +434,6 @@ class ProductController extends Controller
                 $seller->status = SellerQuery::STATUS_MODERATE;
                 $seller->save();
 
-//                Yii::$app
-//                    ->mailer
-//                    ->compose(
-//                        ['html' => 'makeProduct-html', 'text' => 'makeProduct-text'],
-//                        [
-//                            'type' => 'buyer',
-//                            'product_id' => $model->id,
-//                            'query_name' => $seller->query->title,
-//                            'query_date' => $seller->query->created_at,
-//                            'query_car_name' => $seller->query->vendor .' '.$seller->query->car.' '.$seller->query->modification.' '.$seller->query->year
-//                        ]
-//                    )
-//                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-//                    ->setTo($seller->query->email)
-//                    ->setSubject('Added product by your request #'.$seller->query->id .' | '.Yii::$app->name)
-//                    ->send();
-//
-//                Yii::$app
-//                    ->mailer
-//                    ->compose(
-//                        ['html' => 'makeProduct-html', 'text' => 'makeProduct-text'],
-//                        ['type' => 'admin',
-//                            'product_id' => $model->id,
-//                            'query_name' => $seller->query->title,
-//                            'query_date' => $seller->query->created_at,
-//                            'query_car_name' => $seller->query->vendor .' '.$seller->query->car.' '.$seller->query->modification.' '.$seller->query->year
-//                        ]
-//                    )
-//                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-//                    ->setTo(Yii::$app->params['adminEmail'])
-//                    ->setSubject(Yii::$app->name)
-//                    ->send();
-
                 $get_prices = SellerQuery::find()->where(['query_id' => $query_data['query_id']])->andWhere(['not', ['product_id' => null]])->all();
                 $price_array = [];
                 $prices = [];
@@ -489,24 +458,13 @@ class ProductController extends Controller
                     $image_array += [$all_image->id => $all_image->link];
                 }
 
-
-
                 return json_encode([
                     'error' => false,
                     'status' => 'Request sent',
                     'product_id' => $model->id,
                     'image_array' => $image_array,
-//                'postData' => $model->translate->description,
                     'prices' => $prices,
                     'images_json_array' => $images_json_array,
-                    //            'product' => [
-                    //                'page_title' => Yii::t('frontend', 'Product added to cart 1'),
-                    //                'img' => $product->image,
-                    //                'name' => $product->translate->name,
-                    //                //                        'shop' => $product->shop->name,
-                    //                'cat' => $product->category->translate->title,
-                    //                'cart_count' => static::getCount(),
-                    //            ],
                 ]);
 //                return $this->redirect(['/user/requests']);
             } else {
@@ -533,23 +491,12 @@ class ProductController extends Controller
         $product_data = $post['Product'];
         $query_data = $post['SellerQuery'];
 
-//        echo '<pre>';
-//        print_r($post);
-//        echo '</pre>';
-//        exit;
-
         if ($product_data['price']) {
 
             $model = StoreProduct::find()->where(['id' => $product_data['product_id']])->one();
-//            $model = StoreProduct::find()->where(['id' => $id])->one();
-//            $model = $this->findModel($id);
-
-//                $model->car_id = $query_data['car_id'];
-//                $model->user_id = Yii::$app->user->identity->getId();
 
             $image = UploadedFile::getInstanceByName('mainImage');
             $dir = (__DIR__) . '/../../uploads/store-products/';
-
 
             if ($image) {
                 $old_image = StoreProductImage::findOne(['main' => 1, 'product_id' => $model->id]);
@@ -604,7 +551,6 @@ class ProductController extends Controller
             }
 
             $model->save();
-//                $model->sku = Yii::$app->user->getId() . '-' . date('dmy') . '-' . $model->id;
             $translation_en = StoreProductTranslation::findOne(['product_id' => $model->id, 'locale' => 'en-EN']);
             $translation_ar = (!empty(StoreProductTranslation::findOne(['product_id' => $model->id, 'locale' => 'ar-AE']))) ? StoreProductTranslation::findOne(['product_id' => $model->id, 'locale' => 'ar-AE']) : new StoreProductTranslation();
             $translation_ru = (!empty(StoreProductTranslation::findOne(['product_id' => $model->id, 'locale' => 'ru-RU']))) ? StoreProductTranslation::findOne(['product_id' => $model->id, 'locale' => 'ru-RU']) : new StoreProductTranslation();
