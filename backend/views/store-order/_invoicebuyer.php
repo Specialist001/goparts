@@ -83,7 +83,7 @@ $this->title = 'Invoice #'.$order_product->id;
             </tr>
             <tr>
                 <td><strong>Seller:</strong></td>
-                <td>Goparts.ae (Al Mukhtar)</td>
+                <td><?= Yii::t('backend','Owner name') ?></td>
             </tr>
             <tr>
                 <td><strong>Buyer:</strong></td>
@@ -116,28 +116,6 @@ $this->title = 'Invoice #'.$order_product->id;
         </table>
     </div>
     <div class="invoice_warranty">
-        <h2>WARRANTY AND RETURN POLICY</h2>
-        <p>GOPARTS.AE (Al Mukhtar used auto sprae parts tr.) provides warranty for used spare parts and units, which ensure moving and functioning of vehicle, like engine, transmission, pump, motor , computer control units etc.</p>
-        <p>The spare parts and units, which are static  (passive, motionless) and do not affect a  moving and functioning of the vehicle, like body parts (spoiler, glass, door, handle, bamper, fender, non- electric mirror  etc) , interior parts ( plastic covers, arm rest, lining, door handle etc.) will not be covered by warranty.</p>
-        <p>GOPARTS.AE (Al Mukhtar used auto sprae parts tr.) provides warranty  6 days for the following parts and units, which ensure moving and functioning of the car:</p>
-        <ul>
-            <li>ENGINE</li>
-            <li>TRANSMISSION</li>
-            <li>STEERING RACK</li>
-            <li>TRANSFER CASE</li>
-            <li>DIFFERENTIAL</li>
-        </ul>
-        <p>GOPARTS.AE (Al Mukhtar used auto sprae parts tr.) provides 2 days warranty for the following parts and units:</p>
-        <ul>
-            <li>GENERATOR</li>
-            <li>STARTER</li>
-            <li>CONTROL UNIT (for engine, transmission, starter, ABS, etc.)</li>
-            <li>PUMP</li>
-            <li>MOTOR (for windshield wiper, door window regulator etc)</li>
-            <li>AIRBAG</li>
-            <li>SUSPENSION PARTS (shockabsorber, air suspension parts)</li>
-            <li>A/C COMPRESOR</li>
-        </ul>
-        <p>In case the part or unit under warranty is found to be out of order it may be returned by customer to GOPARTS.AE (Al Mukhtar used auto sprae parts tr.)</p>
+        <?= Yii::t('backend','Owner warranty') ?>
     </div>
 </div>
