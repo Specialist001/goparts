@@ -108,7 +108,7 @@ if (Yii::$app->request->get('new_query') == 'send'){
                 </button>
             </div>
             <div class="modal-body">
-                <p class="mb-0">Dear ser. Thank you for leaving us order.</p>
+                <p class="mb-0">Dear sir. Thank you for leaving us order.</p>
                 <p class="mb-0"> You will get best prices from more than 1000s used spare part stores within 24 hours.</p>
                 <p> You will be notified to your email you have provided us.</p>
             </div>
