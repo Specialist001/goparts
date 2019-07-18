@@ -87,7 +87,7 @@ $this->title = 'Invoice #'.$order_product->id;
             </tr>
             <tr>
                 <td><strong>Buyer:</strong></td>
-                <td>Goparts.ae (Al Mukhtar)</td>
+                <td><?= Yii::t('backend','Owner name') ?></td>
             </tr>
             <tr>
                 <td><strong>Pick up Location:</strong></td>
