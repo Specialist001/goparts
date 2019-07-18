@@ -1,6 +1,7 @@
 <?php
 namespace frontend\models;
 
+use common\models\StoreCommission;
 use common\models\UserCommission;
 use Yii;
 use yii\base\Model;
@@ -71,7 +72,8 @@ class SignupForm extends Model
             if ($user->role == 1) {
                 $user_commission->commission = 0;
             } else {
-                $user_commission->commission = 25;
+                $store_commission = StoreCommission::findOne(['name'=>'manual']);
+                $user_commission->commission = $store_commission ? $store_commission->commission : 25;
             }
             $user_commission->save();
 //            $auth = Yii::$app->authManager;

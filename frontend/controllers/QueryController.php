@@ -7,6 +7,7 @@ use common\models\Cars;
 use common\models\QueryImage;
 use common\models\SellerQuery;
 use common\models\StoreCategory;
+use common\models\StoreCommission;
 use common\models\StoreOption;
 use common\models\StoreProductImage;
 use common\models\User;
@@ -213,10 +214,10 @@ class QueryController extends Controller
                         $user->setPassword($password);
                         $user->generateAuthKey();
                         if ($user->save()) {
-
+                            $store_commission = StoreCommission::findOne(['name'=>'auto']);
                             $user_commission = new UserCommission();
                             $user_commission->user_id = $user->id;
-                            $user_commission->commission = 35;
+                            $user_commission->commission = $store_commission ? $store_commission->commission : 35;
                             $user_commission->save();
 
                             Yii::$app
