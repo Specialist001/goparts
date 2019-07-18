@@ -73,36 +73,38 @@ class StoreOrderController extends Controller
     {
         $order_product = StoreOrderProduct::find()->where(['id'=>$id])->with('order','product')->one();
 //        $order = StoreOrder::find()->where(['product_id'=>$order_product->id])->one();
-
-        $pdf = new Pdf([
-            'mode' => Pdf::MODE_UTF8,
-            'marginLeft' => 15,
-            'marginTop' => 15,
-            'marginRight' => 10,
-            'marginBottom' => 15,
-            'destination' => Pdf::DEST_BROWSER,
-            'content' => $this->renderPartial('_invoiceseller.php', [
+        if($order_product) {
+            $pdf = new Pdf([
+                'mode' => Pdf::MODE_UTF8,
+                'marginLeft' => 15,
+                'marginTop' => 15,
+                'marginRight' => 10,
+                'marginBottom' => 15,
+                'destination' => Pdf::DEST_BROWSER,
+                'content' => $this->renderPartial('_invoiceseller.php', [
 //                'order' => $order,
-                'order_product' => $order_product,
-            ]),
-            'cssFile' => '@frontend/web/css/pdf_style.css',
-            'options' => [
-                'title' => 'PDF Document Title',
-                'subject' => 'PDF Document Subject'
-            ],
-            'filename' => 'Invoice - ' . $order_product->id.' GoParts' . '.pdf',
-            'methods' => [
-                'SetTitle' => 'Invoice - ' . $order_product->id . ' at (' . date('d-m-Y', $order_product->order->created_at) . ')',
-                'SetSubject' => 'Invoice GoParts',
-                /*'SetHeader' => ['Р”РѕРіРѕРІРѕСЂ||РѕС‚: ' . $data['deal_date']],*/
+                    'order_product' => $order_product,
+                ]),
+                'cssFile' => '@frontend/web/css/pdf_style.css',
+                'options' => [
+                    'title' => 'PDF Document Title',
+                    'subject' => 'PDF Document Subject'
+                ],
+                'filename' => 'Invoice - ' . $order_product->id . ' GoParts' . '.pdf',
+                'methods' => [
+                    'SetTitle' => 'Invoice - ' . $order_product->id . ' at (' . date('d-m-Y', $order_product->order->created_at) . ')',
+                    'SetSubject' => 'Invoice GoParts',
+                    /*'SetHeader' => ['Р”РѕРіРѕРІРѕСЂ||РѕС‚: ' . $data['deal_date']],*/
 //                'SetFooter' => ['|{PAGENO}|'],
-                'SetAuthor' => 'GoParts',
-                'SetCreator' => 'GoParts',
-                'SetKeywords' => $order_product->product_name,
-            ],
-        ]);
+                    'SetAuthor' => 'GoParts',
+                    'SetCreator' => 'GoParts',
+                    'SetKeywords' => $order_product->product_name,
+                ],
+            ]);
+            return $pdf->render();
+        }
 
-        return $pdf->render();
+        return $this->goBack();
     }
 
     public function actionBuyerInvoice($id)
@@ -110,6 +112,7 @@ class StoreOrderController extends Controller
         $order_product = StoreOrderProduct::find()->where(['id'=>$id])->with('order','product')->one();
 //        $order = StoreOrder::find()->where(['product_id'=>$order_product->id])->one();
 
+        if($order_product) {
         $pdf = new Pdf([
             'mode' => Pdf::MODE_UTF8,
             'marginLeft' => 15,
@@ -137,8 +140,10 @@ class StoreOrderController extends Controller
                 'SetKeywords' => $order_product->product_name,
             ],
         ]);
+            return $pdf->render();
+        }
+        return $this->goBack();
 
-        return $pdf->render();
     }
 
     public function actionPdf()
