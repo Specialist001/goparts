@@ -99,8 +99,6 @@ class AuthController extends \yii\web\Controller
         $role = Yii::$app->request->post('role', null);
         $legal_info = Yii::$app->request->post('legal_info', null);
         $location = Yii::$app->request->post('location', null);
-//        print_r(Yii::$app->request->post());exit;
-        //$name = Yii::$app->request->post('name', null);
 
         //$smsService = new SmsService();
 
@@ -114,7 +112,7 @@ class AuthController extends \yii\web\Controller
 //            $username = $smsService->clearPhone($username);
 //        }
 
-        $user = User::findByUsername($username);
+        $user = User::findByEmail($email);
         if ($user) {
             return $this->redirect(['site/error', 'message' => Yii::t('frontend', 'You are registered already'), 'code' => 401]);
         }

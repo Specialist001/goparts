@@ -7,8 +7,11 @@ use api\transformers\StoreCategoryList;
 use common\components\SimpleImage;
 use common\models\Cars;
 use common\models\Query;
+use common\models\QueryImage;
 use common\models\StoreCategory;
+use common\models\StoreCommission;
 use common\models\User;
+use common\models\UserCommission;
 use frontend\models\QuerySearch;
 use Yii;
 use yii\base\ErrorException;
@@ -144,6 +147,53 @@ class QueryController extends \yii\web\Controller
             $parts_array = [];
 
             if (Yii::$app->request->post()) {
+                $username = Yii::$app->user->getId() ? Yii::$app->user->identity->username : $query_data['name'];
+                $email = Yii::$app->user->getId() ? Yii::$app->user->identity->email : $query_data['email'];
+                $phone = Yii::$app->user->getId() ? Yii::$app->user->identity->phone : $query_data['phone'];
+
+                if (!Yii::$app->user->id) {
+                    $user = User::findByEmail($email);
+                    if ($user) {
+                        Yii::$app
+                            ->mailer
+                            ->compose(
+                                ['html' => 'signUpAuto-html', 'text' => 'signUpAuto-text'],
+                                ['type'=>'all', 'user' => $user, 'password' => $password]
+                            )
+                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
+                            ->setTo($user->email)
+                            ->setSubject('Thank You for your request! | ' . Yii::$app->params['appName'])
+                            ->send();
+                    } else {
+                        $password = mt_rand(10000000, 99999999);
+                        $user = new User();
+                        $user->username = $query_data['name']; //$this->username;
+                        $user->email = $query_data['email'];
+                        $user->phone = $query_data['phone'];
+                        $user->status = User::STATUS_ACTIVE;
+                        $user->reg_type = 'auto';
+                        $user->setPassword($password);
+                        $user->generateAuthKey();
+                        if ($user->save()) {
+                            $store_commission = StoreCommission::findOne(['name'=>'auto']);
+                            $user_commission = new UserCommission();
+                            $user_commission->user_id = $user->id;
+                            $user_commission->commission = $store_commission ? $store_commission->commission : 35;
+                            $user_commission->save();
+
+                            Yii::$app
+                                ->mailer
+                                ->compose(
+                                    ['html' => 'signUpAuto-html', 'text' => 'signUpAuto-text'],
+                                    ['type'=>'first','user' => $user, 'password' => $password]
+                                )
+                                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
+                                ->setTo($user->email)
+                                ->setSubject('Registration on ' . Yii::$app->params['appName'])
+                                ->send();
+                        }
+                    }
+                }
 
                 foreach ($query_part as $key => $part) {
                     $model = new Query();
@@ -161,10 +211,13 @@ class QueryController extends \yii\web\Controller
                     $model->description = $part['description'];
                     $model->category_id = $part['category_id'];
 
+                    $model->user_id = Yii::$app->user->getId() ? Yii::$app->user->getId() : $user->id;
 
-                    $model->user_id = Yii::$app->user->getId() ? Yii::$app->user->getId() : null;
+                    $model->name = $username;
+                    $model->phone = $phone;
+                    $model->email = $email;
 
-//                    $model->save();
+                    $model->save();
 
                     $dir = (__DIR__) . '/../../uploads/queries/';
                     $image = UploadedFile::getInstanceByName('Query['.$key.'][image]');
@@ -183,12 +236,34 @@ class QueryController extends \yii\web\Controller
                         }
                     } else $model->image = null;
 
+                    $images = UploadedFile::getInstancesByName('Query[' . $key . '][images]');
+                    if (!empty($images)) {
+                        foreach ($images as $image) {
+                            $image_model = new QueryImage();
+                            $image_model->query_id = $model->id;
+                            $image_model->main = 0;
+                            $path = $image->baseName . '.' . $image->extension;
+                            if ($image->saveAs($dir . $path)) {
+                                $resizer = new SimpleImage();
+                                $resizer->load($dir . $path);
+                                $resizer->resize(Yii::$app->params['imageSizes']['store-products']['image'][0], Yii::$app->params['imageSizes']['store-products']['image'][1]);
+                                $image_name = uniqid() . '.' . $image->extension;
+                                $resizer->save($dir . $image_name);
+                                $image_model->name = '/uploads/queries/' . $image_name;
+                                if (is_file($dir . $path)) if (file_exists($dir . $path)) unlink($dir . $path);
 
-                    $model->name = $query_data['name'];
-                    $model->phone = $query_data['phone'];
-                    $model->email = $query_data['email'];
+                                $image_model->save();
+                            }
+                        }
+                    } else {
+                        $image_model = new QueryImage();
+                        $image_model->query_id = $model->id;
+                        $image_model->name = '/uploads/site/vectorpaint.png';
+                        $image_model->save();
+                    }
 
                     $model->save();
+
                     $parts_array[$key] = [
                         'id' => $model->id,
                         'title' => $model->title,
@@ -205,19 +280,19 @@ class QueryController extends \yii\web\Controller
 
                 }
 
-                Yii::$app
-                    ->mailer
-                    ->compose(
-                        ['html' => 'makeQuery-html', 'text' => 'makeQuery-text'],
-                        [
-                            'type' => 'buyer',
-                            'parts' => $parts_array
-                        ]
-                    )
-                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-                    ->setTo($query_data['email'])
-                    ->setSubject('Your request  | '.Yii::$app->name)
-                    ->send();
+//                Yii::$app
+//                    ->mailer
+//                    ->compose(
+//                        ['html' => 'makeQuery-html', 'text' => 'makeQuery-text'],
+//                        [
+//                            'type' => 'buyer',
+//                            'parts' => $parts_array
+//                        ]
+//                    )
+//                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+//                    ->setTo($query_data['email'])
+//                    ->setSubject('Your request  | '.Yii::$app->name)
+//                    ->send();
 
                 return $this->asJson(['parts'=>$parts_array,
 //                    'data'=>QueryAddList::transform($model),

@@ -322,7 +322,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
 <!--                            </div>-->
                             <div class="col-md-12">
                                 <label>Part name/Description</label>
-                                <textarea rows="5" class="form-control" name="Query[0][description]" required></textarea>
+                                <textarea rows="5" class="form-control" name="Query[0][description]" required placeholder="<?= Yii::t('frontend','Query description')?>"></textarea>
                             </div>
                         </div>
 
@@ -492,7 +492,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
 <!--                            </div>-->
                             <div class="col-md-12">
                                 <label>Part name/Description</label>
-                                <textarea rows="5" class="form-control query_description"></textarea>
+                                <textarea rows="5" class="form-control query_description" placeholder="<?= Yii::t('frontend','Query description')?>"></textarea>
                             </div>
                         </div>
                     </div>
@@ -615,7 +615,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
             </div>
             <div class="text-center m-auto btn_add_part">
                 <button class="btn bg-form_style_1 px-3 py-2 text-white text-center" id="btn_add_part"
-                        style="cursor: pointer"><i class="fa fa-plus"></i> Add Part
+                        style="cursor: pointer"><i class="fa fa-plus"></i> Add another part
                 </button>
             </div>
         </div>
