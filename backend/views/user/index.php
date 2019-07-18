@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'reg_type',
-                'filter' => ['auto'=>'Auto','manual'=>'Manual']
+                'filter' => ['auto'=>'auto','manual'=>'manual']
             ],
             //'role',
             //'type',

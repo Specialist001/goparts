@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\User;
+use common\models\UserCommission;
 use Yii;
 use common\models\StoreCommission;
 use backend\models\StoreCommissionSearch;
@@ -89,9 +90,24 @@ class StoreCommissionController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
-            $users = User::find()->where(['reg_type'=>$model->name,'status'=>10])->all();
+            $users = User::find()->where(['reg_type'=>$model->name,'role'=>User::ROLE_BUYER])->all();
+            if($users) {
+                foreach ($users as $user) {
+                    $commission = UserCommission::find()->where(['user_id'=>$user->id])->one();
+                    if ($commission) {
+                        $commission->commission = $model->commission;
+                        $commission->save();
+                    } else {
+                        $commission = new UserCommission();
+                        $commission->user_id = $user->id;
+                        $commission->commission = $model->commission;
+                        $commission->save();
+                    }
+                }
+            }
+            $model->save();
 
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['update', 'id' => $model->id]);
         }
 
         return $this->render('update', [
