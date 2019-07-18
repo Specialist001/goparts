@@ -81,7 +81,7 @@ class StoreOrderController extends Controller
             'marginRight' => 10,
             'marginBottom' => 15,
             'destination' => Pdf::DEST_BROWSER,
-            'content' => $this->renderPartial('_invoice.php', [
+            'content' => $this->renderPartial('_invoiceseller.php', [
 //                'order' => $order,
                 'order_product' => $order_product,
             ]),
@@ -95,7 +95,7 @@ class StoreOrderController extends Controller
                 'SetTitle' => 'Invoice - ' . $order_product->id . ' at (' . date('d-m-Y', $order_product->order->created_at) . ')',
                 'SetSubject' => 'Invoice GoParts',
                 /*'SetHeader' => ['Р”РѕРіРѕРІРѕСЂ||РѕС‚: ' . $data['deal_date']],*/
-                'SetFooter' => ['|{PAGENO}|'],
+//                'SetFooter' => ['|{PAGENO}|'],
                 'SetAuthor' => 'GoParts',
                 'SetCreator' => 'GoParts',
                 'SetKeywords' => $order_product->product_name,
@@ -117,7 +117,7 @@ class StoreOrderController extends Controller
             'marginRight' => 10,
             'marginBottom' => 15,
             'destination' => Pdf::DEST_BROWSER,
-            'content' => $this->renderPartial('_invoice.php', [
+            'content' => $this->renderPartial('_invoicebuyer.php', [
 //                'order' => $order,
                 'order_product' => $order_product,
             ]),
@@ -131,7 +131,7 @@ class StoreOrderController extends Controller
                 'SetTitle' => 'Invoice - ' . $order_product->id . ' at (' . date('d-m-Y', $order_product->order->created_at) . ')',
                 'SetSubject' => 'Invoice GoParts',
                 /*'SetHeader' => ['Р”РѕРіРѕРІРѕСЂ||РѕС‚: ' . $data['deal_date']],*/
-                'SetFooter' => ['|{PAGENO}|'],
+//                'SetFooter' => ['|{PAGENO}|'],
                 'SetAuthor' => 'GoParts',
                 'SetCreator' => 'GoParts',
                 'SetKeywords' => $order_product->product_name,
