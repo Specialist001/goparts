@@ -305,10 +305,6 @@ class ProductController extends Controller
     public function actionAdd($id = null, $query_id = null, $car_id = null)
     {
 
-//        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-//            return $this->redirect(['view', 'id' => $model->id]);
-//        }
-
 //        $post = Yii::$app->request->post();
         $post = Yii::$app->request->post();
 //        print_r($post);exit;
@@ -316,7 +312,7 @@ class ProductController extends Controller
         $query_data = $post['SellerQuery'];
         if ($product_data['description']) {
             if ($product_data['price']) {
-
+//
                 $model = new StoreProduct();
 
                 $model->car_id = $query_data['car_id'];

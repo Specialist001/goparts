@@ -5,6 +5,7 @@ use kartik\file\FileInput;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
+use yii\web\View;
 use yii\widgets\LinkPager;
 use yii\widgets\Pjax;
 
@@ -287,8 +288,8 @@ $this->registerCss('
                                                         <?php } ?>
                                                     </div>
                                                     <div class="col pr-5">
-                                                    <textarea class="border font-weight-lighter w-100 p-2 mr-3 <?=$seller_query->product->translate->description ? 'bg-light' : null ?>" name="Product[description]"
-                                                              style="resize: none" <?= $seller_query->product->translate->description ? 'readonly' : null?> ><?= $seller_query->product->translate->description ? $seller_query->product->translate->description : null ?></textarea>
+                                                    <textarea class="border font-weight-lighter w-100 p-2 mr-3" name="Product[description]"
+                                                              style="resize: none" ><?= $seller_query->product->translate->description ? $seller_query->product->translate->description : null ?></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="row pt-3">
@@ -333,8 +334,8 @@ $this->registerCss('
                                                                 My Price
                                                             </div>
                                                             <div class="text-form-style_1 my_price">
-                                                                <input class="w-25 border-0 font-weight-bold text-form-style_1 readonly"
-                                                                       name="Product[price]" type="number" value="<?= $seller_query->product->price ? $seller_query->product->price : 0?>" min="0" required> AED
+                                                                <input class="w-25 font-weight-bold text-form-style_1 readonly"
+                                                                       name="Product[price]" type="number" value="<?= $seller_query->product->price ? $seller_query->product->price : ''?>" min="0" required> AED
                                                                 <!-- <span class="text-dark ml-2 edit_price" style="cursor:pointer;"><i class="la la-pencil" style="font-size: 1.3rem"></i> </span>-->
                                                             </div>
                                                         </div>
@@ -434,6 +435,23 @@ $this->registerCss('
                                     <input type="hidden" class="product_id" name="Product[product_id]" value="<?= $seller_query->product_id ? $seller_query->product_id : null?>">
                                     <input type="hidden" name="_csrf-frontend"
                                            value="<?=Yii::$app->request->getCsrfToken()?>" />
+
+                                    <?php $this->registerJs('
+                                        $(function() {
+                                            $("#seller-query_'.$seller_query->id.'").validate(
+                                            {
+                                                rules:
+                                                {
+                                                    Product:
+                                                    {
+                                                        required: true
+                                                    }
+                                                   
+                                                }
+                                            });
+                                        });
+                                    ',yii\web\View::POS_READY); ?>
+
                                 </form>
                             <?php } ?>
                         <?php } else {?>

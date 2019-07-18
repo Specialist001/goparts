@@ -2188,6 +2188,8 @@ li.lcm-title:hover {
 }
 .my_price input {
     background: #efefef;
+    border: none;
+    border-bottom: 1px solid #00904c!important;
 }
 .my_price input.readonly {
     background: transparent;
