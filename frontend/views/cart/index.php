@@ -91,8 +91,8 @@ $this->registerCss('
                                         </div>
                                         <div class="col-md-4">
                                             <span id="total-count_<?= $cart_product->id ?>">
-                                            <?php $t = $cart_product->product->price * $commission * $cart_product->count;
-                                            echo number_format($t, Yii::$app->params['price']['decimals'], Yii::$app->params['price']['dec_pointer'], Yii::$app->params['price']['thousands_sep']);
+                                            <?php $t = $cart_product->product->price * $commission;
+                                            echo $t < 1000 ? $t : number_format($t, Yii::$app->params['price']['decimals'], Yii::$app->params['price']['dec_pointer'], Yii::$app->params['price']['thousands_sep']);
                                             ?>
 
                                             </span>
@@ -366,4 +366,4 @@ $this->registerCss('
             }
         });
     });
-',yii\web\View::POS_READY);
+',yii\web\View::POS_READY); ?>

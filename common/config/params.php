@@ -14,8 +14,8 @@ return [
     ],
     'price_dec' => [
         'decimals' => '2',
-        'dec_pointer' => ',',
-        'thousands_sep' => '.',
+        'dec_pointer' => '.',
+        'thousands_sep' => ',',
     ],
     'imageSizes' => [
         'shops' => [

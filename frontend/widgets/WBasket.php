@@ -30,7 +30,7 @@ class WBasket extends Widget
                         $total_price += $basket->product->price * $commission * $basket->count;
                     }
                 }
-                return  number_format($total_price, Yii::$app->params['price']['decimals'], Yii::$app->params['price']['dec_pointer'], Yii::$app->params['price']['thousands_sep']);
+                return  $total_price<1000 ? $total_price : number_format($total_price, Yii::$app->params['price']['decimals'], Yii::$app->params['price']['dec_pointer'], Yii::$app->params['price']['thousands_sep']);
             } else {
                 $userCart = !empty(Yii::$app->session->get('cart')) ? Yii::$app->session->get('cart') : [];
                 $total_price = 0;

@@ -78,7 +78,7 @@ $(document).ready(function () {
             success: function (t) {
                 t = JSON.parse(t);
                 if (t.error !== true) {
-                    console.log(t);
+                    // console.log(t);
                     var count = Object.keys(t.prices).length;
                     var count_images = Object.keys(t.images_json_array).length;
 
@@ -142,12 +142,12 @@ $(document).ready(function () {
             cache: false,
             timeout: 600000,
             success: function (t) {
-                console.log(form);
+                // console.log(form);
                 t = JSON.parse(t);
 
                 if (t.error !== true) {
                     // console.log('true-t');
-                    console.log(t);
+                    // console.log(t);
 
                     /*form_.find('.query_images').remove();*/
                     form_.find('.q_images').html('<input type="file" class="query_images" name="Query[images][]" multiple>');
@@ -197,7 +197,7 @@ $(document).ready(function () {
 
         form.submit(function(e){
             e.preventDefault();
-            console.log('true-form');
+            // console.log('true-form');
             $.ajax({
                 url: "/cart/add",
                 data: data,
@@ -207,7 +207,7 @@ $(document).ready(function () {
                     t = JSON.parse(t);
                     // console.log(t);
                     if (t.error !== true) {
-                        console.log(t);
+                        // console.log(t);
                         //$('.header-cart-icon').html(t.product.cart_count);
                         $('#cart_popup').html(
                             '<p class="alert alert-info">' + t.product.page_title + '</p>' +
@@ -232,7 +232,7 @@ $(document).ready(function () {
 
         form.submit(function(e){
             e.preventDefault();
-            console.log('true-form');
+            // console.log('true-form');
             $.ajax({
                 url: "/cart/buy-now",
                 data: data,
@@ -242,7 +242,7 @@ $(document).ready(function () {
                     t = JSON.parse(t);
                     // console.log(t);
                     if (t.error !== true) {
-                        console.log('t');
+                        // console.log('t');
                         //$('.header-cart-icon').html(t.product.cart_count);
                         // $('#cart_popup').html(
                         //     '<p class="alert alert-info">' + t.product.page_title + '</p>' +
@@ -281,7 +281,7 @@ $(document).ready(function () {
             success: function (t) {
                 t = JSON.parse(t);
                 if (t.error !== true) {
-                    console.log(t);
+                    // console.log(t);
                     var target = $('#pr_' + del_button.attr('data-target'));
                     target.remove();
                     recount();
@@ -319,7 +319,7 @@ $(document).ready(function () {
     function recount() {
         var form = $('form#basket-form');
         var data = form.serialize();
-        console.log('btn');
+        // console.log('btn');
 
         $.ajax({
             url: "/cart/recount",
@@ -327,10 +327,10 @@ $(document).ready(function () {
             type: "post",
             success: function (t) {
                 t = JSON.parse(t);
-                console.log(t);
+                // console.log(t);
                 if (t.error !== true) {
                     var count = Object.keys(t.products).length;
-                    console.log(count);
+                    // console.log(count);
                     for (var i=0; i<count; i++) {
                         $('#total-count_'+t.products[i].id).html(t.products[i].sum);
                         $('#quantity_'+t.products[i].id).html(t.products[i].sum);
@@ -632,7 +632,7 @@ $(document).ready(function () {
     });
 
     function getStocks(city_id) {
-        console.log('function');
+
         $.ajax({
             type: "GET",
             url: '/cart/get-stocks',
