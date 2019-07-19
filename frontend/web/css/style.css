@@ -155,6 +155,9 @@ li {
 .select_category {
     z-index: 2;
 }
+.search_car {
+    cursor: pointer
+}
 
 label.toggle .toggle__text, label.toggle + a {
     font-size: 0.9rem;

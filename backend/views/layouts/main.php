@@ -21,7 +21,7 @@ use yii\web\View;
 if (class_exists('backend\assets\AppAsset')) {
     backend\assets\AppAsset::register($this);
 } else {
-    app\assets\AppAsset::register($this);
+    frontend\assets\AppAsset::register($this);
 }
 
 dmstr\web\AdminLteAsset::register($this);
@@ -38,7 +38,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed201
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body class="hold-transition skin-blue sidebar-mini ">
+<body class="hold-transition skin-blue sidebar-mini">
 <?php $this->beginBody() ?>
 <div class="wrapper">
 

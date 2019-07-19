@@ -70,8 +70,10 @@ class SiteController extends Controller
         $counter = [];
         $latest = [];
 
-        $users = User::find()->all();
-        $counter['user_count'] = count($users);
+        $users = User::find();
+        $counter['new_sellers'] = $users->where(['status'=>9,'role'=>User::ROLE_SELLER])->count();
+        $counter['new_shops'] = $users->where(['status'=>9,'role'=>User::ROLE_BUYER,'reg_type'=>'manual'])->count();
+        $counter['new_customers'] = $users->where(['status'=>10,'role'=>User::ROLE_BUYER,'reg_type'=>'auto'])->count();
 
         $product  = StoreProduct::find();
         $latest['products'] = $product->orderBy('id DESC')->limit(5)->all();
