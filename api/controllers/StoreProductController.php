@@ -6,6 +6,7 @@ use common\models\Cars;
 use common\models\StoreProduct;
 use api\transformers\StoreProductList;
 use yii\db\Expression;
+use yii\db\Query;
 
 class StoreProductController extends \yii\web\Controller
 {
@@ -105,7 +106,15 @@ class StoreProductController extends \yii\web\Controller
 //            $car_vendor = Yii::$app->request->post('vendor_name');
         $car_vendor = $vendor;
 
-        $cars = Cars::find()->where(['vendor' => $car_vendor])->all();
+        //$cars = Cars::find()->where(['vendor' => $car_vendor])->all();
+        $query = new Query();
+        $cars = $query->select(['car'])
+            ->from('cars')
+            ->where(['vendor' => $car_vendor])
+            ->orderBy(['car' => SORT_ASC])
+            ->distinct()
+            ->all();
+
         $cars_array = [];
 
         if (count($cars)) {

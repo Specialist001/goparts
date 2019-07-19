@@ -1,5 +1,4 @@
 <?php
-
 /* @var $this yii\web\View */
 
 $this->title = Yii::$app->params['appName'];
@@ -66,8 +65,7 @@ use yii\helpers\Url; ?>
             <div class="info-box">
                 <a href="<?= Url::to(['/store-order', 'StoreOrderSearch[status]'=>1,'sort'=>'-id']) ?>" class="small-box-footer">
                 <span class="info-box-icon bg-aqua">
-                    <i class="la la-list-ul"></i>
-<!--                    --><?//= FA::i('facebook') ?>
+                    <i class="la la-cart-arrow-down"></i>
                 </span>
                 </a>
                 <div class="info-box-content">
@@ -79,30 +77,48 @@ use yii\helpers\Url; ?>
             </div>
         </div>
         <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <!--            <div class="small-box bg-yellow">-->
-            <!--                <div class="inner">-->
-            <!--                    <h3>--><? //= $counter['user_count'] ?><!--</h3>-->
-            <!--                    <p>User Registrations</p>-->
-            <!--                </div>-->
-            <!--                <div class="icon">-->
-            <!--                    <i class="ion ion-person-add"></i>-->
-            <!--                </div>-->
-            <!--                <a href="-->
-            <? //= \yii\helpers\Url::to(['/user']) ?><!--" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
-            <!--            </div>-->
-
             <div class="info-box">
-                <a href="<?= Url::to(['/store-order']) ?>" class="small-box-footer">
+                <a href="<?= Url::to(['/user','UserSearch[role]'=>1,'UserSearch[status]'=>9]) ?>" class="small-box-footer">
                 <span class="info-box-icon bg-yellow">
-                    <i class="la la-users"></i>
-<!--                    --><?//= FA::i('group') ?>
+                    <i class="la la-briefcase"></i>
                 </span>
                 </a>
                 <div class="info-box-content">
-                    <span class="info-box-text">Users</span>
+                    <span class="info-box-text">New Sellers</span>
                     <span class="info-box-number">
-                        <?= $counter['user_count'] ?> <small></small>
+                        <?= $counter['new_sellers'] ?> <small></small>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+            <div class="info-box">
+                <a href="<?= Url::to(['/user','UserSearch[role]'=>0,'UserSearch[status]'=>9, 'UserSearch[reg_type]'=>'manual']) ?>" class="small-box-footer">
+                <span class="info-box-icon bg-blue">
+                    <i class="la la-shopping-cart"></i>
+                </span>
+                </a>
+                <div class="info-box-content">
+                    <span class="info-box-text">New Shops</span>
+                    <span class="info-box-number">
+                        <?= $counter['new_shops'] ?> <small></small>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+            <div class="info-box">
+                <a href="<?= Url::to(['/user','UserSearch[role]'=>0,'UserSearch[status]'=>10, 'UserSearch[reg_type]'=>'auto']) ?>" class="small-box-footer">
+                <span class="info-box-icon bg-yellow">
+                    <i class="la la-users"></i>
+                </span>
+                </a>
+                <div class="info-box-content">
+                    <span class="info-box-text">New Customers</span>
+                    <span class="info-box-number">
+                        <?= $counter['new_customers'] ?> <small></small>
                     </span>
                 </div>
 

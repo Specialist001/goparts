@@ -3,6 +3,7 @@
 namespace api\controllers;
 
 use api\transformers\QueryAddList;
+use api\transformers\QueryList;
 use api\transformers\StoreCategoryList;
 use common\components\SimpleImage;
 use common\models\Cars;
@@ -15,6 +16,8 @@ use common\models\UserCommission;
 use frontend\models\QuerySearch;
 use Yii;
 use yii\base\ErrorException;
+use yii\filters\AccessControl;
+use yii\filters\auth\HttpBasicAuth;
 use yii\web\UploadedFile;
 
 class QueryController extends \yii\web\Controller
@@ -36,9 +39,60 @@ class QueryController extends \yii\web\Controller
         ];
     }
 
+    public function behaviors()
+    {
+        return [
+            'authenticator' => [
+                'class' => HttpBasicAuth::className(),
+                'auth' => function ($email, $password) {
+                    $user = User::findByEmail($email);
+                    if (!$user) return null;
+                    $check = $user->validatePassword($password);
+                    return $check ? $user: null;
+                }
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+//                'only' => ['logout', 'signup'],
+                'rules' => [
+                    [
+                        'actions' => ['create','get-car'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+//            'verbs' => [
+//                'class' => VerbFilter::className(),
+//                'actions' => [
+//                    'purchase-delete' => ['post'],
+//                ],
+//            ],
+        ];
+    }
+
 
     public function actionIndex()
     {
+        if (!Yii::$app->user->isGuest) {
+            if(Yii::$app->user->identity->role == User::ROLE_BUYER) {
+                $queries = Query::find()->where(['user_id' => Yii::$app->user->identity->getId()])->orderBy('`created_at` DESC')->all();
+
+                $user_commission = (!empty(UserCommission::find()->where(['user_id' => Yii::$app->user->identity->getId()])->one())) ? UserCommission::find()->where(['user_id' => Yii::$app->user->identity->getId()])->one() : 1;
+                $commission = $user_commission->commission;
+                $commission = (1 + ($commission ?: 0) / 100);
+
+                return $this->asJson(['data' => QueryList::transform($queries, $commission),'commission'=>$commission]);
+
+            } return $this->asJson(['message'=>'User is not Buyer']);
+
+        } return $this->asJson(['message'=>'Not Authorized']);
+
         $searchModel = new QuerySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -160,7 +214,7 @@ class QueryController extends \yii\web\Controller
                                 ['html' => 'signUpAuto-html', 'text' => 'signUpAuto-text'],
                                 ['type'=>'all', 'user' => $user, 'password' => $password]
                             )
-                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
+                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName']])
                             ->setTo($user->email)
                             ->setSubject('Thank You for your request! | ' . Yii::$app->params['appName'])
                             ->send();
@@ -187,7 +241,7 @@ class QueryController extends \yii\web\Controller
                                     ['html' => 'signUpAuto-html', 'text' => 'signUpAuto-text'],
                                     ['type'=>'first','user' => $user, 'password' => $password]
                                 )
-                                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
+                                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName']])
                                 ->setTo($user->email)
                                 ->setSubject('Registration on ' . Yii::$app->params['appName'])
                                 ->send();

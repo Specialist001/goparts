@@ -422,6 +422,7 @@ $(document).ready(function () {
             success: function (response) {
                 // var result = $.parseJSON(response);
                 if (!response.error) {
+                    console.log(response);
                     $('.car_items').html(response);
                 } else {
                     console.log('Ошибка обработки данных');
@@ -492,7 +493,7 @@ $(document).ready(function () {
                 if (!response.error) {
                     console.log(response);
                     $('#car_id').val(response);
-                    $('.car_name').html(vendor+car+modification+year);
+                    $('.car_name').html(vendor+' '+car+' '+modification+' '+year);
                 } else {
                     console.log('Ошибка обработки данных');
                 }

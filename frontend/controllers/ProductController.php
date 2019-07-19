@@ -252,9 +252,9 @@ class ProductController extends Controller
                                     'query_car_name' => $seller->query->vendor . ' ' . $seller->query->car . ' ' . $seller->query->modification . ' ' . $seller->query->year
                                 ]
                             )
-                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName']])
                             ->setTo($seller->query->email)
-                            ->setSubject('Added product by your request #' . $seller->query->id . ' | ' . Yii::$app->name)
+                            ->setSubject('Added product by your request #' . $seller->query->id . ' | ' . Yii::$app->params['appName'])
                             ->send();
 
                         Yii::$app
@@ -268,9 +268,9 @@ class ProductController extends Controller
                                     'query_car_name' => $seller->query->vendor . ' ' . $seller->query->car . ' ' . $seller->query->modification . ' ' . $seller->query->year
                                 ]
                             )
-                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name])
                             ->setTo(Yii::$app->params['adminEmail'])
-                            ->setSubject(Yii::$app->name)
+                            ->setSubject(Yii::$app->params['appName'])
                             ->send();
 
                         return $this->redirect(['update', 'id' => $model->id, 'category' => $model->category_id, 'car_id' => $car_id]);
@@ -912,36 +912,33 @@ class ProductController extends Controller
 
     public function actionGetCar($vendor)
     {
-//        if (Yii::$app->request->isAjax) {
-//            $car_vendor = Yii::$app->request->post('vendor_name');
         $car_vendor = $vendor;
 
-        $cars = Cars::find()->where(['vendor' => $car_vendor])->all();
+//        $cars = Cars::find()->where(['vendor' => $car_vendor])->orderBy(['car' => SORT_ASC])->all();
+        $query = new Query();
+        $cars = $query->select(['car'])
+            ->from('cars')
+            ->where(['vendor' => $car_vendor])
+            ->orderBy(['car' => SORT_ASC])
+            ->distinct()
+            ->all();
         $cars_array = [];
 
-        if (count($cars)) {
+        if ($cars) {
             foreach ($cars as $key => $car) {
                 $cars_array[$car['car']] = $car['car'];
             }
         }
+//        return $this->asJson($cars_array);
 
-//        $data = '<div class="form-group">';
-//        $data .= '<label class="control-label" for="car">Car</label>';
-//        $data .= '<select name="car[]" id="car_items" class="form-control car_items">';
         $data = '<option disabled selected>' . 'Select Model' . '</option>';
         if (count($cars_array)) {
             foreach ($cars_array as $key => $car_array) {
                 $data .= '<option value="' . $car_array . '">' . $car_array . '</option>';
             }
         }
-//        $data .= "</select>";
-//        $data .= "</div>";
 
-//        echo json_encode(array('data => $data, 'error' => $error));
         return $this->asJson($data);
-//        } else {
-//            return null;
-//        }
     }
 
     public function actionGetModification($vendor, $car)
@@ -971,15 +968,6 @@ class ProductController extends Controller
                 $data .= '<option value="' . $key . '">' . $key . ' (' . $car_array['min'] . ' - ' . $car_array['max'] . ')' . '</option>';
             }
         }
-//        exit;
-
-
-//        $data = '<option disabled selected>' . Yii::t("StoreModule.store", "Select generation") . '</option>';
-//        if (count($query_years)) {
-//            foreach ($query_years as $key => $query_year) {
-//                $data .= '<option value="' . $query_year . '">' . $car_array . '</option>';
-//            }
-//        }
 
         return $this->asJson($data);
     }
