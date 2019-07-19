@@ -41,39 +41,39 @@ class QueryController extends \yii\web\Controller
 
     public function behaviors()
     {
-        return [
-            'authenticator' => [
-                'class' => HttpBasicAuth::className(),
-                'auth' => function ($email, $password) {
-                    $user = User::findByEmail($email);
-                    if (!$user) return null;
-                    $check = $user->validatePassword($password);
-                    return $check ? $user: null;
-                }
-            ],
-            'access' => [
-                'class' => AccessControl::className(),
-//                'only' => ['logout', 'signup'],
-                'rules' => [
-                    [
-                        'actions' => ['create','get-car'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['index'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-//            'verbs' => [
-//                'class' => VerbFilter::className(),
-//                'actions' => [
-//                    'purchase-delete' => ['post'],
+//        return [
+//            'authenticator' => [
+//                'class' => HttpBasicAuth::className(),
+//                'auth' => function ($email, $password) {
+//                    $user = User::findByEmail($email);
+//                    if (!$user) return null;
+//                    $check = $user->validatePassword($password);
+//                    return $check ? $user: null;
+//                }
+//            ],
+//            'access' => [
+//                'class' => AccessControl::className(),
+////                'only' => ['create'],
+//                'rules' => [
+//                    [
+//                        'actions' => ['create','get-car'],
+//                        'allow' => true,
+//                        'roles' => ['?'],
+//                    ],
+//                    [
+//                        'actions' => ['index'],
+//                        'allow' => true,
+//                        'roles' => ['@'],
+//                    ],
 //                ],
 //            ],
-        ];
+////            'verbs' => [
+////                'class' => VerbFilter::className(),
+////                'actions' => [
+////                    'purchase-delete' => ['post'],
+////                ],
+////            ],
+//        ];
     }
 
 
@@ -172,12 +172,10 @@ class QueryController extends \yii\web\Controller
 
     public function actionCreate()
     {
-        if (Yii::$app->user->identity->role == User::ROLE_BUYER && Yii::$app->user->identity->status == User::STATUS_ACTIVE || Yii::$app->user->isGuest) {
+        if (Yii::$app->user->isGuest || Yii::$app->user->identity->role == User::ROLE_BUYER && Yii::$app->user->identity->status == User::STATUS_ACTIVE) {
             $model = new Query();
             $category = !empty(Yii::$app->request->get('category'))? Yii::$app->request->get('category'): false;
 
-            $car = Cars::findOne(['id'=>Yii::$app->request->get('car_id')]);
-            $car_id = $car->id;
 
             if(empty($category = StoreCategory::findOne(['id' => $category, 'status' => 1]))) $category = false;
             if(!empty($category)) if(!empty($category->activeCategories))  $category = false;
@@ -201,6 +199,8 @@ class QueryController extends \yii\web\Controller
             $parts_array = [];
 
             if (Yii::$app->request->post()) {
+                $car = Cars::findOne(['id'=>$query_data['car_id']]);
+
                 $username = Yii::$app->user->getId() ? Yii::$app->user->identity->username : $query_data['name'];
                 $email = Yii::$app->user->getId() ? Yii::$app->user->identity->email : $query_data['email'];
                 $phone = Yii::$app->user->getId() ? Yii::$app->user->identity->phone : $query_data['phone'];
@@ -252,16 +252,16 @@ class QueryController extends \yii\web\Controller
                 foreach ($query_part as $key => $part) {
                     $model = new Query();
                     $model->car_id = $query_data['car_id'];
-                    $model->vendor = $query_data['vendor'];
-                    $model->car = $query_data['car'];
-                    $model->modification = $query_data['modification'];
-                    $model->year = $query_data['year'];
+                    $model->vendor = $car->vendor;
+                    $model->car = $car->car;
+                    $model->modification = $car->modification;
+                    $model->year = $car->year;
                     $model->transmission = $query_data['transmission'];
                     $model->fueltype = $query_data['fueltype'];
                     $model->engine = $query_data['engine'];
                     $model->drivetype = $query_data['drivetype'];
 
-                    $model->title = $part['title'];
+                    $model->title = $part['title'] ? $part['title'] : substr($part['description'],0,10);
                     $model->description = $part['description'];
                     $model->category_id = $part['category_id'];
 
@@ -356,21 +356,5 @@ class QueryController extends \yii\web\Controller
         }
         return $this->redirect(['site/error', 'message' => 'You have not permission for add request', 'code' => 404]);
     }
-
-//    public function actionCategory($id = null)
-//    {
-//        $category = null;
-//        if ($id) {
-//            $category = StoreCategory::find()->where(['status' => 1, 'id' => $id])->orderBy('order')->all();
-//        } else {
-//            $category = StoreCategory::find()->where(['status' => 1, 'parent_id' => null])->orderBy('order')->all();
-//        }
-//        if ($category) {
-//            return $this->asJson(['data' => StoreCategoryList::transform($category)]);
-//        } else {
-//            return $this->redirect(['site/error', 'message' => 'Not Found', 'code' => 404]);
-//        }
-//
-//    }
 
 }
