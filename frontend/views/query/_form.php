@@ -290,7 +290,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-md-12">
-                                <label>Leave image of part and car</label>
+                                <label>Leave images for one part you described in the description</label>
                                 <ul class="images_block list-inline">
                                     <li class="image_block float-left">
                                         <input class="image" type="file" name="Query[0][images][]" accept="image/*,image/jpeg" multiple>
@@ -388,7 +388,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
                         <!--                        </div>-->
                         <div class="row">
                             <div class="col-md-12">
-                                <label>Leave image of part and car</label>
+                                <label>Leave images for one part you described in the description</label>
                                 <ul class="images_block list-inline">
                                     <li class="image_block float-left">
                                         <input class="image" type="file" accept="image/*,image/jpeg" multiple>

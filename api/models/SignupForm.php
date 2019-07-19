@@ -107,7 +107,7 @@ class SignupForm extends Model
                 ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
                 ['user' => $user]
             )
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
+            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName']])
             ->setTo($this->email)
             ->setSubject('Account registration at ' . Yii::$app->params['appName'])
             ->send();
@@ -121,7 +121,7 @@ class SignupForm extends Model
                 ['html' => 'emailVerifyAdmin-html', 'text' => 'emailVerifyAdmin-text'],
                 ['user' => $user]
             )
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
+            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName']])
             ->setTo(Yii::$app->params['adminEmail'])
             ->setSubject('Account registration at ' . Yii::$app->params['appName'])
             ->send();

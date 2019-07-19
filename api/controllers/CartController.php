@@ -3,15 +3,21 @@
 
 namespace api\controllers;
 
+use api\transformers\CartList;
 use api\transformers\ProfileProductList;
+use common\models\City;
+use common\models\StoreDelivery;
 use common\models\StoreProduct;
 use common\models\User;
 use api\models\ProfileForm;
+use common\models\UserCart;
+use common\models\UserCommission;
+use frontend\widgets\WBasket;
 use Yii;
 use yii\filters\auth\HttpBasicAuth;
 use yii\web\UploadedFile;
 
-class ProfileController extends \yii\web\Controller
+class CartController extends \yii\web\Controller
 {
     const STATUS_WAIT = 0;
     const STATUS_SEND = 1;
@@ -50,6 +56,53 @@ class ProfileController extends \yii\web\Controller
 
     public function actionIndex()
     {
+        $total_count = [];
+        $userCart = [];
+        $deliveries = StoreDelivery::find()->all();
+        $cities = City::find()->where(['status'=>1])->all();
+        $user_commission = (!empty(UserCommission::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->one())) ? UserCommission::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->one() : 35;
+        $commission = $user_commission->commission;
+        $commission = (1 + ($commission ? : 0) / 100);
 
+        if (Yii::$app->user->id) {
+            $userCart = UserCart::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->all();
+        } elseif (!empty(Yii::$app->session->get('cart'))) {
+            $products = Yii::$app->session->get('cart');
+            $cart_count = Yii::$app->session->get('cart_count', []);
+            foreach ($products as $it => $product) {
+                $userCart_temp = new UserCart();
+                $userCart_temp->product_id = $product['product_id'];
+                $userCart_temp->count = isset($cart_count[$it]['count'])? $cart_count[$it]['count']: 1;
+                $userCart[] = $userCart_temp;
+            }
+        }
+        if (!empty($userCart)) {
+            for ($i = 0; $i < count($userCart); $i++) {
+                $temp_prod = StoreProduct::findOne(['status' => 1, 'id' => $userCart[$i]->product_id]);
+                if (empty($temp_prod)) continue;
+            }
+        }
+        if (!empty($userCart)) {
+            $total_count = WBasket::widget(['key'=>'main']);
+
+            $this->render('index',[
+                'cart_products' => $userCart,
+                'total_count' => $total_count,
+                'deliveries' => $deliveries,
+                'cities' => $cities,
+                'commission' => $commission,
+            ]);
+
+            return $this->asJson(['data' => CartList::transform($userCart, $commission)]);
+
+        } elseif(empty($userCart)) {
+            return $this->render('index',[
+                'cart_products' => $userCart,
+                'total_count' => $total_count,
+                'cities' => $cities,
+                'deliveries' => $deliveries,
+                'commission' => 35,
+            ]);
+        }
     }
 }
