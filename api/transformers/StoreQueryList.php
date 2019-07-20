@@ -4,9 +4,11 @@
 namespace api\transformers;
 
 
+use common\models\SellerQuery;
+
 class StoreQueryList
 {
-    public static function transform($list)
+    public static function transform($list,$counter,$price_array)
     {
         $data = [];
 
@@ -16,33 +18,53 @@ class StoreQueryList
             $data[$loop] = [
                 'id' => $item->id,
                 'seller_id' => $item->seller_id,
+                'query_id' => $item->query_id,
                 'product_id' => $item->product_id ? $item->product_id : null,
                 'status' => $item->status,
                 'query' => null,
                 'product' => null,
+                'request_prices' => null,
             ];
 
-                $data[$loop]['query'][] = [
-                    'query_id' => $item->query->id,
-                    'user_id' => $item->query->user_id,
-                    'car_id' => $item->query->car_id,
-                    'title' => $item->query->title,
-                    'vendor' => $item->query->vendor,
-                    'car' => $item->query->car,
-                    'modification' => $item->query->modification,
-                    'year' => $item->query->year,
-                    'fueltype' => $item->query->fueltype,
-                    'engine' => $item->query->engine,
-                    'transmission' => $item->query->transmission,
-                    'drivetype' => $item->query->drivetype,
-                    'description' => $item->query->description,
-                    'name' => $item->query->name,
-                    'phone' => $item->query->phone,
-                    'email' => $item->query->email,
-                    'status' => $item->query->status,
-                ];
+            $data[$loop]['query'][] = [
+                'query_id' => $item->query->id,
+                'user_id' => $item->query->user_id,
+                'car_id' => $item->query->car_id,
+                'title' => $item->query->title,
+                'vendor' => $item->query->vendor,
+                'car' => $item->query->car,
+                'modification' => $item->query->modification,
+                'year' => $item->query->year,
+                'fueltype' => $item->query->fueltype,
+                'engine' => $item->query->engine,
+                'transmission' => $item->query->transmission,
+                'drivetype' => $item->query->drivetype,
+                'description' => $item->query->description,
+                'name' => $item->query->name,
+                'phone' => $item->query->phone,
+                'email' => $item->query->email,
+                'status' => $item->query->status,
+            ];
 
-                if ($item->product_id !=0 ) {
+            $get_prices = SellerQuery::find()->where(['query_id' => $item->query_id])->andWhere(['not', ['product_id' => null]])->all();
+            $price_array = [];
+            foreach ($get_prices as $get_price) {
+                $price_array[] += $get_price->productPrice->price;
+            }
+            sort($price_array);
+            $arrlength = count($price_array);
+            if ($arrlength > 3) $counter = 3;
+            else $counter = $arrlength;
+            if ($counter > 0) {
+                for ($x = 0; $x < $counter; $x++) {
+                    $data[$loop]['request_prices'] = [
+                        $counter => $price_array[$x],
+                    ];
+                }
+            }
+
+
+            if ($item->product_id !=0 ) {
                 $data[$loop]['product'][] = [
                     'product_id' => $item->product->id,
                     'car_id' => $item->product->car_id,
@@ -66,14 +88,21 @@ class StoreQueryList
                     'weight' => $item->product->weight ? $item->product->weight : null,
                     'in_stock' => $item->product->in_stock ? $item->product->in_stock : null,
                     'quantity' => $item->product->quantity ? $item->product->quantity : null,
-                    'image' => $item->product->image ? $item->product->image : null,
                     'average_price' => $item->product->average_price ? $item->product->average_price : null,
-
                     'recommended_price' => $item->product->recommended_price ? $item->product->recommended_price : null,
                     'view' => $item->product->view ? $item->product->view : null,
                     'date' => date('d/m/Y', $item->product->created_at),
+//                    'product_images' => null,
                 ];
+
+                foreach ($item->product->storeProductImages as $productImage) {
+                    $data[$loop]['product'][$loop]['product_images'][] = [
+                        'id' => $productImage->id,
+                        'product_id' => $productImage->product_id,
+                        'link' => $productImage->link,
+                    ];
                 }
+            }
 
 
             $loop++;

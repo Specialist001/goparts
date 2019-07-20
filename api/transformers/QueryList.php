@@ -12,6 +12,7 @@ class QueryList
 
         $loop = 0;
 
+
         foreach ($list as $item) {
             $data[$loop] = [
                 'id' => $item->id,
@@ -43,7 +44,7 @@ class QueryList
                     'link' => $queryImage->name,
                 ];
             }
-
+            $loop_1 = 0;
             foreach ($item->sellerProducts as $sellerQuery) {
                 $data[$loop]['requests'][] = [
                     'id' => $sellerQuery->id,
@@ -56,16 +57,16 @@ class QueryList
                     'product_images' => null,
                 ];
 
+
+
                 foreach ($sellerQuery->product->storeProductImages as $productImage) {
-                    $data[$loop]['requests'][$loop]['product_images'][] = [
+                    $data[$loop]['requests'][$loop_1]['product_images'][] = [
                         'id' => $productImage->id,
                         'product_id' => $productImage->product_id,
                         'link' => $productImage->link,
                     ];
-
-
+                    $loop_1++;
                 }
-
             }
 
             $loop++;

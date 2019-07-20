@@ -504,7 +504,8 @@ class StoreProductController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+//        return $this->redirect(['index']);
+        return $this->redirect(['store-product/index?sort=-id']);
     }
 
     public function getCategoryChild($cat, $model, $index = 1)
