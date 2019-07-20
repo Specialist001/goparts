@@ -18,6 +18,7 @@ use Yii;
 use yii\base\ErrorException;
 use yii\filters\AccessControl;
 use yii\filters\auth\HttpBasicAuth;
+use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
 class QueryController extends \yii\web\Controller
@@ -41,39 +42,39 @@ class QueryController extends \yii\web\Controller
 
     public function behaviors()
     {
-//        return [
-//            'authenticator' => [
-//                'class' => HttpBasicAuth::className(),
-//                'auth' => function ($email, $password) {
-//                    $user = User::findByEmail($email);
-//                    if (!$user) return null;
-//                    $check = $user->validatePassword($password);
-//                    return $check ? $user: null;
-//                }
-//            ],
-//            'access' => [
-//                'class' => AccessControl::className(),
-////                'only' => ['create'],
-//                'rules' => [
-//                    [
-//                        'actions' => ['create','get-car'],
-//                        'allow' => true,
-//                        'roles' => ['?'],
-//                    ],
-//                    [
-//                        'actions' => ['index'],
-//                        'allow' => true,
-//                        'roles' => ['@'],
-//                    ],
-//                ],
-//            ],
-////            'verbs' => [
-////                'class' => VerbFilter::className(),
-////                'actions' => [
-////                    'purchase-delete' => ['post'],
-////                ],
-////            ],
-//        ];
+        return [
+            'authenticator' => [
+                'class' => HttpBasicAuth::className(),
+                'auth' => function ($email, $password) {
+                    $user = User::findByEmail($email);
+                    if (!$user) return null;
+                    $check = $user->validatePassword($password);
+                    return $check ? $user: null;
+                }
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+//                'only' => ['create'],
+                'rules' => [
+                    [
+                        'actions' => ['create','get-car'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'actions' => ['index','create','get-car'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'purchase-delete' => ['post'],
+                ],
+            ],
+        ];
     }
 
 

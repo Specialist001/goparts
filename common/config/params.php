@@ -2,10 +2,10 @@
 return [
     'appName' => 'Go Parts',
     'appShortName' => 'GOP',
-    'adminEmail' => 'darking-uz@yandex.com',
+    'adminEmail' => 'goparts.ae@gmail.com',
     'supportEmail' => 'support@goparts.ae',
     'senderEmail' => 'noreply@goparts.ae',
-    'senderName' => 'GO parts',
+    'senderName' => 'GO Parts',
     'user.passwordResetTokenExpire' => 3600,
     'price' => [
         'decimals' => '0',

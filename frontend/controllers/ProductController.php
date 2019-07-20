@@ -304,8 +304,6 @@ class ProductController extends Controller
 
     public function actionAdd($id = null, $query_id = null, $car_id = null)
     {
-
-//        $post = Yii::$app->request->post();
         $post = Yii::$app->request->post();
 //        print_r($post);exit;
         $product_data = $post['Product'];
