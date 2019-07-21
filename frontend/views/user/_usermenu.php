@@ -48,7 +48,7 @@ if (!empty($queries)) {
             <a href="<?= Url::to(['user/index']) ?>"><li><i class="fa fa-user"></i> Profile</li></a>
             <?php if (Yii::$app->user->identity->role == \common\models\User::ROLE_BUYER) { ?>
             <a href="<?= Url::to(['user/queries']) ?>"><li><img src="/svg/Orders_hostory.svg" alt=""> My queries (<?= $query ?>)</li></a>
-            <a href="<?= Url::to(['user/orders']) ?>"><li><img src="/svg/Orders_hostory.svg" alt=""> Orders history</li></a>
+<!--            <a href="--><?//= Url::to(['user/orders']) ?><!--"><li><img src="/svg/Orders_hostory.svg" alt=""> Orders history</li></a>-->
             <a href="<?= Url::to(['/cart']) ?>"><li><img src="/svg/Orders_hostory.svg" alt=""> Cart </li></a>
             <a href="<?= Url::to(['user/purchases']) ?>"><li><img src="/svg/My_orders.svg" alt="">Purchases (<?= $order ?>)</li></a>
             <?php } ?>
