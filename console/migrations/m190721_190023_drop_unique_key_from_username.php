@@ -12,7 +12,7 @@ class m190721_190023_drop_unique_key_from_username extends Migration
      */
     public function safeUp()
     {
-        $this->dropIndex('un-user_username', '{{%users}}');
+        $this->dropIndex('un-user_username', '{{%user}}');
     }
 
     /**
