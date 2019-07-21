@@ -19,6 +19,7 @@ use yii\web\IdentityInterface;
  * @property string $phone
  * @property integer $role
  * @property string $avatar
+ * @property string $location
  * @property string $legal_info
  * @property string $legal_address
  * @property string $auth_key
@@ -69,7 +70,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['role', 'default', 'value' => self::ROLE_BUYER],
             ['role', 'in', 'range' => [self::ROLE_BUYER, self::ROLE_SELLER]],
 
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This login is already taken.', 'on' => 'admin'],
+//            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This login is already taken.', 'on' => 'admin'],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email is already taken.', 'on' => 'admin'],
             [['username', 'email'], 'required', 'on' => 'admin'],
             [['password'], 'string', 'min' => 6, 'max' => 16, 'on' => 'admin'],
@@ -82,7 +83,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['reg_type'], 'string', 'max' => 50],
             [['avatar'], 'string', 'max' => 255],
 //            [['phone'], 'string', 'max' => 100],
-            [['username'], 'unique'],
+//            [['username'], 'unique'],
             [['email'], 'unique'],
             [['password_reset_token'], 'unique'],
         ];

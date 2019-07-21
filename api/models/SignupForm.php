@@ -17,6 +17,7 @@ class SignupForm extends Model
     public $password;
     public $role;
     public $legal_info;
+    public $legal_address;
     public $location;
     public $phone;
 
@@ -40,10 +41,9 @@ class SignupForm extends Model
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
 
-//            ['role', 'string', 'max' => 255],
-//            ['legal_info', 'string', 'max' => 255],
-//            ['location', 'string', 'max' => 255],
-//            ['phone', 'string', 'max' => 255],
+            [['phone', 'legal_info', 'legal_address'], 'string'],
+
+            ['role', 'integer'],
         ];
     }
 
@@ -62,14 +62,16 @@ class SignupForm extends Model
         $user_commission = new UserCommission();
         $user->username = $this->username;
         $user->email = $this->email;
-        $user->phone = $this->phone;
         $user->role = $this->role;
+        $user->reg_type = 'manual';
+        $user->phone = $this->phone;
         $user->legal_info = $this->legal_info;
-        $user->location = $this->location;
+        $user->legal_address = $this->legal_address;
+        $user->avatar = '/uploads/site/no_avatar.png';
         $user->setPassword($password);
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
-//        echo 'true';
+
         if($user->save()){
             $user_commission->user_id = $user->id;
             if ($user->role == 1) {

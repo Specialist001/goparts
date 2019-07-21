@@ -29,7 +29,7 @@ class SignupForm extends Model
         return [
             ['username', 'trim'],
             ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
+//            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'trim'],
@@ -40,6 +40,7 @@ class SignupForm extends Model
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
+            [['phone', 'legal_info', 'legal_address'], 'string'],
 
             ['role', 'integer'],
         ];
@@ -101,17 +102,16 @@ class SignupForm extends Model
 
     protected function sendEmail($user)
     {
-        return
-            Yii::$app
-                ->mailer
-                ->compose(
-                    ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
-                    ['user' => $user]
-                )
-                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
-                ->setTo($this->email)
-                ->setSubject('Account registration at ' . Yii::$app->params['appName'])
-                ->send();
+        return Yii::$app
+            ->mailer
+            ->compose(
+                ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
+                ['user' => $user]
+            )
+            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName']])
+            ->setTo($this->email)
+            ->setSubject('Account registration at ' . Yii::$app->params['appName'])
+            ->send();
     }
 
     protected function sendEmailAdmin($user)
@@ -122,7 +122,7 @@ class SignupForm extends Model
                 ['html' => 'emailVerifyAdmin-html', 'text' => 'emailVerifyAdmin-text'],
                 ['user' => $user]
             )
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
+            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName']])
             ->setTo(Yii::$app->params['adminEmail'])
             ->setSubject('Account registration at ' . Yii::$app->params['appName'])
             ->send();

@@ -139,13 +139,13 @@ $top_pages = Page::find()->where(['status'=>1])->orderBy('order')->all();
                             </li>
                             <li>
                                 <a class="text-form-style_2"
-                                   href="<?= Url::to(['user/orders']) ?>"><?= FA::i('shopping-cart')->addCssClass('text-secondary text-form-style_2') ?>
-                                    Order history</a>
+                                   href="<?= Url::to(['/cart']) ?>"><?= FA::i('shopping-cart')->addCssClass('text-secondary text-form-style_2') ?>
+                                    Cart</a>
                             </li>
                             <li>
                                 <a class="text-form-style_2"
-                                   href="<?= Url::to(['/cart']) ?>"><?= FA::i('shopping-cart')->addCssClass('text-secondary text-form-style_2') ?>
-                                    Cart</a>
+                                   href="<?= Url::to(['user/purchases']) ?>"><?= FA::i('shopping-cart')->addCssClass('text-secondary text-form-style_2') ?>
+                                    Purchases</a>
                             </li>
                             <?php } ?>
                             <?php if (Yii::$app->user->identity->role == 1) { ?>
