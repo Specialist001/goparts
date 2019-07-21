@@ -11,6 +11,7 @@ use yii\behaviors\TimestampBehavior;
  * @property int $id
  * @property int $query_id
  * @property int $seller_id
+ * @property int $sent_manager_id
  * @property int $buyer_id
  * @property int $product_id
  * @property int $status
@@ -21,6 +22,7 @@ use yii\behaviors\TimestampBehavior;
  * @property Query $query
  * @property User $seller
  * @property User $buyer
+ * @property User $sentManager
  */
 class SellerQuery extends \yii\db\ActiveRecord
 {
@@ -53,11 +55,12 @@ class SellerQuery extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['query_id', 'seller_id', 'product_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['query_id', 'seller_id', 'sent_manager_id', 'product_id', 'status', 'created_at', 'updated_at'], 'integer'],
 //            [['created_at', 'updated_at'], 'required'],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => StoreProduct::className(), 'targetAttribute' => ['product_id' => 'id']],
             [['query_id'], 'exist', 'skipOnError' => true, 'targetClass' => Query::className(), 'targetAttribute' => ['query_id' => 'id']],
             [['seller_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['seller_id' => 'id']],
+            [['sent_manager_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['sent_manager_id' => 'id']],
 //            [['buyer_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['buyer_id' => 'id']],
         ];
     }
@@ -71,6 +74,7 @@ class SellerQuery extends \yii\db\ActiveRecord
             'id' => 'ID',
             'query_id' => 'Query ID',
             'seller_id' => 'Seller ID',
+            'sent_manager_id' => 'Manager ID',
             'buyer_id' => 'Buyer ID',
             'product_id' => 'Product ID',
             'status' => 'Status',
@@ -113,6 +117,14 @@ class SellerQuery extends \yii\db\ActiveRecord
     public function getSeller()
     {
         return $this->hasOne(User::className(), ['id' => 'seller_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSentManager()
+    {
+        return $this->hasOne(User::className(), ['id' => 'sent_manager_id']);
     }
 
 //    /**

@@ -46,6 +46,25 @@ $this->registerCss('
             [
                 'attribute' => 'id',
                 'headerOptions' => ['style' => 'width:80px'],
+                'format' => 'raw',
+                'value' => function ($model) {
+//                    return '<a href="'.\yii\helpers\Url::to(['query/view', 'id'=>$model->id]).'">'.$model->name.'</a>';
+                    return '
+                    <div class="dropdown">
+                        <a class="btn dropdown-toggle" type="button" id="dropdownMenuId'.$model->id.'" data-toggle="dropdown">
+                            '.$model->id.'
+                            <span class="caret"></span>
+                          </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuId'.$model->id.'">
+                        <li role="presentation"><strong style="padding-left: 5px">Approve: </strong><a role="menuitem" href="'.\yii\helpers\Url::to(['user/update','id'=>$model->approve_manager_id]).'" tabindex="-1">'.$model->approveManager->username.'</a></li>
+                        <li role="presentation"><strong style="padding-left: 5px">Update: </strong><a role="menuitem" href="'.\yii\helpers\Url::to(['user/update','id'=>$model->update_manager_id]).'" tabindex="-1">'.$model->updateManager->username.'</a></li>
+                        <li role="presentation" class="divider"></li>
+                        <li role="presentation">
+                            <a tabindex="-1" target="_blank" href="'.\yii\helpers\Url::to(['query/view', 'id'=>$model->id]).'">View Details</a>
+                            </li>
+                        </ul>
+                    </div>';
+                }
             ],
             'user_id',
 //            'name',

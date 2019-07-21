@@ -229,6 +229,7 @@ class SellerQueryController extends Controller
                     ->send())
                 {
                     $model->status = SellerQuery::STATUS_PUBLISHED;
+                    $model->sent_manager_id = Yii::$app->user->identity->getId();
                     if ($model->save()) {
                         $data['status']['text'] = 'Request send to buyer';
                         $data['status']['code'] = 1;
@@ -242,6 +243,7 @@ class SellerQueryController extends Controller
                 }
             } else {
                 $model->status = SellerQuery::STATUS_PUBLISHED;
+                $model->sent_manager_id = Yii::$app->user->identity->getId();
                 if ($model->save()) {
                     $data['status']['text'] = 'Product published, but Request not send to buyer';
                     $data['status']['code'] = 0;
@@ -271,6 +273,7 @@ class SellerQueryController extends Controller
                     ->send())
                 {
                     $model->status = SellerQuery::STATUS_PUBLISHED;
+                    $model->sent_manager_id = Yii::$app->user->identity->getId();
                     if ($model->save()) {
                         $data['status']['text'] = 'Request send to buyer';
                         $data['status']['code'] = 1;
@@ -287,6 +290,7 @@ class SellerQueryController extends Controller
                 }
             } else {
                 $model->status = SellerQuery::STATUS_PUBLISHED;
+                $model->sent_manager_id = Yii::$app->user->identity->getId();
                 if ($model->save()) {
                     $data['status']['text'] = 'Product published, but Request not send to buyer';
                     $data['status']['code'] = 0;
