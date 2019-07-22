@@ -498,7 +498,7 @@ function getTypeCarCategoryChild($cat, $model, $index = 1)
             <div class="col-md-4">
                 <? //= $form->field($model, 'phone')->textInput(['value' => Yii::$app->user->identity->phone ? Yii::$app->user->identity->phone : $model->phone, 'maxlength' => true]) ?>
                 <div class="form-group">
-                    <label>Phone</label>
+                    <label>Whats App number</label>
                     <input class="form-control" name="QueryData[phone]"
                            value="<?= Yii::$app->user->identity->phone ? Yii::$app->user->identity->phone : $model->phone ?>"
                            required>
