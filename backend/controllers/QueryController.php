@@ -103,6 +103,9 @@ class QueryController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->update_manager_id = Yii::$app->user->identity->getId();
+            $model->save();
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -165,6 +168,7 @@ class QueryController extends Controller
 
             if ($seller_query->save()) {
                 $model->status = Query::STATUS_VERIFIED;
+                $model->approve_manager_id = Yii::$app->user->identity->getId();
                 $model->save();
                 $data['status'] = 'Request send to sellers';
             } else {

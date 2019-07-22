@@ -61,6 +61,7 @@ $this->registerCss('
                               </a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuId'.$model->id.'">
                             <li role="presentation"><strong style="padding-left: 5px">Query ID: </strong><a href="'.\yii\helpers\Url::to(['query/view', 'id'=>$model->query_id]).'" role="menuitem" tabindex="-1">'.$model->query_id.'</a></li>
+                            <li role="presentation"><strong style="padding-left: 5px">Manger ID: </strong><a href="'.\yii\helpers\Url::to(['user/update', 'id'=>$model->sent_manager_id]).'" role="menuitem" tabindex="-1">'.$model->sentManager->username.'</a></li>
                             </ul>
                         </div>';
                 }

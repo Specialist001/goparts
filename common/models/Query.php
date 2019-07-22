@@ -10,6 +10,8 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property int $id
  * @property int $user_id
+ * @property int $approve_manager_id approved manager
+ * @property int $update_manager_id update manager
  * @property int $car_id
  * @property int $category_id
  * @property string $vendor
@@ -31,6 +33,8 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property Cars $car0
  * @property StoreCategory $category
+ * @property User $approveManager
+ * @property User $updateManager
  * @property User $user
  * @property QueryImage[] $queryImages
  */
@@ -56,13 +60,15 @@ class Query extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'car_id', 'category_id', 'status', 'created_at'], 'integer'],
+            [['user_id', 'approve_manager_id', 'update_manager_id', 'car_id', 'category_id', 'status', 'created_at'], 'integer'],
             [['email'], 'required'],
             [['title'], 'string', 'max' => 150],
             [['vendor', 'car', 'year', 'modification', 'fueltype', 'engine', 'transmission', 'drivetype', 'description', 'name', 'phone', 'email', 'image'], 'string', 'max' => 255],
             [['car_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cars::className(), 'targetAttribute' => ['car_id' => 'id']],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => StoreCategory::className(), 'targetAttribute' => ['category_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['approve_manager_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['approve_manager_id' => 'id']],
+            [['update_manager_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['update_manager_id' => 'id']],
         ];
     }
 
@@ -74,6 +80,8 @@ class Query extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
+            'approve_manager_id' => 'Approved Manager ID',
+            'update_manager_id' => 'Update Manager ID',
             'car_id' => 'Car ID',
             'title' => 'Title',
             'description' => 'Description',
@@ -130,6 +138,22 @@ class Query extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getApproveManager()
+    {
+        return $this->hasOne(User::className(), ['id' => 'approve_manager_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUpdateManager()
+    {
+        return $this->hasOne(User::className(), ['id' => 'update_manager_id']);
     }
 
     /**
