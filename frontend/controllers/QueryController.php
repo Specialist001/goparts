@@ -178,13 +178,6 @@ class QueryController extends Controller
 
             $parts_array = [];
 
-//            $images = UploadedFile::getInstancesByName('Query[0][images]');
-//            echo '<pre>';
-//            print_r(Yii::$app->request->post());
-//            print_r($images);
-//            echo '</pre>';
-//            exit;
-
             if (Yii::$app->request->post()) {
                 $username = Yii::$app->user->getId() ? Yii::$app->user->identity->username : $query_data['name'];
                 $email = Yii::$app->user->getId() ? Yii::$app->user->identity->email : $query_data['email'];
@@ -284,12 +277,6 @@ class QueryController extends Controller
                             $image_model->save();
                         }
                     }
-//                    else {
-//                        $image_model = new QueryImage();
-//                        $image_model->query_id = $model->id;
-//                        $image_model->name = '/uploads/site/vectorpaint.png';
-//                        $image_model->save();
-//                    }
 
                     $images = UploadedFile::getInstancesByName('Query[' . $key . '][images]');
                     if (!empty($images)) {
@@ -322,16 +309,12 @@ class QueryController extends Controller
 
 
                 if (!Yii::$app->user->id) {
-//                    Yii::$app->session->setFlash('success', 'Your query has been sent. Response will be sent to your email');
-//                    Yii::$app->session->setFlash('success', 'Your query has been sent. Response will be sent to your email');
-//                    Yii::$app->session->set('send',true);
                     return $this->redirect(['/',
                         'new_query' => 'send']);
                 }
 
                 return $this->redirect(['/query']);
             }
-//            print_r(Yii::$app->request->post());exit;
 
             return $this->render('create', [
                 'model' => $model,
