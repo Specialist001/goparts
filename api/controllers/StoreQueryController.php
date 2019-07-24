@@ -266,12 +266,12 @@ class StoreQueryController extends Controller
         } else {
             return $this->asJson([
                 'error' => true,
-                'message' => 'Description does not exist'
+                'message' => 'Description does not exist',
             ]);
         }
     }
 
-    public function actinEditProduct()
+    public function actionEditProduct()
     {
         $post = Yii::$app->request->post();
         $product_data = $post['Product'];
@@ -279,9 +279,10 @@ class StoreQueryController extends Controller
 
         if ($product_data['description']) {
             if ($product_data['price']) {
-                if (!(empty(SellerQuery::find()->where(['seller_id' => Yii::$app->user->identity->getId(), 'query_id' => $query_data['query_id'], 'product_id' => null])->one()))) {
-
-                    $model = StoreProduct::find()->where(['id' => $product_data['product_id']])->one();
+                $seller_query = SellerQuery::find()->where(['seller_id' => Yii::$app->user->identity->getId(), 'query_id' => $query_data['query_id']])->one();
+                if (!(empty($seller_query))) {
+                    $product_id = $seller_query->product_id;
+                    $model = StoreProduct::find()->where(['id' => $product_id])->one();
 
                     $image = UploadedFile::getInstanceByName('mainImage');
                     $dir = (__DIR__) . '/../../uploads/store-products/';
@@ -404,23 +405,25 @@ class StoreQueryController extends Controller
                         $prices = null;
                     }
 
-                    return json_encode([
+                    $image_array = [];
+                    $all_images = StoreProductImage::find()->where(['product_id' => $model->id])->all();
+                    foreach ($all_images as $all_image) {
+                        $image_array += [$all_image->id => $all_image->link];
+                    }
+
+                    return $this->asJson([
                         'error' => false,
                         'status' => 'Request sent',
+                        'product_id' => $model->id,
+                        'image_array' => $image_array,
                         'prices' => $prices,
-                        'post' => $post,
                         'images_json_array' => $images_json_array,
-                        //            'product' => [
-                        //                'page_title' => Yii::t('frontend', 'Product added to cart 1'),
-                        //                'img' => $product->image,
-                        //                'name' => $product->translate->name,
-                        //                //                        'shop' => $product->shop->name,
-                        //                'cat' => $product->category->translate->title,
-                        //                'cart_count' => static::getCount(),
-                        //            ],
                     ]);
                 }
-//            return $this->redirect(['/user/requests']);
+            return $this->asJson([
+                'error' => true,
+                'message' => 'Product does not exist'
+            ]);
             } else {
                 return $this->asJson([
                     'error' => true,
