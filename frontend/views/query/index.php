@@ -82,7 +82,7 @@ $this->registerCss('
                                     <input type="hidden" class="car_id" name="Query[car_id]"
                                            value="<?= $buyer_query->car_id ?>">
 
-                                    <div class="new_request p-3 border mb-3 d-inline-block w-100 <?= $buyer_query->sellerProducts ? 'green_request' : null ?>">
+                                    <div class="new_request p-3 border mb-3 d-inline-block w-100 <?= $buyer_query->sellerProducts ? 'green_request green_request_bg' : null ?>">
                                         <div class="rounded-circle border d-none d-md-inline-block float-left mt-4 text-white <?= $buyer_query->sellerProducts ? 'bg-form_style_1' : null ?>"
                                              style="width: 30px; height: 30px; font-size: 1.3rem">
                                             <i class="la la-check pl-1"></i>
