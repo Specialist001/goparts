@@ -14,7 +14,7 @@ class StoreQueryList
 
         $loop = 0;
 
-        foreach ($list as $item) {
+        foreach ($list as $key=> $item) {
             $data[$loop] = [
                 'id' => $item->id,
                 'seller_id' => $item->seller_id,
@@ -26,7 +26,7 @@ class StoreQueryList
                 'request_prices' => null,
             ];
 
-            $data[$loop]['query'][] = [
+            $data[$loop]['query'] = [
                 'query_id' => $item->query->id,
                 'user_id' => $item->query->user_id,
                 'car_id' => $item->query->car_id,
@@ -44,7 +44,16 @@ class StoreQueryList
                 'phone' => $item->query->phone,
                 'email' => $item->query->email,
                 'status' => $item->query->status,
+                'query_images' => null,
             ];
+
+            foreach ($item->query->queryImages as $queryImage) {
+                $data[$loop]['query']['query_images'][] = [
+                    'id' => $queryImage->id,
+                    'query_id' => $queryImage->query_id,
+                    'link' => $queryImage->name,
+                ];
+            }
 
             $get_prices = SellerQuery::find()->where(['query_id' => $item->query_id])->andWhere(['not', ['product_id' => null]])->all();
             $price_array = [];
@@ -65,7 +74,7 @@ class StoreQueryList
 
 
             if ($item->product_id !=0 ) {
-                $data[$loop]['product'][] = [
+                $data[$loop]['product'] = [
                     'product_id' => $item->product->id,
                     'car_id' => $item->product->car_id,
                     'category' => $item->product->category->translate->title ? $item->product->category->translate->title : null,
@@ -92,11 +101,11 @@ class StoreQueryList
                     'recommended_price' => $item->product->recommended_price ? $item->product->recommended_price : null,
                     'view' => $item->product->view ? $item->product->view : null,
                     'date' => date('d/m/Y', $item->product->created_at),
-//                    'product_images' => null,
+                    'product_images' => null,
                 ];
 
                 foreach ($item->product->storeProductImages as $productImage) {
-                    $data[$loop]['product'][$loop]['product_images'][] = [
+                    $data[$loop]['product']['product_images'][] = [
                         'id' => $productImage->id,
                         'product_id' => $productImage->product_id,
                         'link' => $productImage->link,

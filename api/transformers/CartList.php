@@ -16,9 +16,9 @@ class CartList
             $data[$loop] = [
                 'id' => $item->id,
                 'user_id' => $item->user_id,
-                'car_id' => $item->car_id,
+//                'car_id' => $item->car_id,
                 'product_id' => $item->product_id ? $item->product_id : null,
-                'status' => $item->status,
+//                'status' => $item->status,
                 'count' => $item->count,
                 'created_at' => $item->created_at,
                 'product_name' => $item->product->translate->description.' for '.$item->product->car->vendor.' '.$item->product->car->car.' '.$item->product->car->modification.' '.$item->product->car->year,
