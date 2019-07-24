@@ -215,7 +215,7 @@ class QueryController extends \yii\web\Controller
                                 ['html' => 'signUpAuto-html', 'text' => 'signUpAuto-text'],
                                 ['type'=>'all', 'user' => $user, 'password' => $password]
                             )
-                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName']])
+                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' Team'])
                             ->setTo($user->email)
                             ->setSubject('Thank You for your request! | ' . Yii::$app->params['appName'])
                             ->send();
@@ -242,7 +242,7 @@ class QueryController extends \yii\web\Controller
                                     ['html' => 'signUpAuto-html', 'text' => 'signUpAuto-text'],
                                     ['type'=>'first','user' => $user, 'password' => $password]
                                 )
-                                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName']])
+                                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' Team'])
                                 ->setTo($user->email)
                                 ->setSubject('Registration on ' . Yii::$app->params['appName'])
                                 ->send();

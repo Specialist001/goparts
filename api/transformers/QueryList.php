@@ -45,8 +45,8 @@ class QueryList
                 ];
             }
             $loop_1 = 0;
-            foreach ($item->sellerProducts as $sellerQuery) {
-                $data[$loop]['requests'][] = [
+            foreach ($item->sellerProducts as $key=>$sellerQuery) {
+                $data[$loop]['requests'][$key] = [
                     'id' => $sellerQuery->id,
                     'query_id' => $sellerQuery->query_id,
                     'seller_id' => $sellerQuery->seller_id,
@@ -57,10 +57,8 @@ class QueryList
                     'product_images' => null,
                 ];
 
-
-
                 foreach ($sellerQuery->product->storeProductImages as $productImage) {
-                    $data[$loop]['requests'][$loop_1]['product_images'][] = [
+                    $data[$loop]['requests'][$key]['product_images'][] = [
                         'id' => $productImage->id,
                         'product_id' => $productImage->product_id,
                         'link' => $productImage->link,

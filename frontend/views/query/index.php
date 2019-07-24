@@ -43,105 +43,23 @@ $this->registerCss('
 ?>
 <div class="query-index">
     <div class="container pt-3">
-        <div class="row">
-            <div class="col-md-12">
 
-                <h1><?= Html::encode($this->title) ?></h1>
-
-                <p>
-                    <?= Html::a('Create Query', ['create'], ['class' => 'btn btn-success']) ?>
-                </p>
-
-                <?php Pjax::begin(); ?>
-                <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-<!--                --><?//= GridView::widget([
-//                    'dataProvider' => $dataProvider,
-//                    'filterModel' => $searchModel,
-//                    'columns' => [
-//                        ['class' => 'yii\grid\SerialColumn'],
-//
-//                        'id',
-////            'user_id',
-////            'car_id',
-//                        [
-//                            'attribute' => 'vendor',
-//                            'label' => 'Car',
-//                            'value' => function ($model) {
-//                                return $model->vendor . ' ' . $model->car . ' '.$model->year;
-//                            }
-//                        ],
-////            'category_id',
-////                        [
-////                            'attribute' => 'category_id',
-////                            'label' => 'Category',
-////                            'value' => function ($model) {
-////                                return $model->category->translate->title;
-////                            }
-////                        ],
-////            'vendor',
-//                        //'car',
-//                        //'year',
-//                        //'modification',
-//                        'fueltype',
-//                        'engine',
-//                        'transmission',
-//                        'drivetype',
-//                        [
-//                            'attribute'=>'image',
-//                            'format' => 'raw',
-//                            'value' => function ($model) {
-//                                if($model->images) {
-//                                    $img_string = '<ul class="query_imageboxes pl-0 d-inline-block">';
-//                                    $img_string .= '<li class="query_imagebox">
-//                                    <img src="'.$model->firstImage->name .'" class="img-fluid" alt="product">
-//                                </li>';
-//                                    foreach ($model->images as $p_image) {
-//                                        $img_string .= '<li class="d-none">
-//                                        <img src="'.$p_image->name .'" class="img-fluid" alt="product">
-//                                    </li>';
-//                                    }
-//                                    $img_string .= '</ul>';
-//                                }
-//
-////                    return $model->firstImage->name ? '<img src="'.$model->firstImage->name.'" class="img-responsive" alt="query_'.$model->id.'" style="width: 80px">' : null;
-//                                return $model->images ? $img_string : null;
-//                            }
-//                        ],
-//                        [
-//                            'attribute'=>'status',
-//                            'label' => 'Status',
-//                            'filter' => array("0" => "Moderate", "1" => "Verified", "2"=>"Purchased", "-1"=>"Deleted"),
-//                            'format' => 'query',
-//                        ],
-////                        'name',
-//                        //'phone',
-//                        //'email:email',
-//                        //'image',
-////            'status',
-//                        //'created_at',
-//                        [
-//                            'attribute' => 'created_at',
-//                            'label' => 'Date',
-//                            'value' => function ($model) {
-//                                return date('d/m/Y', $model->created_at);
-//                            }
-//                        ],
-//
-//                        ['class' => 'yii\grid\ActionColumn'],
-//                    ],
-//                ]); ?>
-
-                <?php Pjax::end(); ?>
-            </div>
-        </div>
 
         <div class="row">
             <div class="col-md-2">
                 <?= $this->render('//user/_usermenu.php') ?>
             </div>
             <div class="col-md-10 pt-4">
-                <h2 class="">New Requests</h2>
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <h1 class="float-left"><?= Html::encode($this->title) ?></h1>
+
+                        <p class="float-right">
+                            <?= Html::a('Create Query', ['create'], ['class' => 'btn btn-success']) ?>
+                        </p>
+                    </div>
+                </div>
                 <div class="w-100 d-inline-block pt-4">
                     <div class="table_header">
                         <ul class="font-weight-bolder list-inline pl-5 d-none d-md-inline-block">
@@ -165,7 +83,7 @@ $this->registerCss('
                                            value="<?= $buyer_query->car_id ?>">
 
                                     <div class="new_request p-3 border mb-3 d-inline-block w-100 <?= $buyer_query->sellerProducts ? 'green_request' : null ?>">
-                                        <div class="rounded-circle border d-none d-md-inline-block float-left mt-4 text-white "
+                                        <div class="rounded-circle border d-none d-md-inline-block float-left mt-4 text-white <?= $buyer_query->sellerProducts ? 'bg-form_style_1' : null ?>"
                                              style="width: 30px; height: 30px; font-size: 1.3rem">
                                             <i class="la la-check pl-1"></i>
                                         </div>
