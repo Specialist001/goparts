@@ -72,7 +72,8 @@ class User extends ActiveRecord implements IdentityInterface
 
 //            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This login is already taken.', 'on' => 'admin'],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email is already taken.', 'on' => 'admin'],
-            [['username', 'email'], 'required', 'on' => 'admin'],
+            ['username', 'required', 'on' => 'admin'],
+            ['email', 'required', 'message' => 'E-mail is required.', 'on' => 'admin'],
             [['password'], 'string', 'min' => 6, 'max' => 16, 'on' => 'admin'],
 
             [['gender', 'role', 'type', 'access_level', 'visit_time', 'email_confirm', 'status', 'created_at', 'updated_at', 'deleted_at'], 'integer'],
