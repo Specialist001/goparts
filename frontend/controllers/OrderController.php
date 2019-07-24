@@ -155,7 +155,7 @@ class OrderController extends Controller
                                 ['html' => 'signUp-html', 'text' => 'signUp-text'],
                                 ['user' => $user, 'password' => $password]
                             )
-                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
+                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' Team'])
                             ->setTo($user->email)
                             ->setSubject('Registration on ' . Yii::$app->params['appName'])
                             ->send();
@@ -189,7 +189,7 @@ class OrderController extends Controller
                         ['html' => 'makeOrder-html', 'text' => 'makeOrder-text'],
                         ['type' => 'buyer']
                     )
-                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
+                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' Team'])
                     ->setTo($data['User']['email'])
                     ->setSubject(Yii::$app->params['appName'])
                     ->send();
@@ -199,7 +199,7 @@ class OrderController extends Controller
                         ['html' => 'makeOrder-html', 'text' => 'makeOrder-text'],
                         ['type' => 'seller']
                     )
-                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
+                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' Team'])
                     ->setTo(Yii::$app->params['adminEmail'])
                     ->setSubject(Yii::$app->params['appName'])
                     ->send();
@@ -230,7 +230,7 @@ class OrderController extends Controller
                                     'sale_date' => date('m/d/Y', $sellerQuery->updated_at),
                                 ]
                             )
-                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
+                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' Team'])
                             ->setTo($sellerQuery->seller->email)
                             ->setSubject('Your product sold on ' . Yii::$app->name)
                             ->send();

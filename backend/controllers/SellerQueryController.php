@@ -69,7 +69,7 @@ class SellerQueryController extends Controller
                             'query_car_name' => $model->query->vendor .' '.$model->query->car.' '.$model->query->modification.' '.$model->query->year
                         ]
                     )
-                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
+                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' Team'])
                     ->setTo($model->query->email)
                     ->setSubject(Yii::$app->name)
                     ->send())
@@ -138,7 +138,7 @@ class SellerQueryController extends Controller
                         'query_car_name' => $model->query->vendor .' '.$model->query->car.' '.$model->query->modification.' '.$model->query->year
                     ]
                 )
-                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' Team'])
                 ->setTo($model->query->email)
                 ->setSubject('Added product by your request #'.$model->query_id .' | '.Yii::$app->name)
                 ->send();
@@ -154,7 +154,7 @@ class SellerQueryController extends Controller
                         'query_car_name' => $model->query->vendor .' '.$model->query->car.' '.$model->query->modification.' '.$model->query->year
                     ]
                 )
-                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' Team'])
                 ->setTo(Yii::$app->params['adminEmail'])
                 ->setSubject(Yii::$app->name)
                 ->send();
@@ -223,7 +223,7 @@ class SellerQueryController extends Controller
                             'query_car_name' => $model->query->vendor .' '.$model->query->car.' '.$model->query->modification.' '.$model->query->year
                         ]
                     )
-                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
+                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' Team'])
                     ->setTo($model->query->user->email)
                     ->setSubject('Product Added')
                     ->send())
@@ -267,7 +267,7 @@ class SellerQueryController extends Controller
                             'query_car_name' => $model->query->vendor .' '.$model->query->car.' '.$model->query->modification.' '.$model->query->year
                         ]
                     )
-                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
+                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' Team'])
                     ->setTo($model->query->email)
                     ->setSubject('Product added')
                     ->send())
