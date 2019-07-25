@@ -4,9 +4,11 @@
 namespace api\controllers;
 
 use api\transformers\CartList;
+use api\transformers\LocationList;
 use api\transformers\ProfileProductList;
 use common\models\City;
 use common\models\SellerQuery;
+use common\models\Stock;
 use common\models\StoreDelivery;
 use common\models\StoreProduct;
 use common\models\User;
@@ -200,6 +202,7 @@ class CartController extends \yii\web\Controller
         return $this->asJson(['error' => true,'message'=>'Product does not exist']);
     }
 
+    /* Delte product from UserCart */
     public function actionDelete()
     {
         if (!empty($data = Yii::$app->request->post('cart_product_id'))) {
@@ -231,6 +234,70 @@ class CartController extends \yii\web\Controller
             }
         }
         return $this->asJson(['error' => true]);
+    }
+
+    /* Clear Products from User Cart */
+    public function actionClear()
+    {
+        if (Yii::$app->user->identity->getId()) {
+            if($cart = UserCart::findAll(['user_id'=>Yii::$app->user->identity->getId()])) {
+                if (UserCart::deleteAll(['user_id'=>Yii::$app->user->identity->getId()])) $error = 'false';
+                else $error = 'Dont delete';
+            } else {
+                $error = 'Product not found in Cart';
+            }
+            return $this->asJson([
+                'error' => $error
+            ]);
+        }
+        else {
+            $cart = !empty(Yii::$app->session->get('cart')) ? Yii::$app->session->get('cart') : [];
+            if (!empty($cart)) {
+                if (($key = array_search($product, $cart)) !== false) unset($cart[$key]);
+            }
+            Yii::$app->session->set('cart', array_values($cart));
+            return $this->asJson(['error' => false]);
+        }
+    }
+
+    /* Get All Active Cities */
+    public function actionGetCities()
+    {
+        $cities = City::find()->where(['status'=>1])->all();
+
+        $city_array = [];
+
+        if($cities) {
+            foreach ($cities as $key => $city) {
+                $city_array += [$city->id => $city->name];
+            }
+
+            return $this->asJson(['data' => LocationList::transform($cities)]);
+        }
+
+        return $this->asJson(['error'=>true]);
+    }
+
+    public function actionGetStocks($id)
+    {
+        $stocks = Stock::find()->where(['city_id' => $id])->all();
+
+        $stock_array = [];
+
+//        if (count($stocks)) {
+//            foreach ($stocks as $key => $stock) {
+//                $stock_array[$stock['city_id']] = $stock['name'];
+//            }
+//        }
+
+        $data = '<option value="" disabled selected>' . 'Select Location' . '</option>';
+        if (count($stocks)) {
+            foreach ($stocks as $key => $stock) {
+                $data .= '<option value="' . $stock->name . '">' . $stock->name . '</option>';
+            }
+        }
+
+        return $this->asJson($data);
     }
 
     public static function getCount() {
