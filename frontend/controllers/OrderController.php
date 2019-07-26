@@ -122,6 +122,10 @@ class OrderController extends Controller
     public function actionMake()
     {
         $data = Yii::$app->request->post();
+//        echo '<pre>';
+//        print_r($data);
+//        echo '</pre>';
+//        exit;
         $products = $data['CartProduct'];
         $city = City::find()->where(['id' => $data['City']])->one();
         $user = $data['User'];

@@ -215,13 +215,21 @@ class CartController extends \yii\web\Controller
             if ($user_id = Yii::$app->user->id) {
                 $product['user_id'] = $user_id;
                 if(!empty($cart = UserCart::findOne(['id'=>$product['product_id']]))) {
-                    if ($cart->delete()) $error = 'false';
-                    else $error = 'Dont delete';
+                    if ($cart->delete()) {
+                        $error = false;
+                        $message = 'Product remove from User Cart';
+                    }
+                    else {
+                        $error = true;
+                        $message = 'Not possible to remove';
+                    }
                 } else {
-                    $error = 'Product not found in Cart';
+                    $error = true;
+                    $message = 'Product not found in Cart';
                 }
                 return $this->asJson([
                     'error' => $error,
+                    'message' => $message,
                     'data'=>$product,
                     'cart_count' => static::getCount()]);
             } else {
@@ -233,7 +241,7 @@ class CartController extends \yii\web\Controller
                 return $this->asJson(['error' => false, 'cart_count' => static::getCount()]);
             }
         }
-        return $this->asJson(['error' => true]);
+        return $this->asJson(['error' => true,'message'=>'Product ID not found in UserCart']);
     }
 
     /* Clear Products from User Cart */
@@ -241,13 +249,20 @@ class CartController extends \yii\web\Controller
     {
         if (Yii::$app->user->identity->getId()) {
             if($cart = UserCart::findAll(['user_id'=>Yii::$app->user->identity->getId()])) {
-                if (UserCart::deleteAll(['user_id'=>Yii::$app->user->identity->getId()])) $error = 'false';
-                else $error = 'Dont delete';
+                if (UserCart::deleteAll(['user_id'=>Yii::$app->user->identity->getId()])) {
+                    $error = false;
+                    $message = 'Products removed. Cart is empty';
+                } else {
+                    $error = true;
+                    $message = 'Dont delete';
+                }
             } else {
-                $error = 'Product not found in Cart';
+                $error = true;
+                $message = 'Product not found in Cart';
             }
             return $this->asJson([
-                'error' => $error
+                'error' => $error,
+                'message' => $message
             ]);
         }
         else {

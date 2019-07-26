@@ -3,6 +3,7 @@
 
 namespace api\controllers;
 
+use api\transformers\OrderList;
 use api\transformers\ProfileProductList;
 use common\models\City;
 use common\models\SellerQuery;
@@ -31,15 +32,15 @@ class OrderController extends \yii\web\Controller
     public function behaviors()
     {
         return [
-//            'authenticator' => [
-//                'class' => HttpBasicAuth::className(),
-//                'auth' => function ($email, $password) {
-//                    $user = User::findByEmail($email);
-//                    if (!$user) return null;
-//                    $check = $user->validatePassword($password);
-//                    return $check ? $user: null;
-//                }
-//            ]
+            'authenticator' => [
+                'class' => HttpBasicAuth::className(),
+                'auth' => function ($email, $password) {
+                    $user = User::findByEmail($email);
+                    if (!$user) return null;
+                    $check = $user->validatePassword($password);
+                    return $check ? $user: null;
+                }
+            ]
 //            'verbs' => [
 //                'class' => VerbFilter::className(),
 //                'actions' => [
@@ -53,14 +54,19 @@ class OrderController extends \yii\web\Controller
     {
         $data = Yii::$app->request->post();
         $products = $data['CartProduct'];
-        $city = City::find()->where(['id' => $data['City']])->one();
+        $city = City::find()->where(['id' => $data['city_id']])->one();
+        $stock = Stock::find()->where(['id' => $data['stock_id']])->one();
         $user = $data['User'];
         $delivery = $data['Delivery'];
 //        $city = $data['Location'];
         $totalCount = $data['TotalCount'];
 
+        $userCart = UserCart::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->all();
+
+//        return $this->asJson($userCart);exit;
+
         if(!empty($data['User'])) {
-            if(!$this->checkUser($data['User'])) return $this->redirect(['cart/index']);
+            if(!$this->checkUser($data['User'])) return $this->asJson(['error'=>true,'message'=>'Redirect to Cart']);
             if(!Yii::$app->user->id) {
                 if(empty($user = User::findByUsername($data['User']['username']))) {
                     $password = mt_rand(10000000, 99999999);
@@ -85,7 +91,7 @@ class OrderController extends \yii\web\Controller
                                 ['html' => 'signUp-html', 'text' => 'signUp-text'],
                                 ['user' => $user, 'password' => $password]
                             )
-                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' robot'])
+                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName'] . ' Team'])
                             ->setTo($user->email)
                             ->setSubject('Registration on ' . Yii::$app->params['appName'])
                             ->send();
@@ -98,7 +104,7 @@ class OrderController extends \yii\web\Controller
 
             $user->phone = $user->phone ? $user->phone : $data['User']['phone'];
 
-            if(empty($user)) return $this->redirect(['cart/index']);
+            if(empty($user)) return $this->asJson(['error'=>true,'message'=>'Redirect to Cart']);
 
             $order = new StoreOrder();
             $order->user_id = $user->id;
@@ -110,7 +116,7 @@ class OrderController extends \yii\web\Controller
             $order->email = $data['User']['email'] ? $data['User']['email'] : $user->email;
             $order->phone = $data['User']['phone'] ? $data['User']['phone'] : $user->phone;
 //            $order->comment = $data['User']['comment'] ? $data['User']['comment'] : null;
-            $order->city = $data['Location'] ? $data['Location'] : $city->name.' ('. $data['Stock'].')';
+            $order->city = $data['Location'] ? $data['Location'] : $city->name.' ('. $stock->name.')';
 
             if($order->save()) {
                 Yii::$app
@@ -177,7 +183,7 @@ class OrderController extends \yii\web\Controller
 //                print_r($order->getFirstErrors());
                 return $this->asJson(['error'=>1,'message'=>'Not checkout']);
             }
-            return $this->asJson(['message'=>'Make order']);
+            return $this->asJson(['data'=> OrderList::transform($order) ,'message'=>'Make order']);
         }
         return $this->asJson(['error'=>1,'message'=>'User data is empty']);
     }
