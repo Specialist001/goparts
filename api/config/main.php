@@ -21,7 +21,7 @@ return [
         ],
         'user' => [
             'identityClass' => 'common\models\User',
-//            'enableSession' => false,
+            'enableSession' => false,
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-api'],
         ],
