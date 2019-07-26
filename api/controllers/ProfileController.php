@@ -27,8 +27,8 @@ class ProfileController extends \yii\web\Controller
         return [
             'authenticator' => [
                 'class' => HttpBasicAuth::className(),
-                'auth' => function ($email, $password) {
-                    $user = User::findByEmail($email);
+                'auth' => function ($username, $password) {
+                    $user = User::findByUsername($username);
                     if (!$user) return null;
                     $check = $user->validatePassword($password);
                     return $check ? $user: null;
