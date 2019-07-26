@@ -14,7 +14,7 @@ use yii\web\UploadedFile;
 class ProfileController extends \yii\web\Controller
 {
     public $enableCsrfValidation = false;
-    public $enableSession = false;
+//    public $enableSession = false;
 
     public function beforeAction($action)
     {
@@ -33,7 +33,7 @@ class ProfileController extends \yii\web\Controller
                     $check = $user->validatePassword($password);
                     return $check ? $user: null;
                 }
-            ]
+            ],
 //            'verbs' => [
 //                'class' => VerbFilter::className(),
 //                'actions' => [
