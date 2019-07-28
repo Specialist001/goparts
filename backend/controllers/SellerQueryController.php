@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use common\helpers\FirebaseNotifications;
+use common\models\User;
 use rmrevin\yii\fontawesome\FA;
 use Yii;
 use common\models\SellerQuery;
@@ -208,6 +210,21 @@ class SellerQueryController extends Controller
         $data = [];
 
         if ($model->query->user_id) {
+
+            $title = 'Test request title';
+            $body = 'Test request body';
+            $service = new FirebaseNotifications(['authKey' =>
+                'YOUR_AUTH_KEY']);
+
+            $all_users = User::find()->where(['!=','device_id','Null'])->andwhere(['!=','device_id',' '])->all();
+            $tokens = [];
+            foreach ($all_users as $users) {
+                $tokens[] = $users['device_id'];
+            }
+            $message = array('title' => $title, 'body' => $body);
+            $service->sendNotification($tokens, $message);
+
+
             if ($model->query->user->email) {
                 if (Yii::$app
                     ->mailer

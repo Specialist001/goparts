@@ -38,6 +38,7 @@ class AppAsset extends AssetBundle
         'js/jquery-viewer/jquery-viewer.min.js',
         'js/lodash.js',
         'js/slick.js',
+        '/firebase-app.js',
         'js/script.js',
     ];
     public $depends = [

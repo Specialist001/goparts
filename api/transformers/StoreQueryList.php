@@ -44,6 +44,7 @@ class StoreQueryList
                 'phone' => $item->query->phone,
                 'email' => $item->query->email,
                 'status' => $item->query->status,
+                'query_date' => date('m/d/Y H:i', $item->query->created_at),
                 'query_images' => null,
             ];
 
@@ -100,7 +101,7 @@ class StoreQueryList
                     'average_price' => $item->product->average_price ? $item->product->average_price : null,
                     'recommended_price' => $item->product->recommended_price ? $item->product->recommended_price : null,
                     'view' => $item->product->view ? $item->product->view : null,
-                    'date' => date('d/m/Y', $item->product->created_at),
+                    'date' => date('d/m/Y H:i', $item->product->created_at),
                     'product_images' => null,
                 ];
 

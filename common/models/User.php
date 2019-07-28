@@ -25,6 +25,7 @@ use yii\web\IdentityInterface;
  * @property string $auth_key
  * @property string $reg_type
  * @property integer $status
+ * @property string $device_id
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
@@ -79,7 +80,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['gender', 'role', 'type', 'access_level', 'visit_time', 'email_confirm', 'status', 'created_at', 'updated_at', 'deleted_at'], 'integer'],
             [['birth_date'], 'safe'],
             [['birth_date'], 'string'],
-            [['username', 'password_hash', 'password_reset_token', 'email', 'first_name', 'middle_name', 'last_name', 'site', 'about', 'location', 'legal_info', 'legal_reg_certificate', 'legal_address', 'legal_bank_account', 'legal_vat_number', 'verification_token'], 'string', 'max' => 255],
+            [['username', 'password_hash', 'password_reset_token', 'email', 'first_name', 'middle_name', 'last_name', 'site', 'about', 'location', 'legal_info', 'legal_reg_certificate', 'legal_address', 'legal_bank_account', 'legal_vat_number', 'verification_token', 'device_id'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['reg_type'], 'string', 'max' => 50],
             [['avatar'], 'string', 'max' => 255],
@@ -120,6 +121,7 @@ class User extends ActiveRecord implements IdentityInterface
             'legal_bank_account' => 'Legal Bank Account',
             'legal_vat_number' => 'Legal Vat Number',
             'status' => 'Status',
+            'device_id' => 'Device ID',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'deleted_at' => 'Deleted At',
