@@ -32,7 +32,7 @@ class QueryList
                 'phone' => $item->phone,
                 'email' => $item->email,
                 'status' => $item->status,
-                'created_at' => $item->created_at,
+                'created_at' => date('m/d/Y H:i', $item->created_at),
                 'query_images' => null,
                 'requests' => null,
             ];
