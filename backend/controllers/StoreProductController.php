@@ -262,7 +262,7 @@ class StoreProductController extends Controller
             $productCar->car_id = $car->id;
             $productCar->save();
 
-            $car_name = $car_vendor ? $car_vendor . '-' : null . $car_model ? $car_model . '-' : null . $car_modification ? $car_modification . '-' : null . $car_year ? $car_year . '_' : null;
+            $car_name = ($car_vendor ? $car_vendor . '-' : '') . ($car_model ? $car_model . '-' : '') . ($car_modification ? $car_modification . '-' : '') . ($car_year ? $car_year . '_' : '');
 
             if (empty(Yii::$app->request->post('StoreProduct')['title'])) {
                 $model->title = Helper::toSlug($translation_en->name) . '_' . $model->id;
@@ -456,8 +456,6 @@ class StoreProductController extends Controller
             $productCar->product_id = $model->id;
             $productCar->car_id = $car->id;
             $productCar->save();
-
-            $car_name = $car_vendor ? $car_vendor . '-' : null . $car_model ? $car_model . '-' : null . $car_modification ? $car_modification . '-' : null . $car_year ? $car_year . '_' : null;
 
             if (empty(Yii::$app->request->post('StoreProduct')['title'])) {
                 $model->title = Helper::toSlug($translation_en->name) . '_' . $model->id;

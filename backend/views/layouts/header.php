@@ -208,7 +208,9 @@ use yii\helpers\Url;
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
+                                <?php if (!Yii::$app->user->isGuest): ?>
                                 <a href="<?= Url::to(['user/update', 'id' =>Yii::$app->user->identity->getId() ])?>" class="btn btn-default btn-flat">Profile</a>
+                                <?php endif; ?>
                             </div>
                             <div class="pull-right">
                                 <?= Html::a(

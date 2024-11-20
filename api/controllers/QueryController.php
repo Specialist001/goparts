@@ -347,7 +347,9 @@ class QueryController extends \yii\web\Controller
                 return $this->asJson(['parts'=>$parts_array,
 //                    'data'=>QueryAddList::transform($model),
                     'query_status'=>'Added',
-                    'token' => empty(Yii::$app->user->identity->getId()) ? base64_encode($user->email.':'.$password) : null]);
+                    'token' => Yii::$app->user->isGuest ? base64_encode($user->email.':'.$password) : null,
+                    'password' => $password
+                ]);
             }
             return $this->redirect(['site/error', 'message' => 'Not post data', 'code' => 404]);
         }

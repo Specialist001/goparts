@@ -58,7 +58,7 @@ $top_pages = Page::find()->where(['status'=>1])->orderBy('order')->all();
                         <span class="mb-0 pt-1 d-none">Your City</span>
                         <h4 class="pt-1">
                             <?php $city = City::findOne(['default' => 1]);
-                            echo $city->name;
+                            echo $city?->name;
                             ?>
                         </h4>
                     </div>
@@ -239,7 +239,7 @@ $top_pages = Page::find()->where(['status'=>1])->orderBy('order')->all();
                             <div class="header_city_text">
                                 <span>Your City</span>
                                 <h4><?php $city = City::findOne(['default' => 1]);
-                                    echo $city->name;
+                                    echo $city?->name;
                                     ?></h4>
                             </div>
                         </div>
@@ -252,7 +252,9 @@ $top_pages = Page::find()->where(['status'=>1])->orderBy('order')->all();
                             <div class="header_phone_text">
                                 <span>Sa-Th 9:00-20:00</span>
                                 <h4>+97155 689 22 01</h4>
-                                <?php if (Yii::$app->user->identity->role == User::ROLE_BUYER || Yii::$app->user->isGuest) { ?>
+                                <?php if (Yii::$app->user->isGuest) { ?>
+                                    <a href="<?= Url::to(['query/create']) ?>">Leave a request</a>
+                                <?php } else if (Yii::$app->user->identity->role == User::ROLE_BUYER) { ?>
                                     <a href="<?= Url::to(['query/create']) ?>">Leave a request</a>
                                 <?php } ?>
                             </div>

@@ -76,7 +76,7 @@ class MyQueryController extends \yii\web\Controller
 
     public function actionCreate()
     {
-        if (Yii::$app->user->isGuest || Yii::$app->user->identity->role == User::ROLE_BUYER && Yii::$app->user->identity->status == User::STATUS_ACTIVE) {
+        if (Yii::$app->user->identity->role == User::ROLE_BUYER && Yii::$app->user->identity->status == User::STATUS_ACTIVE) {
             $model = new Query();
             $category = !empty(Yii::$app->request->get('category'))? Yii::$app->request->get('category'): false;
 

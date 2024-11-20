@@ -134,26 +134,34 @@ class QueryController extends Controller
 
             $fuel_types = StoreOption::find()->where(['slug' => 'fuel-type'])->one();
             $fuel_array = [];
-            foreach ($fuel_types->storeOptionValues as $fuel_type) {
-                $fuel_array += [$fuel_type->value => $fuel_type->value];
+            if ($fuel_types) {
+                foreach ($fuel_types->storeOptionValues as $fuel_type) {
+                    $fuel_array += [$fuel_type->value => $fuel_type->value];
+                }
             }
 
             $engines_types = StoreOption::find()->where(['slug' => 'engines-type'])->one();
             $engines_array = [];
-            foreach ($engines_types->storeOptionValues as $engines_type) {
-                $engines_array += [$engines_type->value => $engines_type->value];
+            if ($engines_types) {
+                foreach ($engines_types->storeOptionValues as $engines_type) {
+                    $engines_array += [$engines_type->value => $engines_type->value];
+                }
             }
 
             $transmissions = StoreOption::find()->where(['slug' => 'transmission'])->one();
             $transmissions_array = [];
-            foreach ($transmissions->storeOptionValues as $transmission) {
-                $transmissions_array += [$transmission->value => $transmission->value];
+            if ($transmissions) {
+                foreach ($transmissions->storeOptionValues as $transmission) {
+                    $transmissions_array += [$transmission->value => $transmission->value];
+                }
             }
 
             $drive_types = StoreOption::find()->where(['slug' => 'drive-type'])->one();
             $drive_array = [];
-            foreach ($drive_types->storeOptionValues as $drive) {
-                $drive_array += [$drive->value => $drive->value];
+            if ($drive_types) {
+                foreach ($drive_types->storeOptionValues as $drive) {
+                    $drive_array += [$drive->value => $drive->value];
+                }
             }
 
             $cats = StoreCategory::find()->where(['parent_id' => null, 'status' => 1])->orderBy('`order`')->all();
@@ -190,7 +198,7 @@ class QueryController extends Controller
                             ->mailer
                             ->compose(
                                 ['html' => 'signUpAuto-html', 'text' => 'signUpAuto-text'],
-                                ['type'=>'all', 'user' => $user, 'password' => $password]
+                                ['type' => 'all', 'user' => $user, 'password' => $password]
                             )
                             ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName']])
                             ->setTo($user->email)
@@ -207,7 +215,7 @@ class QueryController extends Controller
                         $user->setPassword($password);
                         $user->generateAuthKey();
                         if ($user->save()) {
-                            $store_commission = StoreCommission::findOne(['name'=>'auto']);
+                            $store_commission = StoreCommission::findOne(['name' => 'auto']);
                             $user_commission = new UserCommission();
                             $user_commission->user_id = $user->id;
                             $user_commission->commission = $store_commission ? $store_commission->commission : 35;
@@ -217,7 +225,7 @@ class QueryController extends Controller
                                 ->mailer
                                 ->compose(
                                     ['html' => 'signUpAuto-html', 'text' => 'signUpAuto-text'],
-                                    ['type'=>'first','user' => $user, 'password' => $password]
+                                    ['type' => 'first', 'user' => $user, 'password' => $password]
                                 )
                                 ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName']])
                                 ->setTo($user->email)

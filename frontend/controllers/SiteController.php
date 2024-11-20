@@ -134,7 +134,7 @@ class SiteController extends Controller
             'content' => Yii::$app->urlManager->createAbsoluteUrl(['svg/goparts_logo_1.svg']),
         ]);
 
-        if(Yii::$app->user->identity->role == User::ROLE_SELLER) {
+        if(!Yii::$app->user->isGuest && Yii::$app->user->identity->role == User::ROLE_SELLER) {
 
             return $this->redirect('user');
         }

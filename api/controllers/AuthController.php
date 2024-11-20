@@ -183,6 +183,20 @@ class AuthController extends \yii\web\Controller
         return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
+    /**
+     * Logs out the current user.
+     *
+     * @return mixed
+     */
+    public function actionLogout()
+    {
+        if(Yii::$app->user->logout()) {
+            return $this->asJson(['message'=>'Log Out Success']);
+        }
+
+        return $this->asJson(['message'=>'Not log outed']);
+    }
+
 //    public function isPhone($username) {
 //        $smsService = new SmsService();
 //        return $smsService->isUzPhone($smsService->clearPhone($username));

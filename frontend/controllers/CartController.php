@@ -23,11 +23,11 @@ class CartController extends \yii\web\Controller
     const STATUS_CANCEL = -1;
     const STATUS_ACCEPTED = 2;
 
-    public function beforeAction($action)
-    {
-        $this->enableCsrfValidation = false;
-        return parent::beforeAction('delete','clear');
-    }
+//    public function beforeAction($action)
+//    {
+//        $this->enableCsrfValidation = false;
+//        return parent::beforeAction('delete','clear');
+//    }
 
     /**
      * {@inheritdoc}

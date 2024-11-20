@@ -52,6 +52,7 @@ class WQuery extends Widget
                 'cars_array' => $cars_array,
                 'models_array' => $models_array,
                 'mod_array' => $mod_array,
+                'car_id' => null,
             ]);
         }
 
